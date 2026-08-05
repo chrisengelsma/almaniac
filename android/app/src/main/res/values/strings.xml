@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Almaniac: A Calendar Converter</string>
+    <string name="title_activity_main">Almaniac: A Calendar Converter</string>
+    <string name="package_name">app.engelsma.almanac</string>
+    <string name="custom_url_scheme">app.engelsma.almanac</string>
+    <string name="widget_description">Today\'s date in a calendar of your choice.</string>
+    <string name="widget_configure_title">Choose a calendar</string>
+</resources>

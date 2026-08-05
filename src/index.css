@@ -1,0 +1,49 @@
+:root {
+  --almanac-bg: #263238;
+  --almanac-bg-deep: #222d37;
+  --almanac-yellow: #ffeb3b;
+  --almanac-yellow-soft: #fff176;
+  --almanac-text: #263238;
+  --almanac-text-muted: #546e7a;
+  --almanac-teal: #00897b;
+  --almanac-divider: rgba(38, 50, 56, 0.18);
+
+  color: var(--almanac-text);
+  background: var(--almanac-bg-deep);
+  font-family: Roboto, 'Segoe UI', sans-serif;
+  line-height: 1.4;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}

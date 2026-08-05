@@ -1,0 +1,35 @@
+Screenshot plan for Google Play and App Store (8 frames recommended)
+
+1. HERO — Multi-view dashboard
+   Caption: "See 9 calendars at once"
+   Show: Main screen with today’s date across Gregorian, Islamic (Arabic script), Hebrew, Persian, and others visible.
+
+2. NATIVE SCRIPTS
+   Caption: "Dates in their own scripts"
+   Show: Islamic and Hebrew rows with native typography; transliteration toggle off in drawer preview if possible.
+
+3. RELIGIOUS HOLIDAYS
+   Caption: "Christian, Jewish & Islamic holidays"
+   Show: A date with holiday chips visible (e.g. Hanukkah, Christmas, or Eid al-Fitr).
+
+4. ANCIENT DATES
+   Caption: "Jump to any year — even BCE"
+   Show: Date picker modal open with "100 BCE" entered.
+
+5. EDUCATION
+   Caption: "Learn each calendar’s story"
+   Show: Calendar info modal with world usage map open.
+
+6. CUSTOMIZATION
+   Caption: "Show, hide & reorder"
+   Show: Side drawer with calendar toggles and holiday settings.
+
+7. PRIVACY
+   Caption: "No ads. No tracking. Offline."
+   Show: Clean main UI with subtle caption overlay; no ad banners.
+
+8. WIDGET (optional)
+   Caption: "Today in your calendar of choice"
+   Show: Home screen widget on iOS or Android.
+
+Capture at 1080×1920 (phone) and 1242×2688 (iOS 6.7") using the web app in mobile viewport or a device simulator.
