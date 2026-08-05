@@ -1,20 +1,25 @@
 import {
+  BahaiCalendar,
   ChineseCalendar,
+  CopticCalendar,
+  EthiopianCalendar,
   FrenchRepublicanCalendar,
   GregorianCalendar,
   HebrewCalendar,
   IndianCivilCalendar,
   IslamicCalendar,
+  IslamicCalendarMode,
   JulianCalendar,
   JulianDay,
   MayaCalendar,
   PersianCalendar,
   SovietCalendar,
 } from 'calendar-converter/calendars';
-import { toGregorianCalendar } from 'calendar-converter/services';
+import { toGregorianCalendar, toIslamicCalendar } from 'calendar-converter/services';
 import type { CalendarId } from './calendarRegistry';
 import { DEFAULT_CALENDAR_ORDER } from './calendarRegistry';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
+import type { IslamicCalendarMode as AppIslamicCalendarMode } from './appSettings';
 import {
   astronomicalToDisplay,
   createGregorianDate,
@@ -23,6 +28,16 @@ import {
 } from './gregorianDate';
 
 export type PickerValues = Record<string, string>;
+
+export interface PickerContext {
+  islamicCalendarMode?: AppIslamicCalendarMode;
+}
+
+function converterIslamicMode(context?: PickerContext): IslamicCalendarMode {
+  return context?.islamicCalendarMode === 'ummAlQura'
+    ? IslamicCalendarMode.UmmAlQura
+    : IslamicCalendarMode.Tabular;
+}
 
 export interface PickerFieldOption {
   value: string;
@@ -65,6 +80,16 @@ function julianMonthOptions(): PickerFieldOption[] {
   }));
 }
 
+function eraMonthOptions(
+  count: number,
+  monthName: (month: number) => string,
+): PickerFieldOption[] {
+  return Array.from({ length: count }, (_, index) => ({
+    value: String(index + 1),
+    label: monthName(index + 1),
+  }));
+}
+
 function islamicMonthOptions(): PickerFieldOption[] {
   return Array.from({ length: 12 }, (_, index) => ({
     value: String(index + 1),
@@ -84,6 +109,13 @@ function persianMonthOptions(): PickerFieldOption[] {
   return Array.from({ length: 12 }, (_, index) => ({
     value: String(index + 1),
     label: PersianCalendar.MonthName(index + 1),
+  }));
+}
+
+function bahaiMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 20 }, (_, index) => ({
+    value: String(index + 1),
+    label: BahaiCalendar.MonthName(index + 1),
   }));
 }
 
@@ -142,7 +174,7 @@ function parseFloatValue(values: PickerValues, key: string): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-export function getPickerFields(calendarId: CalendarId): PickerFieldDef[] {
+export function getPickerFields(calendarId: CalendarId, context?: PickerContext): PickerFieldDef[] {
   switch (calendarId) {
     case 'gregorian':
       return [
@@ -200,6 +232,54 @@ export function getPickerFields(calendarId: CalendarId): PickerFieldDef[] {
             const year = parseNumber(values, 'year') ?? 1;
             const month = parseNumber(values, 'month') ?? 1;
             const maxDay = JulianCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'ethiopian':
+      return [
+        { key: 'year', label: 'Year', type: 'number', placeholder: 'e.g. 2018' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => eraMonthOptions(13, EthiopianCalendar.MonthName),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = EthiopianCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'coptic':
+      return [
+        { key: 'year', label: 'Year', type: 'number', placeholder: 'e.g. 1742' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => eraMonthOptions(13, CopticCalendar.MonthName),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = CopticCalendar.NumberOfDaysInMonth(year, month);
             return Array.from({ length: maxDay }, (_, index) => ({
               value: String(index + 1),
               label: String(index + 1),
@@ -310,7 +390,12 @@ export function getPickerFields(calendarId: CalendarId): PickerFieldDef[] {
           getOptions: (values) => {
             const year = parseNumber(values, 'year') ?? 1;
             const month = parseNumber(values, 'month') ?? 1;
-            const maxDay = IslamicCalendar.NumberOfDaysInMonthInYear(month, year);
+            const maxDay = IslamicCalendar.NumberOfDaysInMonthInYear(
+              month,
+              year,
+              undefined,
+              converterIslamicMode(context),
+            );
             return Array.from({ length: maxDay }, (_, index) => ({
               value: String(index + 1),
               label: String(index + 1),
@@ -366,6 +451,30 @@ export function getPickerFields(calendarId: CalendarId): PickerFieldDef[] {
           },
         },
       ];
+    case 'bahai':
+      return [
+        { key: 'year', label: 'Year', type: 'number', min: 1, placeholder: 'e.g. 181' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => bahaiMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = BahaiCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
     case 'indianCivil':
       return [
         { key: 'year', label: 'Year', type: 'number', placeholder: 'e.g. 1948' },
@@ -406,7 +515,11 @@ export function getPickerFields(calendarId: CalendarId): PickerFieldDef[] {
   }
 }
 
-export function extractPickerValues(calendarId: CalendarId, anchor: GregorianCalendar): PickerValues {
+export function extractPickerValues(
+  calendarId: CalendarId,
+  anchor: GregorianCalendar,
+  context?: PickerContext,
+): PickerValues {
   switch (calendarId) {
     case 'gregorian': {
       const { year, era } = astronomicalToDisplay(anchor.year);
@@ -423,6 +536,22 @@ export function extractPickerValues(calendarId: CalendarId, anchor: GregorianCal
         year: String(julian.year),
         month: String(julian.month),
         day: String(julian.day),
+      };
+    }
+    case 'ethiopian': {
+      const ethiopian = new EthiopianCalendar(anchor);
+      return {
+        year: String(ethiopian.year),
+        month: String(ethiopian.month),
+        day: String(ethiopian.day),
+      };
+    }
+    case 'coptic': {
+      const coptic = new CopticCalendar(anchor);
+      return {
+        year: String(coptic.year),
+        month: String(coptic.month),
+        day: String(coptic.day),
       };
     }
     case 'chinese': {
@@ -461,7 +590,7 @@ export function extractPickerValues(calendarId: CalendarId, anchor: GregorianCal
       };
     }
     case 'islamic': {
-      const islamic = new IslamicCalendar(anchor);
+      const islamic = toIslamicCalendar(anchor, converterIslamicMode(context));
       return {
         year: String(islamic.year),
         month: String(islamic.month),
@@ -484,6 +613,14 @@ export function extractPickerValues(calendarId: CalendarId, anchor: GregorianCal
         day: String(persian.day),
       };
     }
+    case 'bahai': {
+      const bahai = new BahaiCalendar(anchor);
+      return {
+        year: String(bahai.year),
+        month: String(bahai.month),
+        day: String(bahai.day),
+      };
+    }
     case 'indianCivil': {
       const indian = new IndianCivilCalendar(anchor);
       return {
@@ -504,6 +641,7 @@ export function extractPickerValues(calendarId: CalendarId, anchor: GregorianCal
 export function pickerValuesToGregorian(
   calendarId: CalendarId,
   values: PickerValues,
+  context?: PickerContext,
 ): GregorianCalendar | null {
   try {
     switch (calendarId) {
@@ -528,6 +666,30 @@ export function pickerValuesToGregorian(
           return null;
         }
         return toGregorianCalendar(new JulianCalendar(year, month, day));
+      }
+      case 'ethiopian': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (!year || !month || !day) {
+          return null;
+        }
+        if (day > EthiopianCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new EthiopianCalendar(year, month, day));
+      }
+      case 'coptic': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (!year || !month || !day) {
+          return null;
+        }
+        if (day > CopticCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new CopticCalendar(year, month, day));
       }
       case 'chinese': {
         const year = parseNumber(values, 'year');
@@ -606,10 +768,13 @@ export function pickerValuesToGregorian(
         if (!year || year < 1 || !month || !day) {
           return null;
         }
-        if (day > IslamicCalendar.NumberOfDaysInMonthInYear(month, year)) {
+        if (day > IslamicCalendar.NumberOfDaysInMonthInYear(month, year, undefined, converterIslamicMode(context))) {
           return null;
         }
-        return toGregorianCalendar(new IslamicCalendar(year, month, day));
+        const mode = converterIslamicMode(context);
+        return toGregorianCalendar(
+          new IslamicCalendar(year, month, day, undefined, undefined, mode),
+        );
       }
       case 'hebrew': {
         const year = parseNumber(values, 'year');
@@ -638,6 +803,18 @@ export function pickerValuesToGregorian(
         }
         return toGregorianCalendar(new PersianCalendar(year, month, day));
       }
+      case 'bahai': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (!year || year < 1 || !month || !day) {
+          return null;
+        }
+        if (day > BahaiCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new BahaiCalendar(year, month, day));
+      }
       case 'indianCivil': {
         const year = parseNumber(values, 'year');
         const month = parseNumber(values, 'month');
@@ -665,8 +842,12 @@ export function pickerValuesToGregorian(
   }
 }
 
-export function clampPickerValues(calendarId: CalendarId, values: PickerValues): PickerValues {
-  const fields = getPickerFields(calendarId);
+export function clampPickerValues(
+  calendarId: CalendarId,
+  values: PickerValues,
+  context?: PickerContext,
+): PickerValues {
+  const fields = getPickerFields(calendarId, context);
   const next = { ...values };
 
   for (const field of fields) {

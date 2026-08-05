@@ -34,6 +34,8 @@ struct CalendarChoiceQuery: EntityQuery {
         return [
             CalendarChoice(id: "gregorian", label: "Gregorian"),
             CalendarChoice(id: "julian", label: "Julian"),
+            CalendarChoice(id: "ethiopian", label: "Ethiopian"),
+            CalendarChoice(id: "coptic", label: "Coptic"),
             CalendarChoice(id: "chinese", label: "Chinese"),
             CalendarChoice(id: "soviet", label: "Soviet"),
             CalendarChoice(id: "frc", label: "FRC"),
@@ -41,6 +43,7 @@ struct CalendarChoiceQuery: EntityQuery {
             CalendarChoice(id: "islamic", label: "Islamic"),
             CalendarChoice(id: "hebrew", label: "Hebrew"),
             CalendarChoice(id: "persian", label: "Persian"),
+            CalendarChoice(id: "bahai", label: "Baháʼí"),
             CalendarChoice(id: "indianCivil", label: "Indian Civil"),
             CalendarChoice(id: "julianDay", label: "Julian Day"),
         ]

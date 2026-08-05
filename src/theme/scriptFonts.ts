@@ -10,4 +10,6 @@ export const SCRIPT_FONTS = {
   devanagari: '"IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif',
   chinese: '"IBM Plex Sans SC", "IBM Plex Sans", sans-serif',
   cyrillic: '"IBM Plex Sans", sans-serif',
+  ethiopic: '"Noto Sans Ethiopic", sans-serif',
+  coptic: '"Noto Sans Coptic", sans-serif',
 } as const;

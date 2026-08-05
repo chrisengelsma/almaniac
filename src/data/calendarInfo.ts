@@ -67,12 +67,30 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     ],
     mapCountries: [...JULIAN_CHURCH_COUNTRIES],
   },
+  ethiopian: {
+    id: 'ethiopian',
+    calendarType: 'solar',
+    firstImplemented: 'c. 4th century CE',
+    history:
+      'A solar calendar of thirteen 30-day months plus a short epagomenal period (Pagume). It shares the Julian leap-year rule and is about seven to eight years behind the Gregorian calendar. Ethiopia uses it alongside the Gregorian calendar for civil and religious life.',
+    usedIn: ['Ethiopia', 'Eritrean Orthodox communities'],
+    mapCountries: ['ET', 'ER'],
+  },
+  coptic: {
+    id: 'coptic',
+    calendarType: 'solar',
+    firstImplemented: 'c. 3rd century CE',
+    history:
+      'The liturgical calendar of the Coptic Orthodox Church, structurally identical to the Ethiopian calendar but reckoned from the era of the martyrs (Anno Martyrum). New Year falls on 11 September in the Gregorian calendar (12 September in a leap year before the Gregorian leap).',
+    usedIn: ['Egypt', 'Coptic Orthodox Church worldwide'],
+    mapCountries: ['EG'],
+  },
   chinese: {
     id: 'chinese',
     calendarType: 'lunisolar',
     firstImplemented: 'c. 14th century BCE (legendary); fixed rules c. 104 BCE',
     history:
-      'The traditional Chinese calendar (农历) follows lunar months anchored by solar terms. Leap months keep festivals aligned with seasons. It governs cultural holidays such as Lunar New Year and the Mid-Autumn Festival; the Gregorian calendar is used for civil administration in China.',
+      'The traditional Chinese calendar (农历) follows lunar months anchored by solar terms, with years named by the sexagenary cycle (干支) of heavenly stems and earthly branches — each year also carries a zodiac animal (生肖). Leap months keep festivals aligned with seasons.',
     usedIn: ['China', 'Taiwan', 'Hong Kong', 'Macau', 'Singapore', 'Malaysia', 'Overseas Chinese communities'],
     mapCountries: ['CN', 'TW', 'HK', 'MO', 'SG', 'MY'],
   },
@@ -108,7 +126,7 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     calendarType: 'lunar',
     firstImplemented: '622 CE (Hijra epoch)',
     history:
-      'A purely lunar calendar of twelve months totaling about 354 days. Months begin at the sighting of the new crescent. It marks religious observances and is the official calendar in many Muslim-majority countries.',
+      'A lunar calendar of twelve months totaling about 354 days. This app supports tabular (arithmetic) conversion and the Umm al-Qura calendar used officially in Saudi Arabia (1300–1600 AH). An optional ±1 day adjustment can fine-tune displayed dates for local moon-sighting practice.',
     usedIn: [
       'Saudi Arabia',
       'Egypt',
@@ -139,6 +157,15 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
       'Also called the Solar Hijri calendar. Months are tied to the vernal equinox, making Nowruz the new year. Omar Khayyam helped refine its leap-year structure; modern Iran and Afghanistan use refined versions.',
     usedIn: ['Iran', 'Afghanistan'],
     mapCountries: ['IR', 'AF'],
+  },
+  bahai: {
+    id: 'bahai',
+    calendarType: 'solar',
+    firstImplemented: '1844 CE',
+    history:
+      'The Badíʿ calendar has nineteen months of nineteen days, with intercalary days (Ayyám-i-Há) before the month of fasting. Naw-Rúz is fixed to the vernal equinox in Tehran. Year 1 began at the declaration of the Báb in 1844.',
+    usedIn: ['Baháʼí communities worldwide'],
+    mapCountries: 'all',
   },
   indianCivil: {
     id: 'indianCivil',

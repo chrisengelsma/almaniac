@@ -68,6 +68,8 @@ public class CalendarWidgetConfigureActivity extends Activity {
                 String[] ids = {
                     "gregorian",
                     "julian",
+                    "ethiopian",
+                    "coptic",
                     "chinese",
                     "soviet",
                     "frc",
@@ -75,6 +77,7 @@ public class CalendarWidgetConfigureActivity extends Activity {
                     "islamic",
                     "hebrew",
                     "persian",
+                    "bahai",
                     "indianCivil",
                     "julianDay"
                 };
@@ -93,6 +96,8 @@ public class CalendarWidgetConfigureActivity extends Activity {
         if (options.isEmpty()) {
             options.add(new CalendarOption("gregorian", "Gregorian"));
             options.add(new CalendarOption("julian", "Julian"));
+            options.add(new CalendarOption("ethiopian", "Ethiopian"));
+            options.add(new CalendarOption("coptic", "Coptic"));
             options.add(new CalendarOption("chinese", "Chinese"));
             options.add(new CalendarOption("soviet", "Soviet"));
             options.add(new CalendarOption("frc", "FRC"));
@@ -100,6 +105,7 @@ public class CalendarWidgetConfigureActivity extends Activity {
             options.add(new CalendarOption("islamic", "Islamic"));
             options.add(new CalendarOption("hebrew", "Hebrew"));
             options.add(new CalendarOption("persian", "Persian"));
+            options.add(new CalendarOption("bahai", "Baháʼí"));
             options.add(new CalendarOption("indianCivil", "Indian Civil"));
             options.add(new CalendarOption("julianDay", "Julian Day"));
         }

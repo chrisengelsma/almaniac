@@ -4,7 +4,7 @@ import {
   DEFAULT_CALENDAR_ORDER,
   type CalendarId,
 } from '../lib/calendarRegistry';
-import type { AppSettings, IslamicDayAdjustment } from '../lib/appSettings';
+import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment } from '../lib/appSettings';
 import { SheetSlider, SheetToggle } from './DrawerControls';
 
 const DISMISS_THRESHOLD_PX = 80;
@@ -16,6 +16,7 @@ interface SettingsSheetProps {
   onClose: () => void;
   onToggleCalendar: (id: CalendarId) => void;
   onTransliterateChange: (value: boolean) => void;
+  onIslamicCalendarModeChange: (value: IslamicCalendarMode) => void;
   onIslamicAdjustmentChange: (value: IslamicDayAdjustment) => void;
   onChristianHolidaysChange: (value: boolean) => void;
   onJewishHolidaysChange: (value: boolean) => void;
@@ -28,6 +29,7 @@ export function SettingsSheet({
   onClose,
   onToggleCalendar,
   onTransliterateChange,
+  onIslamicCalendarModeChange,
   onIslamicAdjustmentChange,
   onChristianHolidaysChange,
   onJewishHolidaysChange,
@@ -166,6 +168,20 @@ export function SettingsSheet({
                   label="Transliterate to English"
                   onChange={() => onTransliterateChange(!settings.transliterateToEnglish)}
                 />
+              </li>
+              <li className="settings-sheet__item settings-sheet__item--stacked">
+                <span>Islamic Calendar System</span>
+                <select
+                  className="settings-sheet__select"
+                  value={settings.islamicCalendarMode}
+                  onChange={(event) =>
+                    onIslamicCalendarModeChange(event.target.value as IslamicCalendarMode)
+                  }
+                  aria-label="Islamic calendar system"
+                >
+                  <option value="tabular">Tabular (arithmetic)</option>
+                  <option value="ummAlQura">Umm al-Qura (Saudi official)</option>
+                </select>
               </li>
               <li className="settings-sheet__item settings-sheet__item--stacked">
                 <span>Islamic Calendar Day Adjustment</span>

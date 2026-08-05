@@ -10,6 +10,7 @@ import { TopBar } from './components/TopBar';
 import {
   loadAppSettings,
   saveAppSettings,
+  setIslamicCalendarMode,
   setIslamicDayAdjustment,
   setShowChristianHolidays,
   setShowIslamicHolidays,
@@ -44,6 +45,7 @@ function App() {
         showJewishHolidays: settings.showJewishHolidays,
         showIslamicHolidays: settings.showIslamicHolidays,
         islamicDayAdjustment: settings.islamicDayAdjustment,
+        islamicCalendarMode: settings.islamicCalendarMode,
       }),
     [anchor, settings],
   );
@@ -90,6 +92,9 @@ function App() {
         onClose={() => setSheetOpen(false)}
         onToggleCalendar={(id) => updateSettings((current) => toggleCalendarVisibility(current, id))}
         onTransliterateChange={(value) => updateSettings((current) => setTransliterateToEnglish(current, value))}
+        onIslamicCalendarModeChange={(value) =>
+          updateSettings((current) => setIslamicCalendarMode(current, value))
+        }
         onIslamicAdjustmentChange={(value) =>
           updateSettings((current) => setIslamicDayAdjustment(current, value))
         }
@@ -117,6 +122,7 @@ function App() {
         anchor={anchor}
         onClose={() => setDatePickerOpen(false)}
         onApply={setAnchor}
+        settings={settings}
       />
     </div>
   );

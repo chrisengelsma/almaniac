@@ -999,6 +999,17 @@
   padding-bottom: 1rem;
 }
 
+.settings-sheet__select {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: inherit;
+  font: inherit;
+}
+
 .sheet__toggle {
   position: relative;
   width: 2.2rem;

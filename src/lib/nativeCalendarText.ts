@@ -1,5 +1,10 @@
-import type {
+import {
+  BahaiCalendar,
   ChineseCalendar,
+  CopticCalendar,
+  EthiopianCalendar,
+} from 'calendar-converter/calendars';
+import type {
   HebrewCalendar,
   IndianCivilCalendar,
   IslamicCalendar,
@@ -8,7 +13,7 @@ import type {
 } from 'calendar-converter/calendars';
 import type { CalendarId } from './calendarRegistry';
 
-export type ScriptFont = 'latin' | 'arabic' | 'hebrew' | 'devanagari' | 'chinese' | 'cyrillic';
+export type ScriptFont = 'latin' | 'arabic' | 'hebrew' | 'devanagari' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic';
 
 const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
 const DEVANAGARI_DIGITS = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
@@ -171,6 +176,81 @@ const SOVIET_EPAGOMENAL = [
   'Високосный день',
 ];
 
+const ETHIOPIAN_MONTHS = [
+  'መስከረም',
+  'ጥቅምት',
+  'ኅዳር',
+  'ታህሣሥ',
+  'ጥር',
+  'የካቲት',
+  'መጋቢት',
+  'ሚያዝያ',
+  'ግንቦት',
+  'ሰኔ',
+  'ሐምሌ',
+  'ነሐሴ',
+  'ጳጉሜ',
+];
+
+const ETHIOPIAN_WEEKDAYS = [
+  'እሑድ',
+  'ሰኞ',
+  'ማክሰኞ',
+  'ረቡዕ',
+  'ሐሙስ',
+  'ዓርብ',
+  'ቅዳሜ',
+];
+
+const COPTIC_MONTHS = [
+  'Ⲑⲱⲟⲩⲧ',
+  'Ⲡⲁⲟⲡⲓ',
+  'Ⲁⲑⲱⲣ',
+  'Ⲕⲟⲓⲁⲕ',
+  'Ⲧⲱⲃⲓ',
+  'Ⲙⲉϣⲓⲣ',
+  'Ⲡⲁⲣⲉⲙϩⲁⲧ',
+  'Ⲡⲁⲣⲉⲙⲟⲩⲇⲉ',
+  'Ⲡⲁϣⲟⲛⲥ',
+  'Ⲡⲁⲱⲛⲓ',
+  'Ⲉⲡⲓⲡ',
+  'Ⲙⲉⲥⲱⲣⲓ',
+  'Ⲛⲁⲥⲓⲉ',
+];
+
+const COPTIC_WEEKDAYS = [
+  'ⲧⲕⲩⲣⲓⲁⲕⲏ',
+  'ⲡⲉⲥⲛⲁⲩ',
+  'ⲡⲥⲟⲙⲉⲛⲧ',
+  'ⲡⲉϥⲧⲟⲟⲩ',
+  'ⲡⲓⲧⲟⲩ',
+  'ⲡⲓⲥⲟⲩ',
+  'ⲡⲥⲁⲃⲃⲁⲧⲟⲛ',
+];
+
+const BAHAI_MONTHS_AR = [
+  'بهاء',
+  'جلال',
+  'جمال',
+  'عظمة',
+  'نور',
+  'رحمة',
+  'كلمات',
+  'كمال',
+  'أسماء',
+  'عزة',
+  'مشية',
+  'علم',
+  'قدرة',
+  'قول',
+  'مسائل',
+  'شرف',
+  'سلطان',
+  'ملك',
+  'أيام الهاء',
+  'علاء',
+];
+
 function toArabicDigits(value: number): string {
   return String(value)
     .split('')
@@ -202,6 +282,12 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
       return 'chinese';
     case 'soviet':
       return 'cyrillic';
+    case 'ethiopian':
+      return 'ethiopic';
+    case 'coptic':
+      return 'coptic';
+    case 'bahai':
+      return 'arabic';
     default:
       return 'latin';
   }
@@ -246,11 +332,13 @@ export function formatIndianCivilEnglish(calendar: IndianCivilCalendar): string 
 export function formatChineseNative(calendar: ChineseCalendar): string {
   const month = CHINESE_MONTHS[calendar.month - 1] ?? '';
   const monthLabel = calendar.isLeapMonth ? `闰${month}` : month;
-  return `${calendar.year}年${monthLabel}${calendar.day}日`;
+  const pillar = ChineseCalendar.YearPillar(calendar.year);
+  return `${calendar.year}年${pillar.sexagenary}${pillar.zodiac}年${monthLabel}${calendar.day}日`;
 }
 
 export function formatChineseEnglish(calendar: ChineseCalendar): string {
-  return calendar.getDate();
+  const pillar = ChineseCalendar.YearPillar(calendar.year);
+  return `${calendar.day} ${calendar.getMonthName()}, ${calendar.year} (Year of the ${pillar.zodiacEnglish}, ${pillar.sexagenaryPinyin})`;
 }
 
 export function formatSovietNative(calendar: SovietCalendar): string {
@@ -263,6 +351,33 @@ export function formatSovietNative(calendar: SovietCalendar): string {
 }
 
 export function formatSovietEnglish(calendar: SovietCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatEthiopianNative(calendar: EthiopianCalendar): string {
+  const month = ETHIOPIAN_MONTHS[calendar.month - 1] ?? '';
+  return `${calendar.day} ${month} ${calendar.year}`;
+}
+
+export function formatEthiopianEnglish(calendar: EthiopianCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatCopticNative(calendar: CopticCalendar): string {
+  const month = COPTIC_MONTHS[calendar.month - 1] ?? '';
+  return `${calendar.day} ${month} ${calendar.year}`;
+}
+
+export function formatCopticEnglish(calendar: CopticCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatBahaiNative(calendar: BahaiCalendar): string {
+  const month = BAHAI_MONTHS_AR[calendar.month - 1] ?? '';
+  return `${toArabicDigits(calendar.day)} ${month} ${toArabicDigits(calendar.year)}`;
+}
+
+export function formatBahaiEnglish(calendar: BahaiCalendar): string {
   return calendar.getDate();
 }
 
@@ -288,6 +403,12 @@ export function nativeWeekday(
       return CHINESE_WEEKDAYS[weekdayIndex];
     case 'soviet':
       return SOVIET_WEEKDAYS[weekdayIndex];
+    case 'ethiopian':
+      return ETHIOPIAN_WEEKDAYS[weekdayIndex];
+    case 'coptic':
+      return COPTIC_WEEKDAYS[weekdayIndex];
+    case 'bahai':
+      return ISLAMIC_WEEKDAYS_AR[weekdayIndex];
     default:
       return undefined;
   }

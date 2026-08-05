@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import type { GregorianCalendar } from '../lib/calendarRegistry';
 import type { CalendarId } from '../lib/calendarRegistry';
+import type { AppSettings } from '../lib/appSettings';
 import {
   clampPickerValues,
   extractPickerValues,
@@ -8,6 +9,7 @@ import {
   getPickerFields,
   PICKER_CALENDAR_OPTIONS,
   pickerValuesToGregorian,
+  type PickerContext,
   type PickerFieldDef,
   type PickerValues,
 } from '../lib/datePickerConfig';
@@ -16,8 +18,13 @@ import type { GregorianEra } from '../lib/gregorianDate';
 interface DatePickerModalProps {
   open: boolean;
   anchor: GregorianCalendar;
+  settings: AppSettings;
   onClose: () => void;
   onApply: (date: GregorianCalendar) => void;
+}
+
+function pickerContextFromSettings(settings: AppSettings): PickerContext {
+  return { islamicCalendarMode: settings.islamicCalendarMode };
 }
 
 function CalendarSearchSelect({
@@ -174,13 +181,14 @@ function PickerField({
   );
 }
 
-export function DatePickerModal({ open, anchor, onClose, onApply }: DatePickerModalProps) {
+export function DatePickerModal({ open, anchor, settings, onClose, onApply }: DatePickerModalProps) {
   const titleId = useId();
   const [calendarId, setCalendarId] = useState<CalendarId>('gregorian');
   const [values, setValues] = useState<PickerValues>({});
   const [error, setError] = useState<string | null>(null);
+  const pickerContext = useMemo(() => pickerContextFromSettings(settings), [settings]);
 
-  const fields = useMemo(() => getPickerFields(calendarId), [calendarId]);
+  const fields = useMemo(() => getPickerFields(calendarId, pickerContext), [calendarId, pickerContext]);
 
   useEffect(() => {
     if (!open) {
@@ -188,23 +196,23 @@ export function DatePickerModal({ open, anchor, onClose, onApply }: DatePickerMo
     }
 
     setCalendarId('gregorian');
-    setValues(extractPickerValues('gregorian', anchor));
+    setValues(extractPickerValues('gregorian', anchor, pickerContext));
     setError(null);
-  }, [open, anchor]);
+  }, [open, anchor, pickerContext]);
 
   const handleCalendarChange = (nextCalendarId: CalendarId) => {
     setCalendarId(nextCalendarId);
-    setValues(clampPickerValues(nextCalendarId, extractPickerValues(nextCalendarId, anchor)));
+    setValues(clampPickerValues(nextCalendarId, extractPickerValues(nextCalendarId, anchor, pickerContext), pickerContext));
     setError(null);
   };
 
   const handleValueChange = (key: string, value: string) => {
-    setValues((current) => clampPickerValues(calendarId, { ...current, [key]: value }));
+    setValues((current) => clampPickerValues(calendarId, { ...current, [key]: value }, pickerContext));
     setError(null);
   };
 
   const handleApply = () => {
-    const next = pickerValuesToGregorian(calendarId, values);
+    const next = pickerValuesToGregorian(calendarId, values, pickerContext);
     if (!next) {
       setError('That date is not valid for the chosen calendar.');
       return;

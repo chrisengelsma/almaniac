@@ -20,6 +20,8 @@ const SCRIPT_CLASS: Record<CalendarRowData['entry']['scriptFont'], string> = {
   devanagari: '',
   chinese: '',
   cyrillic: '',
+  ethiopic: '',
+  coptic: '',
 };
 
 const SCRIPT_STYLE: Record<CalendarRowData['entry']['scriptFont'], string | undefined> = {
@@ -29,6 +31,8 @@ const SCRIPT_STYLE: Record<CalendarRowData['entry']['scriptFont'], string | unde
   devanagari: SCRIPT_FONTS.devanagari,
   chinese: SCRIPT_FONTS.chinese,
   cyrillic: SCRIPT_FONTS.cyrillic,
+  ethiopic: SCRIPT_FONTS.ethiopic,
+  coptic: SCRIPT_FONTS.coptic,
 };
 
 export function CalendarRow({ row, onInfoClick }: CalendarRowProps) {

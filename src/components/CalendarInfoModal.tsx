@@ -27,8 +27,9 @@ function CalendarTypeIcon({ type }: { type: CalendarSystemType }) {
   if (type === 'lunisolar') {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="8" cy="12" r="4.5" />
-        <path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5Z" />
+        <circle cx="7" cy="12" r="3" />
+        <path d="M7 6.25v1.75M7 15v1.75M3.25 12H2.25" />
+        <path d="M18.25 14.75A5 5 0 0 1 13.25 8 4 4 0 1 0 18.25 14.75Z" />
       </svg>
     );
   }

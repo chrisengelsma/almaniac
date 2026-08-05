@@ -1,22 +1,32 @@
 import {
   type Calendar,
+  BahaiCalendar,
   ChineseCalendar,
+  CopticCalendar,
+  EthiopianCalendar,
   FrenchRepublicanCalendar,
   GregorianCalendar,
   HebrewCalendar,
   IndianCivilCalendar,
   IslamicCalendar,
+  IslamicCalendarMode,
   JulianCalendar,
   MayaCalendar,
   PersianCalendar,
   SovietCalendar,
 } from 'calendar-converter/calendars';
-import { toJulianDay } from 'calendar-converter/services';
+import { toIslamicCalendar, toJulianDay } from 'calendar-converter/services';
 import type { MayaLongCountParts } from '../components/MayaLongCount';
 import type { AppSettings } from './appSettings';
 import {
   formatChineseEnglish,
   formatChineseNative,
+  formatCopticEnglish,
+  formatCopticNative,
+  formatEthiopianEnglish,
+  formatEthiopianNative,
+  formatBahaiEnglish,
+  formatBahaiNative,
   formatHebrewEnglish,
   formatHebrewNative,
   formatIndianCivilEnglish,
@@ -36,6 +46,8 @@ import { CALENDAR_NAMES } from '../theme/calendarTheme';
 export type CalendarId =
   | 'gregorian'
   | 'julian'
+  | 'ethiopian'
+  | 'coptic'
   | 'chinese'
   | 'soviet'
   | 'frc'
@@ -43,6 +55,7 @@ export type CalendarId =
   | 'islamic'
   | 'hebrew'
   | 'persian'
+  | 'bahai'
   | 'indianCivil'
   | 'julianDay';
 
@@ -59,6 +72,8 @@ export interface CalendarEntry {
 export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'gregorian',
   'julian',
+  'ethiopian',
+  'coptic',
   'chinese',
   'soviet',
   'frc',
@@ -66,6 +81,7 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'islamic',
   'hebrew',
   'persian',
+  'bahai',
   'indianCivil',
   'julianDay',
 ];
@@ -73,6 +89,8 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
 const CALENDAR_LABELS: Record<CalendarId, string> = {
   gregorian: 'Gregorian',
   julian: 'Julian',
+  ethiopian: 'Ethiopian',
+  coptic: 'Coptic',
   chinese: 'Chinese',
   soviet: 'Soviet',
   frc: 'FRC',
@@ -80,9 +98,20 @@ const CALENDAR_LABELS: Record<CalendarId, string> = {
   islamic: 'Islamic',
   hebrew: 'Hebrew',
   persian: 'Persian',
+  bahai: 'Baháʼí',
   indianCivil: 'Indian Civil',
   julianDay: 'Julian Day',
 };
+
+function islamicCalendarMode(settings: AppSettings): IslamicCalendarMode {
+  return settings.islamicCalendarMode === 'ummAlQura'
+    ? IslamicCalendarMode.UmmAlQura
+    : IslamicCalendarMode.Tabular;
+}
+
+function buildIslamicCalendar(anchor: GregorianCalendar, settings: AppSettings): IslamicCalendar {
+  return toIslamicCalendar(anchor, islamicCalendarMode(settings));
+}
 
 function getWeekday(calendar: Calendar, anchor: GregorianCalendar): string {
   if ('getWeekDay' in calendar && typeof calendar.getWeekDay === 'function') {
@@ -91,12 +120,16 @@ function getWeekday(calendar: Calendar, anchor: GregorianCalendar): string {
   return new GregorianCalendar(anchor).getWeekDay();
 }
 
-function buildCalendar(id: CalendarId, anchor: GregorianCalendar): Calendar {
+function buildCalendar(id: CalendarId, anchor: GregorianCalendar, settings: AppSettings): Calendar {
   switch (id) {
     case 'gregorian':
       return new GregorianCalendar(anchor);
     case 'julian':
       return new JulianCalendar(anchor);
+    case 'ethiopian':
+      return new EthiopianCalendar(anchor);
+    case 'coptic':
+      return new CopticCalendar(anchor);
     case 'chinese':
       return new ChineseCalendar(anchor);
     case 'soviet':
@@ -106,11 +139,13 @@ function buildCalendar(id: CalendarId, anchor: GregorianCalendar): Calendar {
     case 'maya':
       return new MayaCalendar(anchor);
     case 'islamic':
-      return new IslamicCalendar(anchor);
+      return buildIslamicCalendar(anchor, settings);
     case 'hebrew':
       return new HebrewCalendar(anchor);
     case 'persian':
       return new PersianCalendar(anchor);
+    case 'bahai':
+      return new BahaiCalendar(anchor);
     case 'indianCivil':
       return new IndianCivilCalendar(anchor);
     case 'julianDay':
@@ -125,7 +160,14 @@ function applyIslamicAdjustment(calendar: IslamicCalendar, adjustment: number): 
     return calendar;
   }
 
-  const adjusted = new IslamicCalendar(calendar.year, calendar.month, calendar.day);
+  const adjusted = new IslamicCalendar(
+    calendar.year,
+    calendar.month,
+    calendar.day,
+    calendar.calendarType,
+    calendar.leapYearRule,
+    calendar.calendarMode,
+  );
   if (adjustment > 0) {
     adjusted.addDays(adjustment);
   } else {
@@ -153,6 +195,12 @@ function formatDate(
         return formatChineseEnglish(calendar as ChineseCalendar);
       case 'soviet':
         return formatSovietEnglish(calendar as SovietCalendar);
+      case 'ethiopian':
+        return formatEthiopianEnglish(calendar as EthiopianCalendar);
+      case 'coptic':
+        return formatCopticEnglish(calendar as CopticCalendar);
+      case 'bahai':
+        return formatBahaiEnglish(calendar as BahaiCalendar);
       default:
         return calendar.getDate();
     }
@@ -171,6 +219,12 @@ function formatDate(
       return formatChineseNative(calendar as ChineseCalendar);
     case 'soviet':
       return formatSovietNative(calendar as SovietCalendar);
+    case 'ethiopian':
+      return formatEthiopianNative(calendar as EthiopianCalendar);
+    case 'coptic':
+      return formatCopticNative(calendar as CopticCalendar);
+    case 'bahai':
+      return formatBahaiNative(calendar as BahaiCalendar);
     default:
       return calendar.getDate();
   }
@@ -181,7 +235,7 @@ function buildCalendarEntry(
   anchor: GregorianCalendar,
   settings: AppSettings,
 ): CalendarEntry {
-  let calendar = buildCalendar(id, anchor);
+  let calendar = buildCalendar(id, anchor, settings);
 
   if (id === 'islamic') {
     calendar = applyIslamicAdjustment(

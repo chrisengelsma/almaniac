@@ -2,10 +2,12 @@ import type { CalendarId } from './calendarRegistry';
 import { DEFAULT_CALENDAR_ORDER } from './calendarRegistry';
 
 export type IslamicDayAdjustment = -1 | 0 | 1;
+export type IslamicCalendarMode = 'tabular' | 'ummAlQura';
 
 export interface AppSettings {
   visibleCalendars: Record<CalendarId, boolean>;
   transliterateToEnglish: boolean;
+  islamicCalendarMode: IslamicCalendarMode;
   islamicDayAdjustment: IslamicDayAdjustment;
   showChristianHolidays: boolean;
   showJewishHolidays: boolean;
@@ -28,6 +30,7 @@ export function defaultAppSettings(): AppSettings {
   return {
     visibleCalendars: defaultVisibility(),
     transliterateToEnglish: false,
+    islamicCalendarMode: 'tabular',
     islamicDayAdjustment: 0,
     showChristianHolidays: true,
     showJewishHolidays: true,
@@ -48,6 +51,7 @@ export function loadAppSettings(): AppSettings {
     return {
       visibleCalendars: { ...defaults.visibleCalendars, ...parsed.visibleCalendars },
       transliterateToEnglish: parsed.transliterateToEnglish ?? defaults.transliterateToEnglish,
+      islamicCalendarMode: parsed.islamicCalendarMode ?? defaults.islamicCalendarMode,
       islamicDayAdjustment: parsed.islamicDayAdjustment ?? defaults.islamicDayAdjustment,
       showChristianHolidays: parsed.showChristianHolidays ?? defaults.showChristianHolidays,
       showJewishHolidays: parsed.showJewishHolidays ?? defaults.showJewishHolidays,
@@ -80,6 +84,13 @@ export function setTransliterateToEnglish(
   value: boolean,
 ): AppSettings {
   return { ...settings, transliterateToEnglish: value };
+}
+
+export function setIslamicCalendarMode(
+  settings: AppSettings,
+  value: IslamicCalendarMode,
+): AppSettings {
+  return { ...settings, islamicCalendarMode: value };
 }
 
 export function setIslamicDayAdjustment(

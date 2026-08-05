@@ -2,8 +2,10 @@ import {
   GregorianCalendar,
   HebrewCalendar,
   IslamicCalendar,
+  IslamicCalendarMode,
 } from 'calendar-converter/calendars';
-import type { IslamicDayAdjustment } from './appSettings';
+import { toIslamicCalendar } from 'calendar-converter/services';
+import type { IslamicCalendarMode as AppIslamicCalendarMode, IslamicDayAdjustment } from './appSettings';
 
 export type HolidayTradition = 'christian' | 'jewish' | 'islamic';
 
@@ -16,6 +18,7 @@ export interface HolidaySettings {
   showChristianHolidays: boolean;
   showJewishHolidays: boolean;
   showIslamicHolidays: boolean;
+  islamicCalendarMode: AppIslamicCalendarMode;
   islamicDayAdjustment: IslamicDayAdjustment;
 }
 
@@ -101,10 +104,14 @@ function isWithinIslamicMonth(islamic: IslamicCalendar, month: number): boolean 
 
 function buildContext(
   anchor: GregorianCalendar,
+  islamicCalendarMode: AppIslamicCalendarMode,
   islamicDayAdjustment: IslamicDayAdjustment,
 ): HolidayContext {
+  const mode = islamicCalendarMode === 'ummAlQura'
+    ? IslamicCalendarMode.UmmAlQura
+    : IslamicCalendarMode.Tabular;
   const hebrew = new HebrewCalendar(anchor);
-  const islamic = new IslamicCalendar(anchor);
+  const islamic = toIslamicCalendar(anchor, mode);
 
   if (islamicDayAdjustment !== 0) {
     if (islamicDayAdjustment > 0) {
@@ -239,7 +246,11 @@ export function getReligiousHolidays(
   anchor: GregorianCalendar,
   settings: HolidaySettings,
 ): ReligiousHoliday[] {
-  const context = buildContext(anchor, settings.islamicDayAdjustment);
+  const context = buildContext(
+    anchor,
+    settings.islamicCalendarMode,
+    settings.islamicDayAdjustment,
+  );
 
   return collectHolidays(context).filter((holiday) => {
     if (holiday.tradition === 'christian') {
