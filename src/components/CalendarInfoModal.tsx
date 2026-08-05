@@ -1,19 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import {
   CALENDAR_INFO,
   CALENDAR_TYPE_LABELS,
   type CalendarSystemType,
 } from '../data/calendarInfo';
 import type { CalendarId } from '../lib/calendarRegistry';
+import { getBannerAttribution } from '../data/imageAttributions';
+import { CALENDAR_BANNERS } from '../theme/calendarBanners';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
+import { BannerAttribution } from './BannerAttribution';
+import { GregorianMapSection } from './GregorianMapSection';
+import { JulianMapSection } from './JulianMapSection';
 import { WorldUsageMap } from './WorldUsageMap';
 
 interface CalendarInfoModalProps {
   calendarId: CalendarId | null;
   onClose: () => void;
+  onAboutOpen: () => void;
 }
 
-const MODAL_TRANSITION_MS = 280;
+const MODAL_TRANSITION_MS = 300;
 
 function CalendarTypeIcon({ type }: { type: CalendarSystemType }) {
   if (type === 'lunar') {
@@ -60,22 +67,41 @@ function CalendarTypeIcon({ type }: { type: CalendarSystemType }) {
   );
 }
 
-export function CalendarInfoModal({ calendarId, onClose }: CalendarInfoModalProps) {
+export function CalendarInfoModal({ calendarId, onClose, onAboutOpen }: CalendarInfoModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const openFrameRef = useRef<number | null>(null);
   const [renderedId, setRenderedId] = useState<CalendarId | null>(null);
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    if (calendarId) {
-      setRenderedId(calendarId);
-      const frame = window.requestAnimationFrame(() => {
-        setVisible(true);
-      });
-      return () => window.cancelAnimationFrame(frame);
+  useLayoutEffect(() => {
+    if (openFrameRef.current !== null) {
+      window.cancelAnimationFrame(openFrameRef.current);
+      openFrameRef.current = null;
     }
 
-    setVisible(false);
+    if (!calendarId) {
+      setVisible(false);
+      return;
+    }
+
+    flushSync(() => {
+      setRenderedId(calendarId);
+      setVisible(false);
+    });
+
+    openFrameRef.current = window.requestAnimationFrame(() => {
+      openFrameRef.current = null;
+      setVisible(true);
+    });
   }, [calendarId]);
+
+  useEffect(() => {
+    return () => {
+      if (openFrameRef.current !== null) {
+        window.cancelAnimationFrame(openFrameRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (visible || !renderedId || calendarId) {
@@ -120,6 +146,8 @@ export function CalendarInfoModal({ calendarId, onClose }: CalendarInfoModalProp
 
   const info = CALENDAR_INFO[renderedId];
   const title = CALENDAR_NAMES[renderedId];
+  const bannerSrc = CALENDAR_BANNERS[renderedId];
+  const bannerAttribution = getBannerAttribution(renderedId);
 
   return (
     <div className={`info-modal${visible ? ' info-modal--visible' : ''}`} role="presentation">
@@ -131,9 +159,21 @@ export function CalendarInfoModal({ calendarId, onClose }: CalendarInfoModalProp
         aria-labelledby="calendar-info-title"
       >
         <div className="info-modal__hero">
-          <div className="info-modal__hero-placeholder" aria-hidden="true">
-            <span>Image coming soon</span>
-          </div>
+          {bannerSrc ? (
+            <img
+              className="info-modal__hero-image"
+              src={bannerSrc}
+              alt=""
+              aria-hidden="true"
+            />
+          ) : (
+            <div className="info-modal__hero-placeholder" aria-hidden="true">
+              <span>Image coming soon</span>
+            </div>
+          )}
+          {bannerAttribution ? (
+            <BannerAttribution onAboutOpen={onAboutOpen} />
+          ) : null}
           <button
             ref={closeButtonRef}
             type="button"
@@ -170,15 +210,21 @@ export function CalendarInfoModal({ calendarId, onClose }: CalendarInfoModalProp
 
           <p className="info-modal__history">{info.history}</p>
 
-          <section className="info-modal__map-section" aria-label="Geographic usage">
-            <h3>Where it is used</h3>
-            <WorldUsageMap highlighted={info.mapCountries} />
-            <ul className="info-modal__countries">
-              {info.usedIn.map((place) => (
-                <li key={place}>{place}</li>
-              ))}
-            </ul>
-          </section>
+          {renderedId === 'gregorian' ? (
+            <GregorianMapSection info={info} />
+          ) : renderedId === 'julian' ? (
+            <JulianMapSection info={info} />
+          ) : (
+            <section className="info-modal__map-section" aria-label="Geographic usage">
+              <h3>Where it is used</h3>
+              <WorldUsageMap highlighted={info.mapCountries} />
+              <ul className="info-modal__countries">
+                {info.usedIn.map((place) => (
+                  <li key={place}>{place}</li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { syncWidgetData } from './lib/widgetData';
+import { AboutModal } from './components/AboutModal';
 import { DonateModal } from './components/DonateModal';
 import { CalendarInfoModal } from './components/CalendarInfoModal';
 import { CalendarList } from './components/CalendarList';
@@ -35,6 +36,7 @@ function App() {
   const [settings, setSettings] = useState<AppSettings>(() => loadAppSettings());
   const [sheetOpen, setSheetOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [infoCalendarId, setInfoCalendarId] = useState<CalendarId | null>(null);
 
@@ -77,6 +79,7 @@ function App() {
     <div className="app">
       <TopBar
         onDonateOpen={() => setDonateOpen(true)}
+        onAboutOpen={() => setAboutOpen(true)}
         onCustomizeOpen={() => setSheetOpen(true)}
         onDateClick={() => setDatePickerOpen(true)}
         onBack30={() => setAnchor((current) => shiftGregorianDate(current, -30))}
@@ -116,7 +119,15 @@ function App() {
         onInfoClick={setInfoCalendarId}
       />
       <DonateModal open={donateOpen} onClose={() => setDonateOpen(false)} />
-      <CalendarInfoModal calendarId={infoCalendarId} onClose={() => setInfoCalendarId(null)} />
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
+      <CalendarInfoModal
+        calendarId={infoCalendarId}
+        onClose={() => setInfoCalendarId(null)}
+        onAboutOpen={() => {
+          setInfoCalendarId(null);
+          setAboutOpen(true);
+        }}
+      />
       <DatePickerModal
         open={datePickerOpen}
         anchor={anchor}

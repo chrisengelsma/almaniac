@@ -7,6 +7,7 @@
   --almanac-text-muted: #546e7a;
   --almanac-teal: #00897b;
   --almanac-divider: rgba(38, 50, 56, 0.18);
+  --top-bar-height: 7rem;
 
   color: var(--almanac-text);
   background: var(--almanac-bg-deep);
