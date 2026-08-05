@@ -5,7 +5,7 @@ import { DonateModal } from './components/DonateModal';
 import { CalendarInfoModal } from './components/CalendarInfoModal';
 import { CalendarList } from './components/CalendarList';
 import { DatePickerModal } from './components/DatePickerModal';
-import { HolidayBanner } from './components/HolidayBanner';
+import { FullscreenDateView } from './components/FullscreenDateView';
 import { SettingsSheet } from './components/SettingsSheet';
 import { TopBar } from './components/TopBar';
 import {
@@ -13,21 +13,24 @@ import {
   saveAppSettings,
   setIslamicCalendarMode,
   setIslamicDayAdjustment,
-  setShowChristianHolidays,
-  setShowIslamicHolidays,
-  setShowJewishHolidays,
+  setColorTheme,
   setTransliterateToEnglish,
+  setUseModifiedJulianDay,
   toggleCalendarVisibility,
+  toggleColorScheme,
   type AppSettings,
 } from './lib/appSettings';
 import {
   DEFAULT_CALENDAR_ORDER,
+  getOrderedCalendarRows,
   shiftGregorianDate,
   todayGregorianDate,
   type CalendarId,
+  type CalendarRowData,
   type GregorianCalendar,
 } from './lib/calendarRegistry';
-import { getReligiousHolidays } from './lib/religiousHolidays';
+import { viewportRectFromDom, type ViewportRect } from './lib/fullscreenRect';
+import { useDocumentTheme } from './hooks/useDocumentTheme';
 import './App.css';
 
 function App() {
@@ -39,18 +42,29 @@ function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [infoCalendarId, setInfoCalendarId] = useState<CalendarId | null>(null);
+  const [fullscreen, setFullscreen] = useState<{
+    row: CalendarRowData;
+    originRect: ViewportRect;
+    textOriginRect: ViewportRect;
+  } | null>(null);
 
-  const holidays = useMemo(
-    () =>
-      getReligiousHolidays(anchor, {
-        showChristianHolidays: settings.showChristianHolidays,
-        showJewishHolidays: settings.showJewishHolidays,
-        showIslamicHolidays: settings.showIslamicHolidays,
-        islamicDayAdjustment: settings.islamicDayAdjustment,
-        islamicCalendarMode: settings.islamicCalendarMode,
-      }),
-    [anchor, settings],
+  const rows = useMemo(
+    () => getOrderedCalendarRows(order, anchor, settings),
+    [order, anchor, settings],
   );
+
+  const activeFullscreen = useMemo(() => {
+    if (!fullscreen) {
+      return null;
+    }
+
+    const row = rows.find((item) => item.entry.id === fullscreen.row.entry.id) ?? fullscreen.row;
+    return {
+      row,
+      originRect: fullscreen.originRect,
+      textOriginRect: fullscreen.textOriginRect,
+    };
+  }, [fullscreen, rows]);
 
   useEffect(() => {
     saveAppSettings(settings);
@@ -75,11 +89,12 @@ function App() {
     setSettings((current) => updater(current));
   };
 
+  useDocumentTheme(settings);
+
   return (
-    <div className="app">
+    <div className="app" data-color-scheme={settings.colorScheme} data-color-theme={settings.colorTheme}>
       <TopBar
         onDonateOpen={() => setDonateOpen(true)}
-        onAboutOpen={() => setAboutOpen(true)}
         onCustomizeOpen={() => setSheetOpen(true)}
         onDateClick={() => setDatePickerOpen(true)}
         onBack30={() => setAnchor((current) => shiftGregorianDate(current, -30))}
@@ -88,11 +103,12 @@ function App() {
         onForward1={() => setAnchor((current) => shiftGregorianDate(current, 1))}
         onForward30={() => setAnchor((current) => shiftGregorianDate(current, 30))}
       />
-      <HolidayBanner holidays={holidays} />
       <SettingsSheet
         open={sheetOpen}
         settings={settings}
         onClose={() => setSheetOpen(false)}
+        onColorSchemeToggle={() => updateSettings((current) => toggleColorScheme(current))}
+        onColorThemeChange={(value) => updateSettings((current) => setColorTheme(current, value))}
         onToggleCalendar={(id) => updateSettings((current) => toggleCalendarVisibility(current, id))}
         onTransliterateChange={(value) => updateSettings((current) => setTransliterateToEnglish(current, value))}
         onIslamicCalendarModeChange={(value) =>
@@ -101,15 +117,10 @@ function App() {
         onIslamicAdjustmentChange={(value) =>
           updateSettings((current) => setIslamicDayAdjustment(current, value))
         }
-        onChristianHolidaysChange={(value) =>
-          updateSettings((current) => setShowChristianHolidays(current, value))
+        onUseModifiedJulianDayChange={(value) =>
+          updateSettings((current) => setUseModifiedJulianDay(current, value))
         }
-        onJewishHolidaysChange={(value) =>
-          updateSettings((current) => setShowJewishHolidays(current, value))
-        }
-        onIslamicHolidaysChange={(value) =>
-          updateSettings((current) => setShowIslamicHolidays(current, value))
-        }
+        onAboutOpen={() => setAboutOpen(true)}
       />
       <CalendarList
         order={order}
@@ -117,11 +128,20 @@ function App() {
         settings={settings}
         onReorder={setOrder}
         onInfoClick={setInfoCalendarId}
+        onFullscreen={(row, originRect, textOriginRect) =>
+          setFullscreen({
+            row,
+            originRect: viewportRectFromDom(originRect),
+            textOriginRect: viewportRectFromDom(textOriginRect),
+          })
+        }
+        fullscreenCalendarId={activeFullscreen?.row.entry.id ?? null}
       />
       <DonateModal open={donateOpen} onClose={() => setDonateOpen(false)} />
       <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
       <CalendarInfoModal
         calendarId={infoCalendarId}
+        settings={settings}
         onClose={() => setInfoCalendarId(null)}
         onAboutOpen={() => {
           setInfoCalendarId(null);
@@ -135,6 +155,16 @@ function App() {
         onApply={setAnchor}
         settings={settings}
       />
+      {activeFullscreen ? (
+        <FullscreenDateView
+          row={activeFullscreen.row}
+          originRect={activeFullscreen.originRect}
+          textOriginRect={activeFullscreen.textOriginRect}
+          colorScheme={settings.colorScheme}
+          colorTheme={settings.colorTheme}
+          onClose={() => setFullscreen(null)}
+        />
+      ) : null}
     </div>
   );
 }

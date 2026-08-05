@@ -24,7 +24,10 @@ interface DatePickerModalProps {
 }
 
 function pickerContextFromSettings(settings: AppSettings): PickerContext {
-  return { islamicCalendarMode: settings.islamicCalendarMode };
+  return {
+    islamicCalendarMode: settings.islamicCalendarMode,
+    useModifiedJulianDay: settings.useModifiedJulianDay,
+  };
 }
 
 function CalendarSearchSelect({

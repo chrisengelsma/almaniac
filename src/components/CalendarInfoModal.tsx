@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
 import {
   CALENDAR_INFO,
   CALENDAR_TYPE_LABELS,
@@ -9,6 +8,8 @@ import type { CalendarId } from '../lib/calendarRegistry';
 import { getBannerAttribution } from '../data/imageAttributions';
 import { CALENDAR_BANNERS } from '../theme/calendarBanners';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
+import type { AppSettings } from '../lib/appSettings';
+import { calendarColorContext, getCalendarMapColors } from '../theme/calendarColors';
 import { BannerAttribution } from './BannerAttribution';
 import { GregorianMapSection } from './GregorianMapSection';
 import { JulianMapSection } from './JulianMapSection';
@@ -16,11 +17,57 @@ import { WorldUsageMap } from './WorldUsageMap';
 
 interface CalendarInfoModalProps {
   calendarId: CalendarId | null;
+  settings: AppSettings;
   onClose: () => void;
   onAboutOpen: () => void;
 }
 
 const MODAL_TRANSITION_MS = 300;
+
+interface CalendarBannerImageProps {
+  src: string;
+  active: boolean;
+}
+
+function CalendarBannerImage({ src, active }: CalendarBannerImageProps) {
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoadedSrc(null);
+
+    if (!active) {
+      return;
+    }
+
+    const image = new Image();
+    image.decoding = 'async';
+    image.onload = () => setLoadedSrc(src);
+    image.onerror = () => setLoadedSrc(null);
+    image.src = src;
+
+    return () => {
+      image.onload = null;
+      image.onerror = null;
+    };
+  }, [active, src]);
+
+  if (loadedSrc) {
+    return (
+      <img
+        className="info-modal__hero-image info-modal__hero-image--loaded"
+        src={loadedSrc}
+        alt=""
+        decoding="async"
+      />
+    );
+  }
+
+  return (
+    <div className="info-modal__hero-placeholder" aria-hidden="true">
+      <span>Loading banner…</span>
+    </div>
+  );
+}
 
 function CalendarTypeIcon({ type }: { type: CalendarSystemType }) {
   if (type === 'lunar') {
@@ -67,7 +114,7 @@ function CalendarTypeIcon({ type }: { type: CalendarSystemType }) {
   );
 }
 
-export function CalendarInfoModal({ calendarId, onClose, onAboutOpen }: CalendarInfoModalProps) {
+export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }: CalendarInfoModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const openFrameRef = useRef<number | null>(null);
   const [renderedId, setRenderedId] = useState<CalendarId | null>(null);
@@ -84,10 +131,8 @@ export function CalendarInfoModal({ calendarId, onClose, onAboutOpen }: Calendar
       return;
     }
 
-    flushSync(() => {
-      setRenderedId(calendarId);
-      setVisible(false);
-    });
+    setRenderedId(calendarId);
+    setVisible(false);
 
     openFrameRef.current = window.requestAnimationFrame(() => {
       openFrameRef.current = null;
@@ -148,6 +193,7 @@ export function CalendarInfoModal({ calendarId, onClose, onAboutOpen }: Calendar
   const title = CALENDAR_NAMES[renderedId];
   const bannerSrc = CALENDAR_BANNERS[renderedId];
   const bannerAttribution = getBannerAttribution(renderedId);
+  const mapColors = getCalendarMapColors(renderedId, calendarColorContext(settings));
 
   return (
     <div className={`info-modal${visible ? ' info-modal--visible' : ''}`} role="presentation">
@@ -160,19 +206,14 @@ export function CalendarInfoModal({ calendarId, onClose, onAboutOpen }: Calendar
       >
         <div className="info-modal__hero">
           {bannerSrc ? (
-            <img
-              className="info-modal__hero-image"
-              src={bannerSrc}
-              alt=""
-              aria-hidden="true"
-            />
+            <CalendarBannerImage src={bannerSrc} active={visible} />
           ) : (
             <div className="info-modal__hero-placeholder" aria-hidden="true">
               <span>Image coming soon</span>
             </div>
           )}
           {bannerAttribution ? (
-            <BannerAttribution onAboutOpen={onAboutOpen} />
+            <BannerAttribution subjects={bannerAttribution.subjects} onAboutOpen={onAboutOpen} />
           ) : null}
           <button
             ref={closeButtonRef}
@@ -211,13 +252,18 @@ export function CalendarInfoModal({ calendarId, onClose, onAboutOpen }: Calendar
           <p className="info-modal__history">{info.history}</p>
 
           {renderedId === 'gregorian' ? (
-            <GregorianMapSection info={info} />
+            <GregorianMapSection info={info} mapColors={mapColors} />
           ) : renderedId === 'julian' ? (
-            <JulianMapSection info={info} />
+            <JulianMapSection info={info} mapColors={mapColors} />
           ) : (
             <section className="info-modal__map-section" aria-label="Geographic usage">
               <h3>Where it is used</h3>
-              <WorldUsageMap highlighted={info.mapCountries} />
+              <WorldUsageMap
+                highlighted={info.mapCountries}
+                backgroundColor={mapColors.background}
+                strokeColor={mapColors.stroke}
+                fillColor={mapColors.fill}
+              />
               <ul className="info-modal__countries">
                 {info.usedIn.map((place) => (
                   <li key={place}>{place}</li>

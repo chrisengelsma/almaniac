@@ -1,10 +1,10 @@
-package app.engelsma.almanac;
+package app.engelsma.almaniac;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
-import app.engelsma.almanac.widget.CalendarWidgetProvider;
-import app.engelsma.almanac.widget.WidgetConstants;
+import app.engelsma.almaniac.widget.CalendarWidgetProvider;
+import app.engelsma.almaniac.widget.WidgetConstants;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;

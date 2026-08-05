@@ -12,9 +12,10 @@ type MapTab = 'usage' | 'adoption';
 
 interface GregorianMapSectionProps {
   info: CalendarInfo;
+  mapColors: { background: string; stroke: string; fill: string };
 }
 
-export function GregorianMapSection({ info }: GregorianMapSectionProps) {
+export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProps) {
   const [activeTab, setActiveTab] = useState<MapTab>('usage');
   const [adoptionYearIndex, setAdoptionYearIndex] = useState(0);
   const adoptionYear = GREGORIAN_ADOPTION_EVENT_YEARS[adoptionYearIndex];
@@ -62,7 +63,12 @@ export function GregorianMapSection({ info }: GregorianMapSectionProps) {
           role="tabpanel"
           aria-labelledby="gregorian-map-tab-usage"
         >
-          <WorldUsageMap highlighted={info.mapCountries} />
+          <WorldUsageMap
+            highlighted={info.mapCountries}
+            backgroundColor={mapColors.background}
+            strokeColor={mapColors.stroke}
+            fillColor={mapColors.fill}
+          />
           <ul className="info-modal__countries">
             {info.usedIn.map((place) => (
               <li key={place}>{place}</li>
@@ -105,7 +111,12 @@ export function GregorianMapSection({ info }: GregorianMapSectionProps) {
             </p>
           </div>
 
-          <WorldUsageMap highlighted={adoptedCountries} />
+          <WorldUsageMap
+            highlighted={adoptedCountries}
+            backgroundColor={mapColors.background}
+            strokeColor={mapColors.stroke}
+            fillColor={mapColors.fill}
+          />
 
           <div className="adoption-slider__new">
             <h4>Adopted in {adoptionYear}</h4>

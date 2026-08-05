@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { copyTextToClipboard } from '../lib/copyText';
-import { ROW_BACKGROUNDS } from '../theme/calendarTheme';
-import { SCRIPT_FONTS } from '../theme/scriptFonts';
+import { calendarTextClassName, calendarTextStyle } from '../lib/calendarTextStyle';
 import type { CalendarRowData } from '../lib/calendarRegistry';
 import { DragHandle } from './DragHandle';
 import { MayaLongCount } from './MayaLongCount';
@@ -11,37 +10,18 @@ import { MayaLongCount } from './MayaLongCount';
 interface CalendarRowProps {
   row: CalendarRowData;
   onInfoClick: (id: CalendarRowData['entry']['id']) => void;
+  onFullscreen: (row: CalendarRowData, originRect: DOMRectReadOnly, textOriginRect: DOMRectReadOnly) => void;
+  isFullscreenSource?: boolean;
 }
 
-const SCRIPT_CLASS: Record<CalendarRowData['entry']['scriptFont'], string> = {
-  latin: '',
-  arabic: 'calendar-row__text--rtl',
-  hebrew: 'calendar-row__text--rtl',
-  devanagari: '',
-  chinese: '',
-  cyrillic: '',
-  ethiopic: '',
-  coptic: '',
-};
-
-const SCRIPT_STYLE: Record<CalendarRowData['entry']['scriptFont'], string | undefined> = {
-  latin: undefined,
-  arabic: SCRIPT_FONTS.arabic,
-  hebrew: SCRIPT_FONTS.hebrew,
-  devanagari: SCRIPT_FONTS.devanagari,
-  chinese: SCRIPT_FONTS.chinese,
-  cyrillic: SCRIPT_FONTS.cyrillic,
-  ethiopic: SCRIPT_FONTS.ethiopic,
-  coptic: SCRIPT_FONTS.coptic,
-};
-
-export function CalendarRow({ row, onInfoClick }: CalendarRowProps) {
+export function CalendarRow({ row, onInfoClick, onFullscreen, isFullscreenSource = false }: CalendarRowProps) {
   const { entry, visible } = row;
+  const rowRef = useRef<HTMLElement | null>(null);
   const [copied, setCopied] = useState(false);
-  const scriptClass = SCRIPT_CLASS[entry.scriptFont];
-  const scriptStyle = SCRIPT_STYLE[entry.scriptFont]
-    ? { fontFamily: SCRIPT_STYLE[entry.scriptFont] }
-    : undefined;
+  const scriptClass = calendarTextClassName(entry.scriptFont);
+  const scriptStyle = calendarTextStyle(entry.scriptFont);
+  const detailScriptClass = calendarTextClassName(entry.detailScriptFont ?? entry.scriptFont);
+  const detailScriptStyle = calendarTextStyle(entry.detailScriptFont ?? entry.scriptFont);
   const dateText = entry.date || '—';
   const canCopy = Boolean(entry.date && entry.date !== '—');
   const {
@@ -54,8 +34,9 @@ export function CalendarRow({ row, onInfoClick }: CalendarRowProps) {
     isDragging,
   } = useSortable({ id: entry.id, disabled: !visible });
 
-  const style = {
-    backgroundColor: ROW_BACKGROUNDS[entry.id],
+  const style: CSSProperties & { '--calendar-accent'?: string } = {
+    backgroundColor: row.backgroundColor,
+    '--calendar-accent': row.backgroundColor,
     transform: CSS.Transform.toString(transform),
     transition: isDragging ? transition : undefined,
   };
@@ -74,6 +55,17 @@ export function CalendarRow({ row, onInfoClick }: CalendarRowProps) {
     window.setTimeout(() => setCopied(false), 2200);
   };
 
+  const handleFullscreen = () => {
+    const element = rowRef.current;
+    if (!element) {
+      return;
+    }
+
+    const dateElement = element.querySelector('.calendar-row__date');
+    const textRect = dateElement?.getBoundingClientRect() ?? element.getBoundingClientRect();
+    onFullscreen(row, element.getBoundingClientRect(), textRect);
+  };
+
   return (
     <>
       {copied && (
@@ -82,12 +74,17 @@ export function CalendarRow({ row, onInfoClick }: CalendarRowProps) {
         </div>
       )}
       <article
-      ref={setNodeRef}
+      ref={(node) => {
+        rowRef.current = node;
+        setNodeRef(node);
+      }}
+      data-calendar-row={entry.id}
       style={style}
       className={[
         'calendar-row',
         visible ? 'calendar-row--visible' : 'calendar-row--hidden',
         isDragging ? 'calendar-row--dragging' : '',
+        isFullscreenSource ? 'calendar-row--fullscreen-source' : '',
       ]
         .filter(Boolean)
         .join(' ')}
@@ -120,11 +117,20 @@ export function CalendarRow({ row, onInfoClick }: CalendarRowProps) {
             </p>
           </div>
           <div className="calendar-row__meta">
-            <span className="calendar-row__weekday" style={scriptStyle}>
-              {entry.weekday}
-            </span>
+            {entry.weekday ? (
+              <span className="calendar-row__weekday" style={scriptStyle}>
+                {entry.weekday}
+              </span>
+            ) : null}
             <span className="calendar-row__calendar-name">{entry.calendarName}</span>
           </div>
+          {entry.detailLabel ? (
+            <div className="calendar-row__meta calendar-row__meta--bottom">
+              <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle}>
+                {entry.detailLabel}
+              </span>
+            </div>
+          ) : null}
           <div className="calendar-row__actions">
             <button
               type="button"
@@ -136,6 +142,17 @@ export function CalendarRow({ row, onInfoClick }: CalendarRowProps) {
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <rect x="8" y="8" width="12" height="14" rx="1.5" />
                 <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="calendar-row__action"
+              aria-label={`Show ${entry.label} date fullscreen`}
+              disabled={!canCopy}
+              onClick={handleFullscreen}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" />
               </svg>
             </button>
             <button

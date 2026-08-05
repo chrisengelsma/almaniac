@@ -1,7 +1,7 @@
 import SwiftUI
 import WidgetKit
 
-struct AlmanacWidgetEntry: TimelineEntry {
+struct AlmaniactWidgetEntry: TimelineEntry {
     let date: Date
     let calendarId: String
     let calendarName: String
@@ -10,9 +10,9 @@ struct AlmanacWidgetEntry: TimelineEntry {
     let backgroundColor: Color
 }
 
-struct AlmanacWidgetProvider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> AlmanacWidgetEntry {
-        AlmanacWidgetEntry(
+struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
+    func placeholder(in context: Context) -> AlmaniactWidgetEntry {
+        AlmaniactWidgetEntry(
             date: Date(),
             calendarId: "gregorian",
             calendarName: "Gregorian Calendar",
@@ -22,20 +22,20 @@ struct AlmanacWidgetProvider: AppIntentTimelineProvider {
         )
     }
 
-    func snapshot(for configuration: SelectCalendarIntent, in context: Context) async -> AlmanacWidgetEntry {
+    func snapshot(for configuration: SelectCalendarIntent, in context: Context) async -> AlmaniactWidgetEntry {
         entry(for: configuration)
     }
 
-    func timeline(for configuration: SelectCalendarIntent, in context: Context) async -> Timeline<AlmanacWidgetEntry> {
+    func timeline(for configuration: SelectCalendarIntent, in context: Context) async -> Timeline<AlmaniactWidgetEntry> {
         let currentEntry = entry(for: configuration)
         let nextRefresh = Calendar.current.startOfDay(for: Date().addingTimeInterval(86_400))
         return Timeline(entries: [currentEntry], policy: .after(nextRefresh))
     }
 
-    private func entry(for configuration: SelectCalendarIntent) -> AlmanacWidgetEntry {
+    private func entry(for configuration: SelectCalendarIntent) -> AlmaniactWidgetEntry {
         let calendarId = configuration.calendar?.id ?? "gregorian"
         if let data = WidgetDataStore.calendarData(for: calendarId) {
-            return AlmanacWidgetEntry(
+            return AlmaniactWidgetEntry(
                 date: Date(),
                 calendarId: calendarId,
                 calendarName: data.calendarName,
@@ -45,7 +45,7 @@ struct AlmanacWidgetProvider: AppIntentTimelineProvider {
             )
         }
 
-        return AlmanacWidgetEntry(
+        return AlmaniactWidgetEntry(
             date: Date(),
             calendarId: calendarId,
             calendarName: "Almaniac",
@@ -72,8 +72,8 @@ struct AlmanacWidgetProvider: AppIntentTimelineProvider {
     }
 }
 
-struct AlmanacWidgetEntryView: View {
-    var entry: AlmanacWidgetProvider.Entry
+struct AlmaniactWidgetEntryView: View {
+    var entry: AlmaniactWidgetProvider.Entry
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -102,12 +102,12 @@ struct AlmanacWidgetEntryView: View {
 }
 
 @available(iOS 17.0, *)
-struct AlmanacWidget: Widget {
-    let kind = "AlmanacWidget"
+struct AlmaniactWidget: Widget {
+    let kind = "AlmaniactWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: SelectCalendarIntent.self, provider: AlmanacWidgetProvider()) { entry in
-            AlmanacWidgetEntryView(entry: entry)
+        AppIntentConfiguration(kind: kind, intent: SelectCalendarIntent.self, provider: AlmaniactWidgetProvider()) { entry in
+            AlmaniactWidgetEntryView(entry: entry)
                 .containerBackground(for: .widget) {
                     entry.backgroundColor
                 }

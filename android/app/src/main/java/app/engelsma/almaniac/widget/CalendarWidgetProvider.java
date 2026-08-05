@@ -1,4 +1,4 @@
-package app.engelsma.almanac.widget;
+package app.engelsma.almaniac.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -6,8 +6,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-import app.engelsma.almanac.MainActivity;
-import app.engelsma.almanac.R;
+import app.engelsma.almaniac.MainActivity;
+import app.engelsma.almaniac.R;
 
 public class CalendarWidgetProvider extends AppWidgetProvider {
     @Override

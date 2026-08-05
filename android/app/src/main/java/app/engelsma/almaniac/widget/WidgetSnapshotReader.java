@@ -1,4 +1,4 @@
-package app.engelsma.almanac.widget;
+package app.engelsma.almaniac.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;

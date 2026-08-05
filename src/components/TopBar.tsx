@@ -2,7 +2,6 @@ import { APP_LOGO, APP_TAGLINE, APP_TITLE } from '../theme/appBranding';
 
 interface TopBarProps {
   onDonateOpen: () => void;
-  onAboutOpen: () => void;
   onCustomizeOpen: () => void;
   onDateClick: () => void;
   onBack30: () => void;
@@ -77,18 +76,8 @@ function IconToday() {
   );
 }
 
-function IconInfo() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 10v6M12 7h.01" />
-    </svg>
-  );
-}
-
 export function TopBar({
   onDonateOpen,
-  onAboutOpen,
   onCustomizeOpen,
   onDateClick,
   onBack30,
@@ -113,14 +102,6 @@ export function TopBar({
           <span className="top-bar__logo-tagline">{APP_TAGLINE}</span>
         </h1>
         <div className="top-bar__actions">
-          <button
-            type="button"
-            className="icon-button"
-            onClick={onAboutOpen}
-            aria-label="About Almaniac"
-          >
-            <IconInfo />
-          </button>
           <button
             type="button"
             className="icon-button"

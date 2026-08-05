@@ -5,18 +5,27 @@ import {
   EthiopianCalendar,
 } from 'calendar-converter/calendars';
 import type {
+  DiscordianCalendar,
   HebrewCalendar,
   IndianCivilCalendar,
   IslamicCalendar,
+  IsoWeekCalendar,
+  JapaneseWarekiCalendar,
+  BengaliCalendar,
+  MinguoCalendar,
   PersianCalendar,
   SovietCalendar,
+  ThaiBuddhistCalendar,
 } from 'calendar-converter/calendars';
 import type { CalendarId } from './calendarRegistry';
+import type { IslamicCalendarMode } from './appSettings';
 
-export type ScriptFont = 'latin' | 'arabic' | 'hebrew' | 'devanagari' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic';
+export type ScriptFont = 'latin' | 'arabic' | 'hebrew' | 'devanagari' | 'bengali' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'thai';
 
 const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
 const DEVANAGARI_DIGITS = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+const BENGALI_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+const THAI_DIGITS = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
 
 const ISLAMIC_MONTHS_AR = [
   'مُحَرَّم',
@@ -117,6 +126,31 @@ const INDIAN_WEEKDAYS_HI = [
   'गुरुवार',
   'शुक्रवार',
   'शनिवार',
+];
+
+const BENGALI_MONTHS = [
+  'বৈশাখ',
+  'জ্যৈষ্ঠ',
+  'আষাঢ়',
+  'শ্রাবণ',
+  'ভাদ্র',
+  'আশ্বিন',
+  'কার্তিক',
+  'অগ্রহায়ণ',
+  'পৌষ',
+  'মাঘ',
+  'ফাল্গুন',
+  'চৈত্র',
+];
+
+const BENGALI_WEEKDAYS = [
+  'রবিবার',
+  'সোমবার',
+  'মঙ্গলবার',
+  'বুধবার',
+  'বৃহস্পতিবার',
+  'শুক্রবার',
+  'শনিবার',
 ];
 
 const CHINESE_MONTHS = [
@@ -251,6 +285,48 @@ const BAHAI_MONTHS_AR = [
   'علاء',
 ];
 
+const JAPANESE_WEEKDAYS = [
+  '日曜日',
+  '月曜日',
+  '火曜日',
+  '水曜日',
+  '木曜日',
+  '金曜日',
+  '土曜日',
+];
+
+const THAI_MONTHS = [
+  'มกราคม',
+  'กุมภาพันธ์',
+  'มีนาคม',
+  'เมษายน',
+  'พฤษภาคม',
+  'มิถุนายน',
+  'กรกฎาคม',
+  'สิงหาคม',
+  'กันยายน',
+  'ตุลาคม',
+  'พฤศจิกายน',
+  'ธันวาคม',
+];
+
+const THAI_WEEKDAYS = [
+  'วันอาทิตย์',
+  'วันจันทร์',
+  'วันอังคาร',
+  'วันพุธ',
+  'วันพฤหัสบดี',
+  'วันศุกร์',
+  'วันเสาร์',
+];
+
+function toThaiDigits(value: number): string {
+  return String(value)
+    .split('')
+    .map((digit) => THAI_DIGITS[Number(digit)])
+    .join('');
+}
+
 function toArabicDigits(value: number): string {
   return String(value)
     .split('')
@@ -262,6 +338,13 @@ function toDevanagariDigits(value: number): string {
   return String(value)
     .split('')
     .map((digit) => DEVANAGARI_DIGITS[Number(digit)])
+    .join('');
+}
+
+function toBengaliDigits(value: number): string {
+  return String(value)
+    .split('')
+    .map((digit) => BENGALI_DIGITS[Number(digit)])
     .join('');
 }
 
@@ -278,6 +361,8 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
       return 'hebrew';
     case 'indianCivil':
       return 'devanagari';
+    case 'bengali':
+      return 'bengali';
     case 'chinese':
       return 'chinese';
     case 'soviet':
@@ -288,6 +373,11 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
       return 'coptic';
     case 'bahai':
       return 'arabic';
+    case 'japanese':
+    case 'minguo':
+      return 'japanese';
+    case 'thaiBuddhist':
+      return 'thai';
     default:
       return 'latin';
   }
@@ -300,6 +390,17 @@ export function formatIslamicNative(calendar: IslamicCalendar): string {
 
 export function formatIslamicEnglish(calendar: IslamicCalendar): string {
   return `${calendar.day} ${calendar.getMonthName()}, ${calendar.year}`;
+}
+
+export function islamicCalendarSystemLabel(
+  mode: IslamicCalendarMode,
+  transliterateToEnglish: boolean,
+): string {
+  if (transliterateToEnglish) {
+    return mode === 'ummAlQura' ? 'Umm al-Qura' : 'Tabular';
+  }
+
+  return mode === 'ummAlQura' ? 'أُمُّ القُرَى' : 'جَدَوْلِي';
 }
 
 export function formatPersianNative(calendar: PersianCalendar): string {
@@ -332,13 +433,16 @@ export function formatIndianCivilEnglish(calendar: IndianCivilCalendar): string 
 export function formatChineseNative(calendar: ChineseCalendar): string {
   const month = CHINESE_MONTHS[calendar.month - 1] ?? '';
   const monthLabel = calendar.isLeapMonth ? `闰${month}` : month;
-  const pillar = ChineseCalendar.YearPillar(calendar.year);
-  return `${calendar.year}年${pillar.sexagenary}${pillar.zodiac}年${monthLabel}${calendar.day}日`;
+  return `${calendar.year}年${monthLabel}${calendar.day}日`;
 }
 
 export function formatChineseEnglish(calendar: ChineseCalendar): string {
+  return `${calendar.day} ${calendar.getMonthName()}, ${calendar.year}`;
+}
+
+export function chineseYearDetailLabel(calendar: ChineseCalendar): string {
   const pillar = ChineseCalendar.YearPillar(calendar.year);
-  return `${calendar.day} ${calendar.getMonthName()}, ${calendar.year} (Year of the ${pillar.zodiacEnglish}, ${pillar.sexagenaryPinyin})`;
+  return `Year of the ${pillar.zodiacEnglish}, ${pillar.sexagenaryPinyin}`;
 }
 
 export function formatSovietNative(calendar: SovietCalendar): string {
@@ -381,6 +485,71 @@ export function formatBahaiEnglish(calendar: BahaiCalendar): string {
   return calendar.getDate();
 }
 
+export function formatJapaneseNative(calendar: JapaneseWarekiCalendar): string {
+  const era = calendar.getEraNameJa();
+  const yearPart = calendar.eraYear === 1 ? '元' : String(calendar.eraYear);
+  return `${era}${yearPart}年${calendar.month}月${calendar.day}日`;
+}
+
+export function formatJapaneseEnglish(calendar: JapaneseWarekiCalendar): string {
+  const era = calendar.getEraName();
+  const yearPart = calendar.eraYear === 1 ? 'Gannen' : String(calendar.eraYear);
+  return `${era} ${yearPart}, ${calendar.getMonthName()} ${calendar.day}`;
+}
+
+export function formatThaiBuddhistNative(calendar: ThaiBuddhistCalendar): string {
+  const month = THAI_MONTHS[calendar.month - 1] ?? '';
+  return `${toThaiDigits(calendar.day)} ${month} ${toThaiDigits(calendar.year)}`;
+}
+
+export function formatThaiBuddhistEnglish(calendar: ThaiBuddhistCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatBengaliNative(calendar: BengaliCalendar): string {
+  const month = BENGALI_MONTHS[calendar.month - 1] ?? '';
+  return `${toBengaliDigits(calendar.day)} ${month} ${toBengaliDigits(calendar.year)}`;
+}
+
+export function formatBengaliEnglish(calendar: BengaliCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatMinguoNative(calendar: MinguoCalendar): string {
+  return `民國${calendar.year}年${calendar.month}月${calendar.day}日`;
+}
+
+export function formatMinguoEnglish(calendar: MinguoCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatIsoWeekNative(calendar: IsoWeekCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatIsoWeekEnglish(calendar: IsoWeekCalendar): string {
+  const week = String(calendar.month).padStart(2, '0');
+  return `${calendar.year} Week ${calendar.month} (${week}), ${calendar.getWeekDay()}`;
+}
+
+export function formatDiscordianNative(calendar: DiscordianCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatDiscordianEnglish(calendar: DiscordianCalendar): string {
+  return calendar.getDate();
+}
+
+const ISO_WEEKDAYS = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
+
 export function nativeWeekday(
   id: CalendarId,
   weekdayIndex: number,
@@ -399,6 +568,8 @@ export function nativeWeekday(
       return HEBREW_WEEKDAYS[weekdayIndex];
     case 'indianCivil':
       return INDIAN_WEEKDAYS_HI[weekdayIndex];
+    case 'bengali':
+      return BENGALI_WEEKDAYS[weekdayIndex];
     case 'chinese':
       return CHINESE_WEEKDAYS[weekdayIndex];
     case 'soviet':
@@ -409,6 +580,16 @@ export function nativeWeekday(
       return COPTIC_WEEKDAYS[weekdayIndex];
     case 'bahai':
       return ISLAMIC_WEEKDAYS_AR[weekdayIndex];
+    case 'japanese':
+      return JAPANESE_WEEKDAYS[weekdayIndex];
+    case 'minguo':
+      return CHINESE_WEEKDAYS[weekdayIndex];
+    case 'thaiBuddhist':
+      return THAI_WEEKDAYS[weekdayIndex];
+    case 'isoWeek':
+      return ISO_WEEKDAYS[weekdayIndex];
+    case 'discordian':
+      return undefined;
     default:
       return undefined;
   }

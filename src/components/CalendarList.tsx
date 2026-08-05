@@ -19,6 +19,7 @@ import {
   getOrderedCalendarRows,
   reorderCalendars,
   type CalendarId,
+  type CalendarRowData,
   type GregorianCalendar,
 } from '../lib/calendarRegistry';
 import { CalendarRow } from './CalendarRow';
@@ -29,9 +30,19 @@ interface CalendarListProps {
   settings: AppSettings;
   onReorder: (order: CalendarId[]) => void;
   onInfoClick: (id: CalendarId) => void;
+  onFullscreen: (row: CalendarRowData, originRect: DOMRectReadOnly, textOriginRect: DOMRectReadOnly) => void;
+  fullscreenCalendarId?: CalendarId | null;
 }
 
-export function CalendarList({ order, anchor, settings, onReorder, onInfoClick }: CalendarListProps) {
+export function CalendarList({
+  order,
+  anchor,
+  settings,
+  onReorder,
+  onInfoClick,
+  onFullscreen,
+  fullscreenCalendarId = null,
+}: CalendarListProps) {
   const listRef = useRef<HTMLElement>(null);
   const rowsRef = useRef<HTMLDivElement>(null);
   const [showAddHint, setShowAddHint] = useState(false);
@@ -97,7 +108,13 @@ export function CalendarList({ order, anchor, settings, onReorder, onInfoClick }
           <section className="calendar-list" ref={listRef} aria-label="Calendar conversions">
             <div className="calendar-list__rows" ref={rowsRef}>
               {rows.map((row) => (
-                <CalendarRow key={row.entry.id} row={row} onInfoClick={onInfoClick} />
+                <CalendarRow
+                  key={row.entry.id}
+                  row={row}
+                  onInfoClick={onInfoClick}
+                  onFullscreen={onFullscreen}
+                  isFullscreenSource={fullscreenCalendarId === row.entry.id}
+                />
               ))}
             </div>
             {showAddHint ? (

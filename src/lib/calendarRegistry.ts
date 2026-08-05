@@ -10,10 +10,17 @@ import {
   IndianCivilCalendar,
   IslamicCalendar,
   IslamicCalendarMode,
+  JapaneseWarekiCalendar,
   JulianCalendar,
   MayaCalendar,
   PersianCalendar,
   SovietCalendar,
+  ThaiBuddhistCalendar,
+  BengaliCalendar,
+  MinguoCalendar,
+  IsoWeekCalendar,
+  DiscordianCalendar,
+  JulianDay,
 } from 'calendar-converter/calendars';
 import { toIslamicCalendar, toJulianDay } from 'calendar-converter/services';
 import type { MayaLongCountParts } from '../components/MayaLongCount';
@@ -21,6 +28,7 @@ import type { AppSettings } from './appSettings';
 import {
   formatChineseEnglish,
   formatChineseNative,
+  chineseYearDetailLabel,
   formatCopticEnglish,
   formatCopticNative,
   formatEthiopianEnglish,
@@ -33,15 +41,29 @@ import {
   formatIndianCivilNative,
   formatIslamicEnglish,
   formatIslamicNative,
+  islamicCalendarSystemLabel,
+  formatJapaneseEnglish,
+  formatJapaneseNative,
   formatPersianEnglish,
   formatPersianNative,
   formatSovietEnglish,
   formatSovietNative,
+  formatThaiBuddhistEnglish,
+  formatThaiBuddhistNative,
+  formatBengaliEnglish,
+  formatBengaliNative,
+  formatMinguoEnglish,
+  formatMinguoNative,
+  formatIsoWeekEnglish,
+  formatIsoWeekNative,
+  formatDiscordianEnglish,
+  formatDiscordianNative,
   nativeWeekday,
   scriptFontForCalendar,
   type ScriptFont,
 } from './nativeCalendarText';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
+import { calendarColorContext, getCalendarColor } from '../theme/calendarColors';
 
 export type CalendarId =
   | 'gregorian'
@@ -56,6 +78,12 @@ export type CalendarId =
   | 'hebrew'
   | 'persian'
   | 'bahai'
+  | 'japanese'
+  | 'minguo'
+  | 'thaiBuddhist'
+  | 'bengali'
+  | 'isoWeek'
+  | 'discordian'
   | 'indianCivil'
   | 'julianDay';
 
@@ -67,6 +95,8 @@ export interface CalendarEntry {
   date: string;
   scriptFont: ScriptFont;
   mayaLongCount?: MayaLongCountParts;
+  detailLabel?: string;
+  detailScriptFont?: ScriptFont;
 }
 
 export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
@@ -75,6 +105,8 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'ethiopian',
   'coptic',
   'chinese',
+  'japanese',
+  'minguo',
   'soviet',
   'frc',
   'maya',
@@ -82,6 +114,10 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'hebrew',
   'persian',
   'bahai',
+  'thaiBuddhist',
+  'bengali',
+  'isoWeek',
+  'discordian',
   'indianCivil',
   'julianDay',
 ];
@@ -99,6 +135,12 @@ const CALENDAR_LABELS: Record<CalendarId, string> = {
   hebrew: 'Hebrew',
   persian: 'Persian',
   bahai: 'Baháʼí',
+  japanese: 'Japanese',
+  minguo: 'Minguo',
+  thaiBuddhist: 'Thai Buddhist',
+  bengali: 'Bengali',
+  isoWeek: 'ISO Week',
+  discordian: 'Discordian',
   indianCivil: 'Indian Civil',
   julianDay: 'Julian Day',
 };
@@ -146,6 +188,18 @@ function buildCalendar(id: CalendarId, anchor: GregorianCalendar, settings: AppS
       return new PersianCalendar(anchor);
     case 'bahai':
       return new BahaiCalendar(anchor);
+    case 'japanese':
+      return new JapaneseWarekiCalendar(anchor);
+    case 'minguo':
+      return new MinguoCalendar(anchor);
+    case 'thaiBuddhist':
+      return new ThaiBuddhistCalendar(anchor);
+    case 'bengali':
+      return new BengaliCalendar(anchor);
+    case 'isoWeek':
+      return new IsoWeekCalendar(anchor);
+    case 'discordian':
+      return new DiscordianCalendar(anchor);
     case 'indianCivil':
       return new IndianCivilCalendar(anchor);
     case 'julianDay':
@@ -201,6 +255,18 @@ function formatDate(
         return formatCopticEnglish(calendar as CopticCalendar);
       case 'bahai':
         return formatBahaiEnglish(calendar as BahaiCalendar);
+      case 'japanese':
+        return formatJapaneseEnglish(calendar as JapaneseWarekiCalendar);
+      case 'thaiBuddhist':
+        return formatThaiBuddhistEnglish(calendar as ThaiBuddhistCalendar);
+      case 'bengali':
+        return formatBengaliEnglish(calendar as BengaliCalendar);
+      case 'minguo':
+        return formatMinguoEnglish(calendar as MinguoCalendar);
+      case 'isoWeek':
+        return formatIsoWeekEnglish(calendar as IsoWeekCalendar);
+      case 'discordian':
+        return formatDiscordianEnglish(calendar as DiscordianCalendar);
       default:
         return calendar.getDate();
     }
@@ -225,6 +291,18 @@ function formatDate(
       return formatCopticNative(calendar as CopticCalendar);
     case 'bahai':
       return formatBahaiNative(calendar as BahaiCalendar);
+    case 'japanese':
+      return formatJapaneseNative(calendar as JapaneseWarekiCalendar);
+    case 'thaiBuddhist':
+      return formatThaiBuddhistNative(calendar as ThaiBuddhistCalendar);
+    case 'bengali':
+      return formatBengaliNative(calendar as BengaliCalendar);
+    case 'minguo':
+      return formatMinguoNative(calendar as MinguoCalendar);
+    case 'isoWeek':
+      return formatIsoWeekNative(calendar as IsoWeekCalendar);
+    case 'discordian':
+      return formatDiscordianNative(calendar as DiscordianCalendar);
     default:
       return calendar.getDate();
   }
@@ -246,20 +324,44 @@ function buildCalendarEntry(
 
   const weekdayIndex = calendar.getWeekDayNumber();
   const nativeDay = nativeWeekday(id, weekdayIndex, settings.transliterateToEnglish);
-  const weekday = nativeDay ?? getWeekday(calendar, anchor);
+  const weekday = id === 'julianDay' ? '' : (nativeDay ?? getWeekday(calendar, anchor));
 
   const entry: CalendarEntry = {
     id,
-    label: CALENDAR_LABELS[id],
-    calendarName: CALENDAR_NAMES[id],
+    label: id === 'julianDay' && settings.useModifiedJulianDay
+      ? 'Modified JD'
+      : CALENDAR_LABELS[id],
+    calendarName: id === 'julianDay' && settings.useModifiedJulianDay
+      ? 'Modified Julian Day'
+      : CALENDAR_NAMES[id],
     weekday,
     date: formatDate(id, calendar, settings.transliterateToEnglish),
     scriptFont: scriptFontForCalendar(id, settings.transliterateToEnglish),
   };
 
+  if (id === 'julianDay') {
+    const jd = toJulianDay(anchor);
+    const displayValue = settings.useModifiedJulianDay
+      ? jd.value - JulianDay.Epoch.value
+      : jd.value;
+    entry.date = String(displayValue);
+  }
+
   if (id === 'maya' && !settings.transliterateToEnglish) {
     const maya = calendar as MayaCalendar;
     entry.mayaLongCount = [maya.baktun, maya.katun, maya.tun, maya.uinal, maya.kin];
+  }
+
+  if (id === 'islamic') {
+    entry.detailLabel = islamicCalendarSystemLabel(
+      settings.islamicCalendarMode,
+      settings.transliterateToEnglish,
+    );
+  }
+
+  if (id === 'chinese') {
+    entry.detailLabel = chineseYearDetailLabel(calendar as ChineseCalendar);
+    entry.detailScriptFont = 'latin';
   }
 
   return entry;
@@ -268,6 +370,7 @@ function buildCalendarEntry(
 export interface CalendarRowData {
   entry: CalendarEntry;
   visible: boolean;
+  backgroundColor: string;
 }
 
 export function getOrderedCalendarRows(
@@ -278,6 +381,7 @@ export function getOrderedCalendarRows(
   return order.map((id) => ({
     entry: buildCalendarEntry(id, anchor, settings),
     visible: settings.visibleCalendars[id],
+    backgroundColor: getCalendarColor(id, calendarColorContext(settings)),
   }));
 }
 

@@ -1,4 +1,4 @@
-package app.engelsma.almanac;
+package app.engelsma.almaniac;
 
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;

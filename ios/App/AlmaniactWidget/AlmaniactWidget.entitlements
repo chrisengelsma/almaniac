@@ -4,7 +4,7 @@
 <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.app.engelsma.almanac</string>
+        <string>group.app.engelsma.almaniac</string>
     </array>
 </dict>
 </plist>

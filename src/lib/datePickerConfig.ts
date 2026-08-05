@@ -9,11 +9,17 @@ import {
   IndianCivilCalendar,
   IslamicCalendar,
   IslamicCalendarMode,
+  JapaneseWarekiCalendar,
   JulianCalendar,
   JulianDay,
   MayaCalendar,
   PersianCalendar,
   SovietCalendar,
+  ThaiBuddhistCalendar,
+  BengaliCalendar,
+  MinguoCalendar,
+  IsoWeekCalendar,
+  DiscordianCalendar,
 } from 'calendar-converter/calendars';
 import { toGregorianCalendar, toIslamicCalendar } from 'calendar-converter/services';
 import type { CalendarId } from './calendarRegistry';
@@ -31,6 +37,7 @@ export type PickerValues = Record<string, string>;
 
 export interface PickerContext {
   islamicCalendarMode?: AppIslamicCalendarMode;
+  useModifiedJulianDay?: boolean;
 }
 
 function converterIslamicMode(context?: PickerContext): IslamicCalendarMode {
@@ -124,6 +131,73 @@ function indianCivilMonthOptions(): PickerFieldOption[] {
     value: String(index + 1),
     label: IndianCivilCalendar.MonthName(index + 1),
   }));
+}
+
+function japaneseEraOptions(): PickerFieldOption[] {
+  return JapaneseWarekiCalendar.listEras().map((era) => ({
+    value: era.id,
+    label: `${era.nameEn} (${era.nameJa})`,
+  }));
+}
+
+function japaneseMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: JapaneseWarekiCalendar.MonthName(index + 1),
+  }));
+}
+
+function thaiBuddhistMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: ThaiBuddhistCalendar.MonthName(index + 1),
+  }));
+}
+
+function bengaliMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: BengaliCalendar.MonthName(index + 1),
+  }));
+}
+
+function minguoMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: MinguoCalendar.MonthName(index + 1),
+  }));
+}
+
+function isoWeekWeekOptions(year: number): PickerFieldOption[] {
+  return Array.from({ length: IsoWeekCalendar.NumberOfWeeksInYear(year) }, (_, index) => ({
+    value: String(index + 1),
+    label: `Week ${index + 1}`,
+  }));
+}
+
+function isoWeekDayOptions(): PickerFieldOption[] {
+  return Array.from({ length: 7 }, (_, index) => ({
+    value: String(index + 1),
+    label: IsoWeekCalendar.WeekdayName(index + 1),
+  }));
+}
+
+function discordianSeasonOptions(): PickerFieldOption[] {
+  return Array.from({ length: 5 }, (_, index) => ({
+    value: String(index + 1),
+    label: DiscordianCalendar.SeasonName(index + 1),
+  }));
+}
+
+function discordianDayOptions(year: number, season: number): PickerFieldOption[] {
+  const options: PickerFieldOption[] = [];
+  for (let day = 1; day <= 73; day++) {
+    options.push({ value: String(day), label: String(day) });
+    if (season === 1 && DiscordianCalendar.IsLeapYear(year) && day === 59) {
+      options.push({ value: 'stTibs', label: 'St. Tib\'s Day' });
+    }
+  }
+  return options;
 }
 
 function frcMonthOptions(): PickerFieldOption[] {
@@ -319,6 +393,37 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
           },
         },
       ];
+    case 'japanese':
+      return [
+        {
+          key: 'eraId',
+          label: 'Era',
+          type: 'select',
+          getOptions: () => japaneseEraOptions(),
+        },
+        { key: 'eraYear', label: 'Era year', type: 'number', min: 1, placeholder: 'e.g. 7' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => japaneseMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const eraId = values.eraId ?? 'reiwa';
+            const eraYear = parseNumber(values, 'eraYear') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = JapaneseWarekiCalendar.NumberOfDaysInMonth(eraYear, month, eraId);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
     case 'soviet':
       return [
         { key: 'year', label: 'Year', type: 'number', placeholder: 'e.g. 1930' },
@@ -499,15 +604,125 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
           },
         },
       ];
+    case 'thaiBuddhist':
+      return [
+        { key: 'year', label: 'Buddhist year', type: 'number', placeholder: 'e.g. 2568' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => thaiBuddhistMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = ThaiBuddhistCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'bengali':
+      return [
+        { key: 'year', label: 'Bengali year', type: 'number', placeholder: 'e.g. 1432' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => bengaliMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = BengaliCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'minguo':
+      return [
+        { key: 'year', label: 'Minguo year', type: 'number', placeholder: 'e.g. 114' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => minguoMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = MinguoCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'isoWeek':
+      return [
+        { key: 'year', label: 'ISO week-year', type: 'number', placeholder: 'e.g. 2025' },
+        {
+          key: 'week',
+          label: 'Week',
+          type: 'select',
+          getOptions: (values) => isoWeekWeekOptions(parseNumber(values, 'year') ?? 1),
+        },
+        {
+          key: 'weekday',
+          label: 'Weekday',
+          type: 'select',
+          getOptions: () => isoWeekDayOptions(),
+        },
+      ];
+    case 'discordian':
+      return [
+        { key: 'year', label: 'YOLD year', type: 'number', placeholder: 'e.g. 3191' },
+        {
+          key: 'season',
+          label: 'Season',
+          type: 'select',
+          getOptions: () => discordianSeasonOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const season = parseNumber(values, 'season') ?? 1;
+            return discordianDayOptions(year, season);
+          },
+        },
+      ];
     case 'julianDay':
       return [
         {
           key: 'jd',
-          label: 'Julian Day',
+          label: context?.useModifiedJulianDay ? 'Modified Julian Day' : 'Julian Day',
           type: 'number',
           step: 0.5,
-          placeholder: 'e.g. 2460000',
-          hint: 'Enter a Julian Day number (may include .5 for noon).',
+          placeholder: context?.useModifiedJulianDay ? 'e.g. 60000' : 'e.g. 2460000',
+          hint: context?.useModifiedJulianDay
+            ? 'Enter a Modified Julian Day number (may include .5 for noon).'
+            : 'Enter a Julian Day number (may include .5 for noon).',
         },
       ];
     default:
@@ -560,6 +775,15 @@ export function extractPickerValues(
         year: String(chinese.year),
         month: `${chinese.month}:${chinese.isLeapMonth ? 1 : 0}`,
         day: String(chinese.day),
+      };
+    }
+    case 'japanese': {
+      const japanese = new JapaneseWarekiCalendar(anchor);
+      return {
+        eraId: japanese.eraId,
+        eraYear: String(japanese.eraYear),
+        month: String(japanese.month),
+        day: String(japanese.day),
       };
     }
     case 'soviet': {
@@ -629,9 +853,52 @@ export function extractPickerValues(
         day: String(indian.day),
       };
     }
+    case 'thaiBuddhist': {
+      const thai = new ThaiBuddhistCalendar(anchor);
+      return {
+        year: String(thai.year),
+        month: String(thai.month),
+        day: String(thai.day),
+      };
+    }
+    case 'bengali': {
+      const bengali = new BengaliCalendar(anchor);
+      return {
+        year: String(bengali.year),
+        month: String(bengali.month),
+        day: String(bengali.day),
+      };
+    }
+    case 'minguo': {
+      const minguo = new MinguoCalendar(anchor);
+      return {
+        year: String(minguo.year),
+        month: String(minguo.month),
+        day: String(minguo.day),
+      };
+    }
+    case 'isoWeek': {
+      const iso = new IsoWeekCalendar(anchor);
+      return {
+        year: String(iso.year),
+        week: String(iso.month),
+        weekday: String(iso.day),
+      };
+    }
+    case 'discordian': {
+      const discordian = new DiscordianCalendar(anchor);
+      return {
+        year: String(discordian.year),
+        season: String(discordian.month),
+        day: discordian.isStTibsDay ? 'stTibs' : String(discordian.day),
+      };
+    }
     case 'julianDay': {
       const jd = new JulianDay(anchor);
-      return { jd: String(jd.value) };
+      const value = context?.useModifiedJulianDay
+        ? jd.value - JulianDay.Epoch.value
+        : jd.value;
+      return { jd: String(value) };
     }
     default:
       return {};
@@ -705,6 +972,19 @@ export function pickerValuesToGregorian(
           return null;
         }
         return toGregorianCalendar(new ChineseCalendar(year, month, day, isLeapMonth));
+      }
+      case 'japanese': {
+        const eraId = values.eraId ?? 'reiwa';
+        const eraYear = parseNumber(values, 'eraYear');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (!eraYear || eraYear < 1 || !month || !day) {
+          return null;
+        }
+        if (day > JapaneseWarekiCalendar.NumberOfDaysInMonth(eraYear, month, eraId)) {
+          return null;
+        }
+        return toGregorianCalendar(new JapaneseWarekiCalendar(eraId, eraYear, month, day));
       }
       case 'soviet': {
         const year = parseNumber(values, 'year');
@@ -827,11 +1107,81 @@ export function pickerValuesToGregorian(
         }
         return toGregorianCalendar(new IndianCivilCalendar(year, month, day));
       }
-      case 'julianDay': {
-        const jd = parseFloatValue(values, 'jd');
-        if (jd === null) {
+      case 'thaiBuddhist': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (year === null || !month || !day) {
           return null;
         }
+        if (day > ThaiBuddhistCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new ThaiBuddhistCalendar(year, month, day));
+      }
+      case 'bengali': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (year === null || !month || !day) {
+          return null;
+        }
+        if (day > BengaliCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new BengaliCalendar(year, month, day));
+      }
+      case 'minguo': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (year === null || !month || !day) {
+          return null;
+        }
+        if (day > MinguoCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new MinguoCalendar(year, month, day));
+      }
+      case 'isoWeek': {
+        const year = parseNumber(values, 'year');
+        const week = parseNumber(values, 'week');
+        const weekday = parseNumber(values, 'weekday');
+        if (year === null || !week || !weekday) {
+          return null;
+        }
+        if (week > IsoWeekCalendar.NumberOfWeeksInYear(year) || weekday < 1 || weekday > 7) {
+          return null;
+        }
+        return toGregorianCalendar(new IsoWeekCalendar(year, week, weekday));
+      }
+      case 'discordian': {
+        const year = parseNumber(values, 'year');
+        const season = parseNumber(values, 'season');
+        const dayValue = values.day;
+        if (year === null || !season || !dayValue) {
+          return null;
+        }
+        if (dayValue === 'stTibs') {
+          if (season !== 1 || !DiscordianCalendar.IsLeapYear(year)) {
+            return null;
+          }
+          return toGregorianCalendar(new DiscordianCalendar(year, 1, 59, true));
+        }
+        const day = parseNumber(values, 'day');
+        if (!day || day < 1 || day > 73) {
+          return null;
+        }
+        return toGregorianCalendar(new DiscordianCalendar(year, season, day, false));
+      }
+      case 'julianDay': {
+        const jdValue = parseFloatValue(values, 'jd');
+        if (jdValue === null) {
+          return null;
+        }
+        const jd = context?.useModifiedJulianDay
+          ? jdValue + JulianDay.Epoch.value
+          : jdValue;
         return toGregorianCalendar(new JulianDay(jd));
       }
       default:

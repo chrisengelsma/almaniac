@@ -6,7 +6,7 @@ import {
   type CalendarId,
   type GregorianCalendar,
 } from './calendarRegistry';
-import { ROW_BACKGROUNDS } from '../theme/calendarTheme';
+import { calendarColorContext, getCalendarColor } from '../theme/calendarColors';
 import { WidgetBridge } from '../plugins/widgetBridge';
 
 export interface WidgetCalendarSnapshot {
@@ -44,7 +44,7 @@ export function buildWidgetSnapshot(
         calendarName: entry.calendarName,
         weekday: entry.weekday,
         date: entry.date,
-        backgroundColor: ROW_BACKGROUNDS[entry.id],
+        backgroundColor: getCalendarColor(entry.id, calendarColorContext(settings)),
       };
       return acc;
     },

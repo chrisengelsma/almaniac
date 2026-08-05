@@ -1,16 +1,60 @@
 :root {
-  --almanac-bg: #263238;
-  --almanac-bg-deep: #222d37;
-  --almanac-yellow: #ffeb3b;
-  --almanac-yellow-soft: #fff176;
-  --almanac-text: #263238;
-  --almanac-text-muted: #546e7a;
-  --almanac-teal: #00897b;
-  --almanac-divider: rgba(38, 50, 56, 0.18);
+  --almaniac-bg: #263238;
+  --almaniac-bg-deep: #222d37;
+  --almaniac-yellow: #ffeb3b;
+  --almaniac-yellow-soft: #fff176;
+  --almaniac-text: #263238;
+  --almaniac-text-muted: #546e7a;
+  --almaniac-teal: #00897b;
+  --almaniac-divider: rgba(38, 50, 56, 0.18);
+  --calendar-row-divider: rgba(38, 50, 56, 0.24);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.55);
   --top-bar-height: 7rem;
 
-  color: var(--almanac-text);
-  background: var(--almanac-bg-deep);
+  --top-bar-bg: #ffffff;
+  --top-bar-fg: #263238;
+  --top-bar-fg-muted: rgba(38, 50, 56, 0.68);
+  --top-bar-divider: rgba(38, 50, 56, 0.1);
+  --top-bar-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --top-bar-logo: #b8860b;
+  --top-bar-logo-tagline: rgba(38, 50, 56, 0.62);
+
+  --overlay-surface-bg: #eceff1;
+  --overlay-surface-fg: #263238;
+  --overlay-surface-fg-muted: rgba(38, 50, 56, 0.62);
+  --overlay-surface-fg-subtle: rgba(38, 50, 56, 0.72);
+  --overlay-surface-border: rgba(38, 50, 56, 0.12);
+  --overlay-surface-divider: rgba(38, 50, 56, 0.1);
+  --overlay-input-bg: #ffffff;
+  --overlay-input-border: rgba(38, 50, 56, 0.15);
+  --overlay-control-bg: rgba(38, 50, 56, 0.08);
+  --overlay-control-bg-active: rgba(0, 137, 123, 0.16);
+  --overlay-close-bg: rgba(38, 50, 56, 0.1);
+  --overlay-ghost-fg: rgba(38, 50, 56, 0.72);
+  --overlay-primary-btn-bg: #ffdd00;
+  --overlay-primary-btn-fg: #1a1a1a;
+  --overlay-link: #1565c0;
+  --overlay-tab-bg: rgba(38, 50, 56, 0.07);
+  --overlay-tab-fg: rgba(38, 50, 56, 0.68);
+  --overlay-tab-active-bg: #ffffff;
+  --overlay-tab-active-fg: #263238;
+  --overlay-chip-bg: rgba(38, 50, 56, 0.08);
+  --overlay-handle-bg: rgba(38, 50, 56, 0.22);
+  --overlay-toggle-bg: rgba(38, 50, 56, 0.22);
+  --overlay-toggle-knob: #ffffff;
+  --overlay-slider-track: rgba(0, 137, 123, 0.45);
+  --overlay-slider-thumb: #00897b;
+  --overlay-focus: rgba(0, 137, 123, 0.45);
+  --overlay-accent: #00897b;
+  --overlay-error: #c62828;
+  --overlay-dropdown-bg: #ffffff;
+  --overlay-map-border: rgba(38, 50, 56, 0.12);
+  --overlay-hero-gradient-start: #455a64;
+  --overlay-hero-gradient-end: #263238;
+  --overlay-color-scheme: light;
+
+  color: var(--almaniac-text);
+  background: var(--almaniac-bg-deep);
   font-family: Roboto, 'Segoe UI', sans-serif;
   line-height: 1.4;
   font-weight: 400;
@@ -47,4 +91,152 @@ button {
 
 button:disabled {
   cursor: not-allowed;
+}
+
+html[data-color-scheme='dark'] {
+  --top-bar-bg: #263238;
+  --calendar-row-divider: rgba(255, 255, 255, 0.16);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.07);
+  --top-bar-fg: #eceff1;
+  --top-bar-fg-muted: rgba(236, 239, 241, 0.72);
+  --top-bar-divider: rgba(255, 255, 255, 0.06);
+  --top-bar-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+  --top-bar-logo: #ffeb3b;
+  --top-bar-logo-tagline: rgba(255, 235, 59, 0.82);
+
+  --overlay-surface-bg: var(--almaniac-bg);
+  --overlay-surface-fg: #eceff1;
+  --overlay-surface-fg-muted: rgba(236, 239, 241, 0.72);
+  --overlay-surface-fg-subtle: rgba(236, 239, 241, 0.55);
+  --overlay-surface-border: rgba(255, 255, 255, 0.08);
+  --overlay-surface-divider: rgba(255, 255, 255, 0.06);
+  --overlay-input-bg: rgba(0, 0, 0, 0.22);
+  --overlay-input-border: rgba(255, 255, 255, 0.12);
+  --overlay-control-bg: rgba(0, 0, 0, 0.22);
+  --overlay-control-bg-active: rgba(0, 137, 123, 0.28);
+  --overlay-close-bg: rgba(255, 255, 255, 0.1);
+  --overlay-ghost-fg: rgba(236, 239, 241, 0.72);
+  --overlay-primary-btn-bg: rgba(255, 255, 255, 0.1);
+  --overlay-primary-btn-fg: var(--almaniac-yellow);
+  --overlay-link: #90caf9;
+  --overlay-tab-bg: rgba(255, 255, 255, 0.06);
+  --overlay-tab-fg: rgba(236, 239, 241, 0.68);
+  --overlay-tab-active-bg: rgba(255, 255, 255, 0.12);
+  --overlay-tab-active-fg: #eceff1;
+  --overlay-chip-bg: rgba(255, 255, 255, 0.08);
+  --overlay-handle-bg: rgba(236, 239, 241, 0.35);
+  --overlay-toggle-bg: rgba(255, 255, 255, 0.28);
+  --overlay-toggle-knob: #eceff1;
+  --overlay-slider-track: rgba(144, 202, 249, 0.55);
+  --overlay-slider-thumb: #64b5f6;
+  --overlay-focus: rgba(255, 235, 59, 0.45);
+  --overlay-accent: #64b5f6;
+  --overlay-error: #ef9a9a;
+  --overlay-dropdown-bg: var(--almaniac-bg-deep);
+  --overlay-map-border: rgba(255, 255, 255, 0.1);
+  --overlay-hero-gradient-start: #455a64;
+  --overlay-hero-gradient-end: #263238;
+  --overlay-color-scheme: dark;
+}
+
+html[data-color-theme='mono'] {
+  --almaniac-bg: #f5f5f5;
+  --almaniac-bg-deep: #f0f0f0;
+  --almaniac-teal: #616161;
+  --almaniac-text: #212121;
+  --almaniac-text-muted: #757575;
+  --calendar-row-divider: rgba(0, 0, 0, 0.12);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.65);
+
+  --top-bar-bg: #ffffff;
+  --top-bar-fg: #212121;
+  --top-bar-fg-muted: rgba(33, 33, 33, 0.68);
+  --top-bar-divider: rgba(0, 0, 0, 0.1);
+  --top-bar-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --top-bar-logo: #424242;
+  --top-bar-logo-tagline: rgba(66, 66, 66, 0.72);
+
+  --overlay-surface-bg: #f5f5f5;
+  --overlay-surface-fg: #212121;
+  --overlay-surface-fg-muted: rgba(33, 33, 33, 0.62);
+  --overlay-surface-fg-subtle: rgba(33, 33, 33, 0.72);
+  --overlay-surface-border: rgba(0, 0, 0, 0.12);
+  --overlay-surface-divider: rgba(0, 0, 0, 0.1);
+  --overlay-input-bg: #ffffff;
+  --overlay-input-border: rgba(0, 0, 0, 0.15);
+  --overlay-control-bg: rgba(0, 0, 0, 0.06);
+  --overlay-control-bg-active: rgba(0, 0, 0, 0.1);
+  --overlay-close-bg: rgba(0, 0, 0, 0.08);
+  --overlay-ghost-fg: rgba(33, 33, 33, 0.72);
+  --overlay-primary-btn-bg: #e0e0e0;
+  --overlay-primary-btn-fg: #212121;
+  --overlay-link: #424242;
+  --overlay-tab-bg: rgba(0, 0, 0, 0.06);
+  --overlay-tab-fg: rgba(33, 33, 33, 0.68);
+  --overlay-tab-active-bg: #ffffff;
+  --overlay-tab-active-fg: #212121;
+  --overlay-chip-bg: rgba(0, 0, 0, 0.06);
+  --overlay-handle-bg: rgba(0, 0, 0, 0.22);
+  --overlay-toggle-bg: rgba(0, 0, 0, 0.22);
+  --overlay-toggle-knob: #ffffff;
+  --overlay-slider-track: rgba(0, 0, 0, 0.22);
+  --overlay-slider-thumb: #616161;
+  --overlay-focus: rgba(0, 0, 0, 0.32);
+  --overlay-accent: #616161;
+  --overlay-error: #9e9e9e;
+  --overlay-dropdown-bg: #ffffff;
+  --overlay-map-border: rgba(0, 0, 0, 0.12);
+  --overlay-hero-gradient-start: #bdbdbd;
+  --overlay-hero-gradient-end: #757575;
+}
+
+html[data-color-theme='mono'][data-color-scheme='dark'] {
+  --almaniac-bg: #1a1a1a;
+  --almaniac-bg-deep: #121212;
+  --almaniac-teal: #bdbdbd;
+  --almaniac-text: #f5f5f5;
+  --almaniac-text-muted: #bdbdbd;
+  --calendar-row-divider: rgba(255, 255, 255, 0.12);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.05);
+
+  --top-bar-bg: #1a1a1a;
+  --top-bar-fg: #f5f5f5;
+  --top-bar-fg-muted: rgba(245, 245, 245, 0.72);
+  --top-bar-divider: rgba(255, 255, 255, 0.08);
+  --top-bar-shadow: 0 2px 8px rgba(0, 0, 0, 0.32);
+  --top-bar-logo: #f5f5f5;
+  --top-bar-logo-tagline: rgba(245, 245, 245, 0.72);
+
+  --overlay-surface-bg: #1a1a1a;
+  --overlay-surface-fg: #f5f5f5;
+  --overlay-surface-fg-muted: rgba(245, 245, 245, 0.72);
+  --overlay-surface-fg-subtle: rgba(245, 245, 245, 0.55);
+  --overlay-surface-border: rgba(255, 255, 255, 0.08);
+  --overlay-surface-divider: rgba(255, 255, 255, 0.06);
+  --overlay-input-bg: rgba(255, 255, 255, 0.06);
+  --overlay-input-border: rgba(255, 255, 255, 0.12);
+  --overlay-control-bg: rgba(255, 255, 255, 0.08);
+  --overlay-control-bg-active: rgba(255, 255, 255, 0.12);
+  --overlay-close-bg: rgba(255, 255, 255, 0.1);
+  --overlay-ghost-fg: rgba(245, 245, 245, 0.72);
+  --overlay-primary-btn-bg: rgba(255, 255, 255, 0.12);
+  --overlay-primary-btn-fg: #f5f5f5;
+  --overlay-link: #e0e0e0;
+  --overlay-tab-bg: rgba(255, 255, 255, 0.06);
+  --overlay-tab-fg: rgba(245, 245, 245, 0.68);
+  --overlay-tab-active-bg: rgba(255, 255, 255, 0.12);
+  --overlay-tab-active-fg: #f5f5f5;
+  --overlay-chip-bg: rgba(255, 255, 255, 0.08);
+  --overlay-handle-bg: rgba(245, 245, 245, 0.35);
+  --overlay-toggle-bg: rgba(255, 255, 255, 0.28);
+  --overlay-toggle-knob: #f5f5f5;
+  --overlay-slider-track: rgba(255, 255, 255, 0.28);
+  --overlay-slider-thumb: #bdbdbd;
+  --overlay-focus: rgba(255, 255, 255, 0.32);
+  --overlay-accent: #bdbdbd;
+  --overlay-error: #bdbdbd;
+  --overlay-dropdown-bg: #121212;
+  --overlay-map-border: rgba(255, 255, 255, 0.1);
+  --overlay-hero-gradient-start: #616161;
+  --overlay-hero-gradient-end: #212121;
 }

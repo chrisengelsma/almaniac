@@ -41,7 +41,7 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
         aria-labelledby="donate-modal-title"
       >
         <header className="donate-modal__header">
-          <h2 id="donate-modal-title">Keep Almaniac free</h2>
+          <h2 id="donate-modal-title">Hi 👋</h2>
           <button
             ref={closeButtonRef}
             type="button"
@@ -57,11 +57,16 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
 
         <div className="donate-modal__body">
           <p>
-            Almaniac is always free — no ads, no subscriptions, and no tracking. But keeping it
-            running takes real work: app stores, hosting, and ongoing development.
+            I&apos;m Chris Engelsma — developer, husband, and father. Almaniac is a passion project
+            I built because I love calendars and history, and I hope you enjoy using it.
           </p>
           <p>
-            If you find it useful, a small tip goes a long way. Thank you for being here.
+            It&apos;s always free — no ads, no subscriptions, and no tracking. But keeping it running
+            takes real work: app stores, hosting, and ongoing development.
+          </p>
+          <p>
+            If Almaniac has been useful to you, buying me a coffee helps me keep building and
+            improving it. Thank you for being here.
           </p>
         </div>
 

@@ -1,14 +1,22 @@
-import { useMemo } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import countryShapes from 'world-map-country-shapes';
 import type { MapHighlight } from '../data/calendarInfo';
 
 interface WorldUsageMapProps {
   highlighted: MapHighlight;
+  backgroundColor: string;
+  strokeColor: string;
+  fillColor: string;
 }
 
 const VIEWBOX = '0 0 2000 1001';
 
-export function WorldUsageMap({ highlighted }: WorldUsageMapProps) {
+export function WorldUsageMap({
+  highlighted,
+  backgroundColor,
+  strokeColor,
+  fillColor,
+}: WorldUsageMapProps) {
   const activeCountries = useMemo(() => {
     if (highlighted === 'all') {
       return new Set(countryShapes.map((country) => country.id));
@@ -17,10 +25,15 @@ export function WorldUsageMap({ highlighted }: WorldUsageMapProps) {
     return new Set(highlighted);
   }, [highlighted]);
 
+  const mapStyle = {
+    '--map-bg': backgroundColor,
+    '--map-stroke': strokeColor,
+    '--map-fill': fillColor,
+  } as CSSProperties;
+
   return (
-    <div className="world-map">
+    <div className="world-map" style={mapStyle}>
       <svg viewBox={VIEWBOX} role="img" aria-label="World map showing calendar usage">
-        <rect className="world-map__ocean" x="0" y="0" width="2000" height="1001" />
         {countryShapes.map((country) => {
           const isActive = activeCountries.has(country.id);
 

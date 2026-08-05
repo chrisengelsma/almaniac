@@ -1,8 +1,8 @@
 import Foundation
 
 enum WidgetConstants {
-    static let appGroupId = "group.app.engelsma.almanac"
-    static let snapshotKey = "almanac.widget.snapshot.v1"
+    static let appGroupId = "group.app.engelsma.almaniac"
+    static let snapshotKey = "almaniac.widget.snapshot.v1"
 }
 
 struct WidgetCalendarData: Codable {

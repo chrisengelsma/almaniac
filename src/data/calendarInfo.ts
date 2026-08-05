@@ -167,6 +167,42 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     usedIn: ['Baháʼí communities worldwide'],
     mapCountries: 'all',
   },
+  japanese: {
+    id: 'japanese',
+    calendarType: 'solar',
+    firstImplemented: '1873 CE (Gregorian months adopted)',
+    history:
+      'Japan’s official civil calendar pairs Gregorian months and leap years with Japanese era names (年号). Each reign begins a new era year counted from 1 (元年, gannen); Reiwa began on 1 May 2019. Dates are written with the era name, year, month, and day.',
+    usedIn: ['Japan'],
+    mapCountries: ['JP'],
+  },
+  minguo: {
+    id: 'minguo',
+    calendarType: 'solar',
+    firstImplemented: '1912 CE (Republic of China founded)',
+    history:
+      'The Minguo calendar numbers years from the founding of the Republic of China in 1912. Year 1 corresponds to 1912 CE; dates otherwise follow the Gregorian month and day structure. It remains in official use in Taiwan alongside the Western year.',
+    usedIn: ['Taiwan'],
+    mapCountries: ['TW'],
+  },
+  thaiBuddhist: {
+    id: 'thaiBuddhist',
+    calendarType: 'solar',
+    firstImplemented: 'c. 1st century BCE (BE epoch); official BE dates from 1888 CE',
+    history:
+      'Thailand’s civil calendar follows the Gregorian structure but numbers years in the Buddhist Era (BE), which is 543 years ahead of the Common Era. It is used on official documents, newspapers, and everyday life alongside the Western year.',
+    usedIn: ['Thailand'],
+    mapCountries: ['TH'],
+  },
+  bengali: {
+    id: 'bengali',
+    calendarType: 'solar',
+    firstImplemented: '593 CE (traditional); revised in 1987 CE (Bangladesh)',
+    history:
+      'The Bengali calendar is used in Bangladesh and West Bengal. The Bangladesh revised calendar fixes Pohela Boishakh on 14 April with six 31-day months, five 30-day months, and a variable-length Choitro. Years are counted from the traditional Bengali era.',
+    usedIn: ['Bangladesh', 'West Bengal (India)'],
+    mapCountries: ['BD', 'IN'],
+  },
   indianCivil: {
     id: 'indianCivil',
     calendarType: 'solar',
@@ -175,6 +211,29 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
       'The Indian national calendar (Śaka era) aligns months with the tropical zodiac. Chaitra, the first month, begins near the March equinox. It is used alongside the Gregorian calendar for government gazettes and radio broadcasts.',
     usedIn: ['India'],
     mapCountries: ['IN'],
+  },
+  isoWeek: {
+    id: 'isoWeek',
+    calendarType: 'mixed',
+    firstImplemented: '1988 CE (ISO 8601)',
+    history:
+      'The ISO week date system numbers weeks Monday through Sunday, with week 1 defined as the week containing January 4. It is widely used in business planning, manufacturing, payroll, and international standards to avoid ambiguity at year boundaries.',
+    usedIn: [
+      'European Union (business and statistics)',
+      'Nordic countries',
+      'International standards bodies',
+      'Manufacturing and logistics worldwide',
+    ],
+    mapCountries: ['DE', 'FR', 'SE', 'NO', 'FI', 'NL', 'BE', 'AT', 'CH', 'PL', 'CZ', 'DK'],
+  },
+  discordian: {
+    id: 'discordian',
+    calendarType: 'solar',
+    firstImplemented: '1963 CE (Principia Discordia)',
+    history:
+      'A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons—Chaos, Discord, Confusion, Bureaucracy, and The Aftermath—and a five-day week. Leap years gain St. Tib\'s Day between Chaos 59 and 60. Years are counted in YOLD (Year of Our Lady of Discord), Gregorian year plus 1166.',
+    usedIn: ['Discordian communities', 'Internet culture', 'Counterculture humor'],
+    mapCountries: ['US', 'GB', 'CA', 'AU', 'DE'],
   },
   julianDay: {
     id: 'julianDay',

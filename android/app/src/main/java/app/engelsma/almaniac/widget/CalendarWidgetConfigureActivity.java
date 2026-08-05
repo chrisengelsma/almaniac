@@ -1,4 +1,4 @@
-package app.engelsma.almanac.widget;
+package app.engelsma.almaniac.widget;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import app.engelsma.almanac.R;
+import app.engelsma.almaniac.R;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -71,6 +71,8 @@ public class CalendarWidgetConfigureActivity extends Activity {
                     "ethiopian",
                     "coptic",
                     "chinese",
+                    "japanese",
+                    "minguo",
                     "soviet",
                     "frc",
                     "maya",
@@ -78,6 +80,10 @@ public class CalendarWidgetConfigureActivity extends Activity {
                     "hebrew",
                     "persian",
                     "bahai",
+                    "thaiBuddhist",
+                    "bengali",
+                    "isoWeek",
+                    "discordian",
                     "indianCivil",
                     "julianDay"
                 };
@@ -99,6 +105,8 @@ public class CalendarWidgetConfigureActivity extends Activity {
             options.add(new CalendarOption("ethiopian", "Ethiopian"));
             options.add(new CalendarOption("coptic", "Coptic"));
             options.add(new CalendarOption("chinese", "Chinese"));
+            options.add(new CalendarOption("japanese", "Japanese"));
+            options.add(new CalendarOption("minguo", "Minguo"));
             options.add(new CalendarOption("soviet", "Soviet"));
             options.add(new CalendarOption("frc", "FRC"));
             options.add(new CalendarOption("maya", "Maya"));
@@ -106,6 +114,10 @@ public class CalendarWidgetConfigureActivity extends Activity {
             options.add(new CalendarOption("hebrew", "Hebrew"));
             options.add(new CalendarOption("persian", "Persian"));
             options.add(new CalendarOption("bahai", "Baháʼí"));
+            options.add(new CalendarOption("thaiBuddhist", "Thai Buddhist"));
+            options.add(new CalendarOption("bengali", "Bengali"));
+            options.add(new CalendarOption("isoWeek", "ISO Week"));
+            options.add(new CalendarOption("discordian", "Discordian"));
             options.add(new CalendarOption("indianCivil", "Indian Civil"));
             options.add(new CalendarOption("julianDay", "Julian Day"));
         }

@@ -14,6 +14,7 @@ type MapTab = 'usage' | 'timeline';
 
 interface JulianMapSectionProps {
   info: CalendarInfo;
+  mapColors: { background: string; stroke: string; fill: string };
 }
 
 function TimelineEventList({ title, codes }: { title: string; codes: string[] }) {
@@ -33,7 +34,7 @@ function TimelineEventList({ title, codes }: { title: string; codes: string[] })
   );
 }
 
-export function JulianMapSection({ info }: JulianMapSectionProps) {
+export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
   const [activeTab, setActiveTab] = useState<MapTab>('usage');
   const [timelineYearIndex, setTimelineYearIndex] = useState(0);
   const timelineYear = JULIAN_TIMELINE_EVENT_YEARS[timelineYearIndex];
@@ -88,7 +89,12 @@ export function JulianMapSection({ info }: JulianMapSectionProps) {
           role="tabpanel"
           aria-labelledby="julian-map-tab-usage"
         >
-          <WorldUsageMap highlighted={info.mapCountries} />
+          <WorldUsageMap
+            highlighted={info.mapCountries}
+            backgroundColor={mapColors.background}
+            strokeColor={mapColors.stroke}
+            fillColor={mapColors.fill}
+          />
           <ul className="info-modal__countries">
             {info.usedIn.map((place) => (
               <li key={place}>{place}</li>
@@ -135,7 +141,12 @@ export function JulianMapSection({ info }: JulianMapSectionProps) {
             </p>
           </div>
 
-          <WorldUsageMap highlighted={activeCountries} />
+          <WorldUsageMap
+            highlighted={activeCountries}
+            backgroundColor={mapColors.background}
+            strokeColor={mapColors.stroke}
+            fillColor={mapColors.fill}
+          />
 
           <div className="adoption-slider__new adoption-slider__new--dual">
             <TimelineEventList title={`Adopted in ${yearLabel}`} codes={startedInYear} />
