@@ -60,8 +60,8 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
 
         <div className="about-modal__body">
           <p>
-            Almaniac shows one date across many calendar systems — from the Gregorian and Julian
-            calendars to Hebrew, Islamic, Chinese, Maya, and more.
+            Almaniac shows one date in many calendar systems at once: Gregorian, Julian, Hebrew,
+            Islamic, Chinese, Maya, and more.
           </p>
 
           {attributions.length > 0 ? (
@@ -79,7 +79,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
                         </a>
                         {' by '}
                         {source.author}
-                        {' — '}
+                        {', '}
                         <a href={source.licenseUrl} target="_blank" rel="noopener noreferrer">
                           {source.license}
                         </a>

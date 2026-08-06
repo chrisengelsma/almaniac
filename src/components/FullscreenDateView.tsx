@@ -51,7 +51,7 @@ export function FullscreenDateView({
   const fitFrameRef = useRef<number | null>(null);
   const scriptClass = calendarTextClassName(entry.scriptFont);
   const scriptStyle = calendarTextStyle(entry.scriptFont);
-  const dateText = entry.date || '—';
+  const dateText = entry.date || '-';
   const isExpanded = phase === 'open';
   const scaleRect = phase === 'exit' ? exitRect : originRect;
   const textRect = phase === 'exit' ? exitTextRect : textOriginRect;
@@ -60,17 +60,25 @@ export function FullscreenDateView({
       ? colorScheme === 'dark'
         ? '#f5f5f5'
         : '#212121'
-      : colorScheme === 'dark'
-        ? backgroundColor
-        : '#263238';
+      : colorTheme === 'sepia'
+        ? colorScheme === 'dark'
+          ? '#e8dcc8'
+          : '#3d2f1f'
+        : colorScheme === 'dark'
+          ? backgroundColor
+          : '#263238';
   const expandBackgroundColor =
     colorTheme === 'mono'
       ? colorScheme === 'dark'
         ? '#2a2a2a'
         : backgroundColor
-      : colorScheme === 'dark'
-        ? '#263238'
-        : backgroundColor;
+      : colorTheme === 'sepia'
+        ? colorScheme === 'dark'
+          ? '#3d3228'
+          : backgroundColor
+        : colorScheme === 'dark'
+          ? '#263238'
+          : backgroundColor;
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current != null) {

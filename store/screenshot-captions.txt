@@ -1,6 +1,6 @@
 Screenshot plan for Google Play and App Store (8 frames recommended)
 
-1. HERO — Multi-view dashboard
+1. HERO: Multi-view dashboard
    Caption: "See 9 calendars at once"
    Show: Main screen with today’s date across Gregorian, Islamic (Arabic script), Hebrew, Persian, and others visible.
 
@@ -13,7 +13,7 @@ Screenshot plan for Google Play and App Store (8 frames recommended)
    Show: A date with holiday chips visible (e.g. Hanukkah, Christmas, or Eid al-Fitr).
 
 4. ANCIENT DATES
-   Caption: "Jump to any year — even BCE"
+   Caption: "Jump to any year, even BCE"
    Show: Date picker modal open with "100 BCE" entered.
 
 5. EDUCATION

@@ -20,4 +20,6 @@ export const CALENDAR_BANNERS: Partial<Record<CalendarId, string>> = {
   indianCivil: '/banners/indianCivil.png',
   isoWeek: '/banners/isoWeek.png',
   julianDay: '/banners/julianDay.png',
+  bengali: '/banners/bengali.png',
+  minguo: '/banners/minguo.png',
 };

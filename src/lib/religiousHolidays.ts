@@ -159,7 +159,7 @@ function collectHolidays(context: HolidayContext): ReligiousHoliday[] {
     holidays.push({ name: "Tisha B'Av", tradition: 'jewish' });
   }
 
-  // Christian — fixed
+  // Christian, fixed
   if (matchesGregorian(gregorian, 1, 6)) {
     holidays.push({ name: 'Epiphany', tradition: 'christian' });
   }
@@ -170,7 +170,7 @@ function collectHolidays(context: HolidayContext): ReligiousHoliday[] {
     holidays.push({ name: 'All Saints\' Day', tradition: 'christian' });
   }
 
-  // Christian — movable (Gregorian Easter computus)
+  // Christian, movable (Gregorian Easter computus)
   if (easterSunday) {
     const palmSunday = offsetGregorianDate(
       new GregorianCalendar(gregorian.year, easterSunday.month, easterSunday.day),

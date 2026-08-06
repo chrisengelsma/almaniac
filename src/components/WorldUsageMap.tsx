@@ -4,7 +4,6 @@ import type { MapHighlight } from '../data/calendarInfo';
 
 interface WorldUsageMapProps {
   highlighted: MapHighlight;
-  backgroundColor: string;
   strokeColor: string;
   fillColor: string;
 }
@@ -13,7 +12,6 @@ const VIEWBOX = '0 0 2000 1001';
 
 export function WorldUsageMap({
   highlighted,
-  backgroundColor,
   strokeColor,
   fillColor,
 }: WorldUsageMapProps) {
@@ -26,7 +24,6 @@ export function WorldUsageMap({
   }, [highlighted]);
 
   const mapStyle = {
-    '--map-bg': backgroundColor,
     '--map-stroke': strokeColor,
     '--map-fill': fillColor,
   } as CSSProperties;

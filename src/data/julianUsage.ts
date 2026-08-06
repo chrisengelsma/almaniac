@@ -1,6 +1,6 @@
 import { GREGORIAN_ADOPTION_YEARS } from './gregorianAdoption';
 
-/** Countries where Julian remains in liturgical use — no end date on the timeline. */
+/** Countries where Julian remains in liturgical use (no end date on the timeline). */
 const LITURGICAL_JULIAN = new Set([
   'BG', 'BY', 'ET', 'GE', 'GR', 'MD', 'ME', 'MK', 'RS', 'RU', 'UA',
 ]);

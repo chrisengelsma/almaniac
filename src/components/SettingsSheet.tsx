@@ -4,13 +4,16 @@ import {
   DEFAULT_CALENDAR_ORDER,
   type CalendarId,
 } from '../lib/calendarRegistry';
-import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, ColorTheme } from '../lib/appSettings';
+import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, ColorTheme, AppIconChoice } from '../lib/appSettings';
+import appIconLight from '../assets/app-icon-light.png';
+import appIconDark from '../assets/app-icon-dark.png';
 import { COLOR_THEME_SWATCHES } from '../theme/calendarColors';
 import { SheetSlider, SheetToggle } from './DrawerControls';
 
 const COLOR_THEME_OPTIONS: Array<{ id: ColorTheme; label: string }> = [
   { id: 'distinct', label: 'Distinct' },
   { id: 'mono', label: 'Mono' },
+  { id: 'sepia', label: 'Sepia' },
 ];
 
 const DISMISS_THRESHOLD_PX = 80;
@@ -23,12 +26,12 @@ interface SettingsSheetProps {
   settings: AppSettings;
   onClose: () => void;
   onToggleCalendar: (id: CalendarId) => void;
-  onColorSchemeToggle: () => void;
   onColorThemeChange: (value: ColorTheme) => void;
   onTransliterateChange: (value: boolean) => void;
   onIslamicCalendarModeChange: (value: IslamicCalendarMode) => void;
   onIslamicAdjustmentChange: (value: IslamicDayAdjustment) => void;
   onUseModifiedJulianDayChange: (value: boolean) => void;
+  onAppIconChange: (value: AppIconChoice) => void;
   onAboutOpen: () => void;
 }
 
@@ -46,6 +49,24 @@ function IconChevronLeft() {
       <path d="M14 6l-6 6 6 6" />
     </svg>
   );
+}
+
+function IconChevronDown() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
+const APP_ICON_OPTIONS: Array<{ id: AppIconChoice; label: string; preview: string }> = [
+  { id: 'light', label: 'Light', preview: appIconLight },
+  { id: 'dark', label: 'Dark', preview: appIconDark },
+];
+
+interface AppIconPickerProps {
+  value: AppIconChoice;
+  onChange: (value: AppIconChoice) => void;
 }
 
 interface ColorThemePickerProps {
@@ -82,6 +103,92 @@ function ColorThemePicker({ value, onChange }: ColorThemePickerProps) {
         );
       })}
     </div>
+  );
+}
+
+function AppIconPicker({ value, onChange }: AppIconPickerProps) {
+  return (
+    <div className="settings-sheet__icon-grid" role="radiogroup" aria-label="App icon">
+      {APP_ICON_OPTIONS.map((option) => {
+        const selected = value === option.id;
+        return (
+          <button
+            key={option.id}
+            type="button"
+            className={`settings-sheet__icon-option${selected ? ' settings-sheet__icon-option--selected' : ''}`}
+            onClick={() => onChange(option.id)}
+            role="radio"
+            aria-checked={selected}
+            aria-label={`${option.label} app icon`}
+          >
+            <span className="settings-sheet__icon-frame">
+              <img src={option.preview} alt="" className="settings-sheet__icon-preview" />
+            </span>
+            <span className="settings-sheet__icon-label">{option.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function AppIconExpander({
+  value,
+  onChange,
+  sheetOpen,
+}: AppIconPickerProps & { sheetOpen: boolean }) {
+  const [expanded, setExpanded] = useState(false);
+  const selectedOption =
+    APP_ICON_OPTIONS.find((option) => option.id === value) ?? APP_ICON_OPTIONS[0];
+
+  useEffect(() => {
+    if (!sheetOpen) {
+      setExpanded(false);
+    }
+  }, [sheetOpen]);
+
+  return (
+    <li className="settings-sheet__expander-group">
+      <button
+        type="button"
+        className="settings-sheet__expander-trigger"
+        aria-expanded={expanded}
+        aria-controls="settings-app-icon-panel"
+        onClick={() => setExpanded((current) => !current)}
+      >
+        <span>App icon</span>
+        <span className="settings-sheet__expander-summary">
+          <span className="settings-sheet__icon-frame settings-sheet__icon-frame--summary">
+            <img
+              src={selectedOption.preview}
+              alt=""
+              className="settings-sheet__icon-preview settings-sheet__icon-preview--summary"
+            />
+          </span>
+          <span className="settings-sheet__expander-value">{selectedOption.label}</span>
+          <span
+            className={`settings-sheet__expander-chevron${expanded ? ' settings-sheet__expander-chevron--open' : ''}`}
+            aria-hidden="true"
+          >
+            <IconChevronDown />
+          </span>
+        </span>
+      </button>
+      {expanded ? (
+        <div
+          id="settings-app-icon-panel"
+          className="settings-sheet__expander-panel"
+        >
+          <AppIconPicker
+            value={value}
+            onChange={(nextValue) => {
+              onChange(nextValue);
+              setExpanded(false);
+            }}
+          />
+        </div>
+      ) : null}
+    </li>
   );
 }
 
@@ -153,12 +260,12 @@ export function SettingsSheet({
   settings,
   onClose,
   onToggleCalendar,
-  onColorSchemeToggle,
   onColorThemeChange,
   onTransliterateChange,
   onIslamicCalendarModeChange,
   onIslamicAdjustmentChange,
   onUseModifiedJulianDayChange,
+  onAppIconChange,
   onAboutOpen,
 }: SettingsSheetProps) {
   const sheetRef = useRef<HTMLElement>(null);
@@ -321,18 +428,6 @@ export function SettingsSheet({
               <section className="settings-sheet__section">
                 <h3>Settings</h3>
                 <ul className="settings-sheet__list">
-                  <li className="settings-sheet__item settings-sheet__item--stacked">
-                    <span>Color theme</span>
-                    <ColorThemePicker value={settings.colorTheme} onChange={onColorThemeChange} />
-                  </li>
-                  <li className="settings-sheet__item">
-                    <span>Dark mode</span>
-                    <SheetToggle
-                      checked={settings.colorScheme === 'dark'}
-                      label="Dark mode"
-                      onChange={onColorSchemeToggle}
-                    />
-                  </li>
                   <li className="settings-sheet__item">
                     <span>Transliterate To English</span>
                     <SheetToggle
@@ -341,6 +436,15 @@ export function SettingsSheet({
                       onChange={() => onTransliterateChange(!settings.transliterateToEnglish)}
                     />
                   </li>
+                  <li className="settings-sheet__item settings-sheet__item--stacked">
+                    <span>Color theme</span>
+                    <ColorThemePicker value={settings.colorTheme} onChange={onColorThemeChange} />
+                  </li>
+                  <AppIconExpander
+                    value={settings.appIcon}
+                    onChange={onAppIconChange}
+                    sheetOpen={open}
+                  />
                 </ul>
               </section>
 

@@ -64,6 +64,7 @@ import {
 } from './nativeCalendarText';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
 import { calendarColorContext, getCalendarColor } from '../theme/calendarColors';
+import { getReligiousHolidays, type HolidayTradition, type ReligiousHoliday } from './religiousHolidays';
 
 export type CalendarId =
   | 'gregorian'
@@ -371,6 +372,28 @@ export interface CalendarRowData {
   entry: CalendarEntry;
   visible: boolean;
   backgroundColor: string;
+  holidays: ReligiousHoliday[];
+}
+
+const CALENDAR_HOLIDAY_TRADITIONS: Partial<Record<CalendarId, HolidayTradition>> = {
+  gregorian: 'christian',
+  julian: 'christian',
+  coptic: 'christian',
+  ethiopian: 'christian',
+  hebrew: 'jewish',
+  islamic: 'islamic',
+};
+
+function holidaysForCalendar(
+  calendarId: CalendarId,
+  holidays: ReligiousHoliday[],
+): ReligiousHoliday[] {
+  const tradition = CALENDAR_HOLIDAY_TRADITIONS[calendarId];
+  if (!tradition) {
+    return [];
+  }
+
+  return holidays.filter((holiday) => holiday.tradition === tradition);
 }
 
 export function getOrderedCalendarRows(
@@ -378,10 +401,13 @@ export function getOrderedCalendarRows(
   anchor: GregorianCalendar,
   settings: AppSettings,
 ): CalendarRowData[] {
+  const holidays = getReligiousHolidays(anchor, settings);
+
   return order.map((id) => ({
     entry: buildCalendarEntry(id, anchor, settings),
     visible: settings.visibleCalendars[id],
     backgroundColor: getCalendarColor(id, calendarColorContext(settings)),
+    holidays: holidaysForCalendar(id, holidays),
   }));
 }
 

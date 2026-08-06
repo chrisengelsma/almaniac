@@ -90,7 +90,7 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     calendarType: 'lunisolar',
     firstImplemented: 'c. 14th century BCE (legendary); fixed rules c. 104 BCE',
     history:
-      'The traditional Chinese calendar (农历) follows lunar months anchored by solar terms, with years named by the sexagenary cycle (干支) of heavenly stems and earthly branches — each year also carries a zodiac animal (生肖). Leap months keep festivals aligned with seasons.',
+      'The traditional Chinese calendar (农历) follows lunar months anchored by solar terms, with years named by the sexagenary cycle (干支) of heavenly stems and earthly branches. Each year also carries a zodiac animal (生肖). Leap months keep festivals aligned with seasons.',
     usedIn: ['China', 'Taiwan', 'Hong Kong', 'Macau', 'Singapore', 'Malaysia', 'Overseas Chinese communities'],
     mapCountries: ['CN', 'TW', 'HK', 'MO', 'SG', 'MY'],
   },
@@ -117,7 +117,7 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     calendarType: 'mixed',
     firstImplemented: 'c. 500 BCE',
     history:
-      'The Classic Maya used interlocking cycles—the 260-day Tzolkʼin, the 365-day Haab, and the Long Count that tracks days from a mythic creation date. This display uses the Long Count notation familiar from monuments and codices.',
+      'The Classic Maya used interlocking cycles: the 260-day Tzolkʼin, the 365-day Haab, and the Long Count that tracks days from a mythic creation date. This display uses the Long Count notation familiar from monuments and codices.',
     usedIn: ['Mexico', 'Guatemala', 'Belize', 'Honduras', 'El Salvador'],
     mapCountries: ['MX', 'GT', 'BZ', 'HN', 'SV'],
   },
@@ -231,7 +231,7 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     calendarType: 'solar',
     firstImplemented: '1963 CE (Principia Discordia)',
     history:
-      'A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons—Chaos, Discord, Confusion, Bureaucracy, and The Aftermath—and a five-day week. Leap years gain St. Tib\'s Day between Chaos 59 and 60. Years are counted in YOLD (Year of Our Lady of Discord), Gregorian year plus 1166.',
+      'A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons (Chaos, Discord, Confusion, Bureaucracy, and The Aftermath) and a five-day week. Leap years gain St. Tib\'s Day between Chaos 59 and 60. Years are counted in YOLD (Year of Our Lady of Discord), Gregorian year plus 1166.',
     usedIn: ['Discordian communities', 'Internet culture', 'Counterculture humor'],
     mapCountries: ['US', 'GB', 'CA', 'AU', 'DE'],
   },

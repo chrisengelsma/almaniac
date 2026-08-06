@@ -14,7 +14,7 @@ type MapTab = 'usage' | 'timeline';
 
 interface JulianMapSectionProps {
   info: CalendarInfo;
-  mapColors: { background: string; stroke: string; fill: string };
+  mapColors: { stroke: string; fill: string };
 }
 
 function TimelineEventList({ title, codes }: { title: string; codes: string[] }) {
@@ -91,7 +91,6 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
         >
           <WorldUsageMap
             highlighted={info.mapCountries}
-            backgroundColor={mapColors.background}
             strokeColor={mapColors.stroke}
             fillColor={mapColors.fill}
           />
@@ -143,7 +142,6 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
 
           <WorldUsageMap
             highlighted={activeCountries}
-            backgroundColor={mapColors.background}
             strokeColor={mapColors.stroke}
             fillColor={mapColors.fill}
           />

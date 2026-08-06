@@ -1,6 +1,8 @@
 :root {
-  --almaniac-bg: #263238;
-  --almaniac-bg-deep: #222d37;
+  --top-bar-height: 7rem;
+  --top-bar-bg: #faf9f4;
+  --almaniac-bg: var(--top-bar-bg);
+  --almaniac-bg-deep: var(--top-bar-bg);
   --almaniac-yellow: #ffeb3b;
   --almaniac-yellow-soft: #fff176;
   --almaniac-text: #263238;
@@ -9,9 +11,6 @@
   --almaniac-divider: rgba(38, 50, 56, 0.18);
   --calendar-row-divider: rgba(38, 50, 56, 0.24);
   --calendar-row-highlight: rgba(255, 255, 255, 0.55);
-  --top-bar-height: 7rem;
-
-  --top-bar-bg: #ffffff;
   --top-bar-fg: #263238;
   --top-bar-fg-muted: rgba(38, 50, 56, 0.68);
   --top-bar-divider: rgba(38, 50, 56, 0.1);
@@ -30,7 +29,7 @@
   --overlay-control-bg: rgba(38, 50, 56, 0.08);
   --overlay-control-bg-active: rgba(0, 137, 123, 0.16);
   --overlay-close-bg: rgba(38, 50, 56, 0.1);
-  --overlay-ghost-fg: rgba(38, 50, 56, 0.72);
+  --overlay-ghost-fg: #546e7a;
   --overlay-primary-btn-bg: #ffdd00;
   --overlay-primary-btn-fg: #1a1a1a;
   --overlay-link: #1565c0;
@@ -54,7 +53,7 @@
   --overlay-color-scheme: light;
 
   color: var(--almaniac-text);
-  background: var(--almaniac-bg-deep);
+  background: var(--top-bar-bg);
   font-family: Roboto, 'Segoe UI', sans-serif;
   line-height: 1.4;
   font-weight: 400;
@@ -76,6 +75,15 @@ body,
   height: 100%;
 }
 
+@media (orientation: landscape) {
+  html,
+  body,
+  #root {
+    width: 100dvw;
+    max-width: 100dvw;
+  }
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -95,6 +103,8 @@ button:disabled {
 
 html[data-color-scheme='dark'] {
   --top-bar-bg: #263238;
+  --almaniac-bg: var(--top-bar-bg);
+  --almaniac-bg-deep: var(--top-bar-bg);
   --calendar-row-divider: rgba(255, 255, 255, 0.16);
   --calendar-row-highlight: rgba(255, 255, 255, 0.07);
   --top-bar-fg: #eceff1;
@@ -140,21 +150,21 @@ html[data-color-scheme='dark'] {
 }
 
 html[data-color-theme='mono'] {
-  --almaniac-bg: #f5f5f5;
-  --almaniac-bg-deep: #f0f0f0;
-  --almaniac-teal: #616161;
-  --almaniac-text: #212121;
-  --almaniac-text-muted: #757575;
-  --calendar-row-divider: rgba(0, 0, 0, 0.12);
-  --calendar-row-highlight: rgba(255, 255, 255, 0.65);
-
   --top-bar-bg: #ffffff;
+  --almaniac-bg: var(--top-bar-bg);
+  --almaniac-bg-deep: var(--top-bar-bg);
   --top-bar-fg: #212121;
   --top-bar-fg-muted: rgba(33, 33, 33, 0.68);
   --top-bar-divider: rgba(0, 0, 0, 0.1);
   --top-bar-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   --top-bar-logo: #424242;
   --top-bar-logo-tagline: rgba(66, 66, 66, 0.72);
+
+  --almaniac-teal: #616161;
+  --almaniac-text: #212121;
+  --almaniac-text-muted: #757575;
+  --calendar-row-divider: rgba(0, 0, 0, 0.12);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.65);
 
   --overlay-surface-bg: #f5f5f5;
   --overlay-surface-fg: #212121;
@@ -167,7 +177,7 @@ html[data-color-theme='mono'] {
   --overlay-control-bg: rgba(0, 0, 0, 0.06);
   --overlay-control-bg-active: rgba(0, 0, 0, 0.1);
   --overlay-close-bg: rgba(0, 0, 0, 0.08);
-  --overlay-ghost-fg: rgba(33, 33, 33, 0.72);
+  --overlay-ghost-fg: #616161;
   --overlay-primary-btn-bg: #e0e0e0;
   --overlay-primary-btn-fg: #212121;
   --overlay-link: #424242;
@@ -191,21 +201,21 @@ html[data-color-theme='mono'] {
 }
 
 html[data-color-theme='mono'][data-color-scheme='dark'] {
-  --almaniac-bg: #1a1a1a;
-  --almaniac-bg-deep: #121212;
-  --almaniac-teal: #bdbdbd;
-  --almaniac-text: #f5f5f5;
-  --almaniac-text-muted: #bdbdbd;
-  --calendar-row-divider: rgba(255, 255, 255, 0.12);
-  --calendar-row-highlight: rgba(255, 255, 255, 0.05);
-
   --top-bar-bg: #1a1a1a;
+  --almaniac-bg: var(--top-bar-bg);
+  --almaniac-bg-deep: var(--top-bar-bg);
   --top-bar-fg: #f5f5f5;
   --top-bar-fg-muted: rgba(245, 245, 245, 0.72);
   --top-bar-divider: rgba(255, 255, 255, 0.08);
   --top-bar-shadow: 0 2px 8px rgba(0, 0, 0, 0.32);
   --top-bar-logo: #f5f5f5;
   --top-bar-logo-tagline: rgba(245, 245, 245, 0.72);
+
+  --almaniac-teal: #bdbdbd;
+  --almaniac-text: #f5f5f5;
+  --almaniac-text-muted: #bdbdbd;
+  --calendar-row-divider: rgba(255, 255, 255, 0.12);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.05);
 
   --overlay-surface-bg: #1a1a1a;
   --overlay-surface-fg: #f5f5f5;
@@ -239,4 +249,109 @@ html[data-color-theme='mono'][data-color-scheme='dark'] {
   --overlay-map-border: rgba(255, 255, 255, 0.1);
   --overlay-hero-gradient-start: #616161;
   --overlay-hero-gradient-end: #212121;
+}
+
+html[data-color-theme='sepia'] {
+  --top-bar-bg: #f4ecd8;
+  --almaniac-bg: var(--top-bar-bg);
+  --almaniac-bg-deep: var(--top-bar-bg);
+  --top-bar-fg: #3d2f1f;
+  --top-bar-fg-muted: rgba(61, 47, 31, 0.68);
+  --top-bar-divider: rgba(61, 47, 31, 0.12);
+  --top-bar-shadow: 0 2px 8px rgba(61, 47, 31, 0.12);
+  --top-bar-logo: #8b6914;
+  --top-bar-logo-tagline: rgba(61, 47, 31, 0.62);
+
+  --almaniac-yellow: #d4a84b;
+  --almaniac-yellow-soft: #e8c878;
+  --almaniac-text: #3d2f1f;
+  --almaniac-text-muted: #6b5344;
+  --almaniac-teal: #8b6914;
+  --almaniac-divider: rgba(61, 47, 31, 0.18);
+  --calendar-row-divider: rgba(61, 47, 31, 0.22);
+  --calendar-row-highlight: rgba(255, 248, 235, 0.55);
+
+  --overlay-surface-bg: #ebe0c8;
+  --overlay-surface-fg: #3d2f1f;
+  --overlay-surface-fg-muted: rgba(61, 47, 31, 0.62);
+  --overlay-surface-fg-subtle: rgba(61, 47, 31, 0.72);
+  --overlay-surface-border: rgba(61, 47, 31, 0.14);
+  --overlay-surface-divider: rgba(61, 47, 31, 0.1);
+  --overlay-input-bg: #f8f0e0;
+  --overlay-input-border: rgba(61, 47, 31, 0.18);
+  --overlay-control-bg: rgba(61, 47, 31, 0.08);
+  --overlay-control-bg-active: rgba(139, 105, 20, 0.16);
+  --overlay-close-bg: rgba(61, 47, 31, 0.1);
+  --overlay-ghost-fg: #6b5344;
+  --overlay-primary-btn-bg: #d4a84b;
+  --overlay-primary-btn-fg: #2a2118;
+  --overlay-link: #6b4e12;
+  --overlay-tab-bg: rgba(61, 47, 31, 0.07);
+  --overlay-tab-fg: rgba(61, 47, 31, 0.68);
+  --overlay-tab-active-bg: #f8f0e0;
+  --overlay-tab-active-fg: #3d2f1f;
+  --overlay-chip-bg: rgba(61, 47, 31, 0.08);
+  --overlay-handle-bg: rgba(61, 47, 31, 0.22);
+  --overlay-toggle-bg: rgba(61, 47, 31, 0.22);
+  --overlay-toggle-knob: #f8f0e0;
+  --overlay-slider-track: rgba(139, 105, 20, 0.35);
+  --overlay-slider-thumb: #8b6914;
+  --overlay-focus: rgba(139, 105, 20, 0.4);
+  --overlay-accent: #8b6914;
+  --overlay-error: #9c4a32;
+  --overlay-dropdown-bg: #f8f0e0;
+  --overlay-map-border: rgba(61, 47, 31, 0.14);
+  --overlay-hero-gradient-start: #8b7355;
+  --overlay-hero-gradient-end: #5c4d3c;
+}
+
+html[data-color-theme='sepia'][data-color-scheme='dark'] {
+  --top-bar-bg: #2a2118;
+  --almaniac-bg: var(--top-bar-bg);
+  --almaniac-bg-deep: var(--top-bar-bg);
+  --top-bar-fg: #e8dcc8;
+  --top-bar-fg-muted: rgba(232, 220, 200, 0.72);
+  --top-bar-divider: rgba(232, 220, 200, 0.08);
+  --top-bar-shadow: 0 2px 8px rgba(0, 0, 0, 0.32);
+  --top-bar-logo: #d4a84b;
+  --top-bar-logo-tagline: rgba(212, 168, 75, 0.82);
+
+  --almaniac-teal: #c4a86a;
+  --almaniac-text: #3d3228;
+  --almaniac-text-muted: #b8a890;
+  --calendar-row-divider: rgba(232, 220, 200, 0.14);
+  --calendar-row-highlight: rgba(255, 248, 235, 0.06);
+
+  --overlay-surface-bg: #2a2118;
+  --overlay-surface-fg: #e8dcc8;
+  --overlay-surface-fg-muted: rgba(232, 220, 200, 0.72);
+  --overlay-surface-fg-subtle: rgba(232, 220, 200, 0.55);
+  --overlay-surface-border: rgba(232, 220, 200, 0.1);
+  --overlay-surface-divider: rgba(232, 220, 200, 0.08);
+  --overlay-input-bg: rgba(0, 0, 0, 0.22);
+  --overlay-input-border: rgba(232, 220, 200, 0.12);
+  --overlay-control-bg: rgba(0, 0, 0, 0.22);
+  --overlay-control-bg-active: rgba(196, 168, 106, 0.22);
+  --overlay-close-bg: rgba(232, 220, 200, 0.1);
+  --overlay-ghost-fg: rgba(232, 220, 200, 0.72);
+  --overlay-primary-btn-bg: rgba(232, 220, 200, 0.12);
+  --overlay-primary-btn-fg: #d4a84b;
+  --overlay-link: #e8c878;
+  --overlay-tab-bg: rgba(232, 220, 200, 0.06);
+  --overlay-tab-fg: rgba(232, 220, 200, 0.68);
+  --overlay-tab-active-bg: rgba(232, 220, 200, 0.12);
+  --overlay-tab-active-fg: #e8dcc8;
+  --overlay-chip-bg: rgba(232, 220, 200, 0.08);
+  --overlay-handle-bg: rgba(232, 220, 200, 0.35);
+  --overlay-toggle-bg: rgba(232, 220, 200, 0.28);
+  --overlay-toggle-knob: #e8dcc8;
+  --overlay-slider-track: rgba(212, 168, 75, 0.45);
+  --overlay-slider-thumb: #d4a84b;
+  --overlay-focus: rgba(212, 168, 75, 0.45);
+  --overlay-accent: #d4a84b;
+  --overlay-error: #e8a090;
+  --overlay-dropdown-bg: #1f1812;
+  --overlay-map-border: rgba(232, 220, 200, 0.1);
+  --overlay-hero-gradient-start: #5c4d3c;
+  --overlay-hero-gradient-end: #2a2118;
 }

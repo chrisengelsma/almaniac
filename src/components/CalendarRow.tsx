@@ -9,12 +9,21 @@ import { MayaLongCount } from './MayaLongCount';
 
 interface CalendarRowProps {
   row: CalendarRowData;
+  staggerIndex?: number;
+  themeTransitionDelay?: number;
   onInfoClick: (id: CalendarRowData['entry']['id']) => void;
   onFullscreen: (row: CalendarRowData, originRect: DOMRectReadOnly, textOriginRect: DOMRectReadOnly) => void;
   isFullscreenSource?: boolean;
 }
 
-export function CalendarRow({ row, onInfoClick, onFullscreen, isFullscreenSource = false }: CalendarRowProps) {
+export function CalendarRow({
+  row,
+  staggerIndex,
+  themeTransitionDelay,
+  onInfoClick,
+  onFullscreen,
+  isFullscreenSource = false,
+}: CalendarRowProps) {
   const { entry, visible } = row;
   const rowRef = useRef<HTMLElement | null>(null);
   const [copied, setCopied] = useState(false);
@@ -22,8 +31,8 @@ export function CalendarRow({ row, onInfoClick, onFullscreen, isFullscreenSource
   const scriptStyle = calendarTextStyle(entry.scriptFont);
   const detailScriptClass = calendarTextClassName(entry.detailScriptFont ?? entry.scriptFont);
   const detailScriptStyle = calendarTextStyle(entry.detailScriptFont ?? entry.scriptFont);
-  const dateText = entry.date || '—';
-  const canCopy = Boolean(entry.date && entry.date !== '—');
+  const dateText = entry.date || '-';
+  const canCopy = Boolean(entry.date && entry.date !== '-');
   const {
     attributes,
     listeners,
@@ -34,11 +43,21 @@ export function CalendarRow({ row, onInfoClick, onFullscreen, isFullscreenSource
     isDragging,
   } = useSortable({ id: entry.id, disabled: !visible });
 
-  const style: CSSProperties & { '--calendar-accent'?: string } = {
+  const isEntering = staggerIndex !== undefined;
+
+  const style: CSSProperties & {
+    '--calendar-accent'?: string;
+    '--stagger-index'?: number;
+    '--theme-transition-delay'?: string;
+  } = {
     backgroundColor: row.backgroundColor,
     '--calendar-accent': row.backgroundColor,
-    transform: CSS.Transform.toString(transform),
+    transform: isEntering ? undefined : CSS.Transform.toString(transform),
     transition: isDragging ? transition : undefined,
+    ...(isEntering ? { '--stagger-index': staggerIndex } : {}),
+    ...(themeTransitionDelay !== undefined
+      ? { '--theme-transition-delay': `${themeTransitionDelay}ms` }
+      : {}),
   };
 
   const handleCopy = async () => {
@@ -82,7 +101,9 @@ export function CalendarRow({ row, onInfoClick, onFullscreen, isFullscreenSource
       style={style}
       className={[
         'calendar-row',
+        'theme-chunk',
         visible ? 'calendar-row--visible' : 'calendar-row--hidden',
+        isEntering ? 'calendar-row--entering' : '',
         isDragging ? 'calendar-row--dragging' : '',
         isFullscreenSource ? 'calendar-row--fullscreen-source' : '',
       ]
@@ -103,6 +124,14 @@ export function CalendarRow({ row, onInfoClick, onFullscreen, isFullscreenSource
           <DragHandle />
         </button>
         <div className="calendar-row__body">
+          {row.holidays.length > 0 ? (
+            <div
+              className="calendar-row__holiday"
+              aria-label={`Holiday: ${row.holidays.map((holiday) => holiday.name).join(', ')}`}
+            >
+              {row.holidays.map((holiday) => holiday.name).join(' · ')}
+            </div>
+          ) : null}
           <div className="calendar-row__date-wrap">
             <p
               className={`calendar-row__date ${scriptClass}`.trim()}

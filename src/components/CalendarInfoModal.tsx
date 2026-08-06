@@ -260,7 +260,6 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
               <h3>Where it is used</h3>
               <WorldUsageMap
                 highlighted={info.mapCountries}
-                backgroundColor={mapColors.background}
                 strokeColor={mapColors.stroke}
                 fillColor={mapColors.fill}
               />

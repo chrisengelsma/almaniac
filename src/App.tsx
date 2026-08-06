@@ -8,9 +8,13 @@ import { DatePickerModal } from './components/DatePickerModal';
 import { FullscreenDateView } from './components/FullscreenDateView';
 import { SettingsSheet } from './components/SettingsSheet';
 import { TopBar } from './components/TopBar';
+import { applyAppIcon } from './lib/appIcon';
 import {
-  loadAppSettings,
-  saveAppSettings,
+  anchorFromPersistedState,
+  createPersistedAppState,
+  loadPersistedAppState,
+  savePersistedAppState,
+  setAppIcon,
   setIslamicCalendarMode,
   setIslamicDayAdjustment,
   setColorTheme,
@@ -19,9 +23,9 @@ import {
   toggleCalendarVisibility,
   toggleColorScheme,
   type AppSettings,
+  type ColorTheme,
 } from './lib/appSettings';
 import {
-  DEFAULT_CALENDAR_ORDER,
   getOrderedCalendarRows,
   shiftGregorianDate,
   todayGregorianDate,
@@ -31,12 +35,16 @@ import {
 } from './lib/calendarRegistry';
 import { viewportRectFromDom, type ViewportRect } from './lib/fullscreenRect';
 import { useDocumentTheme } from './hooks/useDocumentTheme';
+import { useAppReviewPrompt } from './hooks/useAppReviewPrompt';
+import { useTapHaptics } from './hooks/useTapHaptics';
+import { useThemeTransition } from './hooks/useThemeTransition';
 import './App.css';
 
 function App() {
-  const [anchor, setAnchor] = useState<GregorianCalendar>(() => todayGregorianDate());
-  const [order, setOrder] = useState<CalendarId[]>(DEFAULT_CALENDAR_ORDER);
-  const [settings, setSettings] = useState<AppSettings>(() => loadAppSettings());
+  const [initialState] = useState(() => loadPersistedAppState());
+  const [anchor, setAnchor] = useState<GregorianCalendar>(() => anchorFromPersistedState(initialState));
+  const [order, setOrder] = useState<CalendarId[]>(() => initialState.calendarOrder);
+  const [settings, setSettings] = useState<AppSettings>(() => initialState.settings);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -67,12 +75,16 @@ function App() {
   }, [fullscreen, rows]);
 
   useEffect(() => {
-    saveAppSettings(settings);
-  }, [settings]);
+    savePersistedAppState(createPersistedAppState(settings, order, anchor));
+  }, [settings, order, anchor]);
 
   useEffect(() => {
     void syncWidgetData(settings);
   }, [settings]);
+
+  useEffect(() => {
+    void applyAppIcon(settings.appIcon);
+  }, [settings.appIcon]);
 
   useEffect(() => {
     const syncOnForeground = () => {
@@ -89,14 +101,49 @@ function App() {
     setSettings((current) => updater(current));
   };
 
+  const visibleCalendarIds = useMemo(
+    () => rows.filter((row) => row.visible).map((row) => row.entry.id),
+    [rows],
+  );
+
+  const { isThemeTransitioning, themeTransitionDelays, beginThemeTransition } =
+    useThemeTransition(visibleCalendarIds);
+
   useDocumentTheme(settings);
+  useAppReviewPrompt();
+  useTapHaptics();
+
+  const handleColorSchemeToggle = () => {
+    beginThemeTransition(() => {
+      updateSettings((current) => toggleColorScheme(current));
+    });
+  };
+
+  const handleColorThemeChange = (value: ColorTheme) => {
+    if (value === settings.colorTheme) {
+      return;
+    }
+
+    beginThemeTransition(() => {
+      updateSettings((current) => setColorTheme(current, value));
+    });
+  };
 
   return (
-    <div className="app" data-color-scheme={settings.colorScheme} data-color-theme={settings.colorTheme}>
+    <div
+      className={['app', isThemeTransitioning ? 'app--theme-transitioning' : '']
+        .filter(Boolean)
+        .join(' ')}
+      data-color-scheme={settings.colorScheme}
+      data-color-theme={settings.colorTheme}
+    >
       <TopBar
+        colorScheme={settings.colorScheme}
         onDonateOpen={() => setDonateOpen(true)}
         onCustomizeOpen={() => setSheetOpen(true)}
         onDateClick={() => setDatePickerOpen(true)}
+        onColorSchemeToggle={handleColorSchemeToggle}
+        themeTransitionDelays={themeTransitionDelays}
         onBack30={() => setAnchor((current) => shiftGregorianDate(current, -30))}
         onBack1={() => setAnchor((current) => shiftGregorianDate(current, -1))}
         onToday={() => setAnchor(todayGregorianDate())}
@@ -107,8 +154,7 @@ function App() {
         open={sheetOpen}
         settings={settings}
         onClose={() => setSheetOpen(false)}
-        onColorSchemeToggle={() => updateSettings((current) => toggleColorScheme(current))}
-        onColorThemeChange={(value) => updateSettings((current) => setColorTheme(current, value))}
+        onColorThemeChange={handleColorThemeChange}
         onToggleCalendar={(id) => updateSettings((current) => toggleCalendarVisibility(current, id))}
         onTransliterateChange={(value) => updateSettings((current) => setTransliterateToEnglish(current, value))}
         onIslamicCalendarModeChange={(value) =>
@@ -120,12 +166,17 @@ function App() {
         onUseModifiedJulianDayChange={(value) =>
           updateSettings((current) => setUseModifiedJulianDay(current, value))
         }
+        onAppIconChange={(value) => {
+          updateSettings((current) => setAppIcon(current, value));
+          void applyAppIcon(value);
+        }}
         onAboutOpen={() => setAboutOpen(true)}
       />
       <CalendarList
         order={order}
         anchor={anchor}
         settings={settings}
+        themeTransitionDelays={themeTransitionDelays}
         onReorder={setOrder}
         onInfoClick={setInfoCalendarId}
         onFullscreen={(row, originRect, textOriginRect) =>

@@ -258,7 +258,7 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
           type: 'number',
           min: 1,
           placeholder: 'e.g. 100',
-          hint: 'Type any year — including ancient dates like 100 BCE.',
+          hint: 'Type any year, including ancient dates like 100 BCE.',
         },
         { key: 'era', label: 'Era', type: 'era' },
         {

@@ -53,7 +53,7 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
       'Under the terms of the CC BY 2.0 source, the adapted banner is offered under CC BY 2.0.',
     sources: [
       {
-        title: 'Roma—Statua di Cesare',
+        title: 'Roma, Statua di Cesare',
         author: 'Dan Kamminga',
         license: 'CC BY 2.0',
         licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
@@ -414,25 +414,23 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
   },
   isoWeek: {
     calendarId: 'isoWeek',
-    subjects: 'NBS Atomic Clock | Earth from Apollo 17',
+    subjects: 'NBS Atomic Clock | The Earth Seen from Apollo 17',
     aboutNote:
       'The ISO Week calendar banner is derivative artwork adapted from the source images below.',
     sources: [
       {
-        title: 'NBS atomic clock',
+        title: 'NBS Atomic Clock',
         author: 'National Institute of Standards and Technology',
         license: 'Public domain',
         licenseUrl: 'https://commons.wikimedia.org/wiki/File:Atomic_Clock048.jpg',
         sourceUrl: 'https://commons.wikimedia.org/wiki/File:Atomic_Clock048.jpg',
       },
       {
-        title: 'The Earth seen from Apollo 17 (Original Orientation)',
+        title: 'The Earth Seen from Apollo 17',
         author: 'NASA',
         license: 'Public domain',
-        licenseUrl:
-          'https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17_%28Original_Orientation%29.jpg',
-        sourceUrl:
-          'https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17_%28Original_Orientation%29.jpg',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17_(Original_Orientation).jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17_(Original_Orientation).jpg',
       },
     ],
     derivedLicense: 'Public domain',
@@ -446,7 +444,7 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
       'Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0.',
     sources: [
       {
-        title: 'Joseph Justus Scaliger portrait',
+        title: 'Joseph Justus Scaliger Portrait',
         author: 'Gérard Edelinck and Charles E. Wagstaff',
         license: 'Public domain',
         licenseUrl: 'https://commons.wikimedia.org/wiki/File:Joseph_Justus_Scaliger_portrait.jpg',
@@ -462,6 +460,63 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
     ],
     derivedLicense: 'CC BY-SA 4.0',
     derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  bengali: {
+    calendarId: 'bengali',
+    subjects: 'The Emperor Akbar | Ahsan Manzil',
+    aboutNote:
+      'The Bengali calendar banner is derivative artwork adapted from the source images below. ' +
+      'Under the ShareAlike terms of the CC BY-SA 4.0 sources, the adapted banner is offered under CC BY-SA 4.0.',
+    sources: [
+      {
+        title: 'The Emperor Akbar',
+        author: 'Unknown artist',
+        license: 'Public domain',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:The_Emperor_Akbar.jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:The_Emperor_Akbar.jpg',
+      },
+      {
+        title: 'Front View of Ahsan Manzil',
+        author: 'Sumonto.ck',
+        license: 'CC BY-SA 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Front_view_of_Ahsan_Manzil.jpg',
+      },
+      {
+        title: 'Rice Field in the Middle of a River',
+        author: 'Ayman Nakib Badhan',
+        license: 'CC BY-SA 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Rice_field_in_the_middle_of_a_river.jpg',
+      },
+    ],
+    derivedLicense: 'CC BY-SA 4.0',
+    derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  minguo: {
+    calendarId: 'minguo',
+    subjects: 'Sun Yat-sen | Presidential Office Building',
+    aboutNote:
+      'The Minguo calendar banner is derivative artwork adapted from the source images below. ' +
+      'Under the ShareAlike terms of the CC BY-SA 3.0 source, the adapted banner is offered under CC BY-SA 3.0.',
+    sources: [
+      {
+        title: 'Sun Yat Sen Portrait',
+        author: 'Shanghai Tongsheng Photo Studio / K. T. Thompson',
+        license: 'Public domain',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:Sun_Yat_Sen_portrait.jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Sun_Yat_Sen_portrait.jpg',
+      },
+      {
+        title: 'Taipei Taiwan Presidential Office Building',
+        author: 'CEphoto, Uwe Aranas',
+        license: 'CC BY-SA 3.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Taipei_Taiwan_Presidential-Office-Building-01a.jpg',
+      },
+    ],
+    derivedLicense: 'CC BY-SA 3.0',
+    derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
   },
 };
 

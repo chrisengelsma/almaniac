@@ -1,4 +1,4 @@
-See any date across the world's calendars — all at once, in their own scripts.
+See the same date in many calendars at once, in their native scripts.
 
 Almaniac is a multi-calendar converter that shows Gregorian, Julian, Hebrew, Islamic, Persian, Indian, French Republican, Maya, and Julian Day dates on a single screen.
 
@@ -6,15 +6,15 @@ ALL CALENDARS AT ONCE
 Pick a date and see every calendar system side by side. No back-and-forth converting between source and target.
 
 NATIVE SCRIPTS
-Dates appear in Arabic, Hebrew, and Devanagari with proper fonts — not just romanized text. Toggle transliteration when you prefer English month names.
+Dates appear in Arabic, Hebrew, and Devanagari with proper fonts, not just romanized text. Toggle transliteration when you prefer English month names.
 
 RELIGIOUS HOLIDAYS
 Major Christian, Jewish, and Islamic holidays appear on the dates they fall. Toggle each tradition on or off in settings.
 
 ANCIENT DATES MADE EASY
-Jump to any year by typing it — including BCE dates for historical research. No endless scrolling to reach 100 BCE.
+Jump to any year by typing it, including BCE dates for historical research. No endless scrolling to reach 100 BCE.
 
-LEARN AS YOU CONVERT
+CALENDAR INFO
 Tap any calendar for its history, solar/lunar type, and an interactive map of where it's used today.
 
 BUILT FOR PRIVACY

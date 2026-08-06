@@ -1,7 +1,7 @@
 /**
  * Script fonts chosen for uniform (monolinear) stroke width.
  *
- * IBM Plex Sans is a grotesque family — same design language across scripts,
+ * IBM Plex Sans is a grotesque family with the same design language across scripts,
  * without the thick/thin contrast of calligraphic faces like Noto Naskh Arabic.
  */
 export const SCRIPT_FONTS = {

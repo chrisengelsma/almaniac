@@ -9,7 +9,7 @@ export interface CalendarColorContext {
   calendarColors?: Partial<CalendarColorMap>;
 }
 
-/** Default row colors — muted, distinct, and loosely evocative of each calendar tradition. */
+/** Default row colors: muted, distinct, and loosely evocative of each calendar tradition. */
 export const DEFAULT_CALENDAR_COLORS: CalendarColorMap = {
   gregorian: '#d4dfe8', // cool civil blue-grey
   julian: '#e6d5c3', // Roman stone
@@ -34,8 +34,10 @@ export const DEFAULT_CALENDAR_COLORS: CalendarColorMap = {
 };
 
 const MONO_LIGHT_ROW = '#e8e8e8';
-const MONO_DARK_ROW = '#2a2a2a';
 const MONO_DARK_TEXT = '#f5f5f5';
+
+const SEPIA_LIGHT_ROW = '#ebe0c8';
+const SEPIA_DARK_TEXT = '#e8dcc8';
 
 /** Five-swatch previews for the color-theme picker in settings. */
 export const COLOR_THEME_SWATCHES: Record<ColorTheme, readonly string[]> = {
@@ -47,6 +49,7 @@ export const COLOR_THEME_SWATCHES: Record<ColorTheme, readonly string[]> = {
     DEFAULT_CALENDAR_COLORS.frc,
   ],
   mono: ['#f5f5f5', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#616161'],
+  sepia: ['#f8f0e0', '#ebe0c8', '#d4c4a0', '#b8a078', '#8b6914'],
 };
 
 export function calendarColorContext(
@@ -72,42 +75,50 @@ export function getCalendarColor(id: CalendarId, context: CalendarColorContext):
     return context.colorScheme === 'dark' ? MONO_DARK_TEXT : MONO_LIGHT_ROW;
   }
 
+  if (context.colorTheme === 'sepia') {
+    return context.colorScheme === 'dark' ? SEPIA_DARK_TEXT : SEPIA_LIGHT_ROW;
+  }
+
   return context.calendarColors?.[id] ?? DEFAULT_CALENDAR_COLORS[id];
 }
 
 export function getCalendarMapColors(
   id: CalendarId,
   context: CalendarColorContext,
-): { background: string; stroke: string; fill: string } {
+): { stroke: string; fill: string } {
   if (context.colorTheme === 'mono') {
     if (context.colorScheme === 'dark') {
       return {
-        background: MONO_DARK_ROW,
-        stroke: '#ffffff',
-        fill: '#9e9e9e',
+        stroke: 'rgba(255, 255, 255, 0.35)',
+        fill: '#bdbdbd',
       };
     }
 
     return {
-      background: MONO_LIGHT_ROW,
-      stroke: '#000000',
-      fill: '#757575',
+      stroke: 'rgba(0, 0, 0, 0.28)',
+      fill: '#616161',
+    };
+  }
+
+  if (context.colorTheme === 'sepia') {
+    if (context.colorScheme === 'dark') {
+      return {
+        stroke: 'rgba(232, 220, 200, 0.35)',
+        fill: '#c4a882',
+      };
+    }
+
+    return {
+      stroke: 'rgba(61, 47, 31, 0.28)',
+      fill: '#8b6914',
     };
   }
 
   const accent = getCalendarColor(id, context);
-  const stroke = context.colorScheme === 'dark' ? '#ffffff' : '#000000';
-
-  if (context.colorScheme === 'dark') {
-    return {
-      background: '#263238',
-      stroke,
-      fill: accent,
-    };
-  }
+  const stroke =
+    context.colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.55)';
 
   return {
-    background: accent,
     stroke,
     fill: accent,
   };

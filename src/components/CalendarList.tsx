@@ -5,6 +5,7 @@ import {
   TouchSensor,
   closestCenter,
   type DragEndEvent,
+  type DragOverEvent,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -14,6 +15,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import type { AppSettings } from '../lib/appSettings';
+import type { ThemeTransitionDelays } from '../lib/themeTransition';
 import {
   DEFAULT_CALENDAR_ORDER,
   getOrderedCalendarRows,
@@ -22,12 +24,14 @@ import {
   type CalendarRowData,
   type GregorianCalendar,
 } from '../lib/calendarRegistry';
+import { hapticDragHover } from '../lib/haptics';
 import { CalendarRow } from './CalendarRow';
 
 interface CalendarListProps {
   order: CalendarId[];
   anchor: GregorianCalendar;
   settings: AppSettings;
+  themeTransitionDelays?: ThemeTransitionDelays | null;
   onReorder: (order: CalendarId[]) => void;
   onInfoClick: (id: CalendarId) => void;
   onFullscreen: (row: CalendarRowData, originRect: DOMRectReadOnly, textOriginRect: DOMRectReadOnly) => void;
@@ -38,6 +42,7 @@ export function CalendarList({
   order,
   anchor,
   settings,
+  themeTransitionDelays = null,
   onReorder,
   onInfoClick,
   onFullscreen,
@@ -45,10 +50,18 @@ export function CalendarList({
 }: CalendarListProps) {
   const listRef = useRef<HTMLElement>(null);
   const rowsRef = useRef<HTMLDivElement>(null);
+  const dragOverIdRef = useRef<string | null>(null);
   const [showAddHint, setShowAddHint] = useState(false);
+  const [isEntering, setIsEntering] = useState(true);
   const rows = getOrderedCalendarRows(order, anchor, settings);
   const visibleRows = rows.filter((row) => row.visible);
   const hasHiddenCalendars = visibleRows.length < DEFAULT_CALENDAR_ORDER.length;
+
+  useEffect(() => {
+    const enterDuration = 440 + Math.max(visibleRows.length - 1, 0) * 70;
+    const timer = window.setTimeout(() => setIsEntering(false), enterDuration);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const list = listRef.current;
@@ -81,7 +94,24 @@ export function CalendarList({
     useSensor(TouchSensor, { activationConstraint: { delay: 120, tolerance: 6 } }),
   );
 
+  const handleDragOver = (event: DragOverEvent) => {
+    const overId = event.over ? String(event.over.id) : null;
+    if (overId === dragOverIdRef.current) {
+      return;
+    }
+
+    dragOverIdRef.current = overId;
+    if (overId !== null && overId !== String(event.active.id)) {
+      hapticDragHover();
+    }
+  };
+
+  const resetDragHover = () => {
+    dragOverIdRef.current = null;
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
+    resetDragHover();
     const { active, over } = event;
     if (!over || active.id === over.id) {
       return;
@@ -100,22 +130,47 @@ export function CalendarList({
 
   return (
     <div className="calendar-list-shell">
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        onDragCancel={resetDragHover}
+      >
         <SortableContext
           items={visibleRows.map((row) => row.entry.id)}
           strategy={verticalListSortingStrategy}
         >
-          <section className="calendar-list" ref={listRef} aria-label="Calendar conversions">
+          <section
+            className={[
+              'calendar-list',
+              isEntering ? 'calendar-list--entering' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            ref={listRef}
+            aria-label="Calendar conversions"
+          >
             <div className="calendar-list__rows" ref={rowsRef}>
-              {rows.map((row) => (
-                <CalendarRow
-                  key={row.entry.id}
-                  row={row}
-                  onInfoClick={onInfoClick}
-                  onFullscreen={onFullscreen}
-                  isFullscreenSource={fullscreenCalendarId === row.entry.id}
-                />
-              ))}
+              {(() => {
+                let visibleIndex = 0;
+
+                return rows.map((row) => {
+                  const staggerIndex = row.visible ? visibleIndex++ : undefined;
+
+                  return (
+                    <CalendarRow
+                      key={row.entry.id}
+                      row={row}
+                      staggerIndex={isEntering ? staggerIndex : undefined}
+                      themeTransitionDelay={themeTransitionDelays?.[row.entry.id]}
+                      onInfoClick={onInfoClick}
+                      onFullscreen={onFullscreen}
+                      isFullscreenSource={fullscreenCalendarId === row.entry.id}
+                    />
+                  );
+                });
+              })()}
             </div>
             {showAddHint ? (
               <p className="calendar-list__hint">Add another calendar from the menu</p>

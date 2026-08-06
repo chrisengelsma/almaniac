@@ -12,7 +12,7 @@ type MapTab = 'usage' | 'adoption';
 
 interface GregorianMapSectionProps {
   info: CalendarInfo;
-  mapColors: { background: string; stroke: string; fill: string };
+  mapColors: { stroke: string; fill: string };
 }
 
 export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProps) {
@@ -65,7 +65,6 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
         >
           <WorldUsageMap
             highlighted={info.mapCountries}
-            backgroundColor={mapColors.background}
             strokeColor={mapColors.stroke}
             fillColor={mapColors.fill}
           />
@@ -113,7 +112,6 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
 
           <WorldUsageMap
             highlighted={adoptedCountries}
-            backgroundColor={mapColors.background}
             strokeColor={mapColors.stroke}
             fillColor={mapColors.fill}
           />
