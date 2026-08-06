@@ -2038,3 +2038,51 @@ html[data-color-scheme='dark'] .fullscreen-date__expand,
     fill-opacity: 1;
   }
 }
+
+@media (min-width: 600px) {
+  .calendar-row,
+  .calendar-row__surface,
+  .calendar-row__body,
+  .calendar-list__hint {
+    height: 8.5rem;
+    flex-basis: 8.5rem;
+  }
+
+  .calendar-list--entering .calendar-row--visible.calendar-row--entering {
+    animation-name: calendar-row-enter-tablet;
+  }
+
+  @keyframes calendar-row-enter-tablet {
+    from {
+      opacity: 0;
+      height: 0;
+      flex-basis: 0;
+      transform: translateY(0.75rem);
+    }
+
+    to {
+      opacity: 1;
+      height: 8.5rem;
+      flex-basis: 8.5rem;
+      transform: translateY(0);
+    }
+  }
+
+  .calendar-row__date {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .top-bar__logo-word {
+    font-size: 2.25rem;
+  }
+
+  .date-modal__panel,
+  .donate-modal__panel,
+  .about-modal__panel {
+    width: min(100%, 26rem);
+  }
+
+  .info-modal__panel {
+    width: min(100%, 32rem);
+  }
+}
