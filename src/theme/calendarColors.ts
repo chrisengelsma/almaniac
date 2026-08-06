@@ -37,6 +37,18 @@ const MONO_LIGHT_ROW = '#e8e8e8';
 const MONO_DARK_ROW = '#2a2a2a';
 const MONO_DARK_TEXT = '#f5f5f5';
 
+/** Five-swatch previews for the color-theme picker in settings. */
+export const COLOR_THEME_SWATCHES: Record<ColorTheme, readonly string[]> = {
+  distinct: [
+    DEFAULT_CALENDAR_COLORS.gregorian,
+    DEFAULT_CALENDAR_COLORS.julian,
+    DEFAULT_CALENDAR_COLORS.islamic,
+    DEFAULT_CALENDAR_COLORS.hebrew,
+    DEFAULT_CALENDAR_COLORS.frc,
+  ],
+  mono: ['#f5f5f5', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#616161'],
+};
+
 export function calendarColorContext(
   settings: Pick<CalendarColorContext, 'colorTheme' | 'colorScheme'> & {
     calendarColors?: Partial<CalendarColorMap>;

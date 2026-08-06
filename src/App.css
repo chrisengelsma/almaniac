@@ -1469,6 +1469,51 @@ html[data-color-scheme='dark'] .fullscreen-date__expand,
   padding-bottom: 1rem;
 }
 
+.settings-sheet__theme-grid {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+}
+
+.settings-sheet__theme-option {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.5rem 0.35rem;
+  border: 2px solid var(--overlay-input-border);
+  border-radius: 0.65rem;
+  background: var(--overlay-input-bg);
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.settings-sheet__theme-option--selected {
+  border-color: var(--overlay-accent);
+  background: var(--overlay-control-bg-active);
+  box-shadow: 0 0 0 1px var(--overlay-accent);
+}
+
+.settings-sheet__theme-swatches {
+  display: flex;
+  gap: 2px;
+}
+
+.settings-sheet__theme-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.settings-sheet__theme-label {
+  font-size: 0.78rem;
+  color: var(--overlay-surface-fg-muted);
+}
+
 .settings-sheet__select {
   width: 100%;
   margin-top: 0.5rem;

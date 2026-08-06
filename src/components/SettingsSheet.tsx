@@ -5,7 +5,13 @@ import {
   type CalendarId,
 } from '../lib/calendarRegistry';
 import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, ColorTheme } from '../lib/appSettings';
+import { COLOR_THEME_SWATCHES } from '../theme/calendarColors';
 import { SheetSlider, SheetToggle } from './DrawerControls';
+
+const COLOR_THEME_OPTIONS: Array<{ id: ColorTheme; label: string }> = [
+  { id: 'distinct', label: 'Distinct' },
+  { id: 'mono', label: 'Mono' },
+];
 
 const DISMISS_THRESHOLD_PX = 80;
 const SHEET_TRANSITION_MS = 320;
@@ -39,6 +45,43 @@ function IconChevronLeft() {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M14 6l-6 6 6 6" />
     </svg>
+  );
+}
+
+interface ColorThemePickerProps {
+  value: ColorTheme;
+  onChange: (value: ColorTheme) => void;
+}
+
+function ColorThemePicker({ value, onChange }: ColorThemePickerProps) {
+  return (
+    <div className="settings-sheet__theme-grid" role="radiogroup" aria-label="Color theme">
+      {COLOR_THEME_OPTIONS.map((option) => {
+        const selected = value === option.id;
+        return (
+          <button
+            key={option.id}
+            type="button"
+            className={`settings-sheet__theme-option${selected ? ' settings-sheet__theme-option--selected' : ''}`}
+            onClick={() => onChange(option.id)}
+            role="radio"
+            aria-checked={selected}
+            aria-label={`${option.label} color theme`}
+          >
+            <span className="settings-sheet__theme-swatches" aria-hidden="true">
+              {COLOR_THEME_SWATCHES[option.id].map((color, index) => (
+                <span
+                  key={index}
+                  className="settings-sheet__theme-swatch"
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </span>
+            <span className="settings-sheet__theme-label">{option.label}</span>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
@@ -280,15 +323,7 @@ export function SettingsSheet({
                 <ul className="settings-sheet__list">
                   <li className="settings-sheet__item settings-sheet__item--stacked">
                     <span>Color theme</span>
-                    <select
-                      className="settings-sheet__select"
-                      value={settings.colorTheme}
-                      onChange={(event) => onColorThemeChange(event.target.value as ColorTheme)}
-                      aria-label="Color theme"
-                    >
-                      <option value="distinct">Distinct</option>
-                      <option value="mono">Mono</option>
-                    </select>
+                    <ColorThemePicker value={settings.colorTheme} onChange={onColorThemeChange} />
                   </li>
                   <li className="settings-sheet__item">
                     <span>Dark mode</span>
