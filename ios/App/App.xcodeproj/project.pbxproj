@@ -17,6 +17,8 @@
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
 		A1WGT0222FE993A50072D4E8 /* WidgetBridgePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0032FE993A50072D4E8 /* WidgetBridgePlugin.swift */; };
+		A1ICON022FE993A50072D4E8 /* AppIconPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ICON0032FE993A50072D4E8 /* AppIconPlugin.swift */; };
+		A1BRG022FE993A50072D4E8 /* MainBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BRG0032FE993A50072D4E8 /* MainBridgeViewController.swift */; };
 		A1WGT0232FE993A50072D4E8 /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0042FE993A50072D4E8 /* WidgetDataStore.swift */; };
 		A1WGT0242FE993A50072D4E8 /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0042FE993A50072D4E8 /* WidgetDataStore.swift */; };
 		A1WGT0252FE993A50072D4E8 /* AlmaniactWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0052FE993A50072D4E8 /* AlmaniactWidget.swift */; };
@@ -63,6 +65,8 @@
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		A1WGT0022FE993A50072D4E8 /* AlmaniactWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlmaniactWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1WGT0032FE993A50072D4E8 /* WidgetBridgePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBridgePlugin.swift; sourceTree = "<group>"; };
+		A1ICON0032FE993A50072D4E8 /* AppIconPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPlugin.swift; sourceTree = "<group>"; };
+		A1BRG0032FE993A50072D4E8 /* MainBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBridgeViewController.swift; sourceTree = "<group>"; };
 		A1WGT0042FE993A50072D4E8 /* WidgetDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataStore.swift; sourceTree = "<group>"; };
 		A1WGT0052FE993A50072D4E8 /* AlmaniactWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmaniactWidget.swift; sourceTree = "<group>"; };
 		A1WGT0062FE993A50072D4E8 /* AlmaniactWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmaniactWidgetBundle.swift; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				A1WGT0032FE993A50072D4E8 /* WidgetBridgePlugin.swift */,
+				A1ICON0032FE993A50072D4E8 /* AppIconPlugin.swift */,
+				A1BRG0032FE993A50072D4E8 /* MainBridgeViewController.swift */,
 				A1WGT0162FE993A50072D4E8 /* App.entitlements */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
@@ -264,6 +270,8 @@
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */,
 				A1WGT0222FE993A50072D4E8 /* WidgetBridgePlugin.swift in Sources */,
+				A1ICON022FE993A50072D4E8 /* AppIconPlugin.swift in Sources */,
+				A1BRG022FE993A50072D4E8 /* MainBridgeViewController.swift in Sources */,
 				A1WGT0232FE993A50072D4E8 /* WidgetDataStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +431,7 @@
 			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -446,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
