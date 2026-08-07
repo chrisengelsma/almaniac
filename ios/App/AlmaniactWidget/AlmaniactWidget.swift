@@ -5,9 +5,9 @@ struct AlmaniactWidgetEntry: TimelineEntry {
     let date: Date
     let calendarId: String
     let calendarName: String
-    let weekday: String
     let displayDate: String
     let backgroundColor: Color
+    let textColor: Color
 }
 
 struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
@@ -16,9 +16,9 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
             date: Date(),
             calendarId: "gregorian",
             calendarName: "Gregorian Calendar",
-            weekday: "Wednesday",
             displayDate: "August 5, 2026",
-            backgroundColor: Color(red: 0.89, green: 0.92, blue: 0.72)
+            backgroundColor: Color(red: 0.89, green: 0.92, blue: 0.72),
+            textColor: Color(red: 0.15, green: 0.20, blue: 0.22)
         )
     }
 
@@ -34,14 +34,20 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
 
     private func entry(for configuration: SelectCalendarIntent) -> AlmaniactWidgetEntry {
         let calendarId = configuration.calendar?.id ?? "gregorian"
+        let useTransliteration = configuration.transliterateToEnglish
+
         if let data = WidgetDataStore.calendarData(for: calendarId) {
+            let displayDate = useTransliteration
+                ? (data.dateTransliterated ?? data.date)
+                : data.date
+
             return AlmaniactWidgetEntry(
                 date: Date(),
                 calendarId: calendarId,
                 calendarName: data.calendarName,
-                weekday: data.weekday,
-                displayDate: data.date,
-                backgroundColor: color(from: data.backgroundColor)
+                displayDate: displayDate,
+                backgroundColor: color(from: data.backgroundColor),
+                textColor: color(from: data.textColor ?? "#263238")
             )
         }
 
@@ -49,9 +55,9 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
             date: Date(),
             calendarId: calendarId,
             calendarName: "Almaniac",
-            weekday: "",
             displayDate: "Open Almaniac to refresh",
-            backgroundColor: Color(red: 0.89, green: 0.92, blue: 0.72)
+            backgroundColor: Color(red: 0.89, green: 0.92, blue: 0.72),
+            textColor: Color(red: 0.15, green: 0.20, blue: 0.22)
         )
     }
 
@@ -76,28 +82,16 @@ struct AlmaniactWidgetEntryView: View {
     var entry: AlmaniactWidgetProvider.Entry
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(entry.calendarName)
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color(red: 0.12, green: 0.16, blue: 0.20))
-
-            if !entry.weekday.isEmpty {
-                Text(entry.weekday)
-                    .font(.subheadline)
-                    .foregroundStyle(Color(red: 0.20, green: 0.26, blue: 0.33))
-            }
-
-            Text(entry.displayDate)
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(Color(red: 0.06, green: 0.09, blue: 0.16))
-                .minimumScaleFactor(0.7)
-                .lineLimit(2)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .padding(16)
-        .background(entry.backgroundColor)
+        Text(entry.displayDate)
+            .font(.headline)
+            .fontWeight(.bold)
+            .foregroundStyle(entry.textColor)
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.6)
+            .lineLimit(3)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .padding(12)
+            .background(entry.backgroundColor)
     }
 }
 
@@ -114,6 +108,6 @@ struct AlmaniactWidget: Widget {
         }
         .configurationDisplayName("Almaniac Calendar")
         .description("Today's date in a calendar of your choice.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemSmall])
     }
 }

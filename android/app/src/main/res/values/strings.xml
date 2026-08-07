@@ -6,4 +6,5 @@
     <string name="custom_url_scheme">app.engelsma.almaniac</string>
     <string name="widget_description">Today\'s date in a calendar of your choice.</string>
     <string name="widget_configure_title">Choose a calendar</string>
+    <string name="widget_transliterate_label">Transliterate to English</string>
 </resources>

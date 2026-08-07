@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 import app.engelsma.almaniac.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,9 @@ public class CalendarWidgetConfigureActivity extends Activity {
             return;
         }
 
+        Switch transliterateSwitch = findViewById(R.id.widget_transliterate_switch);
+        transliterateSwitch.setChecked(WidgetSnapshotReader.getTransliterateToEnglish(this, appWidgetId));
+
         List<CalendarOption> options = loadCalendarOptions();
         ListView listView = findViewById(R.id.widget_calendar_list);
         ArrayAdapter<CalendarOption> adapter = new ArrayAdapter<>(
@@ -48,6 +52,11 @@ public class CalendarWidgetConfigureActivity extends Activity {
         listView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
             CalendarOption option = options.get(position);
             WidgetSnapshotReader.setCalendarId(this, appWidgetId, option.id);
+            WidgetSnapshotReader.setTransliterateToEnglish(
+                this,
+                appWidgetId,
+                transliterateSwitch.isChecked()
+            );
 
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             CalendarWidgetProvider.updateWidgets(this, manager, new int[] { appWidgetId });

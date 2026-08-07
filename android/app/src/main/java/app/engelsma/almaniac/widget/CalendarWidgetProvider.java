@@ -32,10 +32,9 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
         WidgetSnapshotReader.CalendarWidgetData data = WidgetSnapshotReader.readCalendar(context, appWidgetId);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_calendar);
 
-        views.setTextViewText(R.id.widget_calendar_name, data.calendarName);
-        views.setTextViewText(R.id.widget_weekday, data.weekday);
         views.setTextViewText(R.id.widget_date, data.date);
         views.setInt(R.id.widget_root, "setBackgroundColor", data.backgroundColor);
+        views.setTextColor(R.id.widget_date, data.textColor);
 
         Intent launchIntent = new Intent(context, MainActivity.class);
         launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

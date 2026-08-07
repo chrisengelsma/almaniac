@@ -3,11 +3,12 @@
     android:configure="app.engelsma.almaniac.widget.CalendarWidgetConfigureActivity"
     android:description="@string/widget_description"
     android:initialLayout="@layout/widget_calendar"
-    android:minWidth="180dp"
-    android:minHeight="80dp"
+    android:minWidth="110dp"
+    android:minHeight="110dp"
     android:previewLayout="@layout/widget_calendar"
-    android:resizeMode="horizontal|vertical"
-    android:targetCellWidth="3"
+    android:resizeMode="none"
+    android:targetCellWidth="2"
     android:targetCellHeight="2"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="home_screen"
+    android:widgetFeatures="reconfigurable" />

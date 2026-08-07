@@ -10,7 +10,9 @@ struct WidgetCalendarData: Codable {
     let calendarName: String
     let weekday: String
     let date: String
+    let dateTransliterated: String?
     let backgroundColor: String
+    let textColor: String?
 }
 
 struct WidgetSnapshot: Codable {

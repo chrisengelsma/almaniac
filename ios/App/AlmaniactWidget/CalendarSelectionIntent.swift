@@ -27,30 +27,30 @@ struct CalendarChoiceQuery: EntityQuery {
     private func allChoices() -> [CalendarChoice] {
         if let snapshot = WidgetDataStore.loadSnapshot() {
             return snapshot.calendars
-                .map { CalendarChoice(id: $0.key, label: $0.value.label) }
+                .map { CalendarChoice(id: $0.key, label: $0.value.calendarName) }
                 .sorted { $0.label < $1.label }
         }
 
         return [
-            CalendarChoice(id: "gregorian", label: "Gregorian"),
-            CalendarChoice(id: "julian", label: "Julian"),
-            CalendarChoice(id: "ethiopian", label: "Ethiopian"),
-            CalendarChoice(id: "coptic", label: "Coptic"),
-            CalendarChoice(id: "chinese", label: "Chinese"),
-            CalendarChoice(id: "japanese", label: "Japanese"),
-            CalendarChoice(id: "minguo", label: "Minguo"),
-            CalendarChoice(id: "soviet", label: "Soviet"),
-            CalendarChoice(id: "frc", label: "FRC"),
-            CalendarChoice(id: "maya", label: "Maya"),
-            CalendarChoice(id: "islamic", label: "Islamic"),
-            CalendarChoice(id: "hebrew", label: "Hebrew"),
-            CalendarChoice(id: "persian", label: "Persian"),
-            CalendarChoice(id: "bahai", label: "Baháʼí"),
-            CalendarChoice(id: "thaiBuddhist", label: "Thai Buddhist"),
-            CalendarChoice(id: "bengali", label: "Bengali"),
-            CalendarChoice(id: "isoWeek", label: "ISO Week"),
-            CalendarChoice(id: "discordian", label: "Discordian"),
-            CalendarChoice(id: "indianCivil", label: "Indian Civil"),
+            CalendarChoice(id: "gregorian", label: "Gregorian Calendar"),
+            CalendarChoice(id: "julian", label: "Julian Calendar"),
+            CalendarChoice(id: "ethiopian", label: "Ethiopian Calendar"),
+            CalendarChoice(id: "coptic", label: "Coptic Calendar"),
+            CalendarChoice(id: "chinese", label: "Chinese Calendar"),
+            CalendarChoice(id: "japanese", label: "Japanese Calendar"),
+            CalendarChoice(id: "minguo", label: "Minguo Calendar"),
+            CalendarChoice(id: "soviet", label: "Soviet Calendar"),
+            CalendarChoice(id: "frc", label: "French Republican Calendar"),
+            CalendarChoice(id: "maya", label: "Maya Calendar"),
+            CalendarChoice(id: "islamic", label: "Islamic Calendar"),
+            CalendarChoice(id: "hebrew", label: "Hebrew Calendar"),
+            CalendarChoice(id: "persian", label: "Persian Calendar"),
+            CalendarChoice(id: "bahai", label: "Baháʼí Calendar"),
+            CalendarChoice(id: "thaiBuddhist", label: "Thai Buddhist Calendar"),
+            CalendarChoice(id: "bengali", label: "Bengali Calendar"),
+            CalendarChoice(id: "isoWeek", label: "ISO Week Calendar"),
+            CalendarChoice(id: "discordian", label: "Discordian Calendar"),
+            CalendarChoice(id: "indianCivil", label: "Indian Civil Calendar"),
             CalendarChoice(id: "julianDay", label: "Julian Day"),
         ]
     }
@@ -64,11 +64,20 @@ struct SelectCalendarIntent: WidgetConfigurationIntent {
     @Parameter(title: "Calendar")
     var calendar: CalendarChoice?
 
+    @Parameter(title: "Transliterate to English", default: false)
+    var transliterateToEnglish: Bool
+
     init() {
-        calendar = CalendarChoice(id: "gregorian", label: "Gregorian")
+        calendar = CalendarChoice(id: "gregorian", label: "Gregorian Calendar")
+        transliterateToEnglish = false
     }
 
-    init(calendar: CalendarChoice) {
+    init(calendar: CalendarChoice, transliterateToEnglish: Bool = false) {
         self.calendar = calendar
+        self.transliterateToEnglish = transliterateToEnglish
+    }
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("\(\.$calendar)")
     }
 }

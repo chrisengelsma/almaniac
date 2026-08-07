@@ -6,7 +6,11 @@ import {
   type CalendarId,
   type GregorianCalendar,
 } from './calendarRegistry';
-import { calendarColorContext, getCalendarColor } from '../theme/calendarColors';
+import {
+  calendarColorContext,
+  getCalendarColor,
+  getWidgetTextColor,
+} from '../theme/calendarColors';
 import { WidgetBridge } from '../plugins/widgetBridge';
 
 export interface WidgetCalendarSnapshot {
@@ -14,7 +18,9 @@ export interface WidgetCalendarSnapshot {
   calendarName: string;
   weekday: string;
   date: string;
+  dateTransliterated: string;
   backgroundColor: string;
+  textColor: string;
 }
 
 export interface WidgetSnapshot {
@@ -35,16 +41,30 @@ export function buildWidgetSnapshot(
   anchor: GregorianCalendar,
   settings: AppSettings,
 ): WidgetSnapshot {
-  const entries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, settings);
+  const colorContext = calendarColorContext(settings);
+  const nativeEntries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, {
+    ...settings,
+    transliterateToEnglish: false,
+  });
+  const transliteratedEntries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, {
+    ...settings,
+    transliterateToEnglish: true,
+  });
+  const transliteratedById = new Map(
+    transliteratedEntries.map((entry) => [entry.id, entry.date] as const),
+  );
 
-  const calendars = entries.reduce(
+  const calendars = nativeEntries.reduce(
     (acc, entry) => {
+      const backgroundColor = getCalendarColor(entry.id, colorContext);
       acc[entry.id] = {
         label: entry.label,
         calendarName: entry.calendarName,
         weekday: entry.weekday,
         date: entry.date,
-        backgroundColor: getCalendarColor(entry.id, calendarColorContext(settings)),
+        dateTransliterated: transliteratedById.get(entry.id) ?? entry.date,
+        backgroundColor,
+        textColor: getWidgetTextColor(backgroundColor, colorContext),
       };
       return acc;
     },

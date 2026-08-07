@@ -70,6 +70,21 @@ export function resolveCalendarColors(
   return { ...DEFAULT_CALENDAR_COLORS, ...overrides };
 }
 
+export function getWidgetTextColor(
+  backgroundColor: string,
+  context: Pick<CalendarColorContext, 'colorTheme' | 'colorScheme'>,
+): string {
+  if (context.colorTheme === 'mono') {
+    return context.colorScheme === 'dark' ? '#f5f5f5' : '#212121';
+  }
+
+  if (context.colorTheme === 'sepia') {
+    return context.colorScheme === 'dark' ? '#e8dcc8' : '#3d2f1f';
+  }
+
+  return context.colorScheme === 'dark' ? backgroundColor : '#263238';
+}
+
 export function getCalendarColor(id: CalendarId, context: CalendarColorContext): string {
   if (context.colorTheme === 'mono') {
     return context.colorScheme === 'dark' ? MONO_DARK_TEXT : MONO_LIGHT_ROW;
