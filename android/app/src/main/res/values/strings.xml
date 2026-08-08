@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Almaniac: A Calendar Converter</string>
-    <string name="title_activity_main">Almaniac: A Calendar Converter</string>
+    <string name="app_name">Almaniac</string>
+    <string name="title_activity_main">Almaniac</string>
     <string name="package_name">app.engelsma.almaniac</string>
     <string name="custom_url_scheme">app.engelsma.almaniac</string>
     <string name="widget_description">Today\'s date in a calendar of your choice.</string>
     <string name="widget_configure_title">Choose a calendar</string>
     <string name="widget_transliterate_label">Transliterate to English</string>
+    <string name="widget_color_theme_label">Color theme</string>
+    <string name="widget_theme_distinct">Distinct</string>
+    <string name="widget_theme_mono">Mono</string>
+    <string name="widget_theme_sepia">Sepia</string>
 </resources>

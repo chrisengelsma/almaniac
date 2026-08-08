@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { APP_TITLE } from '../theme/appBranding';
+import { APP_TITLE, APP_VERSION } from '../theme/appBranding';
+import { SITE_URL } from '../theme/supportLinks';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
 import { getAllBannerAttributions } from '../data/imageAttributions';
 
@@ -97,6 +98,17 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
               ))}
             </section>
           ) : null}
+
+          <p className="about-modal__site-link">
+            <a href={SITE_URL} target="_blank" rel="noopener noreferrer">
+              engelsma.dev
+            </a>
+          </p>
+
+          <div className="about-modal__meta">
+            <span>Version {APP_VERSION}</span>
+            <span>© 2026 Chris Engelsma</span>
+          </div>
         </div>
       </div>
     </div>

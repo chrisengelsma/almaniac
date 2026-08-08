@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import app.engelsma.almaniac.R;
 import java.util.ArrayList;
@@ -41,6 +42,16 @@ public class CalendarWidgetConfigureActivity extends Activity {
         Switch transliterateSwitch = findViewById(R.id.widget_transliterate_switch);
         transliterateSwitch.setChecked(WidgetSnapshotReader.getTransliterateToEnglish(this, appWidgetId));
 
+        RadioGroup themeGroup = findViewById(R.id.widget_color_theme_group);
+        String savedTheme = WidgetSnapshotReader.getColorTheme(this, appWidgetId);
+        if ("mono".equals(savedTheme)) {
+            themeGroup.check(R.id.widget_theme_mono);
+        } else if ("sepia".equals(savedTheme)) {
+            themeGroup.check(R.id.widget_theme_sepia);
+        } else {
+            themeGroup.check(R.id.widget_theme_distinct);
+        }
+
         List<CalendarOption> options = loadCalendarOptions();
         ListView listView = findViewById(R.id.widget_calendar_list);
         ArrayAdapter<CalendarOption> adapter = new ArrayAdapter<>(
@@ -57,6 +68,7 @@ public class CalendarWidgetConfigureActivity extends Activity {
                 appWidgetId,
                 transliterateSwitch.isChecked()
             );
+            WidgetSnapshotReader.setColorTheme(this, appWidgetId, selectedColorTheme(themeGroup));
 
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             CalendarWidgetProvider.updateWidgets(this, manager, new int[] { appWidgetId });
@@ -66,6 +78,17 @@ public class CalendarWidgetConfigureActivity extends Activity {
             setResult(RESULT_OK, result);
             finish();
         });
+    }
+
+    private static String selectedColorTheme(RadioGroup themeGroup) {
+        int checkedId = themeGroup.getCheckedRadioButtonId();
+        if (checkedId == R.id.widget_theme_mono) {
+            return "mono";
+        }
+        if (checkedId == R.id.widget_theme_sepia) {
+            return "sepia";
+        }
+        return "distinct";
     }
 
     private List<CalendarOption> loadCalendarOptions() {

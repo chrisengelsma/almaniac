@@ -21,4 +21,17 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/widget_calendar_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="Gregorian Calendar"
+        android:textColor="#1f2933"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
 </FrameLayout>

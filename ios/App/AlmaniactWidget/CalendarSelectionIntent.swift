@@ -2,6 +2,21 @@ import AppIntents
 import WidgetKit
 
 @available(iOS 17.0, *)
+enum WidgetColorTheme: String, AppEnum {
+    case distinct
+    case mono
+    case sepia
+
+    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Color Theme")
+
+    static var caseDisplayRepresentations: [WidgetColorTheme: DisplayRepresentation] = [
+        .distinct: "Distinct",
+        .mono: "Mono",
+        .sepia: "Sepia",
+    ]
+}
+
+@available(iOS 17.0, *)
 struct CalendarChoice: AppEntity, Identifiable {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Calendar")
     static var defaultQuery = CalendarChoiceQuery()
@@ -64,20 +79,25 @@ struct SelectCalendarIntent: WidgetConfigurationIntent {
     @Parameter(title: "Calendar")
     var calendar: CalendarChoice?
 
+    @Parameter(title: "Color Theme", default: .distinct)
+    var colorTheme: WidgetColorTheme
+
     @Parameter(title: "Transliterate to English", default: false)
     var transliterateToEnglish: Bool
 
     init() {
         calendar = CalendarChoice(id: "gregorian", label: "Gregorian Calendar")
+        colorTheme = .distinct
         transliterateToEnglish = false
     }
 
-    init(calendar: CalendarChoice, transliterateToEnglish: Bool = false) {
+    init(
+        calendar: CalendarChoice,
+        colorTheme: WidgetColorTheme = .distinct,
+        transliterateToEnglish: Bool = false
+    ) {
         self.calendar = calendar
+        self.colorTheme = colorTheme
         self.transliterateToEnglish = transliterateToEnglish
-    }
-
-    static var parameterSummary: some ParameterSummary {
-        Summary("\(\.$calendar)")
     }
 }

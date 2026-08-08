@@ -1,14 +1,19 @@
 .app {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100dvh;
-  height: 100dvh;
+  height: var(--app-height, 100dvh);
+  min-height: var(--app-height, 100dvh);
   background: var(--top-bar-bg);
   padding-top: env(safe-area-inset-top);
   padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
   padding-left: env(safe-area-inset-left);
+  overflow: hidden;
 }
 
 @media (orientation: landscape) {
@@ -891,6 +896,41 @@ html[data-color-scheme='dark'] .info-modal__panel {
   color: var(--overlay-surface-fg-subtle);
 }
 
+.about-modal__site-link {
+  margin: 1.25rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--overlay-surface-divider);
+  text-align: center;
+}
+
+.about-modal__site-link a {
+  font-size: 0.875rem;
+  color: rgba(38, 50, 56, 0.55);
+  text-decoration: none;
+}
+
+.about-modal__site-link a:hover {
+  color: rgba(38, 50, 56, 0.9);
+}
+
+html[data-color-scheme='dark'] .about-modal__site-link a {
+  color: rgba(236, 239, 241, 0.55);
+}
+
+html[data-color-scheme='dark'] .about-modal__site-link a:hover {
+  color: rgba(236, 239, 241, 0.9);
+}
+
+.about-modal__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: var(--overlay-surface-fg-subtle);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .about-modal__backdrop,
   .about-modal__panel {
@@ -1022,18 +1062,21 @@ html[data-color-scheme='dark'] .info-modal__panel {
 
 .calendar-list-shell {
   display: flex;
-  flex: 1;
+  flex: 1 1 0;
   flex-direction: column;
   min-height: 0;
   width: 100%;
+  overflow: hidden;
+  background: var(--top-bar-bg);
 }
 
 .calendar-list {
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: var(--top-bar-bg);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .app--theme-transitioning .calendar-list {
@@ -1043,6 +1086,18 @@ html[data-color-scheme='dark'] .info-modal__panel {
 .calendar-list__rows {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+}
+
+.calendar-row--visible:not(:has(~ .calendar-row--visible)) {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 7.5rem;
+}
+
+.calendar-row--visible:not(:has(~ .calendar-row--visible)) .calendar-row__surface {
+  height: 100%;
+  min-height: 7.5rem;
 }
 
 @keyframes calendar-row-enter {
@@ -2524,6 +2579,14 @@ html[data-color-scheme='dark'] .fullscreen-date__expand,
   .calendar-list__hint {
     height: 8.5rem;
     flex-basis: 8.5rem;
+  }
+
+  .calendar-row--visible:not(:has(~ .calendar-row--visible)) {
+    min-height: 8.5rem;
+  }
+
+  .calendar-row--visible:not(:has(~ .calendar-row--visible)) .calendar-row__surface {
+    min-height: 8.5rem;
   }
 
   .calendar-list--entering .calendar-row--visible.calendar-row--entering {

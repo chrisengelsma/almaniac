@@ -6,8 +6,7 @@ struct AlmaniactWidgetEntry: TimelineEntry {
     let calendarId: String
     let calendarName: String
     let displayDate: String
-    let backgroundColor: Color
-    let textColor: Color
+    let colorTheme: String
 }
 
 struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
@@ -17,8 +16,7 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
             calendarId: "gregorian",
             calendarName: "Gregorian Calendar",
             displayDate: "August 5, 2026",
-            backgroundColor: Color(red: 0.89, green: 0.92, blue: 0.72),
-            textColor: Color(red: 0.15, green: 0.20, blue: 0.22)
+            colorTheme: "distinct"
         )
     }
 
@@ -46,8 +44,7 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
                 calendarId: calendarId,
                 calendarName: data.calendarName,
                 displayDate: displayDate,
-                backgroundColor: color(from: data.backgroundColor),
-                textColor: color(from: data.textColor ?? "#263238")
+                colorTheme: configuration.colorTheme.rawValue
             )
         }
 
@@ -56,8 +53,97 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
             calendarId: calendarId,
             calendarName: "Almaniac",
             displayDate: "Open Almaniac to refresh",
-            backgroundColor: Color(red: 0.89, green: 0.92, blue: 0.72),
-            textColor: Color(red: 0.15, green: 0.20, blue: 0.22)
+            colorTheme: configuration.colorTheme.rawValue
+        )
+    }
+}
+
+struct AlmaniactWidgetEntryView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    var entry: AlmaniactWidgetProvider.Entry
+
+    private var backgroundColor: Color {
+        color(from: resolvedThemeColors.background)
+    }
+
+    private var textColor: Color {
+        color(from: resolvedThemeColors.text)
+    }
+
+    private var resolvedThemeColors: (background: String, text: String) {
+        guard let data = WidgetDataStore.calendarData(for: entry.calendarId) else {
+            return ("#e3eab8", "#263238")
+        }
+
+        return WidgetDataStore.themeColors(
+            for: data,
+            colorTheme: entry.colorTheme,
+            isDark: colorScheme == .dark
+        )
+    }
+
+    var body: some View {
+        ZStack {
+            Text(entry.displayDate)
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(textColor)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.6)
+                .lineLimit(3)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+
+            VStack {
+                Text(entry.calendarName)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(textColor.opacity(0.8))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.75)
+                    .frame(maxWidth: .infinity)
+
+                Spacer(minLength: 0)
+            }
+        }
+        .padding(12)
+        .background(backgroundColor)
+    }
+
+    private func color(from hex: String) -> Color {
+        var sanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if sanitized.hasPrefix("#") {
+            sanitized.removeFirst()
+        }
+
+        guard sanitized.count == 6, let value = UInt64(sanitized, radix: 16) else {
+            return Color(red: 0.89, green: 0.92, blue: 0.72)
+        }
+
+        let red = Double((value >> 16) & 0xFF) / 255.0
+        let green = Double((value >> 8) & 0xFF) / 255.0
+        let blue = Double(value & 0xFF) / 255.0
+        return Color(red: red, green: green, blue: blue)
+    }
+}
+
+struct WidgetThemeBackground: View {
+    @Environment(\.colorScheme) private var colorScheme
+    let entry: AlmaniactWidgetEntry
+
+    var body: some View {
+        color(from: resolvedThemeColors.background)
+    }
+
+    private var resolvedThemeColors: (background: String, text: String) {
+        guard let data = WidgetDataStore.calendarData(for: entry.calendarId) else {
+            return ("#e3eab8", "#263238")
+        }
+
+        return WidgetDataStore.themeColors(
+            for: data,
+            colorTheme: entry.colorTheme,
+            isDark: colorScheme == .dark
         )
     }
 
@@ -78,23 +164,6 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
     }
 }
 
-struct AlmaniactWidgetEntryView: View {
-    var entry: AlmaniactWidgetProvider.Entry
-
-    var body: some View {
-        Text(entry.displayDate)
-            .font(.headline)
-            .fontWeight(.bold)
-            .foregroundStyle(entry.textColor)
-            .multilineTextAlignment(.center)
-            .minimumScaleFactor(0.6)
-            .lineLimit(3)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .padding(12)
-            .background(entry.backgroundColor)
-    }
-}
-
 @available(iOS 17.0, *)
 struct AlmaniactWidget: Widget {
     let kind = "AlmaniactWidget"
@@ -103,7 +172,7 @@ struct AlmaniactWidget: Widget {
         AppIntentConfiguration(kind: kind, intent: SelectCalendarIntent.self, provider: AlmaniactWidgetProvider()) { entry in
             AlmaniactWidgetEntryView(entry: entry)
                 .containerBackground(for: .widget) {
-                    entry.backgroundColor
+                    WidgetThemeBackground(entry: entry)
                 }
         }
         .configurationDisplayName("Almaniac Calendar")

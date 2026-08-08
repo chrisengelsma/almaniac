@@ -3,6 +3,8 @@ import { Capacitor } from '@capacitor/core';
 /** Update this once your Buy Me a Coffee page is live. */
 export const DONATION_URL = 'https://buymeacoffee.com/chrisengelsma';
 
+export const SITE_URL = 'https://engelsma.dev';
+
 export const APP_PACKAGE_ID = 'app.engelsma.almaniac';
 
 /** Set once the app is live on the App Store. */

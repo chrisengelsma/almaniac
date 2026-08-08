@@ -2,6 +2,7 @@ package app.engelsma.almaniac.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,17 +44,35 @@ public final class WidgetSnapshotReader {
         prefs.edit().putBoolean(WidgetConstants.TRANSLITERATE_PREFIX + appWidgetId, value).apply();
     }
 
+    public static String getColorTheme(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getString(WidgetConstants.COLOR_THEME_PREFIX + appWidgetId, "distinct");
+    }
+
+    public static void setColorTheme(Context context, int appWidgetId, String colorTheme) {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putString(WidgetConstants.COLOR_THEME_PREFIX + appWidgetId, colorTheme).apply();
+    }
+
     public static void removeCalendarId(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
         prefs.edit()
             .remove(WidgetConstants.CALENDAR_ID_PREFIX + appWidgetId)
             .remove(WidgetConstants.TRANSLITERATE_PREFIX + appWidgetId)
+            .remove(WidgetConstants.COLOR_THEME_PREFIX + appWidgetId)
             .apply();
+    }
+
+    public static boolean isDarkMode(Context context) {
+        int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return nightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     public static CalendarWidgetData readCalendar(Context context, int appWidgetId) {
         String calendarId = getCalendarId(context, appWidgetId);
         boolean transliterate = getTransliterateToEnglish(context, appWidgetId);
+        String colorTheme = getColorTheme(context, appWidgetId);
+        boolean isDark = isDarkMode(context);
         JSONObject snapshot = readSnapshot(context);
         if (snapshot == null) {
             return CalendarWidgetData.placeholder(calendarId);
@@ -69,17 +88,36 @@ public final class WidgetSnapshotReader {
             String nativeDate = calendar.optString("date", "Open Almaniac");
             String transliteratedDate = calendar.optString("dateTransliterated", nativeDate);
             String displayDate = transliterate ? transliteratedDate : nativeDate;
+            ThemeColors themeColors = readThemeColors(calendar, colorTheme, isDark);
 
             return new CalendarWidgetData(
                 calendarId,
                 calendar.optString("calendarName", "Calendar"),
                 displayDate,
-                parseColor(calendar.optString("backgroundColor", "#e3eab8")),
-                parseColor(calendar.optString("textColor", "#263238"))
+                parseColor(themeColors.backgroundColor),
+                parseColor(themeColors.textColor)
             );
         } catch (JSONException exception) {
             return CalendarWidgetData.placeholder(calendarId);
         }
+    }
+
+    private static ThemeColors readThemeColors(JSONObject calendar, String colorTheme, boolean isDark) {
+        JSONObject themes = calendar.optJSONObject("themes");
+        if (themes != null && themes.has(colorTheme)) {
+            JSONObject theme = themes.optJSONObject(colorTheme);
+            if (theme != null) {
+                JSONObject scheme = theme.optJSONObject(isDark ? "dark" : "light");
+                if (scheme != null) {
+                    return new ThemeColors(
+                        scheme.optString("backgroundColor", "#e3eab8"),
+                        scheme.optString("textColor", "#263238")
+                    );
+                }
+            }
+        }
+
+        return new ThemeColors("#e3eab8", "#263238");
     }
 
     private static int parseColor(String value) {
@@ -87,6 +125,16 @@ public final class WidgetSnapshotReader {
             return Color.parseColor(value);
         } catch (IllegalArgumentException exception) {
             return Color.parseColor("#e3eab8");
+        }
+    }
+
+    private static final class ThemeColors {
+        private final String backgroundColor;
+        private final String textColor;
+
+        private ThemeColors(String backgroundColor, String textColor) {
+            this.backgroundColor = backgroundColor;
+            this.textColor = textColor;
         }
     }
 

@@ -5,14 +5,23 @@ enum WidgetConstants {
     static let snapshotKey = "almaniac.widget.snapshot.v1"
 }
 
+struct WidgetThemeColors: Codable {
+    let backgroundColor: String
+    let textColor: String
+}
+
+struct WidgetThemeVariants: Codable {
+    let light: WidgetThemeColors
+    let dark: WidgetThemeColors
+}
+
 struct WidgetCalendarData: Codable {
     let label: String
     let calendarName: String
     let weekday: String
     let date: String
     let dateTransliterated: String?
-    let backgroundColor: String
-    let textColor: String?
+    let themes: [String: WidgetThemeVariants]?
 }
 
 struct WidgetSnapshot: Codable {
@@ -42,5 +51,19 @@ enum WidgetDataStore {
 
     static func calendarData(for calendarId: String) -> WidgetCalendarData? {
         loadSnapshot()?.calendars[calendarId]
+    }
+
+    static func themeColors(
+        for data: WidgetCalendarData,
+        colorTheme: String,
+        isDark: Bool
+    ) -> (background: String, text: String) {
+        if let themes = data.themes,
+           let variants = themes[colorTheme] {
+            let colors = isDark ? variants.dark : variants.light
+            return (colors.backgroundColor, colors.textColor)
+        }
+
+        return ("#e3eab8", "#263238")
     }
 }

@@ -38,6 +38,7 @@ import { useDocumentTheme } from './hooks/useDocumentTheme';
 import { useAppReviewPrompt } from './hooks/useAppReviewPrompt';
 import { useTapHaptics } from './hooks/useTapHaptics';
 import { useThemeTransition } from './hooks/useThemeTransition';
+import { useViewportHeight } from './hooks/useViewportHeight';
 import './App.css';
 
 function App() {
@@ -110,6 +111,7 @@ function App() {
     useThemeTransition(visibleCalendarIds);
 
   useDocumentTheme(settings);
+  useViewportHeight();
   useAppReviewPrompt();
   useTapHaptics();
 

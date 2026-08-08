@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.widget.RemoteViews;
 import app.engelsma.almaniac.MainActivity;
 import app.engelsma.almaniac.R;
@@ -32,8 +33,10 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
         WidgetSnapshotReader.CalendarWidgetData data = WidgetSnapshotReader.readCalendar(context, appWidgetId);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_calendar);
 
+        views.setTextViewText(R.id.widget_calendar_name, data.calendarName);
         views.setTextViewText(R.id.widget_date, data.date);
         views.setInt(R.id.widget_root, "setBackgroundColor", data.backgroundColor);
+        views.setTextColor(R.id.widget_calendar_name, withAlpha(data.textColor, 0.8f));
         views.setTextColor(R.id.widget_date, data.textColor);
 
         Intent launchIntent = new Intent(context, MainActivity.class);
@@ -47,5 +50,10 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.widget_root, pendingIntent);
 
         manager.updateAppWidget(appWidgetId, views);
+    }
+
+    private static int withAlpha(int color, float alpha) {
+        int alphaChannel = Math.round(255 * alpha);
+        return Color.argb(alphaChannel, Color.red(color), Color.green(color), Color.blue(color));
     }
 }
