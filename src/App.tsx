@@ -39,6 +39,7 @@ import { useAppReviewPrompt } from './hooks/useAppReviewPrompt';
 import { useTapHaptics } from './hooks/useTapHaptics';
 import { useThemeTransition } from './hooks/useThemeTransition';
 import { useViewportHeight } from './hooks/useViewportHeight';
+import { useSafeAreaInsets } from './hooks/useSafeAreaInsets';
 import './App.css';
 
 function App() {
@@ -112,6 +113,7 @@ function App() {
 
   useDocumentTheme(settings);
   useViewportHeight();
+  useSafeAreaInsets();
   useAppReviewPrompt();
   useTapHaptics();
 

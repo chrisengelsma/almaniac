@@ -52,6 +52,7 @@ export function CalendarList({
   const rowsRef = useRef<HTMLDivElement>(null);
   const dragOverIdRef = useRef<string | null>(null);
   const [showAddHint, setShowAddHint] = useState(false);
+  const [fillsViewport, setFillsViewport] = useState(true);
   const [isEntering, setIsEntering] = useState(true);
   const rows = getOrderedCalendarRows(order, anchor, settings);
   const visibleRows = rows.filter((row) => row.visible);
@@ -71,12 +72,14 @@ export function CalendarList({
     }
 
     const updateHint = () => {
+      const rowsOverflow = rowsEl.scrollHeight > list.clientHeight + 1;
+      setFillsViewport(!rowsOverflow);
+
       if (!hasHiddenCalendars) {
         setShowAddHint(false);
         return;
       }
 
-      const rowsOverflow = rowsEl.scrollHeight > list.clientHeight + 1;
       setShowAddHint(!rowsOverflow);
     };
 
@@ -144,6 +147,7 @@ export function CalendarList({
           <section
             className={[
               'calendar-list',
+              fillsViewport ? 'calendar-list--fills-viewport' : '',
               isEntering ? 'calendar-list--entering' : '',
             ]
               .filter(Boolean)
@@ -171,6 +175,7 @@ export function CalendarList({
                   );
                 });
               })()}
+              {fillsViewport ? <div className="calendar-list__spacer" aria-hidden="true" /> : null}
             </div>
             {showAddHint ? (
               <p className="calendar-list__hint">Add another calendar from the menu</p>

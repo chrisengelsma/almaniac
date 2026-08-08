@@ -10,34 +10,47 @@
   height: var(--app-height, 100dvh);
   min-height: var(--app-height, 100dvh);
   background: var(--top-bar-bg);
-  padding-top: env(safe-area-inset-top);
-  padding-right: env(safe-area-inset-right);
-  padding-left: env(safe-area-inset-left);
   overflow: hidden;
+}
+
+html.platform-ios .app,
+html:not(.platform-ios):not(.platform-android) .app {
+  padding-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  padding-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  padding-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
 }
 
 @media (orientation: landscape) {
   .app {
     width: 100dvw;
+  }
+
+  html.platform-ios .app,
+  html:not(.platform-ios):not(.platform-android) .app {
     padding-right: 0;
     padding-left: 0;
   }
 
-  .top-bar__app-bar,
-  .top-bar__controls {
+  html.platform-ios .top-bar__app-bar,
+  html.platform-ios .top-bar__controls,
+  html:not(.platform-ios):not(.platform-android) .top-bar__app-bar,
+  html:not(.platform-ios):not(.platform-android) .top-bar__controls {
     padding-right: max(0.35rem, env(safe-area-inset-right));
     padding-left: max(0.35rem, env(safe-area-inset-left));
   }
 
-  .calendar-row__drag-handle {
+  html.platform-ios .calendar-row__drag-handle,
+  html:not(.platform-ios):not(.platform-android) .calendar-row__drag-handle {
     padding-left: env(safe-area-inset-left);
   }
 
-  .calendar-row__actions {
+  html.platform-ios .calendar-row__actions,
+  html:not(.platform-ios):not(.platform-android) .calendar-row__actions {
     right: calc(0.15rem + env(safe-area-inset-right));
   }
 
-  .fullscreen-date--open .fullscreen-date__text-wrap {
+  html.platform-ios .fullscreen-date--open .fullscreen-date__text-wrap,
+  html:not(.platform-ios):not(.platform-android) .fullscreen-date--open .fullscreen-date__text-wrap {
     padding-right: env(safe-area-inset-right);
     padding-left: env(safe-area-inset-left);
   }
@@ -1076,7 +1089,11 @@ html[data-color-scheme='dark'] .about-modal__site-link a:hover {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: var(--top-bar-bg);
-  padding-bottom: env(safe-area-inset-bottom);
+}
+
+html.platform-ios .calendar-list,
+html:not(.platform-ios):not(.platform-android) .calendar-list {
+  padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
 }
 
 .app--theme-transitioning .calendar-list {
@@ -1089,15 +1106,10 @@ html[data-color-scheme='dark'] .about-modal__site-link a:hover {
   min-height: 100%;
 }
 
-.calendar-row--visible:not(:has(~ .calendar-row--visible)) {
+.calendar-list__spacer {
   flex: 1 1 auto;
-  height: auto;
-  min-height: 7.5rem;
-}
-
-.calendar-row--visible:not(:has(~ .calendar-row--visible)) .calendar-row__surface {
-  height: 100%;
-  min-height: 7.5rem;
+  min-height: 0;
+  background: var(--top-bar-bg);
 }
 
 @keyframes calendar-row-enter {
@@ -2579,14 +2591,6 @@ html[data-color-scheme='dark'] .fullscreen-date__expand,
   .calendar-list__hint {
     height: 8.5rem;
     flex-basis: 8.5rem;
-  }
-
-  .calendar-row--visible:not(:has(~ .calendar-row--visible)) {
-    min-height: 8.5rem;
-  }
-
-  .calendar-row--visible:not(:has(~ .calendar-row--visible)) .calendar-row__surface {
-    min-height: 8.5rem;
   }
 
   .calendar-list--entering .calendar-row--visible.calendar-row--entering {

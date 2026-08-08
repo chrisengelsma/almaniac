@@ -23,6 +23,7 @@ class MainBridgeViewController: CAPBridgeViewController {
 
         webView.frame = view.bounds
         webView.scrollView.frame = webView.bounds
+        syncSafeAreaInsetsToWebView()
 
         let scrollView = webView.scrollView
         scrollView.isScrollEnabled = false
@@ -48,5 +49,22 @@ class MainBridgeViewController: CAPBridgeViewController {
         webView?.backgroundColor = appBackground
         webView?.scrollView.backgroundColor = appBackground
         view.backgroundColor = appBackground
+    }
+
+    private func syncSafeAreaInsetsToWebView() {
+        guard let webView = webView else { return }
+
+        let insets = view.safeAreaInsets
+        let script = """
+        (function() {
+          var root = document.documentElement;
+          root.style.setProperty('--safe-area-inset-top', '\(insets.top)px');
+          root.style.setProperty('--safe-area-inset-right', '\(insets.right)px');
+          root.style.setProperty('--safe-area-inset-bottom', '\(insets.bottom)px');
+          root.style.setProperty('--safe-area-inset-left', '\(insets.left)px');
+        })();
+        """
+
+        webView.evaluateJavaScript(script, completionHandler: nil)
     }
 }
