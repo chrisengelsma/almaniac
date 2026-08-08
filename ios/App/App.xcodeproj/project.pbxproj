@@ -16,15 +16,15 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
-		A1WGT0222FE993A50072D4E8 /* WidgetBridgePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0032FE993A50072D4E8 /* WidgetBridgePlugin.swift */; };
-		A1ICON022FE993A50072D4E8 /* AppIconPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ICON0032FE993A50072D4E8 /* AppIconPlugin.swift */; };
 		A1BRG022FE993A50072D4E8 /* MainBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BRG0032FE993A50072D4E8 /* MainBridgeViewController.swift */; };
+		A1ICON022FE993A50072D4E8 /* AppIconPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ICON0032FE993A50072D4E8 /* AppIconPlugin.swift */; };
+		A1WGT0222FE993A50072D4E8 /* WidgetBridgePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0032FE993A50072D4E8 /* WidgetBridgePlugin.swift */; };
 		A1WGT0232FE993A50072D4E8 /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0042FE993A50072D4E8 /* WidgetDataStore.swift */; };
 		A1WGT0242FE993A50072D4E8 /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0042FE993A50072D4E8 /* WidgetDataStore.swift */; };
-		A1WGT0252FE993A50072D4E8 /* AlmaniactWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0052FE993A50072D4E8 /* AlmaniactWidget.swift */; };
-		A1WGT0262FE993A50072D4E8 /* AlmaniactWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0062FE993A50072D4E8 /* AlmaniactWidgetBundle.swift */; };
+		A1WGT0252FE993A50072D4E8 /* AlmaniacWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0052FE993A50072D4E8 /* AlmaniacWidget.swift */; };
+		A1WGT0262FE993A50072D4E8 /* AlmaniacWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0062FE993A50072D4E8 /* AlmaniacWidgetBundle.swift */; };
 		A1WGT0272FE993A50072D4E8 /* CalendarSelectionIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1WGT0072FE993A50072D4E8 /* CalendarSelectionIntent.swift */; };
-		A1WGT0282FE993A50072D4E8 /* AlmaniactWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1WGT0022FE993A50072D4E8 /* AlmaniactWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A1WGT0282FE993A50072D4E8 /* AlmaniacWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1WGT0022FE993A50072D4E8 /* AlmaniacWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +33,7 @@
 			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A1WGT0012FE993A50072D4E8;
-			remoteInfo = AlmaniactWidgetExtension;
+			remoteInfo = AlmaniacWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -44,7 +44,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				A1WGT0282FE993A50072D4E8 /* AlmaniactWidgetExtension.appex in Embed Foundation Extensions */,
+				A1WGT0282FE993A50072D4E8 /* AlmaniacWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,16 +63,16 @@
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
 		9582B6822FE993A50072D4E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
-		A1WGT0022FE993A50072D4E8 /* AlmaniactWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlmaniactWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1WGT0032FE993A50072D4E8 /* WidgetBridgePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBridgePlugin.swift; sourceTree = "<group>"; };
-		A1ICON0032FE993A50072D4E8 /* AppIconPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPlugin.swift; sourceTree = "<group>"; };
 		A1BRG0032FE993A50072D4E8 /* MainBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBridgeViewController.swift; sourceTree = "<group>"; };
+		A1ICON0032FE993A50072D4E8 /* AppIconPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPlugin.swift; sourceTree = "<group>"; };
+		A1WGT0022FE993A50072D4E8 /* AlmaniacWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlmaniacWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1WGT0032FE993A50072D4E8 /* WidgetBridgePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBridgePlugin.swift; sourceTree = "<group>"; };
 		A1WGT0042FE993A50072D4E8 /* WidgetDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataStore.swift; sourceTree = "<group>"; };
-		A1WGT0052FE993A50072D4E8 /* AlmaniactWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmaniactWidget.swift; sourceTree = "<group>"; };
-		A1WGT0062FE993A50072D4E8 /* AlmaniactWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmaniactWidgetBundle.swift; sourceTree = "<group>"; };
+		A1WGT0052FE993A50072D4E8 /* AlmaniacWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmaniacWidget.swift; sourceTree = "<group>"; };
+		A1WGT0062FE993A50072D4E8 /* AlmaniacWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlmaniacWidgetBundle.swift; sourceTree = "<group>"; };
 		A1WGT0072FE993A50072D4E8 /* CalendarSelectionIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSelectionIntent.swift; sourceTree = "<group>"; };
 		A1WGT0162FE993A50072D4E8 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
-		A1WGT0172FE993A50072D4E8 /* AlmaniactWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlmaniactWidget.entitlements; sourceTree = "<group>"; };
+		A1WGT0172FE993A50072D4E8 /* AlmaniacWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlmaniacWidget.entitlements; sourceTree = "<group>"; };
 		A1WGT0182FE993A50072D4E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +101,7 @@
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
 				A1WGT0092FE993A50072D4E8 /* Shared */,
 				504EC3061FED79650016851F /* App */,
-				A1WGT0082FE993A50072D4E8 /* AlmaniactWidget */,
+				A1WGT0082FE993A50072D4E8 /* AlmaniacWidget */,
 				504EC3051FED79650016851F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				504EC3041FED79650016851F /* App.app */,
-				A1WGT0022FE993A50072D4E8 /* AlmaniactWidgetExtension.appex */,
+				A1WGT0022FE993A50072D4E8 /* AlmaniacWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,16 +135,16 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		A1WGT0082FE993A50072D4E8 /* AlmaniactWidget */ = {
+		A1WGT0082FE993A50072D4E8 /* AlmaniacWidget */ = {
 			isa = PBXGroup;
 			children = (
-				A1WGT0052FE993A50072D4E8 /* AlmaniactWidget.swift */,
-				A1WGT0062FE993A50072D4E8 /* AlmaniactWidgetBundle.swift */,
+				A1WGT0052FE993A50072D4E8 /* AlmaniacWidget.swift */,
+				A1WGT0062FE993A50072D4E8 /* AlmaniacWidgetBundle.swift */,
 				A1WGT0072FE993A50072D4E8 /* CalendarSelectionIntent.swift */,
-				A1WGT0172FE993A50072D4E8 /* AlmaniactWidget.entitlements */,
+				A1WGT0172FE993A50072D4E8 /* AlmaniacWidget.entitlements */,
 				A1WGT0182FE993A50072D4E8 /* Info.plist */,
 			);
-			path = AlmaniactWidget;
+			path = AlmaniacWidget;
 			sourceTree = "<group>";
 		};
 		A1WGT0092FE993A50072D4E8 /* Shared */ = {
@@ -180,9 +180,9 @@
 			productReference = 504EC3041FED79650016851F /* App.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A1WGT0012FE993A50072D4E8 /* AlmaniactWidgetExtension */ = {
+		A1WGT0012FE993A50072D4E8 /* AlmaniacWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1WGT0212FE993A50072D4E8 /* Build configuration list for PBXNativeTarget "AlmaniactWidgetExtension" */;
+			buildConfigurationList = A1WGT0212FE993A50072D4E8 /* Build configuration list for PBXNativeTarget "AlmaniacWidgetExtension" */;
 			buildPhases = (
 				A1WGT0122FE993A50072D4E8 /* Sources */,
 				A1WGT0112FE993A50072D4E8 /* Frameworks */,
@@ -192,9 +192,9 @@
 			);
 			dependencies = (
 			);
-			name = AlmaniactWidgetExtension;
-			productName = AlmaniactWidgetExtension;
-			productReference = A1WGT0022FE993A50072D4E8 /* AlmaniactWidgetExtension.appex */;
+			name = AlmaniacWidgetExtension;
+			productName = AlmaniacWidgetExtension;
+			productReference = A1WGT0022FE993A50072D4E8 /* AlmaniacWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -234,7 +234,7 @@
 			projectRoot = "";
 			targets = (
 				504EC3031FED79650016851F /* App */,
-				A1WGT0012FE993A50072D4E8 /* AlmaniactWidgetExtension */,
+				A1WGT0012FE993A50072D4E8 /* AlmaniacWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -280,8 +280,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1WGT0252FE993A50072D4E8 /* AlmaniactWidget.swift in Sources */,
-				A1WGT0262FE993A50072D4E8 /* AlmaniactWidgetBundle.swift in Sources */,
+				A1WGT0252FE993A50072D4E8 /* AlmaniacWidget.swift in Sources */,
+				A1WGT0262FE993A50072D4E8 /* AlmaniacWidgetBundle.swift in Sources */,
 				A1WGT0272FE993A50072D4E8 /* CalendarSelectionIntent.swift in Sources */,
 				A1WGT0242FE993A50072D4E8 /* WidgetDataStore.swift in Sources */,
 			);
@@ -292,7 +292,7 @@
 /* Begin PBXTargetDependency section */
 		A1WGT0142FE993A50072D4E8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A1WGT0012FE993A50072D4E8 /* AlmaniactWidgetExtension */;
+			target = A1WGT0012FE993A50072D4E8 /* AlmaniacWidgetExtension */;
 			targetProxy = A1WGT0152FE993A50072D4E8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -430,13 +430,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F8LLYMS4VZ;
 				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Almaniac;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,13 +457,15 @@
 		504EC3181FED79650016851F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F8LLYMS4VZ;
 				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Almaniac;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -479,12 +483,13 @@
 		A1WGT0192FE993A50072D4E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = AlmaniactWidget/AlmaniactWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AlmaniacWidget/AlmaniacWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F8LLYMS4VZ;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = AlmaniactWidget/Info.plist;
+				INFOPLIST_FILE = AlmaniacWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Almaniac;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -492,7 +497,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.engelsma.almaniac.AlmaniactWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = app.engelsma.almaniac.AlmaniacWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -503,12 +508,13 @@
 		A1WGT0202FE993A50072D4E8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = AlmaniactWidget/AlmaniactWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AlmaniacWidget/AlmaniacWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F8LLYMS4VZ;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = AlmaniactWidget/Info.plist;
+				INFOPLIST_FILE = AlmaniacWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Almaniac;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -516,7 +522,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.engelsma.almaniac.AlmaniactWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = app.engelsma.almaniac.AlmaniacWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -545,7 +551,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1WGT0212FE993A50072D4E8 /* Build configuration list for PBXNativeTarget "AlmaniactWidgetExtension" */ = {
+		A1WGT0212FE993A50072D4E8 /* Build configuration list for PBXNativeTarget "AlmaniacWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1WGT0192FE993A50072D4E8 /* Debug */,

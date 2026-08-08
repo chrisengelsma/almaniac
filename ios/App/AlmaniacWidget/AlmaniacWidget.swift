@@ -1,7 +1,7 @@
 import SwiftUI
 import WidgetKit
 
-struct AlmaniactWidgetEntry: TimelineEntry {
+struct AlmaniacWidgetEntry: TimelineEntry {
     let date: Date
     let calendarId: String
     let calendarName: String
@@ -9,9 +9,9 @@ struct AlmaniactWidgetEntry: TimelineEntry {
     let colorTheme: String
 }
 
-struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> AlmaniactWidgetEntry {
-        AlmaniactWidgetEntry(
+struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
+    func placeholder(in context: Context) -> AlmaniacWidgetEntry {
+        AlmaniacWidgetEntry(
             date: Date(),
             calendarId: "gregorian",
             calendarName: "Gregorian Calendar",
@@ -20,17 +20,17 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
         )
     }
 
-    func snapshot(for configuration: SelectCalendarIntent, in context: Context) async -> AlmaniactWidgetEntry {
+    func snapshot(for configuration: SelectCalendarIntent, in context: Context) async -> AlmaniacWidgetEntry {
         entry(for: configuration)
     }
 
-    func timeline(for configuration: SelectCalendarIntent, in context: Context) async -> Timeline<AlmaniactWidgetEntry> {
+    func timeline(for configuration: SelectCalendarIntent, in context: Context) async -> Timeline<AlmaniacWidgetEntry> {
         let currentEntry = entry(for: configuration)
         let nextRefresh = Calendar.current.startOfDay(for: Date().addingTimeInterval(86_400))
         return Timeline(entries: [currentEntry], policy: .after(nextRefresh))
     }
 
-    private func entry(for configuration: SelectCalendarIntent) -> AlmaniactWidgetEntry {
+    private func entry(for configuration: SelectCalendarIntent) -> AlmaniacWidgetEntry {
         let calendarId = configuration.calendar?.id ?? "gregorian"
         let useTransliteration = configuration.transliterateToEnglish
 
@@ -39,7 +39,7 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
                 ? (data.dateTransliterated ?? data.date)
                 : data.date
 
-            return AlmaniactWidgetEntry(
+            return AlmaniacWidgetEntry(
                 date: Date(),
                 calendarId: calendarId,
                 calendarName: data.calendarName,
@@ -48,7 +48,7 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
             )
         }
 
-        return AlmaniactWidgetEntry(
+        return AlmaniacWidgetEntry(
             date: Date(),
             calendarId: calendarId,
             calendarName: "Almaniac",
@@ -58,9 +58,10 @@ struct AlmaniactWidgetProvider: AppIntentTimelineProvider {
     }
 }
 
-struct AlmaniactWidgetEntryView: View {
+struct AlmaniacWidgetEntryView: View {
     @Environment(\.colorScheme) private var colorScheme
-    var entry: AlmaniactWidgetProvider.Entry
+    @Environment(\.widgetFamily) private var family
+    var entry: AlmaniacWidgetProvider.Entry
 
     private var backgroundColor: Color {
         color(from: resolvedThemeColors.background)
@@ -82,31 +83,64 @@ struct AlmaniactWidgetEntryView: View {
         )
     }
 
+    private var dateFont: Font {
+        switch family {
+        case .systemExtraLarge, .systemLarge:
+            return .largeTitle
+        case .systemMedium:
+            return .title2
+        default:
+            return .headline
+        }
+    }
+
+    private var calendarNameFont: Font {
+        switch family {
+        case .systemExtraLarge, .systemLarge:
+            return .title3
+        case .systemMedium:
+            return .subheadline
+        default:
+            return .caption
+        }
+    }
+
+    private var contentPadding: CGFloat {
+        switch family {
+        case .systemExtraLarge, .systemLarge:
+            return 20
+        case .systemMedium:
+            return 16
+        default:
+            return 12
+        }
+    }
+
     var body: some View {
         ZStack {
             Text(entry.displayDate)
-                .font(.headline)
+                .font(dateFont)
                 .fontWeight(.bold)
                 .foregroundStyle(textColor)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.6)
-                .lineLimit(3)
+                .lineLimit(family == .systemSmall ? 3 : 4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
             VStack {
                 Text(entry.calendarName)
-                    .font(.caption)
+                    .font(calendarNameFont)
                     .fontWeight(.semibold)
                     .foregroundStyle(textColor.opacity(0.8))
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(family == .systemSmall ? 2 : 3)
                     .minimumScaleFactor(0.75)
                     .frame(maxWidth: .infinity)
 
                 Spacer(minLength: 0)
             }
         }
-        .padding(12)
+        .padding(contentPadding)
         .background(backgroundColor)
     }
 
@@ -129,7 +163,7 @@ struct AlmaniactWidgetEntryView: View {
 
 struct WidgetThemeBackground: View {
     @Environment(\.colorScheme) private var colorScheme
-    let entry: AlmaniactWidgetEntry
+    let entry: AlmaniacWidgetEntry
 
     var body: some View {
         color(from: resolvedThemeColors.background)
@@ -164,19 +198,24 @@ struct WidgetThemeBackground: View {
     }
 }
 
-@available(iOS 17.0, *)
-struct AlmaniactWidget: Widget {
-    let kind = "AlmaniactWidget"
+struct AlmaniacWidget: Widget {
+    let kind = "AlmaniacWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: SelectCalendarIntent.self, provider: AlmaniactWidgetProvider()) { entry in
-            AlmaniactWidgetEntryView(entry: entry)
+        AppIntentConfiguration(kind: kind, intent: SelectCalendarIntent.self, provider: AlmaniacWidgetProvider()) { entry in
+            AlmaniacWidgetEntryView(entry: entry)
                 .containerBackground(for: .widget) {
                     WidgetThemeBackground(entry: entry)
                 }
         }
         .configurationDisplayName("Almaniac Calendar")
         .description("Today's date in a calendar of your choice.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .systemLarge,
+            .systemExtraLarge,
+        ])
+        .contentMarginsDisabled()
     }
 }
