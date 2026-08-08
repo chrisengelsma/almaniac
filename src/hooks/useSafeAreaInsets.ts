@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
 
 function measureSafeAreaInsets() {
   const probe = document.createElement('div');
@@ -28,6 +29,12 @@ function measureSafeAreaInsets() {
 }
 
 function applySafeAreaInsets() {
+  // Native iOS/Android inject insets from the WebView bridge; env() probes return 0
+  // and would overwrite them after the first resize/scroll.
+  if (Capacitor.isNativePlatform()) {
+    return;
+  }
+
   const insets = measureSafeAreaInsets();
   const root = document.documentElement.style;
 
@@ -40,6 +47,10 @@ function applySafeAreaInsets() {
 export function useSafeAreaInsets(): void {
   useEffect(() => {
     applySafeAreaInsets();
+
+    if (Capacitor.isNativePlatform()) {
+      return;
+    }
 
     window.addEventListener('resize', applySafeAreaInsets);
     window.visualViewport?.addEventListener('resize', applySafeAreaInsets);

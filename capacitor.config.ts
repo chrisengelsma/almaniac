@@ -12,6 +12,12 @@ const config: CapacitorConfig = {
   },
   android: {
     backgroundColor: '#faf9f4',
+    scrollEnabled: false,
+  },
+  plugins: {
+    SystemBars: {
+      insetsHandling: 'css',
+    },
   },
 };
 

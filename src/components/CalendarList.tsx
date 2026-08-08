@@ -147,7 +147,6 @@ export function CalendarList({
           <section
             className={[
               'calendar-list',
-              fillsViewport ? 'calendar-list--fills-viewport' : '',
               isEntering ? 'calendar-list--entering' : '',
             ]
               .filter(Boolean)

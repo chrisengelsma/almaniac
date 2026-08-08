@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <script>
+      // Android WebView 140+ enables passthrough safe-area insets with viewport-fit=cover,
+      // which misaligns pointer coordinates (https://issues.chromium.org/issues/40699457).
+      if (/Android/i.test(navigator.userAgent)) {
+        document
+          .querySelector('meta[name="viewport"]')
+          ?.setAttribute('content', 'width=device-width, initial-scale=1.0');
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
