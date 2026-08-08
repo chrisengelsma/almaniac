@@ -16,7 +16,8 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SystemBars: {
-      insetsHandling: 'css',
+      // Parent-padding inset mode fights with position:fixed in the WebView layer.
+      insetsHandling: 'disable',
     },
   },
 };

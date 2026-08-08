@@ -8,6 +8,7 @@ import { DatePickerModal } from './components/DatePickerModal';
 import { FullscreenDateView } from './components/FullscreenDateView';
 import { SettingsSheet } from './components/SettingsSheet';
 import { TopBar } from './components/TopBar';
+import { TapIndicator } from './components/TapIndicator';
 import { applyAppIcon } from './lib/appIcon';
 import {
   anchorFromPersistedState,
@@ -220,6 +221,7 @@ function App() {
           onClose={() => setFullscreen(null)}
         />
       ) : null}
+      <TapIndicator />
     </div>
   );
 }

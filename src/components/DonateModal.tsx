@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { DONATION_URL, getAppReviewUrl, getReviewStoreLabel } from '../theme/supportLinks';
+import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 
 interface DonateModalProps {
   open: boolean;
@@ -31,7 +32,7 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
       return;
     }
 
-    closeButtonRef.current?.focus();
+    focusWithoutScroll(closeButtonRef.current);
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -40,11 +41,11 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
     };
 
     document.addEventListener('keydown', onKeyDown);
-    document.body.style.overflow = 'hidden';
+    setBodyScrollLocked(true);
 
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = '';
+      setBodyScrollLocked(false);
     };
   }, [open, onClose]);
 

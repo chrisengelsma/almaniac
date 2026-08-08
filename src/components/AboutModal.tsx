@@ -3,6 +3,7 @@ import { APP_TITLE, APP_VERSION } from '../theme/appBranding';
 import { SITE_URL } from '../theme/supportLinks';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
 import { getAllBannerAttributions } from '../data/imageAttributions';
+import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 
 interface AboutModalProps {
   open: boolean;
@@ -18,7 +19,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
       return;
     }
 
-    closeButtonRef.current?.focus();
+    focusWithoutScroll(closeButtonRef.current);
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -27,11 +28,11 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
     };
 
     document.addEventListener('keydown', onKeyDown);
-    document.body.style.overflow = 'hidden';
+    setBodyScrollLocked(true);
 
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = '';
+      setBodyScrollLocked(false);
     };
   }, [open, onClose]);
 

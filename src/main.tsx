@@ -6,7 +6,7 @@ import App from './App.tsx'
 
 const platform = Capacitor.getPlatform()
 if (platform !== 'web') {
-  document.documentElement.classList.add(`platform-${platform}`)
+  document.documentElement.classList.add('platform-native', `platform-${platform}`)
 }
 
 createRoot(document.getElementById('root')!).render(

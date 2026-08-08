@@ -8,6 +8,7 @@ import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, ColorTheme
 import appIconLight from '../assets/app-icon-light.png';
 import appIconDark from '../assets/app-icon-dark.png';
 import { COLOR_THEME_SWATCHES } from '../theme/calendarColors';
+import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 import { SheetSlider, SheetToggle } from './DrawerControls';
 
 const COLOR_THEME_OPTIONS: Array<{ id: ColorTheme; label: string }> = [
@@ -287,7 +288,7 @@ export function SettingsSheet({
       return;
     }
 
-    sheetRef.current?.focus();
+    focusWithoutScroll(sheetRef.current);
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -301,11 +302,11 @@ export function SettingsSheet({
     };
 
     document.addEventListener('keydown', onKeyDown);
-    document.body.style.overflow = 'hidden';
+    setBodyScrollLocked(true);
 
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = '';
+      setBodyScrollLocked(false);
     };
   }, [open, onClose, panel]);
 

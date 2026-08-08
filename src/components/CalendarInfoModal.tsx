@@ -6,6 +6,7 @@ import {
 } from '../data/calendarInfo';
 import type { CalendarId } from '../lib/calendarRegistry';
 import { getBannerAttribution } from '../data/imageAttributions';
+import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 import { CALENDAR_BANNERS } from '../theme/calendarBanners';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
 import type { AppSettings } from '../lib/appSettings';
@@ -162,7 +163,7 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
       return;
     }
 
-    closeButtonRef.current?.focus();
+    focusWithoutScroll(closeButtonRef.current);
   }, [renderedId, visible]);
 
   useEffect(() => {
@@ -177,11 +178,11 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
     };
 
     document.addEventListener('keydown', onKeyDown);
-    document.body.style.overflow = 'hidden';
+    setBodyScrollLocked(true);
 
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = '';
+      setBodyScrollLocked(false);
     };
   }, [renderedId, onClose]);
 
