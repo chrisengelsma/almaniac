@@ -9,8 +9,35 @@ import type { IslamicCalendarMode as AppIslamicCalendarMode, IslamicDayAdjustmen
 
 export type HolidayTradition = 'christian' | 'jewish' | 'islamic';
 
+export type HolidayId =
+  | 'jewish.roshHashanah'
+  | 'jewish.yomKippur'
+  | 'jewish.sukkot'
+  | 'jewish.hanukkah'
+  | 'jewish.purim'
+  | 'jewish.passover'
+  | 'jewish.shavuot'
+  | 'jewish.tishaBAv'
+  | 'christian.epiphany'
+  | 'christian.christmas'
+  | 'christian.allSaintsDay'
+  | 'christian.ashWednesday'
+  | 'christian.palmSunday'
+  | 'christian.goodFriday'
+  | 'christian.easterSunday'
+  | 'christian.ascensionDay'
+  | 'christian.pentecost'
+  | 'islamic.newYear'
+  | 'islamic.ashura'
+  | 'islamic.mawlid'
+  | 'islamic.ramadanStart'
+  | 'islamic.laylatAlQadr'
+  | 'islamic.eidAlFitr'
+  | 'islamic.eidAlAdha'
+  | 'islamic.ramadan';
+
 export interface ReligiousHoliday {
-  name: string;
+  id: HolidayId;
   tradition: HolidayTradition;
 }
 
@@ -135,39 +162,39 @@ function collectHolidays(context: HolidayContext): ReligiousHoliday[] {
 
   // Jewish
   if (matchesHebrew(hebrew, 7, 1) || matchesHebrew(hebrew, 7, 2)) {
-    holidays.push({ name: 'Rosh Hashanah', tradition: 'jewish' });
+    holidays.push({ id: 'jewish.roshHashanah', tradition: 'jewish' });
   }
   if (matchesHebrew(hebrew, 7, 10)) {
-    holidays.push({ name: 'Yom Kippur', tradition: 'jewish' });
+    holidays.push({ id: 'jewish.yomKippur', tradition: 'jewish' });
   }
   if (isWithinHebrewRange(hebrew, 7, 15, 7)) {
-    holidays.push({ name: 'Sukkot', tradition: 'jewish' });
+    holidays.push({ id: 'jewish.sukkot', tradition: 'jewish' });
   }
   if (isWithinHebrewRange(hebrew, 9, 25, 8)) {
-    holidays.push({ name: 'Hanukkah', tradition: 'jewish' });
+    holidays.push({ id: 'jewish.hanukkah', tradition: 'jewish' });
   }
   if (matchesHebrew(hebrew, 12, 14) || matchesHebrew(hebrew, 13, 14)) {
-    holidays.push({ name: 'Purim', tradition: 'jewish' });
+    holidays.push({ id: 'jewish.purim', tradition: 'jewish' });
   }
   if (isWithinHebrewRange(hebrew, 1, 15, 8)) {
-    holidays.push({ name: 'Passover', tradition: 'jewish' });
+    holidays.push({ id: 'jewish.passover', tradition: 'jewish' });
   }
   if (matchesHebrew(hebrew, 3, 6)) {
-    holidays.push({ name: 'Shavuot', tradition: 'jewish' });
+    holidays.push({ id: 'jewish.shavuot', tradition: 'jewish' });
   }
   if (matchesHebrew(hebrew, 5, 9)) {
-    holidays.push({ name: "Tisha B'Av", tradition: 'jewish' });
+    holidays.push({ id: 'jewish.tishaBAv', tradition: 'jewish' });
   }
 
   // Christian, fixed
   if (matchesGregorian(gregorian, 1, 6)) {
-    holidays.push({ name: 'Epiphany', tradition: 'christian' });
+    holidays.push({ id: 'christian.epiphany', tradition: 'christian' });
   }
   if (matchesGregorian(gregorian, 12, 25)) {
-    holidays.push({ name: 'Christmas', tradition: 'christian' });
+    holidays.push({ id: 'christian.christmas', tradition: 'christian' });
   }
   if (matchesGregorian(gregorian, 11, 1)) {
-    holidays.push({ name: 'All Saints\' Day', tradition: 'christian' });
+    holidays.push({ id: 'christian.allSaintsDay', tradition: 'christian' });
   }
 
   // Christian, movable (Gregorian Easter computus)
@@ -194,49 +221,49 @@ function collectHolidays(context: HolidayContext): ReligiousHoliday[] {
     );
 
     if (matchesGregorian(gregorian, ashWednesday.month, ashWednesday.day)) {
-      holidays.push({ name: 'Ash Wednesday', tradition: 'christian' });
+      holidays.push({ id: 'christian.ashWednesday', tradition: 'christian' });
     }
     if (matchesGregorian(gregorian, palmSunday.month, palmSunday.day)) {
-      holidays.push({ name: 'Palm Sunday', tradition: 'christian' });
+      holidays.push({ id: 'christian.palmSunday', tradition: 'christian' });
     }
     if (matchesGregorian(gregorian, goodFriday.month, goodFriday.day)) {
-      holidays.push({ name: 'Good Friday', tradition: 'christian' });
+      holidays.push({ id: 'christian.goodFriday', tradition: 'christian' });
     }
     if (matchesGregorian(gregorian, easterSunday.month, easterSunday.day)) {
-      holidays.push({ name: 'Easter Sunday', tradition: 'christian' });
+      holidays.push({ id: 'christian.easterSunday', tradition: 'christian' });
     }
     if (matchesGregorian(gregorian, ascension.month, ascension.day)) {
-      holidays.push({ name: 'Ascension Day', tradition: 'christian' });
+      holidays.push({ id: 'christian.ascensionDay', tradition: 'christian' });
     }
     if (matchesGregorian(gregorian, pentecost.month, pentecost.day)) {
-      holidays.push({ name: 'Pentecost', tradition: 'christian' });
+      holidays.push({ id: 'christian.pentecost', tradition: 'christian' });
     }
   }
 
   // Islamic
   if (matchesIslamic(islamic, 1, 1)) {
-    holidays.push({ name: 'Islamic New Year', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.newYear', tradition: 'islamic' });
   }
   if (matchesIslamic(islamic, 1, 10)) {
-    holidays.push({ name: 'Ashura', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.ashura', tradition: 'islamic' });
   }
   if (matchesIslamic(islamic, 3, 12)) {
-    holidays.push({ name: 'Mawlid al-Nabi', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.mawlid', tradition: 'islamic' });
   }
   if (matchesIslamic(islamic, 9, 1)) {
-    holidays.push({ name: 'Start of Ramadan', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.ramadanStart', tradition: 'islamic' });
   }
   if (matchesIslamic(islamic, 9, 27)) {
-    holidays.push({ name: 'Laylat al-Qadr', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.laylatAlQadr', tradition: 'islamic' });
   }
   if (matchesIslamic(islamic, 10, 1)) {
-    holidays.push({ name: 'Eid al-Fitr', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.eidAlFitr', tradition: 'islamic' });
   }
   if (matchesIslamic(islamic, 12, 10)) {
-    holidays.push({ name: 'Eid al-Adha', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.eidAlAdha', tradition: 'islamic' });
   }
   if (isWithinIslamicMonth(islamic, 9) && !matchesIslamic(islamic, 9, 1)) {
-    holidays.push({ name: 'Ramadan', tradition: 'islamic' });
+    holidays.push({ id: 'islamic.ramadan', tradition: 'islamic' });
   }
 
   return holidays;

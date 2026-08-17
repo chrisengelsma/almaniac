@@ -9,6 +9,31 @@ export interface CalendarColorContext {
   calendarColors?: Partial<CalendarColorMap>;
 }
 
+export interface SupporterGradientIndex {
+  index: number;
+  total: number;
+}
+
+const SUPPORTER_GRADIENT_LIGHT_START = { h: 72, s: 48, l: 86 };
+const SUPPORTER_GRADIENT_LIGHT_END = { h: 168, s: 42, l: 78 };
+const SUPPORTER_GRADIENT_DARK_START = { h: 172, s: 58, l: 42 };
+const SUPPORTER_GRADIENT_DARK_END = { h: 282, s: 54, l: 46 };
+
+export function getSupporterThemeRowColor(
+  index: number,
+  total: number,
+  colorScheme: ColorScheme = 'light',
+): string {
+  const start = colorScheme === 'dark' ? SUPPORTER_GRADIENT_DARK_START : SUPPORTER_GRADIENT_LIGHT_START;
+  const end = colorScheme === 'dark' ? SUPPORTER_GRADIENT_DARK_END : SUPPORTER_GRADIENT_LIGHT_END;
+  const t = total <= 1 ? 0 : index / (total - 1);
+  const h = start.h + (end.h - start.h) * t;
+  const s = start.s + (end.s - start.s) * t;
+  const l = start.l + (end.l - start.l) * t;
+
+  return `hsl(${Math.round(h)}, ${Math.round(s)}%, ${Math.round(l)}%)`;
+}
+
 /** Default row colors: muted, distinct, and loosely evocative of each calendar tradition. */
 export const DEFAULT_CALENDAR_COLORS: CalendarColorMap = {
   gregorian: '#d4dfe8', // cool civil blue-grey
@@ -50,6 +75,7 @@ export const COLOR_THEME_SWATCHES: Record<ColorTheme, readonly string[]> = {
   ],
   mono: ['#f5f5f5', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#616161'],
   sepia: ['#f8f0e0', '#ebe0c8', '#d4c4a0', '#b8a078', '#8b6914'],
+  supporter: ['#e8edc8', '#b8e4c4', '#4a9e9a', '#6a5a9a', '#7d5cad'],
 };
 
 export function calendarColorContext(
@@ -82,16 +108,32 @@ export function getWidgetTextColor(
     return context.colorScheme === 'dark' ? '#e8dcc8' : '#3d2f1f';
   }
 
+  if (context.colorTheme === 'supporter') {
+    return context.colorScheme === 'dark' ? '#e8fff9' : '#263238';
+  }
+
   return context.colorScheme === 'dark' ? backgroundColor : '#263238';
 }
 
-export function getCalendarColor(id: CalendarId, context: CalendarColorContext): string {
+export function getCalendarColor(
+  id: CalendarId,
+  context: CalendarColorContext,
+  gradientIndex?: SupporterGradientIndex,
+): string {
   if (context.colorTheme === 'mono') {
     return context.colorScheme === 'dark' ? MONO_DARK_TEXT : MONO_LIGHT_ROW;
   }
 
   if (context.colorTheme === 'sepia') {
     return context.colorScheme === 'dark' ? SEPIA_DARK_TEXT : SEPIA_LIGHT_ROW;
+  }
+
+  if (context.colorTheme === 'supporter') {
+    if (gradientIndex) {
+      return getSupporterThemeRowColor(gradientIndex.index, gradientIndex.total, context.colorScheme);
+    }
+
+    return getSupporterThemeRowColor(4, 9, context.colorScheme);
   }
 
   return context.calendarColors?.[id] ?? DEFAULT_CALENDAR_COLORS[id];

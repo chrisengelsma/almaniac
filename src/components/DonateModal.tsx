@@ -1,19 +1,30 @@
-import { useEffect, useRef } from 'react';
-import { DONATION_URL, getAppReviewUrl, getReviewStoreLabel } from '../theme/supportLinks';
+import { Capacitor } from '@capacitor/core';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { DonationThankYouModal } from './DonationThankYouModal';
+import { useTranslation } from 'react-i18next';
+import { IconTipJar } from './IconTipJar';
+import { useTipJar } from '../hooks/useTipJar';
+import { requestNativeAppReview } from '../lib/appReview';
 import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
+import {
+  TIP_PRODUCT_IDS,
+  TIP_PRODUCT_LABEL_KEYS,
+  TIP_PRODUCT_PRICE_HINTS_USD,
+  TIP_PRODUCT_TIERS,
+  TIP_TIERS,
+  TIP_TIER_LABEL_KEYS,
+} from '../data/tipProducts';
+import { toIntlLocale, type AppLanguage } from '../i18n/language';
+import {
+  getAppReviewUrl,
+  getDonationChannel,
+  getExternalTipUrl,
+} from '../theme/supportLinks';
 
 interface DonateModalProps {
   open: boolean;
   onClose: () => void;
-}
-
-function IconCoffee() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M6 8h11v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z" />
-      <path d="M17 10h1.8a2.2 2.2 0 0 1 0 4.4H17M7 5v1.5M11 5v1.5M15 5v1.5" />
-    </svg>
-  );
+  onSupporterUnlock?: () => void;
 }
 
 function IconStar() {
@@ -24,8 +35,38 @@ function IconStar() {
   );
 }
 
-export function DonateModal({ open, onClose }: DonateModalProps) {
+function formatTipPrice(amountUsd: number, language: string): string {
+  return new Intl.NumberFormat(toIntlLocale(language as AppLanguage), {
+    style: 'currency',
+    currency: 'USD',
+  }).format(amountUsd);
+}
+
+export function DonateModal({
+  open,
+  onClose,
+  onSupporterUnlock,
+}: DonateModalProps) {
+  const { t, i18n } = useTranslation();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [thankYouOpen, setThankYouOpen] = useState(false);
+  const handlePurchaseSuccess = useCallback(() => {
+    onSupporterUnlock?.();
+    setThankYouOpen(true);
+  }, [onSupporterUnlock]);
+  const { products, status, purchasingId, feedback, buyTip, isAvailable: tipJarAvailable } =
+    useTipJar(open, handlePurchaseSuccess);
+  const donationChannel = getDonationChannel();
+  const showIapTips = donationChannel === 'iap' && tipJarAvailable;
+  const showExternalTips = donationChannel === 'external';
+  const showTips = showIapTips || showExternalTips;
+  const productById = new Map(products.map((product) => [product.id, product]));
+
+  useEffect(() => {
+    if (!open) {
+      setThankYouOpen(false);
+    }
+  }, [open]);
 
   useEffect(() => {
     if (!open) {
@@ -49,15 +90,40 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
     };
   }, [open, onClose]);
 
-  const reviewStoreLabel = getReviewStoreLabel();
+  const platform = Capacitor.getPlatform();
+  const reviewStoreLabel =
+    platform === 'android'
+      ? t('modals.donate.storeGooglePlay')
+      : t('modals.donate.storeAppStore');
 
   const openAppReview = () => {
+    if (Capacitor.isNativePlatform()) {
+      void requestNativeAppReview();
+      return;
+    }
+
     window.open(getAppReviewUrl(), '_blank', 'noopener,noreferrer');
   };
 
+  if (!open) {
+    return null;
+  }
+
+  if (thankYouOpen) {
+    return (
+      <DonationThankYouModal
+        open
+        onClose={() => {
+          setThankYouOpen(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
   return (
-    <div className={`donate-modal${open ? ' donate-modal--visible' : ''}`} aria-hidden={!open}>
-      <button type="button" className="donate-modal__backdrop" onClick={onClose} aria-label="Close" />
+    <div className="donate-modal donate-modal--visible" aria-hidden={false}>
+      <button type="button" className="donate-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
       <div
         className="donate-modal__panel"
         role="dialog"
@@ -67,16 +133,16 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
         <header className="donate-modal__header">
           <div className="donate-modal__title-row">
             <span className="donate-modal__icon">
-              <IconCoffee />
+              <IconTipJar />
             </span>
-            <h2 id="donate-modal-title">Support Almaniac</h2>
+            <h2 id="donate-modal-title">{t('modals.donate.title')}</h2>
           </div>
           <button
             ref={closeButtonRef}
             type="button"
             className="donate-modal__close"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t('common.close')}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" />
@@ -85,21 +151,10 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
         </header>
 
         <div className="donate-modal__body">
-          <p>
-            I&apos;m Chris Engelsma. I built Almaniac to compare dates across calendar systems
-            without jumping between converters.
-          </p>
-          <p>
-            Almaniac is free to use, with no ads, subscriptions, or tracking.
-          </p>
-          <p>
-            If you like the app, a 5-star rating on the App Store or Google Play helps a lot. It
-            also helps other people find Almaniac.
-          </p>
-          <p>
-            You&apos;re also welcome to buy me a coffee as a thank-you. Either way, thanks for
-            using Almaniac.
-          </p>
+          <p>{t('modals.donate.intro')}</p>
+          <p>{t('modals.donate.free')}</p>
+          <p>{t('modals.donate.rating', { store: reviewStoreLabel })}</p>
+          {showTips ? <p>{t('modals.donate.tipJar')}</p> : <p>{t('modals.donate.thanks')}</p>}
         </div>
 
         <footer className="donate-modal__footer">
@@ -108,20 +163,58 @@ export function DonateModal({ open, onClose }: DonateModalProps) {
               <span className="donate-modal__btn-star" aria-hidden="true">
                 <IconStar />
               </span>
-              Rate 5-star {reviewStoreLabel}
+              {t('modals.donate.rateButton', { store: reviewStoreLabel })}
             </button>
-            <a
-              className="donate-modal__btn donate-modal__btn--coffee"
-              href={DONATION_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconCoffee />
-              Buy me a coffee
-            </a>
+
+            {showTips ? (
+              <div className="donate-modal__tip-jar" aria-label={t('modals.donate.tipsAria')}>
+                {showIapTips && status === 'loading' ? (
+                  <p className="donate-modal__tip-status">{t('modals.donate.loadingTips')}</p>
+                ) : null}
+                {showIapTips
+                  ? TIP_PRODUCT_IDS.map((productId) => {
+                      const product = productById.get(productId);
+                      const tier = TIP_PRODUCT_TIERS[productId];
+                      return (
+                        <button
+                          key={productId}
+                          type="button"
+                          className="donate-modal__tip-btn"
+                          onClick={() => void buyTip(productId)}
+                          disabled={purchasingId !== null || status === 'loading'}
+                        >
+                          <span className="donate-modal__tip-btn-label">
+                            {t(TIP_PRODUCT_LABEL_KEYS[productId])}
+                          </span>
+                          <span className="donate-modal__tip-btn-price">
+                            {product?.priceString ??
+                              formatTipPrice(TIP_PRODUCT_PRICE_HINTS_USD[tier], i18n.language)}
+                          </span>
+                        </button>
+                      );
+                    })
+                  : TIP_TIERS.map((tier) => (
+                    <a
+                      key={tier}
+                      className="donate-modal__tip-btn donate-modal__tip-btn--link"
+                      href={getExternalTipUrl(tier)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="donate-modal__tip-btn-label">{t(TIP_TIER_LABEL_KEYS[tier])}</span>
+                      <span className="donate-modal__tip-btn-price">
+                        {formatTipPrice(TIP_PRODUCT_PRICE_HINTS_USD[tier], i18n.language)}
+                      </span>
+                    </a>
+                  ))}
+              </div>
+            ) : null}
           </div>
+
+          {feedback ? <p className="donate-modal__feedback">{feedback}</p> : null}
+
           <button type="button" className="donate-modal__btn donate-modal__btn--ghost" onClick={onClose}>
-            Not now
+            {t('modals.donate.notNow')}
           </button>
         </footer>
       </div>

@@ -1,3 +1,16 @@
+import type { AppLanguage } from '../i18n/language';
+import { toIntlLocale } from '../i18n/language';
+
+/** ISO 3166-1 alpha-2 to localized short name. */
+export function countryName(code: string, language: AppLanguage = 'en'): string {
+  try {
+    const display = new Intl.DisplayNames([toIntlLocale(language)], { type: 'region' });
+    return display.of(code) ?? code;
+  } catch {
+    return COUNTRY_NAMES[code] ?? code;
+  }
+}
+
 /** ISO 3166-1 alpha-2 to English short name (subset used by the app). */
 export const COUNTRY_NAMES: Record<string, string> = {
   AD: 'Andorra',
@@ -194,7 +207,3 @@ export const COUNTRY_NAMES: Record<string, string> = {
   ZM: 'Zambia',
   ZW: 'Zimbabwe',
 };
-
-export function countryName(code: string): string {
-  return COUNTRY_NAMES[code] ?? code;
-}

@@ -1,6 +1,6 @@
 import { registerPlugin } from '@capacitor/core';
 
-export type AppIconChoice = 'light' | 'dark';
+export type AppIconChoice = 'light' | 'dark' | 'supporter';
 
 export interface AppIconPlugin {
   setIcon(options: { icon: AppIconChoice }): Promise<{ icon: AppIconChoice }>;

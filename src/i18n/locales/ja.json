@@ -1,0 +1,559 @@
+{
+  "branding": {
+    "appTitle": "Almaniac",
+    "appLogo": "almaniac",
+    "tagline": "暦法コンバーター"
+  },
+  "common": {
+    "close": "閉じる",
+    "cancel": "キャンセル",
+    "by": "作成者",
+    "country": "国",
+    "countries": "国",
+    "era": {
+      "ce": "西暦",
+      "bce": "紀元前",
+      "ceYear": "西暦{{year}}年",
+      "bceYear": "紀元前{{year}}年"
+    }
+  },
+  "settings": {
+    "title": "カスタマイズ",
+    "selectCalendarsTitle": "暦法を選択",
+    "sectionCalendars": "暦法",
+    "sectionSettings": "設定",
+    "about": "このアプリについて",
+    "language": "言語",
+    "languageAria": "アプリの言語",
+    "transliterateLabel": "英語に転写",
+    "transliterateAria": "英語に転写",
+    "colorThemeLabel": "カラーテーマ",
+    "colorThemeAria": "カラーテーマ",
+    "colorThemeOptionAria": "{{label}} カラーテーマ",
+    "colorThemeDistinct": "カラフル",
+    "colorThemeMono": "モノ",
+    "colorThemeSepia": "セピア",
+    "appIconLabel": "アプリアイコン",
+    "appIconAria": "アプリアイコン",
+    "appIconOptionAria": "{{label}} アプリアイコン",
+    "appIconLight": "ライト",
+    "appIconDark": "ダーク",
+    "selectCalendarsCount": "{{total}} 件中 {{count}} 件を表示",
+    "selectCalendarsToggleAria": "{{calendar}} を切り替え",
+    "islamicSystemLabel": "イスラム暦の方式",
+    "islamicSystemAria": "イスラム暦の方式",
+    "islamicSystemTabular": "表形式（算術）",
+    "islamicSystemUmmAlQura": "ウンム・アルクラ（サウジ公式）",
+    "islamicAdjustmentLabel": "イスラム暦の日付調整",
+    "islamicGroupAria": "イスラム暦の設定",
+    "julianDayLabel": "修正ユリウス日",
+    "julianDayToggle": "修正ユリウス日を使用",
+    "julianDayGroupAria": "ユリウス日の設定",
+    "closeAria": "カスタマイズパネルを閉じる",
+    "backAria": "設定に戻る",
+    "themeToggleLightAria": "ライトモードに切り替え",
+    "themeToggleDarkAria": "ダークモードに切り替え",
+    "languageSystem": "システムの言語",
+    "colorThemeSupporter": "サポーター",
+    "appIconSupporter": "サポーター",
+    "supporterLockedAria": "{{label}}（サポーター特典）",
+    "rememberLastDateLabel": "最後の日付を記憶",
+    "rememberLastDateAria": "最後に表示した日付で開く"
+  },
+  "topBar": {
+    "supportAria": "Almaniac を支援",
+    "jumpToDateAria": "日付にジャンプ",
+    "customizeAria": "暦法と設定をカスタマイズ",
+    "dateNavAria": "日付ナビゲーション",
+    "back30Aria": "30 日戻る",
+    "back1Aria": "1 日戻る",
+    "todayAria": "今日へ移動",
+    "forward1Aria": "1 日進む",
+    "forward30Aria": "30 日進む"
+  },
+  "modals": {
+    "donate": {
+      "title": "Almaniac を支援",
+      "intro": "Chris Engelsma です。Almaniac は、複数の変換ツールを行き来せずに暦法間の日付を比較するために作りました。",
+      "free": "Almaniac は無料で、広告・サブスクリプション・トラッキングはありません。",
+      "rating": "アプリを気に入ったら、{{store}}で 5 つ星の評価をいただけると大変助かります。他の人が Almaniac を見つける助けにもなります。",
+      "tipJar": "感謝の気持ちとして任意のチップを送ることもできます。チップで機能は解放されません。Apple は各チップから 15〜30% を手数料として徴収します。",
+      "coffee": "感謝の気持ちとしてコーヒーを奢ってくれることも歓迎です。いずれにせよ、Almaniac をご利用いただきありがとうございます。",
+      "thanks": "Almaniac をご利用いただきありがとうございます。",
+      "storeAppStore": "App Store で",
+      "storeGooglePlay": "Google Play で",
+      "rateButton": "{{store}}で 5 つ星を付ける",
+      "tipsAria": "任意のチップ",
+      "loadingTips": "チップのオプションを読み込み中…",
+      "coffeeButton": "コーヒーを奢る",
+      "notNow": "後で",
+      "feedbackSuccess": "Almaniac を支援いただきありがとうございます！",
+      "feedbackError": "チップを完了できませんでした。もう一度お試しください。",
+      "thankYouTitle": "ありがとうございます！",
+      "thankYouMessage": "お礼に、新しいテーマとアイコンをお楽しみください。",
+      "thankYouDismiss": "どういたしまして",
+      "tipSmall": "小さなチップ",
+      "tipMedium": "中程度のチップ",
+      "tipLarge": "大きなチップ",
+      "thankYouPerk": "また、新しい機能をいち早くお試しいただけます。"
+    },
+    "about": {
+      "title": "{{appTitle}} について",
+      "description": "Almaniac は、グレゴリオ暦、ユリウス暦、ユダヤ暦、イスラム暦、中国暦、マヤ暦など、多くの暦法で同じ日付を一度に表示します。",
+      "creditsTitle": "画像クレジット",
+      "bannerTitle": "{{calendar}} バナー",
+      "version": "バージョン {{version}}",
+      "copyright": "© 2026 Chris Engelsma",
+      "derivedLicensePrefix": "派生バナーは次のライセンスで共有",
+      "sourceLink": "出典",
+      "banners": {
+        "gregorian": {
+          "subjects": "グレゴリウス13世 | サン・ピエトロ大聖堂",
+          "aboutNote": "グレゴリオ暦のバナーは、下記のソース画像を基に改作した派生作品です。"
+        },
+        "julian": {
+          "subjects": "ユリウス・カエサル | コロッセオ",
+          "aboutNote": "ユリウス暦のバナーは、下記のソース写真を基に改作した派生作品です。 "
+        },
+        "ethiopian": {
+          "subjects": "ラリベラの司祭 | Bete Giyorgis",
+          "aboutNote": "エチオピア暦のバナーは、下記のソース写真を基に改作した派生作品です。 "
+        },
+        "coptic": {
+          "subjects": "聖 Bishoy 修道院 | 聖 Anthony 修道院",
+          "aboutNote": "コプト暦のバナーは、下記のソース写真を基に改作した派生作品です。 "
+        },
+        "chinese": {
+          "subjects": "黄帝 | 天壇",
+          "aboutNote": "中国暦のバナーは、下記のソース画像を基に改作した派生作品です。"
+        },
+        "soviet": {
+          "subjects": "Joseph Stalin | モスクワ・赤の広場",
+          "aboutNote": "ソビエト革命暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "frc": {
+          "subjects": "Triumph of the Republic | The Panthéon",
+          "aboutNote": "フランス共和国暦のバナーは、下記のソース画像を基に改作した派生作品です。"
+        },
+        "japanese": {
+          "subjects": "明治天皇 | 二重橋",
+          "aboutNote": "日本の和暦バナーは、下記のソース写真を基に改作した派生作品です。 "
+        },
+        "maya": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "イスラム暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "hebrew": {
+          "subjects": "Maimonides | エルサレム旧市街",
+          "aboutNote": "ユダヤ暦のバナーは、下記のソース写真を基に改作した派生作品です。 "
+        },
+        "persian": {
+          "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
+          "aboutNote": "ペルシア暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "bahai": {
+          "subjects": "Shrine of the Báb | Haifa",
+          "aboutNote": "バハーイー暦のバナーは、下記のソース写真を基に改作した派生作品です。"
+        },
+        "thaiBuddhist": {
+          "subjects": "King Chulalongkorn | Wat Arun",
+          "aboutNote": "タイ仏暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "discordian": {
+          "subjects": "Eris | Asbury Lanes",
+          "aboutNote": "ディスコーディアン暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "indianCivil": {
+          "subjects": "Meghnad Saha | Jantar Mantar",
+          "aboutNote": "インド国定暦のバナーは、下記のソース画像を基に改作した派生作品です。"
+        },
+        "isoWeek": {
+          "subjects": "NBS Atomic Clock | The Earth Seen from Apollo 17",
+          "aboutNote": "ISO 週番号暦のバナーは、下記のソース画像を基に改作した派生作品です。"
+        },
+        "julianDay": {
+          "subjects": "Joseph Justus Scaliger | Old Observatory, Leiden",
+          "aboutNote": "ユリウス日のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "bengali": {
+          "subjects": "The Emperor Akbar | Ahsan Manzil",
+          "aboutNote": "ベンガル暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "minguo": {
+          "subjects": "Sun Yat-sen | Presidential Office Building",
+          "aboutNote": "民国暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        }
+      }
+    },
+    "calendarInfo": {
+      "closeBackdropAria": "暦法情報を閉じる",
+      "loadingBanner": "バナーを読み込み中…",
+      "imageComingSoon": "画像は近日公開",
+      "source": "出典",
+      "type": "種類",
+      "firstImplemented": "初回実装",
+      "whereUsed": "使用地域",
+      "geoAria": "地理的な使用状況",
+      "mapTabsAria": "地図ビュー",
+      "adoptionTab": "採用日",
+      "timelineTab": "採用のタイムライン",
+      "gregorianSliderLabel": "時系列で採用状況を表示",
+      "julianSliderLabel": "時系列で採用と置換を表示",
+      "yearCe": "西暦{{year}}年",
+      "gregorianAdoptionSummary": "この年までにグレゴリオ暦を使用する{{countryLabel}}は {{count}}",
+      "julianUsageSummary": "この時点でユリウス暦を使用する{{countryLabel}}は {{count}}",
+      "adoptedIn": "{{year}} 年に採用",
+      "julianAdoptedIn": "{{yearLabel}} に採用",
+      "julianStoppedIn": "{{yearLabel}} に使用停止",
+      "mapAria": "暦法の使用状況を示す世界地図"
+    }
+  },
+  "datePicker": {
+    "title": "日付にジャンプ",
+    "calendarLabel": "暦法",
+    "searchPlaceholder": "暦法を検索…",
+    "noResults": "一致する暦法がありません。",
+    "eraAria": "紀元",
+    "eraCe": "西暦",
+    "eraBce": "紀元前",
+    "invalidDate": "選択した暦法ではその日付は無効です。",
+    "cancel": "キャンセル",
+    "apply": "日付へ移動",
+    "field": {
+      "year": "年",
+      "era": "紀元",
+      "month": "月",
+      "day": "日",
+      "eraYear": "紀元年",
+      "decade": "デカード",
+      "baktun": "バクトゥン",
+      "katun": "カトゥン",
+      "tun": "トゥン",
+      "uinal": "ウィナル",
+      "kin": "キン",
+      "buddhistYear": "仏暦年",
+      "bengaliYear": "ベンガル暦年",
+      "minguoYear": "民国年",
+      "isoWeekYear": "ISO 週年",
+      "week": "週",
+      "weekday": "曜日",
+      "yoldYear": "YOLD 年",
+      "season": "季",
+      "julianDay": "ユリウス日",
+      "modifiedJulianDay": "修正ユリウス日"
+    },
+    "hint": {
+      "gregorianYear": "紀元前 100 年など古代の日付も含め、任意の年を入力してください。",
+      "julianDay": "ユリウス日の番号を入力してください。",
+      "modifiedJulianDay": "修正ユリウス日の番号を入力してください。"
+    },
+    "placeholder": {
+      "year100": "例: 100",
+      "julianDay": "例: 2460000",
+      "modifiedJulianDay": "例: 60000"
+    },
+    "isoWeekWeekN": "第 {{week}} 週",
+    "discordianStTibsDay": "聖 Tib の日",
+    "frcSansculottides": "サンキュロティッド",
+    "japaneseEra": "{{nameEn}}（{{nameJa}}）"
+  },
+  "calendars": {
+    "listAria": "暦法変換",
+    "addHint": "メニューから別の暦法を追加",
+    "copied": "クリップボードにコピーしました",
+    "reorderAria": "{{label}} の順序を変更",
+    "holidayAria": "祝日: {{names}}",
+    "copyAria": "{{label}} の日付をコピー",
+    "fullscreenAria": "{{label}} の日付を全画面表示",
+    "aboutAria": "{{label}} について",
+    "fullscreenAriaView": "{{label}} の日付 全画面",
+    "tapToClose": "もう一度タップして閉じる",
+    "islamicSystemUmmAlQura": "ウンム・アルクラ",
+    "islamicSystemTabular": "表形式",
+    "chineseZodiacYear": "{{zodiac}}年（{{pinyin}}）",
+    "japaneseGannen": "元年",
+    "isoWeekDateFormat": "{{year}} 年第 {{week}} 週（{{padded}}）、{{weekday}}",
+    "name": {
+      "gregorian": "グレゴリオ暦",
+      "julian": "ユリウス暦",
+      "ethiopian": "エチオピア暦",
+      "coptic": "コプト暦",
+      "chinese": "中国暦",
+      "soviet": "ソビエト革命暦",
+      "frc": "フランス共和暦",
+      "maya": "マヤ暦",
+      "islamic": "イスラム暦",
+      "hebrew": "ユダヤ暦",
+      "persian": "ペルシャ暦",
+      "bahai": "バハーイー暦",
+      "japanese": "日本の和暦",
+      "minguo": "民国暦",
+      "thaiBuddhist": "タイ仏暦",
+      "bengali": "ベンガル暦",
+      "isoWeek": "ISO 週日付",
+      "discordian": "ディスコーディアン暦",
+      "indianCivil": "インド国定暦",
+      "julianDay": "ユリウス日"
+    },
+    "label": {
+      "gregorian": "グレゴリオ",
+      "julian": "ユリウス",
+      "ethiopian": "エチオピア",
+      "coptic": "コプト",
+      "chinese": "中国",
+      "soviet": "ソビエト",
+      "frc": "FRC",
+      "maya": "マヤ",
+      "islamic": "イスラム",
+      "hebrew": "ユダヤ",
+      "persian": "ペルシャ",
+      "bahai": "バハーイー",
+      "japanese": "日本",
+      "minguo": "民国",
+      "thaiBuddhist": "タイ仏暦",
+      "bengali": "ベンガル",
+      "isoWeek": "ISO 週",
+      "discordian": "ディスコーディアン",
+      "indianCivil": "インド国定",
+      "julianDay": "ユリウス日",
+      "modifiedJulianDay": "修正ユリウス日"
+    },
+    "type": {
+      "solar": "太陽暦",
+      "lunar": "太陰暦",
+      "lunisolar": "太陰太陽暦",
+      "mixed": "混合周期",
+      "continuous": "連続カウント"
+    },
+    "info": {
+      "gregorian": {
+        "firstImplemented": "1582 年",
+        "history": "ユリウス暦のずれを修正するため教皇グレゴリウス XIII によって導入されました。閏年は 400 で割り切れる世紀年を除き、世紀年をスキップします。ヨーロッパとアメリカで段階的に採用され、現在は国際的な民用標準です。",
+        "usedIn": [
+          "アメリカ",
+          "カナダ",
+          "メキシコ",
+          "ブラジル",
+          "イギリス",
+          "フランス",
+          "ドイツ",
+          "イタリア",
+          "スペイン",
+          "オーストラリア",
+          "日本",
+          "中国（民用）",
+          "インド（民用）",
+          "世界の大部分"
+        ]
+      },
+      "julian": {
+        "firstImplemented": "紀元前 45 年",
+        "history": "ユリウス・カエサルがローマ共和政の暦から改革しました。単純な閏年規則（4 年ごと）を用い、いくつかの東方正教会の典礼暦として残っています。",
+        "usedIn": [
+          "ロシア（1918 年まで）",
+          "東方正教会",
+          "エチオピア（変種あり）",
+          "セルビア",
+          "エルサレム総主教庁",
+          "アトス山"
+        ]
+      },
+      "ethiopian": {
+        "firstImplemented": "西暦 4 世紀頃",
+        "history": "13 か月の 30 日と短い閏日（パグメ）からなる太陽暦です。ユリウス暦の閏年規則を共有し、グレゴリオ暦より約 7〜8 年遅れています。エチオピアでは民用・宗教生活でグレゴリオ暦と併用されています。",
+        "usedIn": [
+          "エチオピア",
+          "エリトリア正教会コミュニティ"
+        ]
+      },
+      "coptic": {
+        "firstImplemented": "西暦 3 世紀頃",
+        "history": "コプト正教会の典礼暦で、エチオピア暦と構造的に同一ですが殉教者紀元（Anno Martyrum）で数えます。新年はグレゴリオ暦 9 月 11 日（グレゴリオ閏年前は 9 月 12 日）です。",
+        "usedIn": [
+          "エジプト",
+          "世界中のコプト正教会"
+        ]
+      },
+      "chinese": {
+        "firstImplemented": "紀元前 14 世紀頃（伝説上）；紀元前 104 年頃に規則確定",
+        "history": "伝統的中国暦（农历）は節気で月を定め、天干地支（干支）の六十干支で年を名付けます。各年には十二支（生肖）の動物も付きます。閏月により祭りが季節と揃います。",
+        "usedIn": [
+          "中国",
+          "台湾",
+          "香港",
+          "マカオ",
+          "シンガポール",
+          "マレーシア",
+          "海外華人コミュニティ"
+        ]
+      },
+      "soviet": {
+        "firstImplemented": "1929 年",
+        "history": "スターリンの工業化の際に導入され、7 日週を 5 日の生産サイクルに置き換え、年を 12 か月各 30 日と国民の祝日に再編しました。日常生活ではグレゴリオ暦が並行して使われ、1940 年までに実験は放棄されました。",
+        "usedIn": [
+          "ソビエト連邦（1929–1940）"
+        ]
+      },
+      "frc": {
+        "firstImplemented": "1793 年",
+        "history": "フランス革命期に時間の十進化のために創設されました。年は秋分から始まり、月と週が改名・再編されました。ナポレオンが 1806 年に廃止し、パリ公社が 1871 年に一時復活しました。",
+        "usedIn": [
+          "フランス（1793–1805）",
+          "パリ公社（1871）"
+        ]
+      },
+      "maya": {
+        "firstImplemented": "紀元前 500 年頃",
+        "history": "古典期マヤは 260 日のツォルキン、365 日のハアブ、神話的創世から日を数う長期暦を組み合わせました。この表示は石碑や写本で知られる長期暦表記を使用します。",
+        "usedIn": [
+          "メキシコ",
+          "グアテマラ",
+          "ベリーズ",
+          "ホンジュラス",
+          "エルサルバドル"
+        ]
+      },
+      "islamic": {
+        "firstImplemented": "622 年（ヒジュラ紀元）",
+        "history": "12 か月で合計約 354 日の太陰暦です。本アプリは表形式（算術）変換と、サウジアラビアで公式に使われるウンム・アルクラ暦（1300–1600 AH）をサポートします。任意の ±1 日調整で、地域の月見習慣に合わせて表示を微調整できます。",
+        "usedIn": [
+          "サウジアラビア",
+          "エジプト",
+          "パキスタン",
+          "イラン（太陽ヒジュラと併用）",
+          "トルコ（宗教上の日付）",
+          "インドネシア",
+          "マレーシア",
+          "モロッコ",
+          "アラブ首長国連邦"
+        ]
+      },
+      "hebrew": {
+        "firstImplemented": "西暦 4 世紀頃（規則確定）",
+        "history": "月は太陰月に従い、19 年周期で 7 回閏月を加えて祭りを季節と揃えます。固定算術暦はヒレル II の時代頃に観測による暦から置き換わりました。",
+        "usedIn": [
+          "イスラエル",
+          "世界中のユダヤ人コミュニティ"
+        ]
+      },
+      "persian": {
+        "firstImplemented": "1079 年（ジャラーリー改革）",
+        "history": "太陽ヒジュラ暦とも呼ばれます。月は春分に結び付き、ノウルーズが新年です。オマル・ハイヤームが閏年構造の改良に貢献し、現代のイランとアフガニスタンは洗練された版を使用しています。",
+        "usedIn": [
+          "イラン",
+          "アフガニスタン"
+        ]
+      },
+      "bahai": {
+        "firstImplemented": "1844 年",
+        "history": "バディー暦は 19 か月各 19 日で、断食月の前に閏日（アイヤームイハー）があります。ナウルーズはテヘランの春分に固定されます。第 1 年は 1844 年のバーブの宣言から始まりました。",
+        "usedIn": [
+          "世界中のバハーイー教徒コミュニティ"
+        ]
+      },
+      "japanese": {
+        "firstImplemented": "1873 年（グレゴリオ月の採用）",
+        "history": "日本の公式民用暦は、グレゴリオ暦の月と閏年を日本の元号（年号）と組み合わせます。各在位で新元号が始まり 1 年（元年、gannen）から数えます。令和は 2019 年 5 月 1 日に始まりました。日付は元号・年・月・日で表記します。",
+        "usedIn": [
+          "日本"
+        ]
+      },
+      "minguo": {
+        "firstImplemented": "1912 年（中華民国成立）",
+        "history": "民国暦は 1912 年の中華民国成立から年を数えます。第 1 年は西暦 1912 年に対応し、日付はグレゴリオ暦の月日構造に従います。台湾では西暦年と併用して公式に使われています。",
+        "usedIn": [
+          "台湾"
+        ]
+      },
+      "thaiBuddhist": {
+        "firstImplemented": "紀元前 1 世紀頃（BE 紀元）；1888 年から公式 BE 日付",
+        "history": "タイの民用暦はグレゴリオ構造に従いますが、共通紀元より 543 年進んだ仏暦（BE）で年を数えます。公式文書、新聞、日常生活で西暦年と併用されています。",
+        "usedIn": [
+          "タイ"
+        ]
+      },
+      "bengali": {
+        "firstImplemented": "593 年（伝統）；1987 年改訂（バングラデシュ）",
+        "history": "ベンガル暦はバングラデシュと西ベンガルで使われます。バングラデシュ改訂暦はポヘラ・ボイシャクを 4 月 14 日に固定し、31 日の月 6 か月、30 日の月 5 か月、可変長のチョイトロで構成されます。年は伝統的ベンガル紀元から数えます。",
+        "usedIn": [
+          "バングラデシュ",
+          "西ベンガル（インド）"
+        ]
+      },
+      "indianCivil": {
+        "firstImplemented": "1957 年（公式採用）",
+        "history": "インド国定暦（シャカ紀元）は月を黄道十二宮に合わせます。第 1 月チャイトラは春分付近から始まります。政府官報やラジオ放送でグレゴリオ暦と併用されます。",
+        "usedIn": [
+          "インド"
+        ]
+      },
+      "isoWeek": {
+        "firstImplemented": "1988 年（ISO 8601）",
+        "history": "ISO 週日付は月曜から日曜まで週を番号付けし、第 1 週は 1 月 4 日を含む週と定義されます。ビジネス計画、製造、給与計算、国際標準で広く使われ、年境界の曖昧さを避けます。",
+        "usedIn": [
+          "欧州連合（ビジネス・統計）",
+          "北欧諸国",
+          "国際標準化機関",
+          "世界中の製造・物流"
+        ]
+      },
+      "discordian": {
+        "firstImplemented": "1963 年（Principia Discordia）",
+        "history": "Principia Discordia 由来のパロディ宗教暦で、グレゴリオ年に合わせています。毎年 73 日の季が 5 つ（Chaos、Discord、Confusion、Bureaucracy、The Aftermath）と 5 日週があります。閏年には Chaos 59 と 60 の間に聖 Tib の日が加わります。年は YOLD（Year of Our Lady of Discord）、グレゴリオ年 + 1166 で数えます。",
+        "usedIn": [
+          "ディスコーディアンコミュニティ",
+          "インターネット文化",
+          "カウンターカルチャーのユーモア"
+        ]
+      },
+      "julianDay": {
+        "firstImplemented": "1583 年（スカリガー）",
+        "history": "民用暦ではなく、天文学者や歴史家が使う連続日数です。ユリウス日 0 は紀元前 4713 年 1 月 1 日正午（先取りユリウス暦）から始まります。暦法間の日付比較の曖昧さを避けます。",
+        "usedIn": [
+          "天文学",
+          "宇宙科学",
+          "世界中の歴史研究"
+        ]
+      }
+    }
+  },
+  "holidays": {
+    "bannerAria": "この日の宗教的祝日",
+    "tradition": {
+      "christian": "キリスト教",
+      "jewish": "ユダヤ教",
+      "islamic": "イスラム教"
+    },
+    "jewish": {
+      "roshHashanah": "ロシュ・ハシャナ",
+      "yomKippur": "ヨム・キプール",
+      "sukkot": "スッコト",
+      "hanukkah": "ハヌカ",
+      "purim": "プーリム",
+      "passover": "ペサハ",
+      "shavuot": "シャブオト",
+      "tishaBAv": "ティシャ・ベアブ"
+    },
+    "christian": {
+      "epiphany": "公現祭",
+      "christmas": "クリスマス",
+      "allSaintsDay": "諸聖人の日",
+      "ashWednesday": "四旬節の始まり",
+      "palmSunday": "棕の木の日",
+      "goodFriday": "聖金曜日",
+      "easterSunday": "復活祭",
+      "ascensionDay": "昇天祭",
+      "pentecost": "聖霊降臨祭"
+    },
+    "islamic": {
+      "newYear": "イスラム新年",
+      "ashura": "アーシューラー",
+      "mawlid": "マウリド・ナビー",
+      "ramadanStart": "ラマダン開始",
+      "laylatAlQadr": "ライラト・アルカドル",
+      "eidAlFitr": "イード・アルフィトル",
+      "eidAlAdha": "イード・アルアドハー",
+      "ramadan": "ラマダン"
+    }
+  }
+}

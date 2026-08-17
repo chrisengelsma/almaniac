@@ -1,0 +1,559 @@
+{
+  "branding": {
+    "appTitle": "Almaniac",
+    "appLogo": "almaniac",
+    "tagline": "Konverter Kalender"
+  },
+  "common": {
+    "close": "Tutup",
+    "cancel": "Batal",
+    "by": "oleh",
+    "country": "negara",
+    "countries": "negara",
+    "era": {
+      "ce": "M",
+      "bce": "SM",
+      "ceYear": "M {{year}}",
+      "bceYear": "SM {{year}}"
+    }
+  },
+  "settings": {
+    "title": "Sesuaikan",
+    "selectCalendarsTitle": "Pilih Kalender",
+    "sectionCalendars": "Kalender",
+    "sectionSettings": "Pengaturan",
+    "about": "Tentang",
+    "language": "Bahasa",
+    "languageAria": "Bahasa aplikasi",
+    "transliterateLabel": "Transliterasi ke Inggris",
+    "transliterateAria": "Transliterasi ke Inggris",
+    "colorThemeLabel": "Tema warna",
+    "colorThemeAria": "Tema warna",
+    "colorThemeOptionAria": "Tema warna {{label}}",
+    "colorThemeDistinct": "Berwarna",
+    "colorThemeMono": "Mono",
+    "colorThemeSepia": "Sepia",
+    "appIconLabel": "Ikon aplikasi",
+    "appIconAria": "Ikon aplikasi",
+    "appIconOptionAria": "Ikon aplikasi {{label}}",
+    "appIconLight": "Terang",
+    "appIconDark": "Gelap",
+    "selectCalendarsCount": "{{count}} dari {{total}} ditampilkan",
+    "selectCalendarsToggleAria": "Alihkan {{calendar}}",
+    "islamicSystemLabel": "Sistem Kalender Islam",
+    "islamicSystemAria": "Sistem kalender Islam",
+    "islamicSystemTabular": "Tabular (aritmetika)",
+    "islamicSystemUmmAlQura": "Umm al-Qura (resmi Saudi)",
+    "islamicAdjustmentLabel": "Penyesuaian Hari Kalender Islam",
+    "islamicGroupAria": "Pengaturan kalender Islam",
+    "julianDayLabel": "Hari Julian Diubah",
+    "julianDayToggle": "Gunakan Hari Julian Diubah",
+    "julianDayGroupAria": "Pengaturan Hari Julian",
+    "closeAria": "Tutup panel penyesuaian",
+    "backAria": "Kembali ke pengaturan",
+    "themeToggleLightAria": "Beralih ke mode terang",
+    "themeToggleDarkAria": "Beralih ke mode gelap",
+    "languageSystem": "Default sistem",
+    "colorThemeSupporter": "Pendukung",
+    "appIconSupporter": "Pendukung",
+    "supporterLockedAria": "{{label}} (keuntungan pendukung)",
+    "rememberLastDateLabel": "Ingat tanggal terakhir",
+    "rememberLastDateAria": "Buka pada tanggal terakhir yang dilihat"
+  },
+  "topBar": {
+    "supportAria": "Dukung Almaniac",
+    "jumpToDateAria": "Lompat ke tanggal",
+    "customizeAria": "Sesuaikan kalender dan pengaturan",
+    "dateNavAria": "Navigasi tanggal",
+    "back30Aria": "Kembali 30 hari",
+    "back1Aria": "Kembali 1 hari",
+    "todayAria": "Ke hari ini",
+    "forward1Aria": "Maju 1 hari",
+    "forward30Aria": "Maju 30 hari"
+  },
+  "modals": {
+    "donate": {
+      "title": "Dukung Almaniac",
+      "intro": "Saya Chris Engelsma. Saya membuat Almaniac untuk membandingkan tanggal antar sistem kalender tanpa berpindah antar konverter.",
+      "free": "Almaniac gratis digunakan, tanpa iklan, langganan, atau pelacakan.",
+      "rating": "Jika Anda menyukai aplikasi ini, penilaian 5 bintang {{store}} sangat membantu. Ini juga membantu orang lain menemukan Almaniac.",
+      "tipJar": "Anda juga bisa memberikan tip opsional sebagai ucapan terima kasih. Tip tidak membuka fitur apa pun. Apple mengambil komisi 15–30% dari setiap tip.",
+      "coffee": "Anda juga boleh membelikan saya kopi sebagai ucapan terima kasih. Bagaimanapun, terima kasih telah menggunakan Almaniac.",
+      "thanks": "Terima kasih telah menggunakan Almaniac.",
+      "storeAppStore": "di App Store",
+      "storeGooglePlay": "di Google Play",
+      "rateButton": "Beri 5 bintang {{store}}",
+      "tipsAria": "Tip opsional",
+      "loadingTips": "Memuat opsi tip…",
+      "coffeeButton": "Belikan saya kopi",
+      "notNow": "Nanti saja",
+      "feedbackSuccess": "Terima kasih telah mendukung Almaniac!",
+      "feedbackError": "Tip tidak dapat diselesaikan. Silakan coba lagi.",
+      "thankYouTitle": "Terima kasih!",
+      "thankYouMessage": "Sebagai ucapan terima kasih, nikmati tema dan ikon baru.",
+      "thankYouDismiss": "Sama-sama",
+      "tipSmall": "Tip kecil",
+      "tipMedium": "Tip sedang",
+      "tipLarge": "Tip besar",
+      "thankYouPerk": "Anda juga akan mendapatkan akses awal ke hal-hal baru."
+    },
+    "about": {
+      "title": "Tentang {{appTitle}}",
+      "description": "Almaniac menampilkan satu tanggal dalam banyak sistem kalender sekaligus: Gregorian, Julian, Ibrani, Islam, Tionghoa, Maya, dan lainnya.",
+      "creditsTitle": "Kredit gambar",
+      "bannerTitle": "Spanduk {{calendar}}",
+      "version": "Versi {{version}}",
+      "copyright": "© 2026 Chris Engelsma",
+      "derivedLicensePrefix": "Spanduk turunan dibagikan di bawah",
+      "sourceLink": "Sumber",
+      "banners": {
+        "gregorian": {
+          "subjects": "Gregorius XIII | Basilika Santo Petrus",
+          "aboutNote": "Spanduk kalender Gregorian adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini."
+        },
+        "julian": {
+          "subjects": "Julius Caesar | Colosseum",
+          "aboutNote": "Spanduk kalender Julian adalah karya turunan yang diadaptasi dari foto sumber di bawah ini. "
+        },
+        "ethiopian": {
+          "subjects": "Imam di Lalibela | Bete Giyorgis",
+          "aboutNote": "Spanduk kalender Ethiopia adalah karya turunan yang diadaptasi dari foto sumber di bawah ini. "
+        },
+        "coptic": {
+          "subjects": "Biara Santo Bishoy | Biara Santo Anthony",
+          "aboutNote": "Spanduk kalender Koptik adalah karya turunan yang diadaptasi dari foto sumber di bawah ini. "
+        },
+        "chinese": {
+          "subjects": "Huangdi | Kuil Surga",
+          "aboutNote": "Spanduk kalender Tionghoa adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini."
+        },
+        "soviet": {
+          "subjects": "Joseph Stalin | Lapangan Merah Moskow",
+          "aboutNote": "Spanduk kalender Revolusi Soviet adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "frc": {
+          "subjects": "Triumph of the Republic | The Panthéon",
+          "aboutNote": "Spanduk kalender Republik Prancis adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini."
+        },
+        "japanese": {
+          "subjects": "Kaisar Meiji | Jembatan Nijubashi",
+          "aboutNote": "Spanduk kalender Wareki Jepang adalah karya turunan yang diadaptasi dari foto sumber di bawah ini. "
+        },
+        "maya": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "Spanduk kalender Islam adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "hebrew": {
+          "subjects": "Maimonides | Kota Tua Yerusalem",
+          "aboutNote": "Spanduk kalender Ibrani adalah karya turunan yang diadaptasi dari foto sumber di bawah ini. "
+        },
+        "persian": {
+          "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
+          "aboutNote": "Spanduk kalender Persia adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "bahai": {
+          "subjects": "Shrine of the Báb | Haifa",
+          "aboutNote": "Spanduk kalender Baháʼí adalah karya turunan yang diadaptasi dari foto sumber di bawah ini."
+        },
+        "thaiBuddhist": {
+          "subjects": "King Chulalongkorn | Wat Arun",
+          "aboutNote": "Spanduk kalender Buddha Thailand adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "discordian": {
+          "subjects": "Eris | Asbury Lanes",
+          "aboutNote": "Spanduk kalender Discordian adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "indianCivil": {
+          "subjects": "Meghnad Saha | Jantar Mantar",
+          "aboutNote": "Spanduk kalender Sipil India adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini."
+        },
+        "isoWeek": {
+          "subjects": "NBS Atomic Clock | The Earth Seen from Apollo 17",
+          "aboutNote": "Spanduk kalender Minggu ISO adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini."
+        },
+        "julianDay": {
+          "subjects": "Joseph Justus Scaliger | Old Observatory, Leiden",
+          "aboutNote": "Spanduk kalender Hari Julian adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "bengali": {
+          "subjects": "The Emperor Akbar | Ahsan Manzil",
+          "aboutNote": "Spanduk kalender Bengali adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "minguo": {
+          "subjects": "Sun Yat-sen | Presidential Office Building",
+          "aboutNote": "Spanduk kalender Minguo adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        }
+      }
+    },
+    "calendarInfo": {
+      "closeBackdropAria": "Tutup info kalender",
+      "loadingBanner": "Memuat spanduk…",
+      "imageComingSoon": "Gambar segera hadir",
+      "source": "Sumber",
+      "type": "Jenis",
+      "firstImplemented": "Pertama kali diterapkan",
+      "whereUsed": "Tempat digunakan",
+      "geoAria": "Penggunaan geografis",
+      "mapTabsAria": "Tampilan peta",
+      "adoptionTab": "Tanggal adopsi",
+      "timelineTab": "Linimasa adopsi",
+      "gregorianSliderLabel": "Tampilkan adopsi seiring waktu",
+      "julianSliderLabel": "Tampilkan adopsi dan penggantian seiring waktu",
+      "yearCe": "M {{year}}",
+      "gregorianAdoptionSummary": "{{count}} {{countryLabel}} menggunakan kalender Gregorian pada tahun ini",
+      "julianUsageSummary": "{{count}} {{countryLabel}} menggunakan kalender Julian pada saat ini",
+      "adoptedIn": "Diadopsi pada {{year}}",
+      "julianAdoptedIn": "Diadopsi pada {{yearLabel}}",
+      "julianStoppedIn": "Berhenti digunakan pada {{yearLabel}}",
+      "mapAria": "Peta dunia yang menunjukkan penggunaan kalender"
+    }
+  },
+  "datePicker": {
+    "title": "Lompat ke tanggal",
+    "calendarLabel": "Kalender",
+    "searchPlaceholder": "Cari kalender…",
+    "noResults": "Tidak ada kalender yang cocok.",
+    "eraAria": "Era",
+    "eraCe": "M",
+    "eraBce": "SM",
+    "invalidDate": "Tanggal tersebut tidak valid untuk kalender yang dipilih.",
+    "cancel": "Batal",
+    "apply": "Ke tanggal",
+    "field": {
+      "year": "Tahun",
+      "era": "Era",
+      "month": "Bulan",
+      "day": "Hari",
+      "eraYear": "Tahun era",
+      "decade": "Dekade",
+      "baktun": "Baktun",
+      "katun": "Katun",
+      "tun": "Tun",
+      "uinal": "Uinal",
+      "kin": "Kin",
+      "buddhistYear": "Tahun Buddha",
+      "bengaliYear": "Tahun Bengali",
+      "minguoYear": "Tahun Minguo",
+      "isoWeekYear": "Tahun minggu ISO",
+      "week": "Minggu",
+      "weekday": "Hari dalam minggu",
+      "yoldYear": "Tahun YOLD",
+      "season": "Musim",
+      "julianDay": "Hari Julian",
+      "modifiedJulianDay": "Hari Julian Diubah"
+    },
+    "hint": {
+      "gregorianYear": "Ketik tahun apa pun, termasuk tanggal kuno seperti 100 SM.",
+      "julianDay": "Masukkan nomor Hari Julian.",
+      "modifiedJulianDay": "Masukkan nomor Hari Julian Diubah."
+    },
+    "placeholder": {
+      "year100": "mis. 100",
+      "julianDay": "mis. 2460000",
+      "modifiedJulianDay": "mis. 60000"
+    },
+    "isoWeekWeekN": "Minggu {{week}}",
+    "discordianStTibsDay": "Hari St. Tib",
+    "frcSansculottides": "Sansculottides",
+    "japaneseEra": "{{nameEn}} ({{nameJa}})"
+  },
+  "calendars": {
+    "listAria": "Konversi kalender",
+    "addHint": "Tambahkan kalender lain dari menu",
+    "copied": "Disalin ke papan klip",
+    "reorderAria": "Urutkan ulang {{label}}",
+    "holidayAria": "Hari libur: {{names}}",
+    "copyAria": "Salin tanggal {{label}}",
+    "fullscreenAria": "Tampilkan tanggal {{label}} layar penuh",
+    "aboutAria": "Tentang {{label}}",
+    "fullscreenAriaView": "Tanggal {{label}} layar penuh",
+    "tapToClose": "Ketuk lagi untuk menutup",
+    "islamicSystemUmmAlQura": "Umm al-Qura",
+    "islamicSystemTabular": "Tabular",
+    "chineseZodiacYear": "Tahun {{zodiac}}, {{pinyin}}",
+    "japaneseGannen": "Gannen",
+    "isoWeekDateFormat": "{{year}} Minggu {{week}} ({{padded}}), {{weekday}}",
+    "name": {
+      "gregorian": "Kalender Gregorian",
+      "julian": "Kalender Julian",
+      "ethiopian": "Kalender Ethiopia",
+      "coptic": "Kalender Koptik",
+      "chinese": "Kalender Tionghoa",
+      "soviet": "Kalender Revolusi Soviet",
+      "frc": "Kalender Republik Prancis",
+      "maya": "Kalender Maya",
+      "islamic": "Kalender Islam",
+      "hebrew": "Kalender Ibrani",
+      "persian": "Kalender Persia",
+      "bahai": "Kalender Baháʼí",
+      "japanese": "Kalender Wareki Jepang",
+      "minguo": "Kalender Minguo",
+      "thaiBuddhist": "Kalender Buddha Thailand",
+      "bengali": "Kalender Bengali",
+      "isoWeek": "Tanggal Minggu ISO",
+      "discordian": "Kalender Discordian",
+      "indianCivil": "Kalender Sipil India",
+      "julianDay": "Hari Julian"
+    },
+    "label": {
+      "gregorian": "Gregorian",
+      "julian": "Julian",
+      "ethiopian": "Ethiopia",
+      "coptic": "Koptik",
+      "chinese": "Tionghoa",
+      "soviet": "Soviet",
+      "frc": "FRC",
+      "maya": "Maya",
+      "islamic": "Islam",
+      "hebrew": "Ibrani",
+      "persian": "Persia",
+      "bahai": "Baháʼí",
+      "japanese": "Jepang",
+      "minguo": "Minguo",
+      "thaiBuddhist": "Buddha Thailand",
+      "bengali": "Bengali",
+      "isoWeek": "Minggu ISO",
+      "discordian": "Discordian",
+      "indianCivil": "Sipil India",
+      "julianDay": "Hari Julian",
+      "modifiedJulianDay": "JD Diubah"
+    },
+    "type": {
+      "solar": "Matahari",
+      "lunar": "Bulan",
+      "lunisolar": "Bulan-Matahari",
+      "mixed": "Siklus campuran",
+      "continuous": "Hitungan berkelanjutan"
+    },
+    "info": {
+      "gregorian": {
+        "firstImplemented": "1582 M",
+        "history": "Diperkenalkan oleh Paus Gregorius XIII untuk memperbaiki penyimpangan kalender Julian. Tahun kabisat melewati tahun abad kecuali habis dibagi 400. Diadopsi secara bertahap di Eropa dan Amerika, sekarang menjadi standar sipil internasional.",
+        "usedIn": [
+          "Amerika Serikat",
+          "Kanada",
+          "Meksiko",
+          "Brasil",
+          "Britania Raya",
+          "Prancis",
+          "Jerman",
+          "Italia",
+          "Spanyol",
+          "Australia",
+          "Jepang",
+          "Tiongkok (penggunaan sipil)",
+          "India (penggunaan sipil)",
+          "Sebagian besar dunia"
+        ]
+      },
+      "julian": {
+        "firstImplemented": "45 SM",
+        "history": "Direformasi oleh Julius Caesar dari kalender republik Romawi. Menggunakan aturan tahun kabisat sederhana (setiap empat tahun) dan tetap menjadi kalender liturgi beberapa gereja Ortodoks Timur.",
+        "usedIn": [
+          "Rusia (hingga 1918)",
+          "Gereja Ortodoks Timur",
+          "Ethiopia (dengan variasi)",
+          "Serbia",
+          "Patriarkat Yerusalem",
+          "Gunung Athos"
+        ]
+      },
+      "ethiopian": {
+        "firstImplemented": "sekitar abad ke-4 M",
+        "history": "Kalender surya dengan tiga belas bulan 30 hari ditambah periode epagomenal singkat (Pagume). Berbagi aturan tahun kabisat Julian dan tertinggal sekitar tujuh hingga delapan tahun dari kalender Gregorian. Ethiopia menggunakannya bersama Gregorian untuk kehidupan sipil dan keagamaan.",
+        "usedIn": [
+          "Ethiopia",
+          "Komunitas Ortodoks Eritrea"
+        ]
+      },
+      "coptic": {
+        "firstImplemented": "sekitar abad ke-3 M",
+        "history": "Kalender liturgi Gereja Ortodoks Koptik, struktural identik dengan kalender Ethiopia tetapi dihitung dari era martir (Anno Martyrum). Tahun baru jatuh pada 11 September Gregorian (12 September sebelum tahun kabisat Gregorian).",
+        "usedIn": [
+          "Mesir",
+          "Gereja Ortodoks Koptik di seluruh dunia"
+        ]
+      },
+      "chinese": {
+        "firstImplemented": "sekitar abad ke-14 SM (legendaris); aturan tetap sekitar 104 SM",
+        "history": "Kalender Tionghoa tradisional (农历) mengikuti bulan lunar yang ditetapkan oleh istilah surya, dengan tahun dinamai oleh siklus enam puluh (干支) batang surgawi dan cabang bumi. Setiap tahun juga memiliki hewan zodiak (生肖). Bulan tambahan menjaga festival selaras dengan musim.",
+        "usedIn": [
+          "Tiongkok",
+          "Taiwan",
+          "Hong Kong",
+          "Makau",
+          "Singapura",
+          "Malaysia",
+          "Komunitas Tionghoa di luar negeri"
+        ]
+      },
+      "soviet": {
+        "firstImplemented": "1929 M",
+        "history": "Diperkenalkan selama industrialisasi Stalin, kalender revolusioner ini mengganti minggu tujuh hari dengan siklus produksi lima hari dan menyusun ulang tahun menjadi dua belas bulan 30 hari ditambah hari libur nasional. Kalender Gregorian tetap paralel untuk kehidupan sehari-hari; eksperimen ditinggalkan pada 1940.",
+        "usedIn": [
+          "Uni Soviet (1929–1940)"
+        ]
+      },
+      "frc": {
+        "firstImplemented": "1793 M",
+        "history": "Dibuat selama Revolusi Prancis untuk mendesimalisasi penghitungan waktu. Tahun dimulai pada ekuinoks musim gugur; bulan dan minggu diganti nama dan disusun ulang. Napoleon menghapusnya pada 1806; Komune Paris menghidupkannya kembali sebentar pada 1871.",
+        "usedIn": [
+          "Prancis (1793–1805)",
+          "Komune Paris (1871)"
+        ]
+      },
+      "maya": {
+        "firstImplemented": "sekitar 500 SM",
+        "history": "Maya Klasik menggunakan siklus saling terkait: Tzolkʼin 260 hari, Haab 365 hari, dan Long Count yang melacak hari dari tanggal penciptaan mitos. Tampilan ini menggunakan notasi Long Count yang dikenal dari monumen dan kodeks.",
+        "usedIn": [
+          "Meksiko",
+          "Guatemala",
+          "Belize",
+          "Honduras",
+          "El Salvador"
+        ]
+      },
+      "islamic": {
+        "firstImplemented": "622 M (era Hijrah)",
+        "history": "Kalender lunar dua belas bulan dengan total sekitar 354 hari. Aplikasi ini mendukung konversi tabular (aritmetika) dan kalender Umm al-Qura yang digunakan resmi di Arab Saudi (1300–1600 AH). Penyesuaian ±1 hari opsional dapat menyempurnakan tanggal tampilan sesuai praktik rukyat bulan lokal.",
+        "usedIn": [
+          "Arab Saudi",
+          "Mesir",
+          "Pakistan",
+          "Iran (bersama Hijrah Syamsiah)",
+          "Turki (untuk tanggal keagamaan)",
+          "Indonesia",
+          "Malaysia",
+          "Maroko",
+          "Uni Emirat Arab"
+        ]
+      },
+      "hebrew": {
+        "firstImplemented": "sekitar abad ke-4 M (aturan tetap)",
+        "history": "Bulan mengikuti bulan lunar, dengan bulan tambahan ditambahkan tujuh kali dalam setiap sembilan belas tahun agar festival selaras dengan musim. Kalender aritmetika tetap menggantikan perhitungan berbasis pengamatan sekitar masa Hillel II.",
+        "usedIn": [
+          "Israel",
+          "Komunitas Yahudi di seluruh dunia"
+        ]
+      },
+      "persian": {
+        "firstImplemented": "1079 M (reformasi Jalali)",
+        "history": "Juga disebut kalender Hijrah Syamsiah. Bulan terkait ekuinoks vernal, menjadikan Nowruz tahun baru. Omar Khayyam membantu menyempurnakan struktur tahun kabisat; Iran dan Afganistan modern menggunakan versi yang disempurnakan.",
+        "usedIn": [
+          "Iran",
+          "Afganistan"
+        ]
+      },
+      "bahai": {
+        "firstImplemented": "1844 M",
+        "history": "Kalender Badíʿ memiliki sembilan belas bulan sembilan belas hari, dengan hari interkalasi (Ayyám-i-Há) sebelum bulan puasa. Naw-Rúz ditetapkan pada ekuinoks vernal di Teheran. Tahun 1 dimulai pada deklarasi Báb pada 1844.",
+        "usedIn": [
+          "Komunitas Baháʼí di seluruh dunia"
+        ]
+      },
+      "japanese": {
+        "firstImplemented": "1873 M (bulan Gregorian diadopsi)",
+        "history": "Kalender sipil resmi Jepang memadukan bulan dan tahun kabisat Gregorian dengan nama era Jepang (年号). Setiap kekuasaan memulai era baru dihitung dari 1 (元年, gannen); Reiwa dimulai 1 Mei 2019. Tanggal ditulis dengan nama era, tahun, bulan, dan hari.",
+        "usedIn": [
+          "Jepang"
+        ]
+      },
+      "minguo": {
+        "firstImplemented": "1912 M (Republik Tiongkok didirikan)",
+        "history": "Kalender Minguo menomori tahun dari pendirian Republik Tiongkok pada 1912. Tahun 1 sesuai dengan 1912 M; tanggal lainnya mengikuti struktur bulan dan hari Gregorian. Tetap digunakan resmi di Taiwan bersama tahun Barat.",
+        "usedIn": [
+          "Taiwan"
+        ]
+      },
+      "thaiBuddhist": {
+        "firstImplemented": "sekitar abad ke-1 SM (era BE); tanggal BE resmi dari 1888 M",
+        "history": "Kalender sipil Thailand mengikuti struktur Gregorian tetapi menomori tahun dalam Era Buddha (BE), yang 543 tahun di depan Masehi. Digunakan pada dokumen resmi, koran, dan kehidupan sehari-hari bersama tahun Barat.",
+        "usedIn": [
+          "Thailand"
+        ]
+      },
+      "bengali": {
+        "firstImplemented": "593 M (tradisional); direvisi 1987 M (Bangladesh)",
+        "history": "Kalender Bengali digunakan di Bangladesh dan Bengal Barat. Kalender revisi Bangladesh menetapkan Pohela Boishakh pada 14 April dengan enam bulan 31 hari, lima bulan 30 hari, dan Choitro panjang variabel. Tahun dihitung dari era Bengali tradisional.",
+        "usedIn": [
+          "Bangladesh",
+          "Bengal Barat (India)"
+        ]
+      },
+      "indianCivil": {
+        "firstImplemented": "1957 M (adopsi resmi)",
+        "history": "Kalender nasional India (era Śaka) menyelaraskan bulan dengan zodiak tropis. Chaitra, bulan pertama, dimulai mendekati ekuinoks Maret. Digunakan bersama Gregorian untuk gazette pemerintah dan siaran radio.",
+        "usedIn": [
+          "India"
+        ]
+      },
+      "isoWeek": {
+        "firstImplemented": "1988 M (ISO 8601)",
+        "history": "Sistem tanggal minggu ISO menomori minggu Senin hingga Minggu, dengan minggu 1 didefinisikan sebagai minggu yang berisi 4 Januari. Digunakan luas dalam perencanaan bisnis, manufaktur, penggajian, dan standar internasional untuk menghindari ambiguitas di batas tahun.",
+        "usedIn": [
+          "Uni Eropa (bisnis dan statistik)",
+          "Negara Nordik",
+          "Badan standar internasional",
+          "Manufaktur dan logistik di seluruh dunia"
+        ]
+      },
+      "discordian": {
+        "firstImplemented": "1963 M (Principia Discordia)",
+        "history": "Kalender agama parodi dari Principia Discordia, selaras dengan tahun Gregorian. Setiap tahun memiliki lima musim 73 hari (Chaos, Discord, Confusion, Bureaucracy, dan The Aftermath) dan minggu lima hari. Tahun kabisat mendapat Hari St. Tib antara Chaos 59 dan 60. Tahun dihitung dalam YOLD (Year of Our Lady of Discord), tahun Gregorian ditambah 1166.",
+        "usedIn": [
+          "Komunitas Discordian",
+          "Budaya internet",
+          "Humor kontra-budaya"
+        ]
+      },
+      "julianDay": {
+        "firstImplemented": "1583 M (Scaliger)",
+        "history": "Bukan kalender sipil melainkan hitungan hari berkelanjutan yang digunakan astronom dan sejarawan. Hari Julian 0 dimulai pada tengah hari 1 Januari 4713 SM (Julian proleptik). Menghindari ambiguitas saat membandingkan tanggal antar sistem kalender.",
+        "usedIn": [
+          "Astronomi",
+          "Ilmu antariksa",
+          "Penelitian sejarah di seluruh dunia"
+        ]
+      }
+    }
+  },
+  "holidays": {
+    "bannerAria": "Hari libur keagamaan pada tanggal ini",
+    "tradition": {
+      "christian": "Kristen",
+      "jewish": "Yahudi",
+      "islamic": "Islam"
+    },
+    "jewish": {
+      "roshHashanah": "Rosh Hashanah",
+      "yomKippur": "Yom Kippur",
+      "sukkot": "Sukkot",
+      "hanukkah": "Hanukkah",
+      "purim": "Purim",
+      "passover": "Paskah",
+      "shavuot": "Syabuot",
+      "tishaBAv": "Tisha B'Av"
+    },
+    "christian": {
+      "epiphany": "Epifani",
+      "christmas": "Natal",
+      "allSaintsDay": "Hari Semua Orang Kudus",
+      "ashWednesday": "Rabu Abu",
+      "palmSunday": "Minggu Palma",
+      "goodFriday": "Jumat Agung",
+      "easterSunday": "Paskah",
+      "ascensionDay": "Kenaikan Yesus",
+      "pentecost": "Pentakosta"
+    },
+    "islamic": {
+      "newYear": "Tahun Baru Islam",
+      "ashura": "Asyura",
+      "mawlid": "Maulid Nabi",
+      "ramadanStart": "Awal Ramadan",
+      "laylatAlQadr": "Lailatul Qadar",
+      "eidAlFitr": "Idul Fitri",
+      "eidAlAdha": "Idul Adha",
+      "ramadan": "Ramadan"
+    }
+  }
+}

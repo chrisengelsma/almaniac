@@ -62,7 +62,7 @@ import {
   scriptFontForCalendar,
   type ScriptFont,
 } from './nativeCalendarText';
-import { CALENDAR_NAMES } from '../theme/calendarTheme';
+import type { CalendarCopy } from '../i18n/calendarCopy';
 import { calendarColorContext, getCalendarColor } from '../theme/calendarColors';
 import { getReligiousHolidays, type HolidayTradition, type ReligiousHoliday } from './religiousHolidays';
 
@@ -122,29 +122,6 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'indianCivil',
   'julianDay',
 ];
-
-const CALENDAR_LABELS: Record<CalendarId, string> = {
-  gregorian: 'Gregorian',
-  julian: 'Julian',
-  ethiopian: 'Ethiopian',
-  coptic: 'Coptic',
-  chinese: 'Chinese',
-  soviet: 'Soviet',
-  frc: 'FRC',
-  maya: 'Maya',
-  islamic: 'Islamic',
-  hebrew: 'Hebrew',
-  persian: 'Persian',
-  bahai: 'Baháʼí',
-  japanese: 'Japanese',
-  minguo: 'Minguo',
-  thaiBuddhist: 'Thai Buddhist',
-  bengali: 'Bengali',
-  isoWeek: 'ISO Week',
-  discordian: 'Discordian',
-  indianCivil: 'Indian Civil',
-  julianDay: 'Julian Day',
-};
 
 function islamicCalendarMode(settings: AppSettings): IslamicCalendarMode {
   return settings.islamicCalendarMode === 'ummAlQura'
@@ -313,6 +290,7 @@ function buildCalendarEntry(
   id: CalendarId,
   anchor: GregorianCalendar,
   settings: AppSettings,
+  copy: CalendarCopy,
 ): CalendarEntry {
   let calendar = buildCalendar(id, anchor, settings);
 
@@ -329,12 +307,8 @@ function buildCalendarEntry(
 
   const entry: CalendarEntry = {
     id,
-    label: id === 'julianDay' && settings.useModifiedJulianDay
-      ? 'Modified JD'
-      : CALENDAR_LABELS[id],
-    calendarName: id === 'julianDay' && settings.useModifiedJulianDay
-      ? 'Modified Julian Day'
-      : CALENDAR_NAMES[id],
+    label: copy.getLabel(id, settings.useModifiedJulianDay),
+    calendarName: copy.getName(id, settings.useModifiedJulianDay),
     weekday,
     date: formatDate(id, calendar, settings.transliterateToEnglish),
     scriptFont: scriptFontForCalendar(id, settings.transliterateToEnglish),
@@ -400,23 +374,38 @@ export function getOrderedCalendarRows(
   order: CalendarId[],
   anchor: GregorianCalendar,
   settings: AppSettings,
+  copy: CalendarCopy,
 ): CalendarRowData[] {
   const holidays = getReligiousHolidays(anchor, settings);
+  const context = calendarColorContext(settings);
+  const visibleOrder = order.filter((id) => settings.visibleCalendars[id]);
 
-  return order.map((id) => ({
-    entry: buildCalendarEntry(id, anchor, settings),
-    visible: settings.visibleCalendars[id],
-    backgroundColor: getCalendarColor(id, calendarColorContext(settings)),
-    holidays: holidaysForCalendar(id, holidays),
-  }));
+  return order.map((id) => {
+    const visible = settings.visibleCalendars[id];
+    const visibleIndex = visibleOrder.indexOf(id);
+
+    return {
+      entry: buildCalendarEntry(id, anchor, settings, copy),
+      visible,
+      backgroundColor: getCalendarColor(
+        id,
+        context,
+        context.colorTheme === 'supporter' && visible
+          ? { index: visibleIndex, total: visibleOrder.length }
+          : undefined,
+      ),
+      holidays: holidaysForCalendar(id, holidays),
+    };
+  });
 }
 
 export function getCalendarEntries(
   order: CalendarId[],
   anchor: GregorianCalendar,
   settings: AppSettings,
+  copy: CalendarCopy,
 ): CalendarEntry[] {
-  return getOrderedCalendarRows(order, anchor, settings)
+  return getOrderedCalendarRows(order, anchor, settings, copy)
     .filter((row) => row.visible)
     .map((row) => row.entry);
 }
@@ -425,8 +414,9 @@ export function getAllCalendarEntries(
   order: CalendarId[],
   anchor: GregorianCalendar,
   settings: AppSettings,
+  copy: CalendarCopy,
 ): CalendarEntry[] {
-  return order.map((id) => buildCalendarEntry(id, anchor, settings));
+  return order.map((id) => buildCalendarEntry(id, anchor, settings, copy));
 }
 
 export function shiftGregorianDate(

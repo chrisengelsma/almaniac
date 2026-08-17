@@ -85,6 +85,23 @@ html.platform-native #root {
   min-height: 100%;
 }
 
+/* Android WebView: pin root to the WebView viewport, not dynamic viewport units. */
+html.platform-android,
+html.platform-android body,
+html.platform-android #root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background: var(--top-bar-bg);
+}
+
+html.platform-android .app {
+  height: var(--app-height, 100%);
+  min-height: var(--app-height, 100%);
+}
+
 @media (orientation: landscape) {
   html:not(.platform-native),
   html:not(.platform-native) body,
@@ -375,4 +392,128 @@ html[data-color-theme='sepia'][data-color-scheme='dark'] {
   --overlay-map-border: rgba(232, 220, 200, 0.1);
   --overlay-hero-gradient-start: #5c4d3c;
   --overlay-hero-gradient-end: #2a2118;
+}
+
+html[data-color-theme='supporter'] {
+  --supporter-tilt-hue: 0;
+  --top-bar-bg: #3d4348;
+  --almaniac-bg: #9ed9d4;
+  --almaniac-bg-deep: #3d4348;
+  --top-bar-fg: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 96%, 62%);
+  --top-bar-fg-muted: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 90%, 55%);
+  --top-bar-divider: rgba(255, 235, 59, 0.14);
+  --top-bar-shadow: 0 2px 10px rgba(0, 0, 0, 0.32);
+  --top-bar-logo: hsl(calc(52 + var(--supporter-tilt-hue, 0)), 100%, 62%);
+  --top-bar-logo-tagline: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 88%, 58%);
+
+  --almaniac-yellow: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 96%, 62%);
+  --almaniac-yellow-soft: hsl(calc(56 + var(--supporter-tilt-hue, 0)), 100%, 72%);
+  --almaniac-text: #263238;
+  --almaniac-text-muted: #455a64;
+  --almaniac-teal: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 72%, 33%);
+  --almaniac-divider: rgba(38, 50, 56, 0.16);
+  --calendar-row-divider: rgba(38, 50, 56, 0.12);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.42);
+
+  --overlay-surface-bg: #e8f5f2;
+  --overlay-surface-fg: #263238;
+  --overlay-surface-fg-muted: rgba(38, 50, 56, 0.62);
+  --overlay-surface-fg-subtle: rgba(38, 50, 56, 0.72);
+  --overlay-surface-border: rgba(38, 50, 56, 0.12);
+  --overlay-surface-divider: rgba(38, 50, 56, 0.1);
+  --overlay-input-bg: #ffffff;
+  --overlay-input-border: rgba(38, 50, 56, 0.15);
+  --overlay-control-bg: rgba(38, 50, 56, 0.08);
+  --overlay-control-bg-active: rgba(0, 137, 123, 0.14);
+  --overlay-close-bg: rgba(38, 50, 56, 0.1);
+  --overlay-ghost-fg: #546e7a;
+  --overlay-primary-btn-bg: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 96%, 58%);
+  --overlay-primary-btn-fg: #263238;
+  --overlay-link: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 72%, 28%);
+  --overlay-tab-bg: rgba(38, 50, 56, 0.07);
+  --overlay-tab-fg: rgba(38, 50, 56, 0.68);
+  --overlay-tab-active-bg: #ffffff;
+  --overlay-tab-active-fg: #263238;
+  --overlay-chip-bg: rgba(38, 50, 56, 0.08);
+  --overlay-handle-bg: rgba(38, 50, 56, 0.22);
+  --overlay-toggle-bg: rgba(38, 50, 56, 0.22);
+  --overlay-toggle-knob: #ffffff;
+  --overlay-slider-track: rgba(0, 137, 123, 0.35);
+  --overlay-slider-thumb: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 72%, 33%);
+  --overlay-focus: rgba(0, 137, 123, 0.4);
+  --overlay-accent: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 72%, 33%);
+  --overlay-error: #c62828;
+  --overlay-dropdown-bg: #ffffff;
+  --overlay-map-border: rgba(38, 50, 56, 0.12);
+  --overlay-hero-gradient-start: #b8e4c4;
+  --overlay-hero-gradient-end: #3d4348;
+}
+
+html[data-color-theme='supporter'][data-color-scheme='dark'] {
+  --top-bar-bg: #2f2848;
+  --almaniac-bg: #1a3540;
+  --almaniac-bg-deep: #3d2858;
+  --top-bar-fg: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 96%, 62%);
+  --top-bar-fg-muted: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 90%, 55%);
+  --top-bar-divider: rgba(158, 217, 212, 0.14);
+  --top-bar-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  --top-bar-logo: hsl(calc(52 + var(--supporter-tilt-hue, 0)), 100%, 62%);
+  --top-bar-logo-tagline: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 88%, 58%);
+
+  --almaniac-yellow: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 96%, 62%);
+  --almaniac-yellow-soft: hsl(calc(56 + var(--supporter-tilt-hue, 0)), 100%, 72%);
+  --almaniac-text: #e8fff9;
+  --almaniac-text-muted: rgba(232, 255, 249, 0.72);
+  --almaniac-teal: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 56%, 62%);
+  --calendar-row-divider: rgba(232, 255, 249, 0.1);
+  --calendar-row-highlight: rgba(255, 255, 255, 0.12);
+
+  --overlay-surface-bg: #2a3050;
+  --overlay-surface-fg: #e8fff9;
+  --overlay-surface-fg-muted: rgba(232, 255, 249, 0.72);
+  --overlay-surface-fg-subtle: rgba(232, 255, 249, 0.55);
+  --overlay-surface-border: rgba(158, 140, 210, 0.14);
+  --overlay-surface-divider: rgba(158, 140, 210, 0.1);
+  --overlay-input-bg: rgba(255, 255, 255, 0.06);
+  --overlay-input-border: rgba(158, 140, 210, 0.14);
+  --overlay-control-bg: rgba(255, 255, 255, 0.08);
+  --overlay-control-bg-active: rgba(158, 217, 212, 0.18);
+  --overlay-close-bg: rgba(255, 255, 255, 0.1);
+  --overlay-ghost-fg: rgba(232, 255, 249, 0.72);
+  --overlay-primary-btn-bg: hsl(calc(54 + var(--supporter-tilt-hue, 0)), 96%, 58%);
+  --overlay-primary-btn-fg: #263238;
+  --overlay-link: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 56%, 72%);
+  --overlay-tab-bg: rgba(255, 255, 255, 0.06);
+  --overlay-tab-fg: rgba(232, 255, 249, 0.68);
+  --overlay-tab-active-bg: rgba(255, 255, 255, 0.12);
+  --overlay-tab-active-fg: #e8fff9;
+  --overlay-chip-bg: rgba(255, 255, 255, 0.08);
+  --overlay-handle-bg: rgba(232, 255, 249, 0.35);
+  --overlay-toggle-bg: rgba(255, 255, 255, 0.28);
+  --overlay-toggle-knob: #e8fff9;
+  --overlay-slider-track: rgba(158, 140, 210, 0.35);
+  --overlay-slider-thumb: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 56%, 62%);
+  --overlay-focus: rgba(158, 140, 210, 0.45);
+  --overlay-accent: hsl(calc(174 + var(--supporter-tilt-hue, 0)), 56%, 62%);
+  --overlay-error: #ef9a9a;
+  --overlay-dropdown-bg: #1f2238;
+  --overlay-map-border: rgba(158, 140, 210, 0.12);
+  --overlay-hero-gradient-start: #1a4d52;
+  --overlay-hero-gradient-end: #3d2858;
+}
+
+html[dir='rtl'] .top-bar__app-bar,
+html[dir='rtl'] .top-bar__controls,
+html[dir='rtl'] .calendar-row__actions,
+html[dir='rtl'] .settings-sheet__nav-item,
+html[dir='rtl'] .settings-sheet__item,
+html[dir='rtl'] .settings-sheet__header-row,
+html[dir='rtl'] .donate-modal__tip-btn,
+html[dir='rtl'] .info-modal__fact {
+  direction: rtl;
+}
+
+html[dir='rtl'] .settings-sheet__expander-summary,
+html[dir='rtl'] .settings-sheet__nav-copy {
+  text-align: right;
 }

@@ -1,4 +1,5 @@
 import { useRef, useState, type CSSProperties } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { copyTextToClipboard } from '../lib/copyText';
@@ -24,6 +25,7 @@ export function CalendarRow({
   onFullscreen,
   isFullscreenSource = false,
 }: CalendarRowProps) {
+  const { t } = useTranslation();
   const { entry, visible } = row;
   const rowRef = useRef<HTMLElement | null>(null);
   const [copied, setCopied] = useState(false);
@@ -85,11 +87,13 @@ export function CalendarRow({
     onFullscreen(row, element.getBoundingClientRect(), textRect);
   };
 
+  const holidayNames = row.holidays.map((holiday) => t(`holidays.${holiday.id}`));
+
   return (
     <>
       {copied && (
         <div className="copy-notice" role="status" aria-live="polite">
-          Copied to clipboard
+          {t('calendars.copied')}
         </div>
       )}
       <article
@@ -112,11 +116,24 @@ export function CalendarRow({
       aria-hidden={!visible}
     >
       <div className="calendar-row__surface">
+        <div className="calendar-row__date-wrap">
+          <p
+            className={`calendar-row__date ${scriptClass}`.trim()}
+            style={scriptStyle}
+            aria-label={entry.mayaLongCount ? dateText : undefined}
+          >
+            {entry.mayaLongCount ? (
+              <MayaLongCount parts={entry.mayaLongCount} />
+            ) : (
+              dateText
+            )}
+          </p>
+        </div>
         <button
           type="button"
           ref={setActivatorNodeRef}
           className="calendar-row__drag-handle"
-          aria-label={`Reorder ${entry.label}`}
+          aria-label={t('calendars.reorderAria', { label: entry.label })}
           {...attributes}
           {...listeners}
           disabled={!visible}
@@ -127,24 +144,11 @@ export function CalendarRow({
           {row.holidays.length > 0 ? (
             <div
               className="calendar-row__holiday"
-              aria-label={`Holiday: ${row.holidays.map((holiday) => holiday.name).join(', ')}`}
+              aria-label={t('calendars.holidayAria', { names: holidayNames.join(', ') })}
             >
-              {row.holidays.map((holiday) => holiday.name).join(' · ')}
+              {holidayNames.join(' · ')}
             </div>
           ) : null}
-          <div className="calendar-row__date-wrap">
-            <p
-              className={`calendar-row__date ${scriptClass}`.trim()}
-              style={scriptStyle}
-              aria-label={entry.mayaLongCount ? dateText : undefined}
-            >
-              {entry.mayaLongCount ? (
-                <MayaLongCount parts={entry.mayaLongCount} />
-              ) : (
-                dateText
-              )}
-            </p>
-          </div>
           <div className="calendar-row__meta">
             {entry.weekday ? (
               <span className="calendar-row__weekday" style={scriptStyle}>
@@ -164,7 +168,7 @@ export function CalendarRow({
             <button
               type="button"
               className="calendar-row__action"
-              aria-label={`Copy ${entry.label} date`}
+              aria-label={t('calendars.copyAria', { label: entry.label })}
               disabled={!canCopy}
               onClick={handleCopy}
             >
@@ -176,7 +180,7 @@ export function CalendarRow({
             <button
               type="button"
               className="calendar-row__action"
-              aria-label={`Show ${entry.label} date fullscreen`}
+              aria-label={t('calendars.fullscreenAria', { label: entry.label })}
               disabled={!canCopy}
               onClick={handleFullscreen}
             >
@@ -187,7 +191,7 @@ export function CalendarRow({
             <button
               type="button"
               className="calendar-row__action"
-              aria-label={`About the ${entry.label}`}
+              aria-label={t('calendars.aboutAria', { label: entry.label })}
               onClick={() => onInfoClick(entry.id)}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">

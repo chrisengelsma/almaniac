@@ -1,21 +1,17 @@
 import { Capacitor } from '@capacitor/core';
 import { AppIcon, type AppIconChoice } from '../plugins/appIcon';
 
+const VALID_ICONS = new Set<AppIconChoice>(['light', 'dark', 'supporter']);
+
 export async function applyAppIcon(icon: AppIconChoice): Promise<boolean> {
-  if (!Capacitor.isNativePlatform()) {
-    return true;
+  if (!Capacitor.isNativePlatform() || !VALID_ICONS.has(icon)) {
+    return false;
   }
 
   try {
-    const nativeIcon = await getNativeAppIcon();
-    if (nativeIcon === icon) {
-      return true;
-    }
-
     const result = await AppIcon.setIcon({ icon });
     return result.icon === icon;
-  } catch (error) {
-    console.error('Failed to set app icon:', error);
+  } catch {
     return false;
   }
 }
@@ -27,9 +23,10 @@ export async function getNativeAppIcon(): Promise<AppIconChoice | null> {
 
   try {
     const result = await AppIcon.getIcon();
-    return result.icon;
-  } catch (error) {
-    console.error('Failed to read app icon:', error);
+    return VALID_ICONS.has(result.icon) ? result.icon : 'light';
+  } catch {
     return null;
   }
 }
+
+export type { AppIconChoice };

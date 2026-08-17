@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
 
 function updateViewportHeight() {
+  if (Capacitor.getPlatform() === 'android') {
+    return;
+  }
+
   if (Capacitor.isNativePlatform()) {
     document.documentElement.style.removeProperty('--app-height');
     return;

@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
-import { APP_LOGO, APP_TAGLINE, APP_TITLE } from '../theme/appBranding';
+import { useTranslation } from 'react-i18next';
 import type { ColorScheme } from '../lib/appSettings';
 import type { ThemeTransitionDelays } from '../lib/themeTransition';
+import { IconTipJar } from './IconTipJar';
 import { ThemeToggleButton } from './ThemeToggleButton';
 
 interface TopBarProps {
@@ -16,15 +17,6 @@ interface TopBarProps {
   onToday: () => void;
   onForward1: () => void;
   onForward30: () => void;
-}
-
-function IconCoffee() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M6 8h11v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z" />
-      <path d="M17 10h1.8a2.2 2.2 0 0 1 0 4.4H17M7 5v1.5M11 5v1.5M15 5v1.5" />
-    </svg>
-  );
 }
 
 function IconCalendar() {
@@ -97,6 +89,8 @@ export function TopBar({
   onForward1,
   onForward30,
 }: TopBarProps) {
+  const { t } = useTranslation();
+
   return (
     <header className="top-bar">
       <div
@@ -111,20 +105,20 @@ export function TopBar({
           type="button"
           className="icon-button"
           onClick={onDonateOpen}
-          aria-label="Support Almaniac"
+          aria-label={t('topBar.supportAria')}
         >
-          <IconCoffee />
+          <IconTipJar />
         </button>
-        <h1 className="top-bar__logo" aria-label={APP_TITLE}>
-          <span className="top-bar__logo-word">{APP_LOGO}</span>
-          <span className="top-bar__logo-tagline">{APP_TAGLINE}</span>
+        <h1 className="top-bar__logo" aria-label={t('branding.appTitle')}>
+          <span className="top-bar__logo-word">{t('branding.appLogo')}</span>
+          <span className="top-bar__logo-tagline">{t('branding.tagline')}</span>
         </h1>
         <div className="top-bar__actions">
           <button
             type="button"
             className="icon-button"
             onClick={onDateClick}
-            aria-label="Jump to date"
+            aria-label={t('topBar.jumpToDateAria')}
           >
             <IconCalendar />
           </button>
@@ -133,7 +127,7 @@ export function TopBar({
             type="button"
             className="icon-button"
             onClick={onCustomizeOpen}
-            aria-label="Customize calendars and settings"
+            aria-label={t('topBar.customizeAria')}
           >
             <IconSliders />
           </button>
@@ -142,26 +136,26 @@ export function TopBar({
       <div
         className="top-bar__controls theme-chunk"
         role="toolbar"
-        aria-label="Date navigation"
+        aria-label={t('topBar.dateNavAria')}
         style={
           themeTransitionDelays
             ? ({ '--theme-transition-delay': `${themeTransitionDelays['top-bar-controls'] ?? 0}ms` } as CSSProperties)
             : undefined
         }
       >
-        <button type="button" className="icon-button" onClick={onBack30} aria-label="Back 30 days">
+        <button type="button" className="icon-button" onClick={onBack30} aria-label={t('topBar.back30Aria')}>
           <IconUndo />
         </button>
-        <button type="button" className="icon-button" onClick={onBack1} aria-label="Back 1 day">
+        <button type="button" className="icon-button" onClick={onBack1} aria-label={t('topBar.back1Aria')}>
           <IconChevronLeft />
         </button>
-        <button type="button" className="icon-button" onClick={onToday} aria-label="Go to today">
+        <button type="button" className="icon-button" onClick={onToday} aria-label={t('topBar.todayAria')}>
           <IconToday />
         </button>
-        <button type="button" className="icon-button" onClick={onForward1} aria-label="Forward 1 day">
+        <button type="button" className="icon-button" onClick={onForward1} aria-label={t('topBar.forward1Aria')}>
           <IconChevronRight />
         </button>
-        <button type="button" className="icon-button" onClick={onForward30} aria-label="Forward 30 days">
+        <button type="button" className="icon-button" onClick={onForward30} aria-label={t('topBar.forward30Aria')}>
           <IconRedo />
         </button>
       </div>

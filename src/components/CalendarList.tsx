@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DndContext,
   PointerSensor,
@@ -24,6 +25,7 @@ import {
   type CalendarRowData,
   type GregorianCalendar,
 } from '../lib/calendarRegistry';
+import type { CalendarCopy } from '../i18n/calendarCopy';
 import { hapticDragHover } from '../lib/haptics';
 import { CalendarRow } from './CalendarRow';
 
@@ -31,6 +33,7 @@ interface CalendarListProps {
   order: CalendarId[];
   anchor: GregorianCalendar;
   settings: AppSettings;
+  calendarCopy: CalendarCopy;
   themeTransitionDelays?: ThemeTransitionDelays | null;
   onReorder: (order: CalendarId[]) => void;
   onInfoClick: (id: CalendarId) => void;
@@ -42,20 +45,23 @@ export function CalendarList({
   order,
   anchor,
   settings,
+  calendarCopy,
   themeTransitionDelays = null,
   onReorder,
   onInfoClick,
   onFullscreen,
   fullscreenCalendarId = null,
 }: CalendarListProps) {
+  const { t } = useTranslation();
   const listRef = useRef<HTMLElement>(null);
   const rowsRef = useRef<HTMLDivElement>(null);
   const dragOverIdRef = useRef<string | null>(null);
   const [showAddHint, setShowAddHint] = useState(false);
   const [fillsViewport, setFillsViewport] = useState(true);
   const [isEntering, setIsEntering] = useState(true);
-  const rows = getOrderedCalendarRows(order, anchor, settings);
-  const visibleRows = rows.filter((row) => row.visible);
+  const visibleRows = getOrderedCalendarRows(order, anchor, settings, calendarCopy).filter(
+    (row) => row.visible,
+  );
   const hasHiddenCalendars = visibleRows.length < DEFAULT_CALENDAR_ORDER.length;
 
   useEffect(() => {
@@ -152,32 +158,24 @@ export function CalendarList({
               .filter(Boolean)
               .join(' ')}
             ref={listRef}
-            aria-label="Calendar conversions"
+            aria-label={t('calendars.listAria')}
           >
             <div className="calendar-list__rows" ref={rowsRef}>
-              {(() => {
-                let visibleIndex = 0;
-
-                return rows.map((row) => {
-                  const staggerIndex = row.visible ? visibleIndex++ : undefined;
-
-                  return (
-                    <CalendarRow
-                      key={row.entry.id}
-                      row={row}
-                      staggerIndex={isEntering ? staggerIndex : undefined}
-                      themeTransitionDelay={themeTransitionDelays?.[row.entry.id]}
-                      onInfoClick={onInfoClick}
-                      onFullscreen={onFullscreen}
-                      isFullscreenSource={fullscreenCalendarId === row.entry.id}
-                    />
-                  );
-                });
-              })()}
+              {visibleRows.map((row, index) => (
+                <CalendarRow
+                  key={row.entry.id}
+                  row={row}
+                  staggerIndex={isEntering ? index : undefined}
+                  themeTransitionDelay={themeTransitionDelays?.[row.entry.id]}
+                  onInfoClick={onInfoClick}
+                  onFullscreen={onFullscreen}
+                  isFullscreenSource={fullscreenCalendarId === row.entry.id}
+                />
+              ))}
               {fillsViewport ? <div className="calendar-list__spacer" aria-hidden="true" /> : null}
             </div>
             {showAddHint ? (
-              <p className="calendar-list__hint">Add another calendar from the menu</p>
+              <p className="calendar-list__hint">{t('calendars.addHint')}</p>
             ) : null}
           </section>
         </SortableContext>

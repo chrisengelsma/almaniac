@@ -1,0 +1,559 @@
+{
+  "branding": {
+    "appTitle": "Almaniac",
+    "appLogo": "almaniac",
+    "tagline": "Takvim Dönüştürücü"
+  },
+  "common": {
+    "close": "Kapat",
+    "cancel": "İptal",
+    "by": "tarafından",
+    "country": "ülke",
+    "countries": "ülke",
+    "era": {
+      "ce": "MS",
+      "bce": "MÖ",
+      "ceYear": "MS {{year}}",
+      "bceYear": "MÖ {{year}}"
+    }
+  },
+  "settings": {
+    "title": "Özelleştir",
+    "selectCalendarsTitle": "Takvimleri Seç",
+    "sectionCalendars": "Takvimler",
+    "sectionSettings": "Ayarlar",
+    "about": "Hakkında",
+    "language": "Dil",
+    "languageAria": "Uygulama dili",
+    "transliterateLabel": "İngilizceye Transliterasyon",
+    "transliterateAria": "İngilizceye transliterasyon",
+    "colorThemeLabel": "Renk teması",
+    "colorThemeAria": "Renk teması",
+    "colorThemeOptionAria": "{{label}} renk teması",
+    "colorThemeDistinct": "Renkli",
+    "colorThemeMono": "Mono",
+    "colorThemeSepia": "Sepya",
+    "appIconLabel": "Uygulama simgesi",
+    "appIconAria": "Uygulama simgesi",
+    "appIconOptionAria": "{{label}} uygulama simgesi",
+    "appIconLight": "Açık",
+    "appIconDark": "Koyu",
+    "selectCalendarsCount": "{{total}} takvimden {{count}} tanesi gösteriliyor",
+    "selectCalendarsToggleAria": "{{calendar}} değiştir",
+    "islamicSystemLabel": "İslami Takvim Sistemi",
+    "islamicSystemAria": "İslami takvim sistemi",
+    "islamicSystemTabular": "Tablo (aritmetik)",
+    "islamicSystemUmmAlQura": "Ümmü'l-Kure (Suudi resmi)",
+    "islamicAdjustmentLabel": "İslami Takvim Gün Ayarı",
+    "islamicGroupAria": "İslami takvim ayarları",
+    "julianDayLabel": "Değiştirilmiş Jülyen Günü",
+    "julianDayToggle": "Değiştirilmiş Jülyen Günü kullan",
+    "julianDayGroupAria": "Jülyen Günü ayarları",
+    "closeAria": "Özelleştirme panelini kapat",
+    "backAria": "Ayarlara dön",
+    "themeToggleLightAria": "Açık moda geç",
+    "themeToggleDarkAria": "Koyu moda geç",
+    "languageSystem": "Sistem varsayılanı",
+    "colorThemeSupporter": "Destekçi",
+    "appIconSupporter": "Destekçi",
+    "supporterLockedAria": "{{label}} (destekçi ayrıcalığı)",
+    "rememberLastDateLabel": "Son tarihi hatırla",
+    "rememberLastDateAria": "Son görüntülenen tarihte aç"
+  },
+  "topBar": {
+    "supportAria": "Almaniac'ı destekle",
+    "jumpToDateAria": "Tarihe git",
+    "customizeAria": "Takvimleri ve ayarları özelleştir",
+    "dateNavAria": "Tarih gezintisi",
+    "back30Aria": "30 gün geri",
+    "back1Aria": "1 gün geri",
+    "todayAria": "Bugüne git",
+    "forward1Aria": "1 gün ileri",
+    "forward30Aria": "30 gün ileri"
+  },
+  "modals": {
+    "donate": {
+      "title": "Almaniac'ı Destekle",
+      "intro": "Ben Chris Engelsma. Almaniac'ı, dönüştürücüler arasında geçiş yapmadan takvim sistemleri arasında tarihleri karşılaştırmak için geliştirdim.",
+      "free": "Almaniac ücretsizdir; reklam, abonelik veya izleme yoktur.",
+      "rating": "Uygulamayı beğendiyseniz, {{store}} 5 yıldızlı bir değerlendirme çok yardımcı olur. Diğer insanların Almaniac'ı bulmasına da yardımcı olur.",
+      "tipJar": "Teşekkür olarak isteğe bağlı bir bahşiş de bırakabilirsiniz. Bahşişler hiçbir şeyin kilidini açmaz. Apple her bahşişten %15–30 komisyon alır.",
+      "coffee": "Teşekkür olarak bana bir kahve ısmarlamanız da memnuniyetle karşılanır. Her iki durumda da Almaniac'ı kullandığınız için teşekkürler.",
+      "thanks": "Almaniac'ı kullandığınız için teşekkürler.",
+      "storeAppStore": "App Store'da",
+      "storeGooglePlay": "Google Play'de",
+      "rateButton": "{{store}} 5 yıldız ver",
+      "tipsAria": "İsteğe bağlı bahşişler",
+      "loadingTips": "Bahşiş seçenekleri yükleniyor…",
+      "coffeeButton": "Bana kahve ısmarla",
+      "notNow": "Şimdi değil",
+      "feedbackSuccess": "Almaniac'ı desteklediğiniz için teşekkürler!",
+      "feedbackError": "Bahşiş tamamlanamadı. Lütfen tekrar deneyin.",
+      "thankYouTitle": "Teşekkürler!",
+      "thankYouMessage": "Teşekkür olarak yeni bir tema ve simge seçeneğinin keyfini çıkarın.",
+      "thankYouDismiss": "Rica ederim",
+      "tipSmall": "Küçük bahşiş",
+      "tipMedium": "Orta bahşiş",
+      "tipLarge": "Büyük bahşiş",
+      "thankYouPerk": "Ayrıca yeniliklere ilk siz erişeceksiniz."
+    },
+    "about": {
+      "title": "{{appTitle}} Hakkında",
+      "description": "Almaniac, bir tarihi aynı anda birçok takvim sisteminde gösterir: Gregoryen, Jülyen, İbrani, İslami, Çin, Maya ve daha fazlası.",
+      "creditsTitle": "Görsel kaynakları",
+      "bannerTitle": "{{calendar}} afişi",
+      "version": "Sürüm {{version}}",
+      "copyright": "© 2026 Chris Engelsma",
+      "derivedLicensePrefix": "Türev afiş şu lisans altında paylaşılmıştır",
+      "sourceLink": "Kaynak",
+      "banners": {
+        "gregorian": {
+          "subjects": "Gregory XIII | Aziz Petrus Bazilikası",
+          "aboutNote": "Gregoryen takvim afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir."
+        },
+        "julian": {
+          "subjects": "Julius Caesar | Kolezyum",
+          "aboutNote": "Jülyen takvim afişi, aşağıdaki kaynak fotoğraflardan uyarlanmış türev bir eserdir. "
+        },
+        "ethiopian": {
+          "subjects": "Lalibela'da bir rahip | Bete Giyorgis",
+          "aboutNote": "Etiyopya takvimi afişi, aşağıdaki kaynak fotoğraflardan uyarlanmış türev bir eserdir. "
+        },
+        "coptic": {
+          "subjects": "Aziz Bishoy Manastırı | Aziz Anthony Manastırı",
+          "aboutNote": "Kıpti takvimi afişi, aşağıdaki kaynak fotoğraflardan uyarlanmış türev bir eserdir. "
+        },
+        "chinese": {
+          "subjects": "Huangdi | Cennet Tapınağı",
+          "aboutNote": "Çin takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir."
+        },
+        "soviet": {
+          "subjects": "Joseph Stalin | Moskova Kızıl Meydanı",
+          "aboutNote": "Sovyet Devrim takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "frc": {
+          "subjects": "Triumph of the Republic | The Panthéon",
+          "aboutNote": "Fransız Cumhuriyet takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir."
+        },
+        "japanese": {
+          "subjects": "İmparator Meiji | Nijubashi Köprüsü",
+          "aboutNote": "Japon Wareki takvimi afişi, aşağıdaki kaynak fotoğraflardan uyarlanmış türev bir eserdir. "
+        },
+        "maya": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "İslami takvim afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "hebrew": {
+          "subjects": "Maimonides | Kudüs Eski Şehir",
+          "aboutNote": "İbrani takvim afişi, aşağıdaki kaynak fotoğraflardan uyarlanmış türev bir eserdir. "
+        },
+        "persian": {
+          "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
+          "aboutNote": "Fars takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "bahai": {
+          "subjects": "Shrine of the Báb | Haifa",
+          "aboutNote": "Baháʼí takvimi afişi, aşağıdaki kaynak fotoğraftan uyarlanmış türev bir eserdir."
+        },
+        "thaiBuddhist": {
+          "subjects": "King Chulalongkorn | Wat Arun",
+          "aboutNote": "Tay Budist takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "discordian": {
+          "subjects": "Eris | Asbury Lanes",
+          "aboutNote": "Discordian takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "indianCivil": {
+          "subjects": "Meghnad Saha | Jantar Mantar",
+          "aboutNote": "Hindistan Sivil takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir."
+        },
+        "isoWeek": {
+          "subjects": "NBS Atomic Clock | The Earth Seen from Apollo 17",
+          "aboutNote": "ISO Hafta takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir."
+        },
+        "julianDay": {
+          "subjects": "Joseph Justus Scaliger | Old Observatory, Leiden",
+          "aboutNote": "Jülyen Günü takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "bengali": {
+          "subjects": "The Emperor Akbar | Ahsan Manzil",
+          "aboutNote": "Bengal takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "minguo": {
+          "subjects": "Sun Yat-sen | Presidential Office Building",
+          "aboutNote": "Minguo takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        }
+      }
+    },
+    "calendarInfo": {
+      "closeBackdropAria": "Takvim bilgisini kapat",
+      "loadingBanner": "Afiş yükleniyor…",
+      "imageComingSoon": "Görsel yakında",
+      "source": "Kaynak",
+      "type": "Tür",
+      "firstImplemented": "İlk uygulama",
+      "whereUsed": "Kullanıldığı yerler",
+      "geoAria": "Coğrafi kullanım",
+      "mapTabsAria": "Harita görünümleri",
+      "adoptionTab": "Kabul tarihi",
+      "timelineTab": "Kabul zaman çizelgesi",
+      "gregorianSliderLabel": "Zaman içinde kabulü göster",
+      "julianSliderLabel": "Zaman içinde kabul ve değişimi göster",
+      "yearCe": "MS {{year}}",
+      "gregorianAdoptionSummary": "Bu yıla kadar Gregoryen takvimi kullanan {{count}} {{countryLabel}}",
+      "julianUsageSummary": "Bu noktada Jülyen takvimi kullanan {{count}} {{countryLabel}}",
+      "adoptedIn": "{{year}} yılında kabul edildi",
+      "julianAdoptedIn": "{{yearLabel}} yılında kabul edildi",
+      "julianStoppedIn": "{{yearLabel}} yılında kullanımı bırakıldı",
+      "mapAria": "Takvim kullanımını gösteren dünya haritası"
+    }
+  },
+  "datePicker": {
+    "title": "Tarihe git",
+    "calendarLabel": "Takvim",
+    "searchPlaceholder": "Takvim ara…",
+    "noResults": "Eşleşen takvim yok.",
+    "eraAria": "Dönem",
+    "eraCe": "MS",
+    "eraBce": "MÖ",
+    "invalidDate": "Bu tarih seçilen takvim için geçerli değil.",
+    "cancel": "İptal",
+    "apply": "Tarihe git",
+    "field": {
+      "year": "Yıl",
+      "era": "Dönem",
+      "month": "Ay",
+      "day": "Gün",
+      "eraYear": "Dönem yılı",
+      "decade": "Dekad",
+      "baktun": "Baktun",
+      "katun": "Katun",
+      "tun": "Tun",
+      "uinal": "Uinal",
+      "kin": "Kin",
+      "buddhistYear": "Budist yılı",
+      "bengaliYear": "Bengal yılı",
+      "minguoYear": "Minguo yılı",
+      "isoWeekYear": "ISO hafta yılı",
+      "week": "Hafta",
+      "weekday": "Haftanın günü",
+      "yoldYear": "YOLD yılı",
+      "season": "Mevsim",
+      "julianDay": "Jülyen Günü",
+      "modifiedJulianDay": "Değiştirilmiş Jülyen Günü"
+    },
+    "hint": {
+      "gregorianYear": "MÖ 100 gibi eski tarihler dahil herhangi bir yıl yazın.",
+      "julianDay": "Bir Jülyen Günü numarası girin.",
+      "modifiedJulianDay": "Bir Değiştirilmiş Jülyen Günü numarası girin."
+    },
+    "placeholder": {
+      "year100": "örn. 100",
+      "julianDay": "örn. 2460000",
+      "modifiedJulianDay": "örn. 60000"
+    },
+    "isoWeekWeekN": "Hafta {{week}}",
+    "discordianStTibsDay": "Aziz Tib Günü",
+    "frcSansculottides": "Sansculottides",
+    "japaneseEra": "{{nameEn}} ({{nameJa}})"
+  },
+  "calendars": {
+    "listAria": "Takvim dönüşümleri",
+    "addHint": "Menüden başka bir takvim ekle",
+    "copied": "Panoya kopyalandı",
+    "reorderAria": "{{label}} sırasını değiştir",
+    "holidayAria": "Bayram: {{names}}",
+    "copyAria": "{{label}} tarihini kopyala",
+    "fullscreenAria": "{{label}} tarihini tam ekranda göster",
+    "aboutAria": "{{label}} hakkında",
+    "fullscreenAriaView": "{{label}} tarihi tam ekran",
+    "tapToClose": "Kapatmak için tekrar dokunun",
+    "islamicSystemUmmAlQura": "Ümmü'l-Kure",
+    "islamicSystemTabular": "Tablo",
+    "chineseZodiacYear": "{{zodiac}} yılı, {{pinyin}}",
+    "japaneseGannen": "Gannen",
+    "isoWeekDateFormat": "{{year}} Hafta {{week}} ({{padded}}), {{weekday}}",
+    "name": {
+      "gregorian": "Gregoryen Takvimi",
+      "julian": "Jülyen Takvimi",
+      "ethiopian": "Etiyopya Takvimi",
+      "coptic": "Kıpti Takvimi",
+      "chinese": "Çin Takvimi",
+      "soviet": "Sovyet Devrim Takvimi",
+      "frc": "Fransız Cumhuriyet Takvimi",
+      "maya": "Maya Takvimi",
+      "islamic": "İslami Takvim",
+      "hebrew": "İbrani Takvimi",
+      "persian": "Fars Takvimi",
+      "bahai": "Baháʼí Takvimi",
+      "japanese": "Japon Wareki Takvimi",
+      "minguo": "Minguo Takvimi",
+      "thaiBuddhist": "Tay Budist Takvimi",
+      "bengali": "Bengal Takvimi",
+      "isoWeek": "ISO Hafta Tarihi",
+      "discordian": "Discordian Takvimi",
+      "indianCivil": "Hindistan Sivil Takvimi",
+      "julianDay": "Jülyen Günü"
+    },
+    "label": {
+      "gregorian": "Gregoryen",
+      "julian": "Jülyen",
+      "ethiopian": "Etiyopya",
+      "coptic": "Kıpti",
+      "chinese": "Çin",
+      "soviet": "Sovyet",
+      "frc": "FRC",
+      "maya": "Maya",
+      "islamic": "İslami",
+      "hebrew": "İbrani",
+      "persian": "Fars",
+      "bahai": "Baháʼí",
+      "japanese": "Japon",
+      "minguo": "Minguo",
+      "thaiBuddhist": "Tay Budist",
+      "bengali": "Bengal",
+      "isoWeek": "ISO Hafta",
+      "discordian": "Discordian",
+      "indianCivil": "Hindistan Sivil",
+      "julianDay": "Jülyen Günü",
+      "modifiedJulianDay": "Değ. JD"
+    },
+    "type": {
+      "solar": "Güneş",
+      "lunar": "Ay",
+      "lunisolar": "Güneş-Ay",
+      "mixed": "Karışık döngüler",
+      "continuous": "Sürekli sayım"
+    },
+    "info": {
+      "gregorian": {
+        "firstImplemented": "1582 MS",
+        "history": "Jülyen takvimindeki sapmayı düzeltmek için Papa Gregory XIII tarafından tanıtıldı. Artık yıllar, 400'e bölünmeyen yüzyıl yıllarını atlar. Avrupa ve Amerika'da kademeli olarak benimsendi; şimdi uluslararası sivil standarttır.",
+        "usedIn": [
+          "Amerika Birleşik Devletleri",
+          "Kanada",
+          "Meksika",
+          "Brezilya",
+          "Birleşik Krallık",
+          "Fransa",
+          "Almanya",
+          "İtalya",
+          "İspanya",
+          "Avustralya",
+          "Japonya",
+          "Çin (sivil kullanım)",
+          "Hindistan (sivil kullanım)",
+          "Dünyanın çoğu"
+        ]
+      },
+      "julian": {
+        "firstImplemented": "MÖ 45",
+        "history": "Julius Caesar tarafından Roma cumhuriyet takviminden reform edildi. Basit artık yıl kuralı (her dördüncü yıl) kullanır ve birkaç Doğu Ortodoks kilisesinin litürjik takvimi olarak kalmıştır.",
+        "usedIn": [
+          "Rusya (1918'e kadar)",
+          "Doğu Ortodoks kiliseleri",
+          "Etiyopya (varyasyonlarla)",
+          "Sırbistan",
+          "Kudüs Patrikhanesi",
+          "Ahtos Dağı"
+        ]
+      },
+      "ethiopian": {
+        "firstImplemented": "yaklaşık MS 4. yüzyıl",
+        "history": "On üç 30 günlük ay artı kısa bir ek gün dönemi (Pagume) olan güneş takvimidir. Jülyen artık yıl kuralını paylaşır ve Gregoryen takvimden yaklaşık yedi ila sekiz yıl geridedir. Etiyopya bunu sivil ve dini yaşamda Gregoryen ile birlikte kullanır.",
+        "usedIn": [
+          "Etiyopya",
+          "Eritre Ortodoks toplulukları"
+        ]
+      },
+      "coptic": {
+        "firstImplemented": "yaklaşık MS 3. yüzyıl",
+        "history": "Kıpti Ortodoks Kilisesi'nin litürjik takvimi, Etiyopya takvimiyle yapısal olarak aynıdır ancak şehitler çağından (Anno Martyrum) sayılır. Yeni yıl Gregoryen 11 Eylül'dedir (Gregoryen artık yıldan önce 12 Eylül).",
+        "usedIn": [
+          "Mısır",
+          "Dünya çapında Kıpti Ortodoks Kilisesi"
+        ]
+      },
+      "chinese": {
+        "firstImplemented": "yaklaşık MÖ 14. yüzyıl (efsanevi); sabit kurallar yaklaşık MÖ 104",
+        "history": "Geleneksel Çin takvimi (农历), güneş terimleriyle sabitlenmiş ay aylarını izler; yıllar göksel gövdeler ve yeryüzü dalları (干支) altmışlık döngüsüyle adlandırılır. Her yılın bir burç hayvanı (生肖) da vardır. Artık aylar festivalleri mevsimlerle hizalı tutar.",
+        "usedIn": [
+          "Çin",
+          "Tayvan",
+          "Hong Kong",
+          "Makao",
+          "Singapur",
+          "Malezya",
+          "Yurtdışı Çin toplulukları"
+        ]
+      },
+      "soviet": {
+        "firstImplemented": "1929 MS",
+        "history": "Stalin'in sanayileşme döneminde tanıtıldı; bu devrim takvimi yedi günlük haftaları beş günlük üretim döngüleriyle değiştirdi ve yılı on iki 30 günlük ay artı ulusal tatiller olarak yeniden yapılandırdı. Günlük yaşam için Gregoryen takvim paralel kaldı; deney 1940'a kadar terk edildi.",
+        "usedIn": [
+          "Sovyetler Birliği (1929–1940)"
+        ]
+      },
+      "frc": {
+        "firstImplemented": "1793 MS",
+        "history": "Fransız Devrimi sırasında zamanı ondalıklaştırmak için oluşturuldu. Yıllar sonbahar ekinoksunda başladı; aylar ve haftalar yeniden adlandırıldı ve yapılandırıldı. Napolyon 1806'da kaldırdı; Paris Komünü 1871'de kısa süreliğine canlandırdı.",
+        "usedIn": [
+          "Fransa (1793–1805)",
+          "Paris Komünü (1871)"
+        ]
+      },
+      "maya": {
+        "firstImplemented": "yaklaşık MÖ 500",
+        "history": "Klasik Mayalar iç içe geçmiş döngüler kullandı: 260 günlük Tzolkʼin, 365 günlük Haab ve mitolojik yaratılış tarihinden günleri sayan Uzun Sayım. Bu görünüm anıtlar ve kodekslerde bilinen Uzun Sayım gösterimini kullanır.",
+        "usedIn": [
+          "Meksika",
+          "Guatemala",
+          "Belize",
+          "Honduras",
+          "El Salvador"
+        ]
+      },
+      "islamic": {
+        "firstImplemented": "622 MS (Hicret dönemi)",
+        "history": "Toplam yaklaşık 354 gün olan on iki aylık ay takvimidir. Bu uygulama tablo (aritmetik) dönüşümü ve Suudi Arabistan'da resmi olarak kullanılan Ümmü'l-Kure takvimini (1300–1600 AH) destekler. İsteğe bağlı ±1 gün ayarı, yerel ay görme uygulamasına göre tarihleri ince ayarlayabilir.",
+        "usedIn": [
+          "Suudi Arabistan",
+          "Mısır",
+          "Pakistan",
+          "İran (Güneş Hicri ile birlikte)",
+          "Türkiye (dini tarihler için)",
+          "Endonezya",
+          "Malezya",
+          "Fas",
+          "Birleşik Arap Emirlikleri"
+        ]
+      },
+      "hebrew": {
+        "firstImplemented": "yaklaşık MS 4. yüzyıl (sabit kurallar)",
+        "history": "Aylar ay aylarını izler; festivalleri mevsimlerle hizalamak için her on dokuz yılda yedi kez artık ay eklenir. Sabit aritmetik takvim, Hillel II döneminde gözlem tabanlı hesaplamanın yerini aldı.",
+        "usedIn": [
+          "İsrail",
+          "Dünya çapında Yahudi toplulukları"
+        ]
+      },
+      "persian": {
+        "firstImplemented": "1079 MS (Celali reformu)",
+        "history": "Güneş Hicri takvimi olarak da bilinir. Aylar ilkbahar ekinoksuna bağlıdır; Nowruz yeni yıldır. Ömer Hayyam artık yıl yapısını geliştirmeye yardımcı oldu; modern İran ve Afganistan geliştirilmiş sürümler kullanır.",
+        "usedIn": [
+          "İran",
+          "Afganistan"
+        ]
+      },
+      "bahai": {
+        "firstImplemented": "1844 MS",
+        "history": "Badíʿ takviminde on dokuz günden on dokuz ay vardır; oruç ayından önce ara günler (Ayyám-i-Há). Naw-Rúz, Tahran'daki ilkbahar ekinoksuna sabitlenmiştir. 1. yıl, 1844'te Báb'ın ilanıyla başladı.",
+        "usedIn": [
+          "Dünya çapında Baháʼí toplulukları"
+        ]
+      },
+      "japanese": {
+        "firstImplemented": "1873 MS (Gregoryen aylar benimsendi)",
+        "history": "Japonya'nın resmi sivil takvimi, Gregoryen ayları ve artık yılları Japon dönem adlarıyla (年号) eşleştirir. Her saltanat 1'den (元年, gannen) sayılan yeni bir dönem başlatır; Reiwa 1 Mayıs 2019'da başladı. Tarihler dönem adı, yıl, ay ve günle yazılır.",
+        "usedIn": [
+          "Japonya"
+        ]
+      },
+      "minguo": {
+        "firstImplemented": "1912 MS (Çin Cumhuriyeti kuruldu)",
+        "history": "Minguo takvimi yılları 1912'de Çin Cumhuriyeti'nin kuruluşundan sayar. 1. yıl 1912 MS'ye karşılık gelir; aksi halde Gregoryen ay ve gün yapısını izler. Tayvan'da Batı yılıyla birlikte resmi kullanımda kalır.",
+        "usedIn": [
+          "Tayvan"
+        ]
+      },
+      "thaiBuddhist": {
+        "firstImplemented": "yaklaşık MÖ 1. yüzyıl (BE dönemi); resmi BE tarihleri 1888 MS'den",
+        "history": "Tayland sivil takvimi Gregoryen yapıyı izler ancak yılları Ortak Çağ'dan 543 yıl ileride olan Budist Çağ'da (BE) numaralandırır. Resmi belgelerde, gazetelerde ve günlük yaşamda Batı yılıyla birlikte kullanılır.",
+        "usedIn": [
+          "Tayland"
+        ]
+      },
+      "bengali": {
+        "firstImplemented": "593 MS (geleneksel); 1987 MS'de revize (Bangladeş)",
+        "history": "Bengal takvimi Bangladeş ve Batı Bengal'de kullanılır. Bangladeş revize takvimi Pohela Boishakh'ı 14 Nisan'a sabitler; altı 31 günlük, beş 30 günlük ay ve değişken uzunlukta Choitro. Yıllar geleneksel Bengal döneminden sayılır.",
+        "usedIn": [
+          "Bangladeş",
+          "Batı Bengal (Hindistan)"
+        ]
+      },
+      "indianCivil": {
+        "firstImplemented": "1957 MS (resmi kabul)",
+        "history": "Hindistan ulusal takvimi (Śaka dönemi) ayları tropik burçlarla hizalar. İlk ay Chaitra, Mart ekinoksuna yakın başlar. Hükümet resmi gazeteleri ve radyo yayınlarında Gregoryen ile birlikte kullanılır.",
+        "usedIn": [
+          "Hindistan"
+        ]
+      },
+      "isoWeek": {
+        "firstImplemented": "1988 MS (ISO 8601)",
+        "history": "ISO hafta tarihi sistemi haftaları Pazartesi'den Pazar'a numaralandırır; 1. hafta 4 Ocak'ı içeren haftadır. İş planlaması, üretim, bordro ve uluslararası standartlarda yaygın kullanılır; yıl sınırlarındaki belirsizlikten kaçınır.",
+        "usedIn": [
+          "Avrupa Birliği (iş ve istatistik)",
+          "İskandinav ülkeleri",
+          "Uluslararası standart kuruluşları",
+          "Dünya çapında üretim ve lojistik"
+        ]
+      },
+      "discordian": {
+        "firstImplemented": "1963 MS (Principia Discordia)",
+        "history": "Principia Discordia'dan bir parodi din takvimi, Gregoryen yılla hizalıdır. Her yıl beş 73 günlük mevsim (Chaos, Discord, Confusion, Bureaucracy ve The Aftermath) ve beş günlük hafta vardır. Artık yıllar Chaos 59 ve 60 arasında Aziz Tib Günü kazanır. Yıllar YOLD (Year of Our Lady of Discord) olarak, Gregoryen yıl + 1166 ile sayılır.",
+        "usedIn": [
+          "Discordian toplulukları",
+          "İnternet kültürü",
+          "Karşı kültür mizahı"
+        ]
+      },
+      "julianDay": {
+        "firstImplemented": "1583 MS (Scaliger)",
+        "history": "Sivil takvim değil, astronomlar ve tarihçiler tarafından kullanılan sürekli gün sayımıdır. Jülyen Günü 0, 1 Ocak MÖ 4713 öğleninde (proleptik Jülyen) başlar. Takvim sistemleri arasında tarih karşılaştırırken belirsizlikten kaçınır.",
+        "usedIn": [
+          "Astronomi",
+          "Uzay bilimi",
+          "Dünya çapında tarihsel araştırma"
+        ]
+      }
+    }
+  },
+  "holidays": {
+    "bannerAria": "Bu tarihteki dini bayramlar",
+    "tradition": {
+      "christian": "Hristiyan",
+      "jewish": "Yahudi",
+      "islamic": "İslami"
+    },
+    "jewish": {
+      "roshHashanah": "Rosh Hashanah",
+      "yomKippur": "Yom Kippur",
+      "sukkot": "Sukkot",
+      "hanukkah": "Hanuka",
+      "purim": "Purim",
+      "passover": "Pesah",
+      "shavuot": "Şavuot",
+      "tishaBAv": "Tişa beAv"
+    },
+    "christian": {
+      "epiphany": "Epifani",
+      "christmas": "Noel",
+      "allSaintsDay": "Tüm Azizler Günü",
+      "ashWednesday": "Kül Çarşambası",
+      "palmSunday": "Palmiye Pazarı",
+      "goodFriday": "Kutsal Cuma",
+      "easterSunday": "Paskalya Pazar",
+      "ascensionDay": "Yükseliş Günü",
+      "pentecost": "Pentekost"
+    },
+    "islamic": {
+      "newYear": "İslami Yeni Yıl",
+      "ashura": "Aşure",
+      "mawlid": "Mevlid Kandili",
+      "ramadanStart": "Ramazan Başlangıcı",
+      "laylatAlQadr": "Kadir Gecesi",
+      "eidAlFitr": "Ramazan Bayramı",
+      "eidAlAdha": "Kurban Bayramı",
+      "ramadan": "Ramazan"
+    }
+  }
+}

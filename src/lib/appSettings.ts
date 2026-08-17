@@ -6,14 +6,25 @@ import {
 } from './calendarRegistry';
 import { GregorianCalendar as GregorianCalendarClass } from 'calendar-converter/calendars';
 import type { CalendarColorMap } from '../theme/calendarColors';
+import {
+  isAppLanguage,
+  isAppLanguagePreference,
+  resolveAppLanguage,
+  type AppLanguage,
+  type AppLanguagePreference,
+} from '../i18n/language';
+import { sanitizeSupporterSelections } from './supporterPerks';
 
 export type IslamicDayAdjustment = -1 | 0 | 1;
 export type IslamicCalendarMode = 'tabular' | 'ummAlQura';
 export type ColorScheme = 'light' | 'dark';
-export type ColorTheme = 'distinct' | 'mono' | 'sepia';
-export type AppIconChoice = 'light' | 'dark';
+export type ColorTheme = 'distinct' | 'mono' | 'sepia' | 'supporter';
+export type AppIconChoice = 'light' | 'dark' | 'supporter';
+
+export type { AppLanguage, AppLanguagePreference };
 
 export interface AppSettings {
+  appLanguagePreference: AppLanguagePreference;
   visibleCalendars: Record<CalendarId, boolean>;
   calendarColors: Partial<CalendarColorMap>;
   colorTheme: ColorTheme;
@@ -26,6 +37,8 @@ export interface AppSettings {
   showJewishHolidays: boolean;
   showIslamicHolidays: boolean;
   appIcon: AppIconChoice;
+  supporterUnlocked: boolean;
+  rememberLastOpenedDate: boolean;
 }
 
 const STORAGE_KEY = 'almaniac.settings.v1';
@@ -44,6 +57,8 @@ export interface PersistedAppState {
 
 interface LegacyStoredSettings extends Partial<AppSettings> {
   visibleCalendars?: Record<CalendarId, boolean>;
+  /** @deprecated Migrated to appLanguagePreference. */
+  appLanguage?: AppLanguage;
 }
 
 function systemColorScheme(): ColorScheme {
@@ -73,6 +88,7 @@ function defaultVisibility(): Record<CalendarId, boolean> {
 
 export function defaultAppSettings(): AppSettings {
   return {
+    appLanguagePreference: 'system',
     visibleCalendars: defaultVisibility(),
     calendarColors: {},
     colorTheme: 'distinct',
@@ -85,6 +101,8 @@ export function defaultAppSettings(): AppSettings {
     showJewishHolidays: true,
     showIslamicHolidays: true,
     appIcon: 'light',
+    supporterUnlocked: false,
+    rememberLastOpenedDate: true,
   };
 }
 
@@ -93,18 +111,29 @@ export function loadAppSettings(): AppSettings {
   return loadPersistedAppState().settings;
 }
 
-function loadAppSettingsFromPartial(parsed: Partial<AppSettings>): AppSettings {
+function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage?: AppLanguage }): AppSettings {
   const defaults = defaultAppSettings();
 
-  return {
+  let appLanguagePreference = defaults.appLanguagePreference;
+  if (isAppLanguagePreference(parsed.appLanguagePreference)) {
+    appLanguagePreference = parsed.appLanguagePreference;
+  } else if (isAppLanguage(parsed.appLanguage)) {
+    appLanguagePreference = parsed.appLanguage;
+  }
+
+  return sanitizeSupporterSelections({
+    appLanguagePreference,
     visibleCalendars: { ...defaults.visibleCalendars, ...parsed.visibleCalendars },
     calendarColors: { ...defaults.calendarColors, ...parsed.calendarColors },
     colorTheme:
-      parsed.colorTheme === 'distinct' ||
-      parsed.colorTheme === 'mono' ||
-      parsed.colorTheme === 'sepia'
-        ? parsed.colorTheme
-        : defaults.colorTheme,
+      (parsed.colorTheme as string | undefined) === 'teal'
+        ? 'supporter'
+        : parsed.colorTheme === 'distinct' ||
+            parsed.colorTheme === 'mono' ||
+            parsed.colorTheme === 'sepia' ||
+            parsed.colorTheme === 'supporter'
+          ? parsed.colorTheme
+          : defaults.colorTheme,
     colorScheme: parsed.colorScheme ?? defaults.colorScheme,
     transliterateToEnglish: parsed.transliterateToEnglish ?? defaults.transliterateToEnglish,
     islamicCalendarMode: parsed.islamicCalendarMode ?? defaults.islamicCalendarMode,
@@ -114,8 +143,16 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings>): AppSettings {
     showJewishHolidays: parsed.showJewishHolidays ?? defaults.showJewishHolidays,
     showIslamicHolidays: parsed.showIslamicHolidays ?? defaults.showIslamicHolidays,
     appIcon:
-      parsed.appIcon === 'light' || parsed.appIcon === 'dark' ? parsed.appIcon : defaults.appIcon,
-  };
+      (parsed.appIcon as string | undefined) === 'teal'
+        ? 'supporter'
+        : parsed.appIcon === 'light' ||
+            parsed.appIcon === 'dark' ||
+            parsed.appIcon === 'supporter'
+          ? parsed.appIcon
+          : defaults.appIcon,
+    supporterUnlocked: parsed.supporterUnlocked === true,
+    rememberLastOpenedDate: parsed.rememberLastOpenedDate ?? defaults.rememberLastOpenedDate,
+  });
 }
 
 function anchorDateFromGregorian(anchor: GregorianCalendar): AnchorDateParts {
@@ -247,7 +284,11 @@ export function createPersistedAppState(
 }
 
 export function anchorFromPersistedState(state: PersistedAppState): GregorianCalendar {
-  return anchorDateToGregorian(state.anchorDate);
+  if (state.settings.rememberLastOpenedDate) {
+    return anchorDateToGregorian(state.anchorDate);
+  }
+
+  return todayGregorianDate();
 }
 
 export function toggleCalendarVisibility(
@@ -291,6 +332,13 @@ export function setUseModifiedJulianDay(
   return { ...settings, useModifiedJulianDay: value };
 }
 
+export function setRememberLastOpenedDate(
+  settings: AppSettings,
+  value: boolean,
+): AppSettings {
+  return { ...settings, rememberLastOpenedDate: value };
+}
+
 export function setShowChristianHolidays(settings: AppSettings, value: boolean): AppSettings {
   return { ...settings, showChristianHolidays: value };
 }
@@ -330,4 +378,24 @@ export function setColorTheme(settings: AppSettings, value: ColorTheme): AppSett
 
 export function setAppIcon(settings: AppSettings, value: AppIconChoice): AppSettings {
   return { ...settings, appIcon: value };
+}
+
+export function setSupporterUnlocked(settings: AppSettings, value: boolean): AppSettings {
+  return { ...settings, supporterUnlocked: value };
+}
+
+export function getResolvedAppLanguage(settings: AppSettings): AppLanguage {
+  return resolveAppLanguage(settings.appLanguagePreference);
+}
+
+export function setAppLanguagePreference(
+  settings: AppSettings,
+  value: AppLanguagePreference,
+): AppSettings {
+  return { ...settings, appLanguagePreference: value };
+}
+
+/** @deprecated Use setAppLanguagePreference. */
+export function setAppLanguage(settings: AppSettings, value: AppLanguagePreference): AppSettings {
+  return setAppLanguagePreference(settings, value);
 }

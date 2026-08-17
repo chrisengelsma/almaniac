@@ -1,0 +1,559 @@
+{
+  "branding": {
+    "appTitle": "Almaniac",
+    "appLogo": "almaniac",
+    "tagline": "Un convertitore di calendari"
+  },
+  "common": {
+    "close": "Chiudi",
+    "cancel": "Annulla",
+    "by": "di",
+    "country": "paese",
+    "countries": "paesi",
+    "era": {
+      "ce": "d.C.",
+      "bce": "a.C.",
+      "ceYear": "{{year}} d.C.",
+      "bceYear": "{{year}} a.C."
+    }
+  },
+  "settings": {
+    "title": "Personalizza",
+    "selectCalendarsTitle": "Seleziona calendari",
+    "sectionCalendars": "Calendari",
+    "sectionSettings": "Impostazioni",
+    "about": "Informazioni",
+    "language": "Lingua",
+    "languageAria": "Lingua dell'app",
+    "transliterateLabel": "Traslittera in inglese",
+    "transliterateAria": "Traslittera in inglese",
+    "colorThemeLabel": "Tema colore",
+    "colorThemeAria": "Tema colore",
+    "colorThemeOptionAria": "Tema colore {{label}}",
+    "colorThemeDistinct": "Distinct",
+    "colorThemeMono": "Mono",
+    "colorThemeSepia": "Sepia",
+    "appIconLabel": "Icona dell'app",
+    "appIconAria": "Icona dell'app",
+    "appIconOptionAria": "Icona {{label}}",
+    "appIconLight": "Chiaro",
+    "appIconDark": "Scuro",
+    "selectCalendarsCount": "{{count}} di {{total}} mostrati",
+    "selectCalendarsToggleAria": "Attiva o disattiva {{calendar}}",
+    "islamicSystemLabel": "Sistema del calendario islamico",
+    "islamicSystemAria": "Sistema del calendario islamico",
+    "islamicSystemTabular": "Tabulare (aritmetico)",
+    "islamicSystemUmmAlQura": "Umm al-Qura (ufficiale saudita)",
+    "islamicAdjustmentLabel": "Regolazione del giorno del calendario islamico",
+    "islamicGroupAria": "Impostazioni del calendario islamico",
+    "julianDayLabel": "Giorno giuliano modificato",
+    "julianDayToggle": "Usa giorno giuliano modificato",
+    "julianDayGroupAria": "Impostazioni del giorno giuliano",
+    "closeAria": "Chiudi pannello di personalizzazione",
+    "backAria": "Torna alle impostazioni",
+    "themeToggleLightAria": "Passa alla modalità chiara",
+    "themeToggleDarkAria": "Passa alla modalità scura",
+    "languageSystem": "Lingua di sistema",
+    "colorThemeSupporter": "Supporter",
+    "appIconSupporter": "Supporter",
+    "supporterLockedAria": "{{label}} (vantaggio supporter)",
+    "rememberLastDateLabel": "Ricorda ultima data",
+    "rememberLastDateAria": "Apri sull'ultima data visualizzata"
+  },
+  "topBar": {
+    "supportAria": "Supporta Almaniac",
+    "jumpToDateAria": "Vai alla data",
+    "customizeAria": "Personalizza calendari e impostazioni",
+    "dateNavAria": "Navigazione per data",
+    "back30Aria": "Indietro di 30 giorni",
+    "back1Aria": "Indietro di 1 giorno",
+    "todayAria": "Vai a oggi",
+    "forward1Aria": "Avanti di 1 giorno",
+    "forward30Aria": "Avanti di 30 giorni"
+  },
+  "modals": {
+    "donate": {
+      "title": "Supporta Almaniac",
+      "intro": "Sono Chris Engelsma. Ho creato Almaniac per confrontare date tra sistemi di calendario senza saltare da un convertitore all'altro.",
+      "free": "Almaniac è gratuito, senza pubblicità, abbonamenti o tracciamento.",
+      "rating": "Se ti piace l'app, una valutazione a 5 stelle {{store}} aiuta molto. Aiuta anche altre persone a trovare Almaniac.",
+      "tipJar": "Puoi anche lasciare una mancia opzionale come ringraziamento. Le mance non sbloccano nulla. Apple trattiene il 15–30% di ogni mancia come commissione.",
+      "coffee": "Puoi anche offrirmi un caffè come ringraziamento. In ogni caso, grazie per usare Almaniac.",
+      "thanks": "Grazie per usare Almaniac.",
+      "storeAppStore": "sull'App Store",
+      "storeGooglePlay": "su Google Play",
+      "rateButton": "Valuta con 5 stelle {{store}}",
+      "tipsAria": "Mance opzionali",
+      "loadingTips": "Caricamento opzioni mancia…",
+      "coffeeButton": "Buy me a coffee",
+      "notNow": "Non ora",
+      "feedbackSuccess": "Grazie per aver supportato Almaniac!",
+      "feedbackError": "Impossibile completare la mancia. Riprova.",
+      "thankYouTitle": "Grazie!",
+      "thankYouMessage": "Per ringraziarti, ti regaliamo un nuovo tema e un’icona.",
+      "thankYouDismiss": "Prego",
+      "tipSmall": "Mancia piccola",
+      "tipMedium": "Mancia media",
+      "tipLarge": "Mancia grande",
+      "thankYouPerk": "Avrai anche accesso anticipato a tutte le novità."
+    },
+    "about": {
+      "title": "Informazioni su {{appTitle}}",
+      "description": "Almaniac mostra una stessa data in molti sistemi di calendario: gregoriano, giuliano, ebraico, islamico, cinese, maya e altri.",
+      "creditsTitle": "Crediti immagini",
+      "bannerTitle": "Banner {{calendar}}",
+      "version": "Versione {{version}}",
+      "copyright": "© 2026 Chris Engelsma",
+      "derivedLicensePrefix": "Banner derivato condiviso sotto",
+      "sourceLink": "Fonte",
+      "banners": {
+        "gregorian": {
+          "subjects": "Gregorio XIII | Basilica di San Pietro",
+          "aboutNote": "Il banner del calendario gregoriano è un'opera derivata adattata dalle immagini fonte qui sotto."
+        },
+        "julian": {
+          "subjects": "Giulio Cesare | Colosseo",
+          "aboutNote": "Il banner del calendario giuliano è un'opera derivata adattata dalle fotografie fonte qui sotto. "
+        },
+        "ethiopian": {
+          "subjects": "Sacerdote a Lalibela | Bete Giyorgis",
+          "aboutNote": "Il banner del calendario etiope è un'opera derivata adattata dalle fotografie fonte qui sotto. "
+        },
+        "coptic": {
+          "subjects": "Monastero di San Bishoy | Monastero di Sant'Antonio",
+          "aboutNote": "Il banner del calendario copto è un'opera derivata adattata dalle fotografie fonte qui sotto. "
+        },
+        "chinese": {
+          "subjects": "Huangdi | Tempio del Cielo",
+          "aboutNote": "Il banner del calendario cinese è un'opera derivata adattata dalle immagini fonte qui sotto."
+        },
+        "soviet": {
+          "subjects": "Joseph Stalin | Piazza Rossa di Mosca",
+          "aboutNote": "Il banner del calendario rivoluzionario sovietico è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "frc": {
+          "subjects": "Trionfo della Repubblica | Il Panthéon",
+          "aboutNote": "Il banner del calendario repubblicano francese è un'opera derivata adattata dalle immagini fonte qui sotto."
+        },
+        "japanese": {
+          "subjects": "Imperatore Meiji | Ponte Nijubashi",
+          "aboutNote": "Il banner del calendario giapponese Wareki è un'opera derivata adattata dalle fotografie fonte qui sotto. "
+        },
+        "maya": {
+          "subjects": "Al-Biruni | La Mecca",
+          "aboutNote": "Il banner del calendario islamico è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "hebrew": {
+          "subjects": "Maimonide | Città Vecchia di Gerusalemme",
+          "aboutNote": "Il banner del calendario ebraico è un'opera derivata adattata dalle fotografie fonte qui sotto. "
+        },
+        "persian": {
+          "subjects": "Omar Khayyam | Piazza Naqsh-e Jahan",
+          "aboutNote": "Il banner del calendario persiano è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "bahai": {
+          "subjects": "Santuario del Báb | Haifa",
+          "aboutNote": "Il banner del calendario baháʼí è un'opera derivata adattata dalla fotografia fonte qui sotto."
+        },
+        "thaiBuddhist": {
+          "subjects": "Re Chulalongkorn | Wat Arun",
+          "aboutNote": "Il banner del calendario buddista thailandese è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "discordian": {
+          "subjects": "Eris | Asbury Lanes",
+          "aboutNote": "Il banner del calendario discordiano è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "indianCivil": {
+          "subjects": "Meghnad Saha | Jantar Mantar",
+          "aboutNote": "Il banner del calendario civile indiano è un'opera derivata adattata dalle immagini fonte qui sotto."
+        },
+        "isoWeek": {
+          "subjects": "Orologio atomico NBS | La Terra vista da Apollo 17",
+          "aboutNote": "Il banner del calendario ISO Week è un'opera derivata adattata dalle immagini fonte qui sotto."
+        },
+        "julianDay": {
+          "subjects": "Joseph Justus Scaliger | Vecchio osservatorio di Leiden",
+          "aboutNote": "Il banner del calendario Julian Day è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "bengali": {
+          "subjects": "L'imperatore Akbar | Ahsan Manzil",
+          "aboutNote": "Il banner del calendario bengalese è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "minguo": {
+          "subjects": "Sun Yat-sen | Edificio dell'Ufficio presidenziale",
+          "aboutNote": "Il banner del calendario Minguo è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        }
+      }
+    },
+    "calendarInfo": {
+      "closeBackdropAria": "Chiudi informazioni calendario",
+      "loadingBanner": "Caricamento banner…",
+      "imageComingSoon": "Immagine in arrivo",
+      "source": "Fonte",
+      "type": "Tipo",
+      "firstImplemented": "Prima implementazione",
+      "whereUsed": "Dove è usato",
+      "geoAria": "Uso geografico",
+      "mapTabsAria": "Viste mappa",
+      "adoptionTab": "Data di adozione",
+      "timelineTab": "Cronologia di adozione",
+      "gregorianSliderLabel": "Mostra l'adozione nel tempo",
+      "julianSliderLabel": "Mostra adozione e sostituzione nel tempo",
+      "yearCe": "{{year}} d.C.",
+      "gregorianAdoptionSummary": "{{count}} {{countryLabel}} usano il calendario gregoriano in questo anno",
+      "julianUsageSummary": "{{count}} {{countryLabel}} usano il calendario giuliano in questo momento",
+      "adoptedIn": "Adottato nel {{year}}",
+      "julianAdoptedIn": "Adottato nel {{yearLabel}}",
+      "julianStoppedIn": "Non più in uso dal {{yearLabel}}",
+      "mapAria": "Mappa mondiale che mostra l'uso del calendario"
+    }
+  },
+  "datePicker": {
+    "title": "Vai alla data",
+    "calendarLabel": "Calendario",
+    "searchPlaceholder": "Cerca calendari…",
+    "noResults": "Nessun calendario corrisponde.",
+    "eraAria": "Era",
+    "eraCe": "d.C.",
+    "eraBce": "a.C.",
+    "invalidDate": "Questa data non è valida per il calendario scelto.",
+    "cancel": "Annulla",
+    "apply": "Vai alla data",
+    "field": {
+      "year": "Anno",
+      "era": "Era",
+      "month": "Mese",
+      "day": "Giorno",
+      "eraYear": "Anno dell'era",
+      "decade": "Décade",
+      "baktun": "Baktun",
+      "katun": "Katun",
+      "tun": "Tun",
+      "uinal": "Uinal",
+      "kin": "Kin",
+      "buddhistYear": "Anno buddista",
+      "bengaliYear": "Anno bengalese",
+      "minguoYear": "Anno Minguo",
+      "isoWeekYear": "Anno settimana ISO",
+      "week": "Settimana",
+      "weekday": "Giorno della settimana",
+      "yoldYear": "Anno YOLD",
+      "season": "Stagione",
+      "julianDay": "Giorno giuliano",
+      "modifiedJulianDay": "Giorno giuliano modificato"
+    },
+    "hint": {
+      "gregorianYear": "Inserisci qualsiasi anno, incluse date antiche come 100 a.C.",
+      "julianDay": "Inserisci un numero di giorno giuliano.",
+      "modifiedJulianDay": "Inserisci un numero di giorno giuliano modificato."
+    },
+    "placeholder": {
+      "year100": "es. 100",
+      "julianDay": "es. 2460000",
+      "modifiedJulianDay": "es. 60000"
+    },
+    "isoWeekWeekN": "Settimana {{week}}",
+    "discordianStTibsDay": "Giorno di San Tib",
+    "frcSansculottides": "Sansculottides",
+    "japaneseEra": "{{nameEn}} ({{nameJa}})"
+  },
+  "calendars": {
+    "listAria": "Conversioni di calendario",
+    "addHint": "Aggiungi un altro calendario dal menu",
+    "copied": "Copiato negli appunti",
+    "reorderAria": "Riordina {{label}}",
+    "holidayAria": "Festività: {{names}}",
+    "copyAria": "Copia data {{label}}",
+    "fullscreenAria": "Mostra data {{label}} a schermo intero",
+    "aboutAria": "Informazioni sul {{label}}",
+    "fullscreenAriaView": "Data {{label}} a schermo intero",
+    "tapToClose": "Tocca di nuovo per chiudere",
+    "islamicSystemUmmAlQura": "Umm al-Qura",
+    "islamicSystemTabular": "Tabulare",
+    "chineseZodiacYear": "Anno del {{zodiac}}, {{pinyin}}",
+    "japaneseGannen": "Gannen",
+    "isoWeekDateFormat": "{{year}} Settimana {{week}} ({{padded}}), {{weekday}}",
+    "name": {
+      "gregorian": "Calendario gregoriano",
+      "julian": "Calendario giuliano",
+      "ethiopian": "Calendario etiope",
+      "coptic": "Calendario copto",
+      "chinese": "Calendario cinese",
+      "soviet": "Calendario rivoluzionario sovietico",
+      "frc": "Calendario repubblicano francese",
+      "maya": "Calendario maya",
+      "islamic": "Calendario islamico",
+      "hebrew": "Calendario ebraico",
+      "persian": "Calendario persiano",
+      "bahai": "Calendario baháʼí",
+      "japanese": "Calendario giapponese Wareki",
+      "minguo": "Calendario Minguo",
+      "thaiBuddhist": "Calendario buddista thailandese",
+      "bengali": "Calendario bengalese",
+      "isoWeek": "Data settimana ISO",
+      "discordian": "Calendario discordiano",
+      "indianCivil": "Calendario civile indiano",
+      "julianDay": "Giorno giuliano"
+    },
+    "label": {
+      "gregorian": "Gregoriano",
+      "julian": "Giuliano",
+      "ethiopian": "Etiope",
+      "coptic": "Copto",
+      "chinese": "Cinese",
+      "soviet": "Sovietico",
+      "frc": "FRC",
+      "maya": "Maya",
+      "islamic": "Islamico",
+      "hebrew": "Ebraico",
+      "persian": "Persiano",
+      "bahai": "Baháʼí",
+      "japanese": "Giapponese",
+      "minguo": "Minguo",
+      "thaiBuddhist": "Buddista thailandese",
+      "bengali": "Bengalese",
+      "isoWeek": "Settimana ISO",
+      "discordian": "Discordiano",
+      "indianCivil": "Civile indiano",
+      "julianDay": "Giorno giuliano",
+      "modifiedJulianDay": "GJ mod."
+    },
+    "type": {
+      "solar": "Solare",
+      "lunar": "Lunare",
+      "lunisolar": "Lunisolare",
+      "mixed": "Cicli misti",
+      "continuous": "Conteggio continuo"
+    },
+    "info": {
+      "gregorian": {
+        "firstImplemented": "1582 d.C.",
+        "history": "Introdotto da papa Gregorio XIII per correggere la deriva del calendario giuliano. Gli anni bisestili saltano gli anni secolari a meno che non siano divisibili per 400. Adottato gradualmente in Europa e nelle Americhe, è oggi lo standard civile internazionale.",
+        "usedIn": [
+          "Stati Uniti",
+          "Canada",
+          "Messico",
+          "Brasile",
+          "Regno Unito",
+          "Francia",
+          "Germania",
+          "Italia",
+          "Spagna",
+          "Australia",
+          "Giappone",
+          "Cina (uso civile)",
+          "India (uso civile)",
+          "La maggior parte del mondo"
+        ]
+      },
+      "julian": {
+        "firstImplemented": "45 a.C.",
+        "history": "Riformato da Giulio Cesare dal calendario repubblicano romano. Usa una semplice regola degli anni bisestili (ogni quattro anni) e rimane il calendario liturgico di diverse chiese ortodosse orientali.",
+        "usedIn": [
+          "Russia (fino al 1918)",
+          "Chiese ortodosse orientali",
+          "Etiopia (con variazioni)",
+          "Serbia",
+          "Patriarcato di Gerusalemme",
+          "Monte Athos"
+        ]
+      },
+      "ethiopian": {
+        "firstImplemented": "ca. IV secolo d.C.",
+        "history": "Un calendario solare di tredici mesi da 30 giorni più un breve periodo epagomenale (Pagume). Condividendo la regola bisestile giuliana, è circa sette-otto anni indietro rispetto al calendario gregoriano. L'Etiopia lo usa insieme al calendario gregoriano nella vita civile e religiosa.",
+        "usedIn": [
+          "Etiopia",
+          "Comunità ortodosse eritree"
+        ]
+      },
+      "coptic": {
+        "firstImplemented": "ca. III secolo d.C.",
+        "history": "Il calendario liturgico della Chiesa ortodossa copta, strutturalmente identico al calendario etiope ma calcolato dall'era dei martiri (Anno Martyrum). Il Capodanno cade l'11 settembre nel calendario gregoriano (12 settembre in un anno bisestile prima del salto gregoriano).",
+        "usedIn": [
+          "Egitto",
+          "Chiesa ortodossa copta in tutto il mondo"
+        ]
+      },
+      "chinese": {
+        "firstImplemented": "ca. XIV secolo a.C. (leggendario); regole fisse ca. 104 a.C.",
+        "history": "Il calendario tradizionale cinese (农历) segue mesi lunari ancorati ai termini solari, con anni nominati dal ciclo sessagenario (干支) di tronchi celesti e rami terrestri. Ogni anno porta anche un animale dello zodiaco (生肖). I mesi intercalari mantengono le festività allineate alle stagioni.",
+        "usedIn": [
+          "Cina",
+          "Taiwan",
+          "Hong Kong",
+          "Macao",
+          "Singapore",
+          "Malesia",
+          "Comunità cinesi all'estero"
+        ]
+      },
+      "soviet": {
+        "firstImplemented": "1929 d.C.",
+        "history": "Introdotto durante l'industrializzazione di Stalin, questo calendario rivoluzionario sostituì le settimane di sette giorni con cicli produttivi di cinque giorni e ristrutturò l'anno in dodici mesi da 30 giorni più festività nazionali. Il calendario gregoriano rimase in parallelo per la vita quotidiana; l'esperimento fu abbandonato entro il 1940.",
+        "usedIn": [
+          "Unione Sovietica (1929–1940)"
+        ]
+      },
+      "frc": {
+        "firstImplemented": "1793 d.C.",
+        "history": "Creato durante la Rivoluzione francese per decimalizzare la misura del tempo. Gli anni iniziavano all'equinozio d'autunno; mesi e settimane furono rinominati e ristrutturati. Napoleone lo abolì nel 1806; la Comune di Parigi lo riprese brevemente nel 1871.",
+        "usedIn": [
+          "Francia (1793–1805)",
+          "Comune di Parigi (1871)"
+        ]
+      },
+      "maya": {
+        "firstImplemented": "ca. 500 a.C.",
+        "history": "I Maya classici usavano cicli interconnessi: il Tzolkʼin di 260 giorni, l'Haab di 365 giorni e il Conto Lungo che traccia i giorni da una data mitica di creazione. Questa visualizzazione usa la notazione del Conto Lungo familiare da monumenti e codici.",
+        "usedIn": [
+          "Messico",
+          "Guatemala",
+          "Belize",
+          "Honduras",
+          "El Salvador"
+        ]
+      },
+      "islamic": {
+        "firstImplemented": "622 d.C. (epoca dell'Egira)",
+        "history": "Un calendario lunare di dodici mesi per un totale di circa 354 giorni. Questa app supporta la conversione tabulare (aritmetica) e il calendario Umm al-Qura usato ufficialmente in Arabia Saudita (1300–1600 AH). Un aggiustamento opzionale di ±1 giorno può affinare le date mostrate per la pratica locale di avvistamento della luna.",
+        "usedIn": [
+          "Arabia Saudita",
+          "Egitto",
+          "Pakistan",
+          "Iran (insieme all'Hijri solare)",
+          "Turchia (per date religiose)",
+          "Indonesia",
+          "Malesia",
+          "Marocco",
+          "Emirati Arabi Uniti"
+        ]
+      },
+      "hebrew": {
+        "firstImplemented": "ca. IV secolo d.C. (regole fisse)",
+        "history": "I mesi seguono i mesi lunari, con un mese bisestile aggiunto in sette anni su diciannove per mantenere le festività allineate alle stagioni. Il calendario aritmetico fisso sostituì il calcolo basato sull'osservazione intorno all'epoca di Hillel II.",
+        "usedIn": [
+          "Israele",
+          "Comunità ebraiche in tutto il mondo"
+        ]
+      },
+      "persian": {
+        "firstImplemented": "1079 d.C. (riforma Jalali)",
+        "history": "Chiamato anche calendario Hijri solare. I mesi sono legati all'equinozio di primavera, rendendo Nowruz il Capodanno. Omar Khayyam contribuì a perfezionare la struttura degli anni bisestili; l'Iran e l'Afghanistan moderni usano versioni raffinate.",
+        "usedIn": [
+          "Iran",
+          "Afghanistan"
+        ]
+      },
+      "bahai": {
+        "firstImplemented": "1844 d.C.",
+        "history": "Il calendario Badíʿ ha diciannove mesi da diciannove giorni, con giorni intercalari (Ayyám-i-Há) prima del mese di digiuno. Naw-Rúz è fissato all'equinozio di primavera a Teheran. L'anno 1 iniziò con la dichiarazione del Báb nel 1844.",
+        "usedIn": [
+          "Comunità baháʼí in tutto il mondo"
+        ]
+      },
+      "japanese": {
+        "firstImplemented": "1873 d.C. (mesi gregoriani adottati)",
+        "history": "Il calendario civile ufficiale del Giappone abbina mesi e anni bisestili gregoriani ai nomi di era giapponesi (年号). Ogni regno inizia un nuovo anno di era contato da 1 (元年, gannen); Reiwa iniziò il 1º maggio 2019. Le date sono scritte con nome dell'era, anno, mese e giorno.",
+        "usedIn": [
+          "Giappone"
+        ]
+      },
+      "minguo": {
+        "firstImplemented": "1912 d.C. (fondazione della Repubblica di Cina)",
+        "history": "Il calendario Minguo numera gli anni dalla fondazione della Repubblica di Cina nel 1912. L'anno 1 corrisponde al 1912 d.C.; per il resto le date seguono la struttura di mese e giorno gregoriana. Rimane in uso ufficiale a Taiwan insieme all'anno occidentale.",
+        "usedIn": [
+          "Taiwan"
+        ]
+      },
+      "thaiBuddhist": {
+        "firstImplemented": "ca. I secolo a.C. (epoca BE); date BE ufficiali dal 1888 d.C.",
+        "history": "Il calendario civile thailandese segue la struttura gregoriana ma numera gli anni nell'Era buddista (BE), che è 543 anni avanti rispetto all'Era comune. È usato in documenti ufficiali, giornali e nella vita quotidiana insieme all'anno occidentale.",
+        "usedIn": [
+          "Thailandia"
+        ]
+      },
+      "bengali": {
+        "firstImplemented": "593 d.C. (tradizionale); revisione nel 1987 d.C. (Bangladesh)",
+        "history": "Il calendario bengalese è usato in Bangladesh e Bengala Occidentale. Il calendario rivisto del Bangladesh fissa il Pohela Boishakh al 14 aprile con sei mesi da 31 giorni, cinque da 30 giorni e un Choitro di lunghezza variabile. Gli anni sono contati dall'era bengalese tradizionale.",
+        "usedIn": [
+          "Bangladesh",
+          "Bengala Occidentale (India)"
+        ]
+      },
+      "indianCivil": {
+        "firstImplemented": "1957 d.C. (adozione ufficiale)",
+        "history": "Il calendario nazionale indiano (era Śaka) allinea i mesi allo zodiaco tropicale. Chaitra, il primo mese, inizia vicino all'equinozio di marzo. È usato insieme al calendario gregoriano per le gazzette governative e le trasmissioni radiofoniche.",
+        "usedIn": [
+          "India"
+        ]
+      },
+      "isoWeek": {
+        "firstImplemented": "1988 d.C. (ISO 8601)",
+        "history": "Il sistema di data settimana ISO numera le settimane da lunedì a domenica, con la settimana 1 definita come quella che contiene il 4 gennaio. È ampiamente usato nella pianificazione aziendale, nella produzione, nelle buste paga e negli standard internazionali per evitare ambiguità ai confini dell'anno.",
+        "usedIn": [
+          "Unione Europea (affari e statistiche)",
+          "Paesi nordici",
+          "Organismi di standard internazionali",
+          "Produzione e logistica in tutto il mondo"
+        ]
+      },
+      "discordian": {
+        "firstImplemented": "1963 d.C. (Principia Discordia)",
+        "history": "Un calendario parodico della Principia Discordia, allineato all'anno gregoriano. Ogni anno ha cinque stagioni da 73 giorni (Chaos, Discord, Confusion, Bureaucracy e The Aftermath) e una settimana di cinque giorni. Gli anni bisestili guadagnano il Giorno di San Tib tra Chaos 59 e 60. Gli anni sono contati in YOLD (Year of Our Lady of Discord), anno gregoriano più 1166.",
+        "usedIn": [
+          "Comunità discordiane",
+          "Cultura di Internet",
+          "Umorismo controculturale"
+        ]
+      },
+      "julianDay": {
+        "firstImplemented": "1583 d.C. (Scaliger)",
+        "history": "Non è un calendario civile ma un conteggio continuo dei giorni usato da astronomi e storici. Il giorno giuliano 0 inizia a mezzogiorno del 1º gennaio 4713 a.C. (giuliano prolettico). Evita ambiguità nel confronto di date tra sistemi di calendario.",
+        "usedIn": [
+          "Astronomia",
+          "Scienza spaziale",
+          "Ricerca storica in tutto il mondo"
+        ]
+      }
+    }
+  },
+  "holidays": {
+    "bannerAria": "Festività religiose in questa data",
+    "tradition": {
+      "christian": "Cristiano",
+      "jewish": "Ebraico",
+      "islamic": "Islamico"
+    },
+    "jewish": {
+      "roshHashanah": "Rosh Hashanah",
+      "yomKippur": "Yom Kippur",
+      "sukkot": "Sukkot",
+      "hanukkah": "Hanukkah",
+      "purim": "Purim",
+      "passover": "Pesach",
+      "shavuot": "Shavuot",
+      "tishaBAv": "Tisha B'Av"
+    },
+    "christian": {
+      "epiphany": "Epifania",
+      "christmas": "Natale",
+      "allSaintsDay": "Ognissanti",
+      "ashWednesday": "Mercoledì delle Ceneri",
+      "palmSunday": "Domenica delle Palme",
+      "goodFriday": "Venerdì Santo",
+      "easterSunday": "Pasqua",
+      "ascensionDay": "Ascensione",
+      "pentecost": "Pentecoste"
+    },
+    "islamic": {
+      "newYear": "Capodanno islamico",
+      "ashura": "Ashura",
+      "mawlid": "Mawlid al-Nabi",
+      "ramadanStart": "Inizio del Ramadan",
+      "laylatAlQadr": "Laylat al-Qadr",
+      "eidAlFitr": "Eid al-Fitr",
+      "eidAlAdha": "Eid al-Adha",
+      "ramadan": "Ramadan"
+    }
+  }
+}

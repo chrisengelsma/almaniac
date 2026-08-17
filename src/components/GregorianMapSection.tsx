@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { countryName } from '../data/countryNames';
 import type { CalendarInfo } from '../data/calendarInfo';
+import type { AppLanguage } from '../i18n/language';
 import {
   GREGORIAN_ADOPTION_EVENT_YEARS,
   getAdoptedCountryIds,
@@ -13,9 +15,12 @@ type MapTab = 'usage' | 'adoption';
 interface GregorianMapSectionProps {
   info: CalendarInfo;
   mapColors: { stroke: string; fill: string };
+  language: AppLanguage;
+  usedIn: string[];
 }
 
-export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProps) {
+export function GregorianMapSection({ info, mapColors, language, usedIn }: GregorianMapSectionProps) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<MapTab>('usage');
   const [adoptionYearIndex, setAdoptionYearIndex] = useState(0);
   const adoptionYear = GREGORIAN_ADOPTION_EVENT_YEARS[adoptionYearIndex];
@@ -30,9 +35,12 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
     [adoptionYear],
   );
 
+  const countryLabel =
+    adoptedCountries.length === 1 ? t('common.country') : t('common.countries');
+
   return (
-    <section className="info-modal__map-section" aria-label="Geographic usage">
-      <div className="info-modal__map-tabs" role="tablist" aria-label="Map views">
+    <section className="info-modal__map-section" aria-label={t('modals.calendarInfo.geoAria')}>
+      <div className="info-modal__map-tabs" role="tablist" aria-label={t('modals.calendarInfo.mapTabsAria')}>
         <button
           type="button"
           role="tab"
@@ -42,7 +50,7 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
           className={`info-modal__map-tab${activeTab === 'usage' ? ' info-modal__map-tab--active' : ''}`}
           onClick={() => setActiveTab('usage')}
         >
-          Where it is used
+          {t('modals.calendarInfo.whereUsed')}
         </button>
         <button
           type="button"
@@ -53,7 +61,7 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
           className={`info-modal__map-tab${activeTab === 'adoption' ? ' info-modal__map-tab--active' : ''}`}
           onClick={() => setActiveTab('adoption')}
         >
-          Date of adoption
+          {t('modals.calendarInfo.adoptionTab')}
         </button>
       </div>
 
@@ -69,7 +77,7 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
             fillColor={mapColors.fill}
           />
           <ul className="info-modal__countries">
-            {info.usedIn.map((place) => (
+            {usedIn.map((place) => (
               <li key={place}>{place}</li>
             ))}
           </ul>
@@ -82,7 +90,7 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
         >
           <div className="adoption-slider">
             <label className="adoption-slider__label" htmlFor="gregorian-adoption-year">
-              Reveal adoption through time
+              {t('modals.calendarInfo.gregorianSliderLabel')}
             </label>
             <div className="adoption-slider__row">
               <span className="adoption-slider__bound">{GREGORIAN_ADOPTION_EVENT_YEARS[0]}</span>
@@ -95,18 +103,20 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
                 step={1}
                 value={adoptionYearIndex}
                 onChange={(event) => setAdoptionYearIndex(Number(event.target.value))}
-                aria-valuetext={`${adoptionYear} CE`}
+                aria-valuetext={t('modals.calendarInfo.yearCe', { year: adoptionYear })}
               />
               <span className="adoption-slider__bound">
                 {GREGORIAN_ADOPTION_EVENT_YEARS[GREGORIAN_ADOPTION_EVENT_YEARS.length - 1]}
               </span>
             </div>
             <p className="adoption-slider__year" aria-live="polite">
-              <strong>{adoptionYear} CE</strong>
+              <strong>{t('modals.calendarInfo.yearCe', { year: adoptionYear })}</strong>
             </p>
             <p className="adoption-slider__summary">
-              {adoptedCountries.length} {adoptedCountries.length === 1 ? 'country' : 'countries'} using
-              the Gregorian calendar by this year
+              {t('modals.calendarInfo.gregorianAdoptionSummary', {
+                count: adoptedCountries.length,
+                countryLabel,
+              })}
             </p>
           </div>
 
@@ -117,10 +127,10 @@ export function GregorianMapSection({ info, mapColors }: GregorianMapSectionProp
           />
 
           <div className="adoption-slider__new">
-            <h4>Adopted in {adoptionYear}</h4>
+            <h4>{t('modals.calendarInfo.adoptedIn', { year: adoptionYear })}</h4>
             <ul className="info-modal__countries adoption-slider__countries">
               {newlyAdopted.map((code) => (
-                <li key={code}>{countryName(code)}</li>
+                <li key={code}>{countryName(code, language)}</li>
               ))}
             </ul>
           </div>

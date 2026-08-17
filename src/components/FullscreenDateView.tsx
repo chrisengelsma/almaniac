@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
 import type { ColorScheme, ColorTheme } from '../lib/appSettings';
 import { calendarTextClassName, calendarTextStyle } from '../lib/calendarTextStyle';
@@ -39,6 +40,7 @@ export function FullscreenDateView({
   colorTheme,
   onClose,
 }: FullscreenDateViewProps) {
+  const { t } = useTranslation();
   const { entry, backgroundColor } = row;
   const [phase, setPhase] = useState<FullscreenPhase>(() => (prefersReducedMotion() ? 'open' : 'enter'));
   const [exitRect, setExitRect] = useState(originRect);
@@ -64,6 +66,10 @@ export function FullscreenDateView({
         ? colorScheme === 'dark'
           ? '#e8dcc8'
           : '#3d2f1f'
+      : colorTheme === 'supporter'
+        ? colorScheme === 'dark'
+          ? '#e8fff9'
+          : '#263238'
         : colorScheme === 'dark'
           ? backgroundColor
           : '#263238';
@@ -76,9 +82,13 @@ export function FullscreenDateView({
         ? colorScheme === 'dark'
           ? '#3d3228'
           : backgroundColor
-        : colorScheme === 'dark'
-          ? '#263238'
-          : backgroundColor;
+        : colorTheme === 'supporter'
+          ? colorScheme === 'dark'
+            ? '#2a3050'
+            : backgroundColor
+          : colorScheme === 'dark'
+            ? '#263238'
+            : backgroundColor;
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current != null) {
@@ -267,7 +277,7 @@ export function FullscreenDateView({
       data-color-theme={colorTheme}
       role="dialog"
       aria-modal="true"
-      aria-label={`${entry.label} date fullscreen`}
+      aria-label={t('calendars.fullscreenAriaView', { label: entry.label })}
       onClick={handleTap}
     >
       <div
@@ -302,7 +312,7 @@ export function FullscreenDateView({
       </div>
       {awaitingClose && phase === 'open' ? (
         <p className="fullscreen-date__prompt" role="status">
-          Tap again to close
+          {t('calendars.tapToClose')}
         </p>
       ) : null}
     </div>

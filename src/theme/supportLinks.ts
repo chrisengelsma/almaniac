@@ -1,7 +1,46 @@
 import { Capacitor } from '@capacitor/core';
+import type { TipTier } from '../data/tipProducts';
+import { EXTERNAL_TIP_COFFEE_AMOUNTS } from '../data/tipProducts';
 
 /** Update this once your Buy Me a Coffee page is live. */
 export const DONATION_URL = 'https://buymeacoffee.com/chrisengelsma';
+
+export type DonationChannel = 'iap' | 'external';
+
+/**
+ * Resolve how optional tips should be offered on this device.
+ * Native iOS can briefly report platform "web" before Capacitor finishes booting;
+ * treat any native non-Android session as IAP so external links never flash.
+ */
+export function getDonationChannel(): DonationChannel {
+  const platform = Capacitor.getPlatform();
+
+  if (platform === 'ios') {
+    return 'iap';
+  }
+
+  if (platform === 'android') {
+    return 'external';
+  }
+
+  if (Capacitor.isNativePlatform()) {
+    return 'iap';
+  }
+
+  return 'external';
+}
+
+/** App Store guidelines require external donation links to use IAP on iOS. */
+export function isExternalDonationAllowed(): boolean {
+  return getDonationChannel() === 'external';
+}
+
+export function getExternalTipUrl(tier: TipTier): string {
+  const amount = EXTERNAL_TIP_COFFEE_AMOUNTS[tier];
+  const url = new URL(DONATION_URL);
+  url.searchParams.set('amount', String(amount));
+  return url.toString();
+}
 
 export const SITE_URL = 'https://engelsma.dev';
 
@@ -34,8 +73,8 @@ export function getReviewStoreLabel(): string {
   }
 
   if (platform === 'android') {
-    return 'on the Play Store';
+    return 'on Google Play';
   }
 
-  return 'on the Play Store';
+  return 'on the App Store';
 }

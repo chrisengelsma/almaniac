@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ColorScheme } from '../lib/appSettings';
 import { THEME_ICON_MS } from '../lib/themeTransition';
 
@@ -27,6 +28,7 @@ function IconSun() {
 }
 
 export function ThemeToggleButton({ colorScheme, onToggle }: ThemeToggleButtonProps) {
+  const { t } = useTranslation();
   const isDark = colorScheme === 'dark';
   const [phase, setPhase] = useState<'idle' | 'to-dark' | 'to-light'>('idle');
   const timeoutRef = useRef<number | null>(null);
@@ -75,7 +77,7 @@ export function ThemeToggleButton({ colorScheme, onToggle }: ThemeToggleButtonPr
       type="button"
       className={`icon-button theme-toggle ${modeClass}`}
       onClick={handleClick}
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={isDark ? t('settings.themeToggleLightAria') : t('settings.themeToggleDarkAria')}
       aria-pressed={isDark}
     >
       <span className="theme-toggle__viewport" aria-hidden="true">

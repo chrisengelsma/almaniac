@@ -1,0 +1,559 @@
+{
+  "branding": {
+    "appTitle": "Almaniac",
+    "appLogo": "almaniac",
+    "tagline": "역법 변환기"
+  },
+  "common": {
+    "close": "닫기",
+    "cancel": "취소",
+    "by": "제작",
+    "country": "국가",
+    "countries": "국가",
+    "era": {
+      "ce": "서기",
+      "bce": "기원전",
+      "ceYear": "서기 {{year}}년",
+      "bceYear": "기원전 {{year}}년"
+    }
+  },
+  "settings": {
+    "title": "맞춤 설정",
+    "selectCalendarsTitle": "역법 선택",
+    "sectionCalendars": "역법",
+    "sectionSettings": "설정",
+    "about": "정보",
+    "language": "언어",
+    "languageAria": "앱 언어",
+    "transliterateLabel": "영어로 음역",
+    "transliterateAria": "영어로 음역",
+    "colorThemeLabel": "색상 테마",
+    "colorThemeAria": "색상 테마",
+    "colorThemeOptionAria": "{{label}} 색상 테마",
+    "colorThemeDistinct": "다채로움",
+    "colorThemeMono": "단색",
+    "colorThemeSepia": "세피아",
+    "appIconLabel": "앱 아이콘",
+    "appIconAria": "앱 아이콘",
+    "appIconOptionAria": "{{label}} 앱 아이콘",
+    "appIconLight": "밝게",
+    "appIconDark": "어둡게",
+    "selectCalendarsCount": "{{total}}개 중 {{count}}개 표시",
+    "selectCalendarsToggleAria": "{{calendar}} 전환",
+    "islamicSystemLabel": "이슬람 역법 체계",
+    "islamicSystemAria": "이슬람 역법 체계",
+    "islamicSystemTabular": "표 형식(산술)",
+    "islamicSystemUmmAlQura": "움 알쿠라(사우디 공식)",
+    "islamicAdjustmentLabel": "이슬람 역법 일자 조정",
+    "islamicGroupAria": "이슬람 역법 설정",
+    "julianDayLabel": "수정 율리우스일",
+    "julianDayToggle": "수정 율리우스일 사용",
+    "julianDayGroupAria": "율리우스일 설정",
+    "closeAria": "맞춤 설정 패널 닫기",
+    "backAria": "설정으로 돌아가기",
+    "themeToggleLightAria": "밝은 모드로 전환",
+    "themeToggleDarkAria": "어두운 모드로 전환",
+    "languageSystem": "시스템 기본값",
+    "colorThemeSupporter": "서포터",
+    "appIconSupporter": "서포터",
+    "supporterLockedAria": "{{label}} (서포터 혜택)",
+    "rememberLastDateLabel": "마지막 날짜 기억",
+    "rememberLastDateAria": "마지막으로 본 날짜로 열기"
+  },
+  "topBar": {
+    "supportAria": "Almaniac 후원",
+    "jumpToDateAria": "날짜로 이동",
+    "customizeAria": "역법 및 설정 맞춤",
+    "dateNavAria": "날짜 탐색",
+    "back30Aria": "30일 뒤로",
+    "back1Aria": "1일 뒤로",
+    "todayAria": "오늘로 이동",
+    "forward1Aria": "1일 앞으로",
+    "forward30Aria": "30일 앞으로"
+  },
+  "modals": {
+    "donate": {
+      "title": "Almaniac 후원",
+      "intro": "Chris Engelsma입니다. Almaniac은 여러 변환기를 오가지 않고 역법 간 날짜를 비교할 수 있도록 만들었습니다.",
+      "free": "Almaniac은 무료이며 광고, 구독, 추적이 없습니다.",
+      "rating": "앱이 마음에 드셨다면 {{store}}에서 별 5개 평가를 남겨 주시면 큰 도움이 됩니다. 다른 사람들이 Almaniac을 찾는 데에도 도움이 됩니다.",
+      "tipJar": "감사의 표시로 선택적 팁을 남길 수도 있습니다. 팁으로 기능이 해제되지는 않습니다. Apple은 각 팁에서 15–30%를 수수료로 가져갑니다.",
+      "coffee": "감사의 표시로 커피를 사 주셔도 좋습니다. 어느 쪽이든 Almaniac을 이용해 주셔서 감사합니다.",
+      "thanks": "Almaniac을 이용해 주셔서 감사합니다.",
+      "storeAppStore": "App Store에서",
+      "storeGooglePlay": "Google Play에서",
+      "rateButton": "{{store}} 별 5개 평가",
+      "tipsAria": "선택적 팁",
+      "loadingTips": "팁 옵션 불러오는 중…",
+      "coffeeButton": "커피 사주기",
+      "notNow": "나중에",
+      "feedbackSuccess": "Almaniac을 후원해 주셔서 감사합니다!",
+      "feedbackError": "팁을 완료할 수 없습니다. 다시 시도해 주세요.",
+      "thankYouTitle": "감사합니다!",
+      "thankYouMessage": "감사의 마음을 담아 새 테마와 아이콘을 드립니다.",
+      "thankYouDismiss": "천만에요",
+      "tipSmall": "소액 팁",
+      "tipMedium": "중간 팁",
+      "tipLarge": "고액 팁",
+      "thankYouPerk": "또한 새로운 기능을 가장 먼저 이용하실 수 있습니다."
+    },
+    "about": {
+      "title": "{{appTitle}} 정보",
+      "description": "Almaniac은 그레고리력, 율리우스력, 히브리력, 이슬람력, 중국력, 마야력 등 여러 역법에서 하나의 날짜를 한꺼번에 보여 줍니다.",
+      "creditsTitle": "이미지 출처",
+      "bannerTitle": "{{calendar}} 배너",
+      "version": "버전 {{version}}",
+      "copyright": "© 2026 Chris Engelsma",
+      "derivedLicensePrefix": "파생 배너는 다음 라이선스로 공유",
+      "sourceLink": "출처",
+      "banners": {
+        "gregorian": {
+          "subjects": "교황 그레고리오 13세 | 성 베드로 대성당",
+          "aboutNote": "그레고리력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다."
+        },
+        "julian": {
+          "subjects": "율리우스 카이사르 | 콜로세움",
+          "aboutNote": "율리우스력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다. "
+        },
+        "ethiopian": {
+          "subjects": "라리벨라의 사제 | Bete Giyorgis",
+          "aboutNote": "에티오피아력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다. "
+        },
+        "coptic": {
+          "subjects": "성 비쇼이 수도원 | 성 안토니오 수도원",
+          "aboutNote": "콥트력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다. "
+        },
+        "chinese": {
+          "subjects": "황제 | 천단",
+          "aboutNote": "중국력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다."
+        },
+        "soviet": {
+          "subjects": "Joseph Stalin | 모스크바 붉은 광장",
+          "aboutNote": "소비에트 혁명력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "frc": {
+          "subjects": "Triumph of the Republic | The Panthéon",
+          "aboutNote": "프랑스 공화력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다."
+        },
+        "japanese": {
+          "subjects": "메이지 천황 | 이중교",
+          "aboutNote": "일본 연호력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다. "
+        },
+        "maya": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "이슬람력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "hebrew": {
+          "subjects": "Maimonides | 예루살렘 구시가지",
+          "aboutNote": "히브리력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다. "
+        },
+        "persian": {
+          "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
+          "aboutNote": "페르시아력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "bahai": {
+          "subjects": "Shrine of the Báb | Haifa",
+          "aboutNote": "바하이력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다."
+        },
+        "thaiBuddhist": {
+          "subjects": "King Chulalongkorn | Wat Arun",
+          "aboutNote": "태국 불력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "discordian": {
+          "subjects": "Eris | Asbury Lanes",
+          "aboutNote": "디스코르디안력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "indianCivil": {
+          "subjects": "Meghnad Saha | Jantar Mantar",
+          "aboutNote": "인도 국력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다."
+        },
+        "isoWeek": {
+          "subjects": "NBS Atomic Clock | The Earth Seen from Apollo 17",
+          "aboutNote": "ISO 주차력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다."
+        },
+        "julianDay": {
+          "subjects": "Joseph Justus Scaliger | Old Observatory, Leiden",
+          "aboutNote": "율리우스일 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "bengali": {
+          "subjects": "The Emperor Akbar | Ahsan Manzil",
+          "aboutNote": "벵골력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "minguo": {
+          "subjects": "Sun Yat-sen | Presidential Office Building",
+          "aboutNote": "민국력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        }
+      }
+    },
+    "calendarInfo": {
+      "closeBackdropAria": "역법 정보 닫기",
+      "loadingBanner": "배너 불러오는 중…",
+      "imageComingSoon": "이미지 준비 중",
+      "source": "출처",
+      "type": "유형",
+      "firstImplemented": "최초 도입",
+      "whereUsed": "사용 지역",
+      "geoAria": "지리적 사용",
+      "mapTabsAria": "지도 보기",
+      "adoptionTab": "도입 시기",
+      "timelineTab": "도입 연표",
+      "gregorianSliderLabel": "시간에 따른 도입 현황 표시",
+      "julianSliderLabel": "시간에 따른 도입 및 대체 표시",
+      "yearCe": "서기 {{year}}년",
+      "gregorianAdoptionSummary": "이 해까지 그레고리력을 사용하는 {{countryLabel}} {{count}}개",
+      "julianUsageSummary": "이 시점에 율리우스력을 사용하는 {{countryLabel}} {{count}}개",
+      "adoptedIn": "{{year}}년에 도입",
+      "julianAdoptedIn": "{{yearLabel}}에 도입",
+      "julianStoppedIn": "{{yearLabel}}에 사용 중단",
+      "mapAria": "역법 사용을 보여 주는 세계 지도"
+    }
+  },
+  "datePicker": {
+    "title": "날짜로 이동",
+    "calendarLabel": "역법",
+    "searchPlaceholder": "역법 검색…",
+    "noResults": "일치하는 역법이 없습니다.",
+    "eraAria": "연호",
+    "eraCe": "서기",
+    "eraBce": "기원전",
+    "invalidDate": "선택한 역법에 해당 날짜가 유효하지 않습니다.",
+    "cancel": "취소",
+    "apply": "이동",
+    "field": {
+      "year": "년",
+      "era": "연호",
+      "month": "월",
+      "day": "일",
+      "eraYear": "연호 연도",
+      "decade": "데카드",
+      "baktun": "박툰",
+      "katun": "카툰",
+      "tun": "툰",
+      "uinal": "우이날",
+      "kin": "킨",
+      "buddhistYear": "불력 연도",
+      "bengaliYear": "벵골력 연도",
+      "minguoYear": "민국력 연도",
+      "isoWeekYear": "ISO 주차 연도",
+      "week": "주",
+      "weekday": "요일",
+      "yoldYear": "YOLD 연도",
+      "season": "계절",
+      "julianDay": "율리우스일",
+      "modifiedJulianDay": "수정 율리우스일"
+    },
+    "hint": {
+      "gregorianYear": "기원전 100년과 같은 고대 날짜를 포함해 아무 연도나 입력하세요.",
+      "julianDay": "율리우스일 번호를 입력하세요.",
+      "modifiedJulianDay": "수정 율리우스일 번호를 입력하세요."
+    },
+    "placeholder": {
+      "year100": "예: 100",
+      "julianDay": "예: 2460000",
+      "modifiedJulianDay": "예: 60000"
+    },
+    "isoWeekWeekN": "{{week}}주차",
+    "discordianStTibsDay": "성 티브의 날",
+    "frcSansculottides": "상크울로티드",
+    "japaneseEra": "{{nameEn}} ({{nameJa}})"
+  },
+  "calendars": {
+    "listAria": "역법 변환",
+    "addHint": "메뉴에서 다른 역법 추가",
+    "copied": "클립보드에 복사됨",
+    "reorderAria": "{{label}} 순서 변경",
+    "holidayAria": "공휴일: {{names}}",
+    "copyAria": "{{label}} 날짜 복사",
+    "fullscreenAria": "{{label}} 날짜 전체 화면",
+    "aboutAria": "{{label}} 정보",
+    "fullscreenAriaView": "{{label}} 날짜 전체 화면",
+    "tapToClose": "다시 탭하여 닫기",
+    "islamicSystemUmmAlQura": "움 알쿠라",
+    "islamicSystemTabular": "표 형식",
+    "chineseZodiacYear": "{{zodiac}}띠 해, {{pinyin}}",
+    "japaneseGannen": "원년",
+    "isoWeekDateFormat": "{{year}}년 {{week}}주차 ({{padded}}), {{weekday}}",
+    "name": {
+      "gregorian": "그레고리력",
+      "julian": "율리우스력",
+      "ethiopian": "에티오피아력",
+      "coptic": "콥트력",
+      "chinese": "중국력",
+      "soviet": "소비에트 혁명력",
+      "frc": "프랑스 공화력",
+      "maya": "마야력",
+      "islamic": "이슬람력",
+      "hebrew": "히브리력",
+      "persian": "페르시아력",
+      "bahai": "바하이력",
+      "japanese": "일본 연호력",
+      "minguo": "민국력",
+      "thaiBuddhist": "태국 불력",
+      "bengali": "벵골력",
+      "isoWeek": "ISO 주차력",
+      "discordian": "디스코르디안력",
+      "indianCivil": "인도 국력",
+      "julianDay": "율리우스일"
+    },
+    "label": {
+      "gregorian": "그레고리",
+      "julian": "율리우스",
+      "ethiopian": "에티오피아",
+      "coptic": "콥트",
+      "chinese": "중국",
+      "soviet": "소비에트",
+      "frc": "FRC",
+      "maya": "마야",
+      "islamic": "이슬람",
+      "hebrew": "히브리",
+      "persian": "페르시아",
+      "bahai": "바하이",
+      "japanese": "일본",
+      "minguo": "민국",
+      "thaiBuddhist": "태국 불력",
+      "bengali": "벵골",
+      "isoWeek": "ISO 주차",
+      "discordian": "디스코르디안",
+      "indianCivil": "인도 국력",
+      "julianDay": "율리우스일",
+      "modifiedJulianDay": "수정 JD"
+    },
+    "type": {
+      "solar": "태양력",
+      "lunar": "태음력",
+      "lunisolar": "음양력",
+      "mixed": "혼합 주기",
+      "continuous": "연속 일수"
+    },
+    "info": {
+      "gregorian": {
+        "firstImplemented": "1582년",
+        "history": "율리우스력의 오차를 바로잡기 위해 교황 그레고리오 13세가 도입했습니다. 윤년은 400으로 나누어떨어지지 않는 세기년을 건너뜁니다. 유럽과 아메리카에 점진적으로 채택되어 현재 국제 민간 표준입니다.",
+        "usedIn": [
+          "미국",
+          "캐나다",
+          "멕시코",
+          "브라질",
+          "영국",
+          "프랑스",
+          "독일",
+          "이탈리아",
+          "스페인",
+          "호주",
+          "일본",
+          "중국(민간 사용)",
+          "인도(민간 사용)",
+          "전 세계 대부분"
+        ]
+      },
+      "julian": {
+        "firstImplemented": "기원전 45년",
+        "history": "율리우스 카이사르가 로마 공화정 역법에서 개혁했습니다. 단순한 윤년 규칙(4년마다)을 사용하며, 여러 동방 정교회의 전례 역법으로 남아 있습니다.",
+        "usedIn": [
+          "러시아(1918년까지)",
+          "동방 정교회",
+          "에티오피아(변형 포함)",
+          "세르비아",
+          "예루살렘 총대주교구",
+          "아토스산"
+        ]
+      },
+      "ethiopian": {
+        "firstImplemented": "약 서기 4세기",
+        "history": "13개의 30일 달과 짧은 윤일(파구메)로 이루어진 태양력입니다. 율리우스력의 윤년 규칙을 공유하며 그레고리력보다 약 7~8년 늦습니다. 에티오피아에서는 민간 및 종교 생활에서 그레고리력과 함께 사용합니다.",
+        "usedIn": [
+          "에티오피아",
+          "에리트레아 정교회 공동체"
+        ]
+      },
+      "coptic": {
+        "firstImplemented": "약 서기 3세기",
+        "history": "콥트 정교회의 전례 역법으로, 에티오피아력과 구조적으로 동일하지만 순교자 연대(Anno Martyrum)로 계산합니다. 새해는 그레고리력 9월 11일(그레고리 윤년 전에는 9월 12일)입니다.",
+        "usedIn": [
+          "이집트",
+          "전 세계 콥트 정교회"
+        ]
+      },
+      "chinese": {
+        "firstImplemented": "약 기원전 14세기(전설); 확정 규칙 약 기원전 104년",
+        "history": "전통 중국력(农历)은 절기로 음력 달을 정하고, 천간지지(干支) 육십갑자로 해를 이름 짓습니다. 각 해에는 십이지(生肖) 동물도 붙습니다. 윤달로 명절이 계절과 맞춰집니다.",
+        "usedIn": [
+          "중국",
+          "대만",
+          "홍콩",
+          "마카오",
+          "싱가포르",
+          "말레이시아",
+          "해외 화교 공동체"
+        ]
+      },
+      "soviet": {
+        "firstImplemented": "1929년",
+        "history": "스탈린의 공업화 시기에 도입되어 7일 주를 5일 생산 주기로 바꾸고, 12개월 각 30일과 국경일로 해를 재구성했습니다. 일상 생활에는 그레고리력이 병행되었으며, 1940년까지 실험이 중단되었습니다.",
+        "usedIn": [
+          "소비에트 연방(1929–1940)"
+        ]
+      },
+      "frc": {
+        "firstImplemented": "1793년",
+        "history": "프랑스 혁명기에 시간을 십진화하기 위해 만들어졌습니다. 해는 추분에 시작하고, 달과 주가 개명·재구성되었습니다. 나폴레옹이 1806년에 폐지했고, 파리 코뮌이 1871년에 잠시 부활시켰습니다.",
+        "usedIn": [
+          "프랑스(1793–1805)",
+          "파리 코뮌(1871)"
+        ]
+      },
+      "maya": {
+        "firstImplemented": "약 기원전 500년",
+        "history": "고전기 마야는 260일 촐킨, 365일 해브, 신화적 창세일부터 날을 세는 장기력을 함께 썼습니다. 이 표시는 비석과 사본에서 익숙한 장기력 표기를 사용합니다.",
+        "usedIn": [
+          "멕시코",
+          "과테말라",
+          "벨리즈",
+          "온두라스",
+          "엘살바도르"
+        ]
+      },
+      "islamic": {
+        "firstImplemented": "622년(히즈라 원년)",
+        "history": "12개월로 약 354일인 태음력입니다. 이 앱은 표 형식(산술) 변환과 사우디아라비아에서 공식 사용하는 움 알쿠라력(1300–1600 AH)을 지원합니다. 선택적 ±1일 조정으로 지역의 달 관측 관습에 맞게 표시를 미세 조정할 수 있습니다.",
+        "usedIn": [
+          "사우디아라비아",
+          "이집트",
+          "파키스탄",
+          "이란(태양 히즈라와 병행)",
+          "터키(종교 날짜)",
+          "인도네시아",
+          "말레이시아",
+          "모로코",
+          "아랍에미리트"
+        ]
+      },
+      "hebrew": {
+        "firstImplemented": "약 서기 4세기(확정 규칙)",
+        "history": "달은 태음월을 따르며, 19년마다 7번 윤달을 넣어 명절이 계절과 맞춰집니다. 고정 산술 역법은 힐렐 2세 무렵 관측 기반 역법을 대체했습니다.",
+        "usedIn": [
+          "이스라엘",
+          "전 세계 유대인 공동체"
+        ]
+      },
+      "persian": {
+        "firstImplemented": "1079년(잘랄리 개혁)",
+        "history": "태양 히즈라력이라고도 합니다. 달은 춘분에 맞추어 노루즈가 새해입니다. 오마르 하이얌이 윤년 구조를 다듬었고, 현대 이란과 아프가니스탄은 개선된 버전을 사용합니다.",
+        "usedIn": [
+          "이란",
+          "아프가니스탄"
+        ]
+      },
+      "bahai": {
+        "firstImplemented": "1844년",
+        "history": "바디력은 19일씩 19개월이며, 금식 달 앞에 윤일(Ayyám-i-Há)이 있습니다. 나우루즈는 테헤란의 춘분에 고정됩니다. 1년은 1844년 바브의 선포로 시작했습니다.",
+        "usedIn": [
+          "전 세계 바하이 공동체"
+        ]
+      },
+      "japanese": {
+        "firstImplemented": "1873년(그레고리 월 채택)",
+        "history": "일본 공식 민간 역법은 그레고리력의 달과 윤년에 일본 연호(年号)를 더합니다. 각 재위마다 새 연호가 시작되어 1년(元年, gannen)부터 셉니다. 레이와는 2019년 5월 1일에 시작했습니다. 날짜는 연호, 연, 월, 일로 씁니다.",
+        "usedIn": [
+          "일본"
+        ]
+      },
+      "minguo": {
+        "firstImplemented": "1912년(중화민국 수립)",
+        "history": "민국력은 1912년 중화민국 수립을 기준으로 연도를 셉니다. 1년은 서기 1912년에 해당하며, 나머지는 그레고리력의 월·일 구조를 따릅니다. 대만에서 서기 연도와 함께 공식 사용됩니다.",
+        "usedIn": [
+          "대만"
+        ]
+      },
+      "thaiBuddhist": {
+        "firstImplemented": "약 기원전 1세기(BE 원년); 공식 BE 날짜 1888년부터",
+        "history": "태국 민간 역법은 그레고리 구조를 따르지만, 서기보다 543년 앞선 불력(BE)으로 연도를 셉니다. 공문서, 신문, 일상에서 서기 연도와 함께 사용됩니다.",
+        "usedIn": [
+          "태국"
+        ]
+      },
+      "bengali": {
+        "firstImplemented": "593년(전통); 1987년 개정(방글라데시)",
+        "history": "벵골력은 방글라데시와 서벵골에서 사용됩니다. 방글라데시 개정력은 포헬라 보이샤크를 4월 14일로 고정하고, 31일 달 6개, 30일 달 5개, 가변 길이 초이트로로 구성됩니다. 연도는 전통 벵골 연대에서 셉니다.",
+        "usedIn": [
+          "방글라데시",
+          "서벵골(인도)"
+        ]
+      },
+      "indianCivil": {
+        "firstImplemented": "1957년(공식 채택)",
+        "history": "인도 국력(샤카 연대)은 달을 열대 황도대에 맞춥니다. 첫 달 차이트라는 3월 춘분 근처에 시작합니다. 정부 관보와 라디오 방송에서 그레고리력과 함께 사용됩니다.",
+        "usedIn": [
+          "인도"
+        ]
+      },
+      "isoWeek": {
+        "firstImplemented": "1988년(ISO 8601)",
+        "history": "ISO 주차력은 월요일부터 일요일까지 주를 번호 매기며, 1주는 1월 4일을 포함하는 주로 정의합니다. 사업 계획, 제조, 급여, 국제 표준에서 널리 쓰여 연말 경계의 모호함을 피합니다.",
+        "usedIn": [
+          "유럽 연합(사업 및 통계)",
+          "북유럽 국가",
+          "국제 표준 기구",
+          "전 세계 제조 및 물류"
+        ]
+      },
+      "discordian": {
+        "firstImplemented": "1963년(Principia Discordia)",
+        "history": "Principia Discordia에서 나온 패러디 종교 역법으로, 그레고리 연도에 맞춥니다. 매해 73일 계절 5개(Chaos, Discord, Confusion, Bureaucracy, The Aftermath)와 5일 주가 있습니다. 윤년에는 Chaos 59와 60 사이에 성 티브의 날이 추가됩니다. 연도는 YOLD(Year of Our Lady of Discord), 그레고리 연도 + 1166로 셉니다.",
+        "usedIn": [
+          "디스코르디안 공동체",
+          "인터넷 문화",
+          "대안 문화 유머"
+        ]
+      },
+      "julianDay": {
+        "firstImplemented": "1583년(스칼리거)",
+        "history": "민간 역법이 아니라 천문학자와 역사학자가 쓰는 연속 일수입니다. 율리우스일 0은 기원전 4713년 1월 1일 정오(선취 율리우스력)부터 시작합니다. 역법 간 날짜 비교의 모호함을 피합니다.",
+        "usedIn": [
+          "천문학",
+          "우주 과학",
+          "전 세계 역사 연구"
+        ]
+      }
+    }
+  },
+  "holidays": {
+    "bannerAria": "이 날짜의 종교 공휴일",
+    "tradition": {
+      "christian": "기독교",
+      "jewish": "유대교",
+      "islamic": "이슬람"
+    },
+    "jewish": {
+      "roshHashanah": "로시하샤나",
+      "yomKippur": "욤 키푸르",
+      "sukkot": "수콧",
+      "hanukkah": "하누카",
+      "purim": "푸림",
+      "passover": "유월절",
+      "shavuot": "샤부오트",
+      "tishaBAv": "티샤 바브"
+    },
+    "christian": {
+      "epiphany": "주현절",
+      "christmas": "성탄절",
+      "allSaintsDay": "모든 성인의 날",
+      "ashWednesday": "재의 수요일",
+      "palmSunday": "종려주일",
+      "goodFriday": "성금요일",
+      "easterSunday": "부활절",
+      "ascensionDay": "승천일",
+      "pentecost": "성령강림절"
+    },
+    "islamic": {
+      "newYear": "이슬람 새해",
+      "ashura": "아슈라",
+      "mawlid": "마울리드 알나비",
+      "ramadanStart": "라마단 시작",
+      "laylatAlQadr": "라일라툴 카드르",
+      "eidAlFitr": "이드 알피트르",
+      "eidAlAdha": "이드 알아드하",
+      "ramadan": "라마단"
+    }
+  }
+}

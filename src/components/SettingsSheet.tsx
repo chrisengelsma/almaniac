@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { CALENDAR_NAMES } from '../theme/calendarTheme';
+import { useTranslation } from 'react-i18next';
+import { APP_LANGUAGES, LANGUAGE_LABELS, type AppLanguagePreference } from '../i18n/language';
 import {
   DEFAULT_CALENDAR_ORDER,
   type CalendarId,
@@ -7,14 +8,17 @@ import {
 import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, ColorTheme, AppIconChoice } from '../lib/appSettings';
 import appIconLight from '../assets/app-icon-light.png';
 import appIconDark from '../assets/app-icon-dark.png';
+import appIconSupporter from '../assets/app-icon-teal.png';
 import { COLOR_THEME_SWATCHES } from '../theme/calendarColors';
+import { isSupporterAppIcon, isSupporterColorTheme } from '../lib/supporterPerks';
 import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 import { SheetSlider, SheetToggle } from './DrawerControls';
 
-const COLOR_THEME_OPTIONS: Array<{ id: ColorTheme; label: string }> = [
-  { id: 'distinct', label: 'Distinct' },
-  { id: 'mono', label: 'Mono' },
-  { id: 'sepia', label: 'Sepia' },
+const COLOR_THEME_OPTIONS: Array<{ id: ColorTheme; labelKey: string }> = [
+  { id: 'distinct', labelKey: 'settings.colorThemeDistinct' },
+  { id: 'mono', labelKey: 'settings.colorThemeMono' },
+  { id: 'sepia', labelKey: 'settings.colorThemeSepia' },
+  { id: 'supporter', labelKey: 'settings.colorThemeSupporter' },
 ];
 
 const DISMISS_THRESHOLD_PX = 80;
@@ -32,7 +36,10 @@ interface SettingsSheetProps {
   onIslamicCalendarModeChange: (value: IslamicCalendarMode) => void;
   onIslamicAdjustmentChange: (value: IslamicDayAdjustment) => void;
   onUseModifiedJulianDayChange: (value: boolean) => void;
+  onRememberLastOpenedDateChange: (value: boolean) => void;
   onAppIconChange: (value: AppIconChoice) => void;
+  onRequestSupporterUnlock: () => void;
+  onAppLanguageChange: (value: AppLanguagePreference) => void;
   onAboutOpen: () => void;
 }
 
@@ -60,35 +67,67 @@ function IconChevronDown() {
   );
 }
 
-const APP_ICON_OPTIONS: Array<{ id: AppIconChoice; label: string; preview: string }> = [
-  { id: 'light', label: 'Light', preview: appIconLight },
-  { id: 'dark', label: 'Dark', preview: appIconDark },
+const APP_ICON_OPTIONS: Array<{ id: AppIconChoice; labelKey: string; preview: string }> = [
+  { id: 'light', labelKey: 'settings.appIconLight', preview: appIconLight },
+  { id: 'dark', labelKey: 'settings.appIconDark', preview: appIconDark },
+  { id: 'supporter', labelKey: 'settings.appIconSupporter', preview: appIconSupporter },
 ];
 
-interface AppIconPickerProps {
-  value: AppIconChoice;
-  onChange: (value: AppIconChoice) => void;
+function IconLock() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 10V8a5 5 0 0 1 10 0v2M6 10h12v10H6V10Z" />
+    </svg>
+  );
 }
 
 interface ColorThemePickerProps {
   value: ColorTheme;
+  supporterUnlocked: boolean;
   onChange: (value: ColorTheme) => void;
+  onRequestSupporterUnlock: () => void;
 }
 
-function ColorThemePicker({ value, onChange }: ColorThemePickerProps) {
+function ColorThemePicker({
+  value,
+  supporterUnlocked,
+  onChange,
+  onRequestSupporterUnlock,
+}: ColorThemePickerProps) {
+  const { t } = useTranslation();
+
   return (
-    <div className="settings-sheet__theme-grid" role="radiogroup" aria-label="Color theme">
+    <div className="settings-sheet__theme-grid" role="radiogroup" aria-label={t('settings.colorThemeAria')}>
       {COLOR_THEME_OPTIONS.map((option) => {
         const selected = value === option.id;
+        const locked = !supporterUnlocked && isSupporterColorTheme(option.id);
+        const label = t(option.labelKey);
         return (
           <button
             key={option.id}
             type="button"
-            className={`settings-sheet__theme-option${selected ? ' settings-sheet__theme-option--selected' : ''}`}
-            onClick={() => onChange(option.id)}
+            className={[
+              'settings-sheet__theme-option',
+              selected ? 'settings-sheet__theme-option--selected' : '',
+              locked ? 'settings-sheet__theme-option--locked' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            onClick={() => {
+              if (locked) {
+                onRequestSupporterUnlock();
+                return;
+              }
+              onChange(option.id);
+            }}
             role="radio"
             aria-checked={selected}
-            aria-label={`${option.label} color theme`}
+            aria-disabled={locked}
+            aria-label={
+              locked
+                ? t('settings.supporterLockedAria', { label })
+                : t('settings.colorThemeOptionAria', { label })
+            }
           >
             <span className="settings-sheet__theme-swatches" aria-hidden="true">
               {COLOR_THEME_SWATCHES[option.id].map((color, index) => (
@@ -99,7 +138,14 @@ function ColorThemePicker({ value, onChange }: ColorThemePickerProps) {
                 />
               ))}
             </span>
-            <span className="settings-sheet__theme-label">{option.label}</span>
+            <span className="settings-sheet__theme-label">
+              {label}
+              {locked ? (
+                <span className="settings-sheet__lock-badge" aria-hidden="true">
+                  <IconLock />
+                </span>
+              ) : null}
+            </span>
           </button>
         );
       })}
@@ -107,25 +153,61 @@ function ColorThemePicker({ value, onChange }: ColorThemePickerProps) {
   );
 }
 
-function AppIconPicker({ value, onChange }: AppIconPickerProps) {
+interface AppIconPickerProps {
+  value: AppIconChoice;
+  supporterUnlocked: boolean;
+  onChange: (value: AppIconChoice) => void;
+  onRequestSupporterUnlock: () => void;
+}
+
+function AppIconPicker({
+  value,
+  supporterUnlocked,
+  onChange,
+  onRequestSupporterUnlock,
+}: AppIconPickerProps) {
+  const { t } = useTranslation();
+
   return (
-    <div className="settings-sheet__icon-grid" role="radiogroup" aria-label="App icon">
+    <div className="settings-sheet__icon-grid" role="radiogroup" aria-label={t('settings.appIconAria')}>
       {APP_ICON_OPTIONS.map((option) => {
         const selected = value === option.id;
+        const locked = !supporterUnlocked && isSupporterAppIcon(option.id);
+        const label = t(option.labelKey);
         return (
           <button
             key={option.id}
             type="button"
-            className={`settings-sheet__icon-option${selected ? ' settings-sheet__icon-option--selected' : ''}`}
-            onClick={() => onChange(option.id)}
+            className={[
+              'settings-sheet__icon-option',
+              selected ? 'settings-sheet__icon-option--selected' : '',
+              locked ? 'settings-sheet__icon-option--locked' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            onClick={() => {
+              if (locked) {
+                onRequestSupporterUnlock();
+                return;
+              }
+              onChange(option.id);
+            }}
             role="radio"
             aria-checked={selected}
-            aria-label={`${option.label} app icon`}
+            aria-disabled={locked}
+            aria-label={
+              locked ? t('settings.supporterLockedAria', { label }) : t('settings.appIconOptionAria', { label })
+            }
           >
             <span className="settings-sheet__icon-frame">
               <img src={option.preview} alt="" className="settings-sheet__icon-preview" />
+              {locked ? (
+                <span className="settings-sheet__icon-lock" aria-hidden="true">
+                  <IconLock />
+                </span>
+              ) : null}
             </span>
-            <span className="settings-sheet__icon-label">{option.label}</span>
+            <span className="settings-sheet__icon-label">{label}</span>
           </button>
         );
       })}
@@ -135,12 +217,16 @@ function AppIconPicker({ value, onChange }: AppIconPickerProps) {
 
 function AppIconExpander({
   value,
+  supporterUnlocked,
   onChange,
+  onRequestSupporterUnlock,
   sheetOpen,
 }: AppIconPickerProps & { sheetOpen: boolean }) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const selectedOption =
     APP_ICON_OPTIONS.find((option) => option.id === value) ?? APP_ICON_OPTIONS[0];
+  const selectedLabel = t(selectedOption.labelKey);
 
   useEffect(() => {
     if (!sheetOpen) {
@@ -157,7 +243,7 @@ function AppIconExpander({
         aria-controls="settings-app-icon-panel"
         onClick={() => setExpanded((current) => !current)}
       >
-        <span>App icon</span>
+        <span>{t('settings.appIconLabel')}</span>
         <span className="settings-sheet__expander-summary">
           <span className="settings-sheet__icon-frame settings-sheet__icon-frame--summary">
             <img
@@ -166,7 +252,7 @@ function AppIconExpander({
               className="settings-sheet__icon-preview settings-sheet__icon-preview--summary"
             />
           </span>
-          <span className="settings-sheet__expander-value">{selectedOption.label}</span>
+          <span className="settings-sheet__expander-value">{selectedLabel}</span>
           <span
             className={`settings-sheet__expander-chevron${expanded ? ' settings-sheet__expander-chevron--open' : ''}`}
             aria-hidden="true"
@@ -182,10 +268,12 @@ function AppIconExpander({
         >
           <AppIconPicker
             value={value}
+            supporterUnlocked={supporterUnlocked}
             onChange={(nextValue) => {
               onChange(nextValue);
               setExpanded(false);
             }}
+            onRequestSupporterUnlock={onRequestSupporterUnlock}
           />
         </div>
       ) : null}
@@ -204,24 +292,26 @@ function IslamicCalendarOptions({
   onIslamicCalendarModeChange,
   onIslamicAdjustmentChange,
 }: IslamicCalendarOptionsProps) {
+  const { t } = useTranslation();
+
   return (
-    <div className="settings-sheet__calendar-options" role="group" aria-label="Islamic calendar settings">
+    <div className="settings-sheet__calendar-options" role="group" aria-label={t('settings.islamicGroupAria')}>
       <div className="settings-sheet__item settings-sheet__item--stacked">
-        <span>Islamic Calendar System</span>
+        <span>{t('settings.islamicSystemLabel')}</span>
         <select
           className="settings-sheet__select"
           value={settings.islamicCalendarMode}
           onChange={(event) =>
             onIslamicCalendarModeChange(event.target.value as IslamicCalendarMode)
           }
-          aria-label="Islamic calendar system"
+          aria-label={t('settings.islamicSystemAria')}
         >
-          <option value="tabular">Tabular (arithmetic)</option>
-          <option value="ummAlQura">Umm al-Qura (Saudi official)</option>
+          <option value="tabular">{t('settings.islamicSystemTabular')}</option>
+          <option value="ummAlQura">{t('settings.islamicSystemUmmAlQura')}</option>
         </select>
       </div>
       <div className="settings-sheet__item settings-sheet__item--stacked">
-        <span>Islamic Calendar Day Adjustment</span>
+        <span>{t('settings.islamicAdjustmentLabel')}</span>
         <SheetSlider
           min={-1}
           max={1}
@@ -242,13 +332,15 @@ function JulianDayOptions({
   settings,
   onUseModifiedJulianDayChange,
 }: JulianDayOptionsProps) {
+  const { t } = useTranslation();
+
   return (
-    <div className="settings-sheet__calendar-options" role="group" aria-label="Julian Day settings">
+    <div className="settings-sheet__calendar-options" role="group" aria-label={t('settings.julianDayGroupAria')}>
       <div className="settings-sheet__item settings-sheet__item--stacked">
-        <span>Modified Julian Day</span>
+        <span>{t('settings.julianDayLabel')}</span>
         <SheetToggle
           checked={settings.useModifiedJulianDay}
-          label="Use Modified Julian Day"
+          label={t('settings.julianDayToggle')}
           onChange={() => onUseModifiedJulianDayChange(!settings.useModifiedJulianDay)}
         />
       </div>
@@ -266,9 +358,13 @@ export function SettingsSheet({
   onIslamicCalendarModeChange,
   onIslamicAdjustmentChange,
   onUseModifiedJulianDayChange,
+  onRememberLastOpenedDateChange,
   onAppIconChange,
+  onRequestSupporterUnlock,
+  onAppLanguageChange,
   onAboutOpen,
 }: SettingsSheetProps) {
+  const { t } = useTranslation();
   const sheetRef = useRef<HTMLElement>(null);
   const dragStartY = useRef<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
@@ -356,23 +452,24 @@ export function SettingsSheet({
 
   return (
     <>
-      <button
-        type="button"
-        className={`sheet-backdrop${open ? ' sheet-backdrop--open' : ''}`}
-        onClick={onClose}
-        aria-label="Close customize panel"
-        tabIndex={open ? 0 : -1}
-      />
-      <aside
-        ref={sheetRef}
-        className={`settings-sheet${open ? ' settings-sheet--open' : ''}`}
-        style={sheetStyle}
-        aria-hidden={!open}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="settings-sheet-title"
-        tabIndex={-1}
-      >
+      {open ? (
+        <>
+          <button
+            type="button"
+            className="sheet-backdrop sheet-backdrop--open"
+            onClick={onClose}
+            aria-label={t('settings.closeAria')}
+          />
+          <aside
+            ref={sheetRef}
+            className="settings-sheet settings-sheet--open"
+            style={sheetStyle}
+            aria-hidden={false}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="settings-sheet-title"
+            tabIndex={-1}
+          >
         <div className="settings-sheet__header">
           <div
             className="settings-sheet__handle"
@@ -388,7 +485,7 @@ export function SettingsSheet({
                 type="button"
                 className="settings-sheet__back"
                 onClick={() => setPanel('main')}
-                aria-label="Back to settings"
+                aria-label={t('settings.backAria')}
               >
                 <IconChevronLeft />
               </button>
@@ -396,7 +493,7 @@ export function SettingsSheet({
               <span className="settings-sheet__header-spacer" aria-hidden="true" />
             )}
             <h2 id="settings-sheet-title" className="settings-sheet__title">
-              {panel === 'calendars' ? 'Select Calendars' : 'Customize'}
+              {panel === 'calendars' ? t('settings.selectCalendarsTitle') : t('settings.title')}
             </h2>
             <span className="settings-sheet__header-spacer" aria-hidden="true" />
           </div>
@@ -406,7 +503,7 @@ export function SettingsSheet({
           {panel === 'main' ? (
             <>
               <section className="settings-sheet__section">
-                <h3>Calendars</h3>
+                <h3>{t('settings.sectionCalendars')}</h3>
                 <ul className="settings-sheet__list">
                   <li>
                     <button
@@ -415,9 +512,12 @@ export function SettingsSheet({
                       onClick={() => setPanel('calendars')}
                     >
                       <span className="settings-sheet__nav-copy">
-                        <span className="settings-sheet__nav-label">Select Calendars</span>
+                        <span className="settings-sheet__nav-label">{t('settings.selectCalendarsTitle')}</span>
                         <span className="settings-sheet__nav-detail">
-                          {visibleCalendarCount} of {DEFAULT_CALENDAR_ORDER.length} shown
+                          {t('settings.selectCalendarsCount', {
+                            count: visibleCalendarCount,
+                            total: DEFAULT_CALENDAR_ORDER.length,
+                          })}
                         </span>
                       </span>
                       <IconChevronRight />
@@ -427,23 +527,58 @@ export function SettingsSheet({
               </section>
 
               <section className="settings-sheet__section">
-                <h3>Settings</h3>
+                <h3>{t('settings.sectionSettings')}</h3>
                 <ul className="settings-sheet__list">
+                  <li className="settings-sheet__item settings-sheet__item--stacked">
+                    <span>{t('settings.language')}</span>
+                    <select
+                      className="settings-sheet__select"
+                      value={settings.appLanguagePreference}
+                      onChange={(event) =>
+                        onAppLanguageChange(event.target.value as AppLanguagePreference)
+                      }
+                      aria-label={t('settings.languageAria')}
+                    >
+                      <option value="system">{t('settings.languageSystem')}</option>
+                      {APP_LANGUAGES.map((language) => (
+                        <option key={language} value={language}>
+                          {LANGUAGE_LABELS[language]}
+                        </option>
+                      ))}
+                    </select>
+                  </li>
                   <li className="settings-sheet__item">
-                    <span>Transliterate To English</span>
+                    <span>{t('settings.transliterateLabel')}</span>
                     <SheetToggle
                       checked={settings.transliterateToEnglish}
-                      label="Transliterate to English"
+                      label={t('settings.transliterateAria')}
                       onChange={() => onTransliterateChange(!settings.transliterateToEnglish)}
                     />
                   </li>
+                  <li className="settings-sheet__item">
+                    <span>{t('settings.rememberLastDateLabel')}</span>
+                    <SheetToggle
+                      checked={settings.rememberLastOpenedDate}
+                      label={t('settings.rememberLastDateAria')}
+                      onChange={() =>
+                        onRememberLastOpenedDateChange(!settings.rememberLastOpenedDate)
+                      }
+                    />
+                  </li>
                   <li className="settings-sheet__item settings-sheet__item--stacked">
-                    <span>Color theme</span>
-                    <ColorThemePicker value={settings.colorTheme} onChange={onColorThemeChange} />
+                    <span>{t('settings.colorThemeLabel')}</span>
+                    <ColorThemePicker
+                      value={settings.colorTheme}
+                      supporterUnlocked={settings.supporterUnlocked}
+                      onChange={onColorThemeChange}
+                      onRequestSupporterUnlock={onRequestSupporterUnlock}
+                    />
                   </li>
                   <AppIconExpander
                     value={settings.appIcon}
+                    supporterUnlocked={settings.supporterUnlocked}
                     onChange={onAppIconChange}
+                    onRequestSupporterUnlock={onRequestSupporterUnlock}
                     sheetOpen={open}
                   />
                 </ul>
@@ -461,7 +596,7 @@ export function SettingsSheet({
                       }}
                     >
                       <span className="settings-sheet__nav-copy">
-                        <span className="settings-sheet__nav-label">About</span>
+                        <span className="settings-sheet__nav-label">{t('settings.about')}</span>
                       </span>
                       <IconChevronRight />
                     </button>
@@ -475,10 +610,10 @@ export function SettingsSheet({
                 {DEFAULT_CALENDAR_ORDER.map((id) => (
                   <li key={id} className="settings-sheet__calendar-group">
                     <div className="settings-sheet__item">
-                      <span>{CALENDAR_NAMES[id]}</span>
+                      <span>{t(`calendars.name.${id}`)}</span>
                       <SheetToggle
                         checked={settings.visibleCalendars[id]}
-                        label={`Toggle ${CALENDAR_NAMES[id]}`}
+                        label={t('settings.selectCalendarsToggleAria', { calendar: t(`calendars.name.${id}`) })}
                         onChange={() => onToggleCalendar(id)}
                       />
                     </div>
@@ -501,7 +636,9 @@ export function SettingsSheet({
             </section>
           )}
         </div>
-      </aside>
+          </aside>
+        </>
+      ) : null}
     </>
   );
 }

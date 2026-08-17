@@ -16,7 +16,7 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SystemBars: {
-      // Parent-padding inset mode fights with position:fixed in the WebView layer.
+      // Avoid WebView-parent padding on API 35+; it skews touch coords on tablets.
       insetsHandling: 'disable',
     },
   },

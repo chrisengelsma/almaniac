@@ -1,4 +1,4 @@
-import type { AppSettings, ColorScheme, ColorTheme } from './appSettings';
+import { getResolvedAppLanguage, type AppSettings, type ColorScheme, type ColorTheme } from './appSettings';
 import {
   DEFAULT_CALENDAR_ORDER,
   getAllCalendarEntries,
@@ -12,6 +12,8 @@ import {
   getWidgetTextColor,
 } from '../theme/calendarColors';
 import { WidgetBridge } from '../plugins/widgetBridge';
+import i18n from '../i18n';
+import { createCalendarCopy } from '../i18n/calendarCopy';
 
 export interface WidgetThemeColors {
   backgroundColor: string;
@@ -39,7 +41,7 @@ export interface WidgetSnapshot {
   calendars: Record<CalendarId, WidgetCalendarSnapshot>;
 }
 
-const COLOR_THEMES: ColorTheme[] = ['distinct', 'mono', 'sepia'];
+const COLOR_THEMES: ColorTheme[] = ['distinct', 'mono', 'sepia', 'supporter'];
 const COLOR_SCHEMES: ColorScheme[] = ['light', 'dark'];
 
 function formatGregorianDate(anchor: GregorianCalendar): string {
@@ -58,7 +60,14 @@ function buildThemeVariants(
       const variants = COLOR_SCHEMES.reduce(
         (acc, colorScheme) => {
           const context = calendarColorContext({ ...settings, colorTheme, colorScheme });
-          const backgroundColor = getCalendarColor(id, context);
+          const orderIndex = DEFAULT_CALENDAR_ORDER.indexOf(id);
+          const backgroundColor = getCalendarColor(
+            id,
+            context,
+            colorTheme === 'supporter'
+              ? { index: orderIndex, total: DEFAULT_CALENDAR_ORDER.length }
+              : undefined,
+          );
           acc[colorScheme] = {
             backgroundColor,
             textColor: getWidgetTextColor(backgroundColor, context),
@@ -79,14 +88,15 @@ export function buildWidgetSnapshot(
   anchor: GregorianCalendar,
   settings: AppSettings,
 ): WidgetSnapshot {
+  const copy = createCalendarCopy(i18n.getFixedT(getResolvedAppLanguage(settings)));
   const nativeEntries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, {
     ...settings,
     transliterateToEnglish: false,
-  });
+  }, copy);
   const transliteratedEntries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, {
     ...settings,
     transliterateToEnglish: true,
-  });
+  }, copy);
   const transliteratedById = new Map(
     transliteratedEntries.map((entry) => [entry.id, entry.date] as const),
   );

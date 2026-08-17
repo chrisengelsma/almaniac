@@ -10,7 +10,10 @@ public class AppIconPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "getIcon", returnType: CAPPluginReturnPromise)
     ]
 
-    private let darkIconName = "AppIcon-Dark"
+    private let iconNames: [String: String] = [
+        "dark": "AppIcon-Dark",
+        "supporter": "AppIcon-Teal"
+    ]
 
     @objc func setIcon(_ call: CAPPluginCall) {
         guard UIApplication.shared.supportsAlternateIcons else {
@@ -19,8 +22,8 @@ public class AppIconPlugin: CAPPlugin, CAPBridgedPlugin {
         }
 
         let requested = call.getString("icon") ?? "light"
-        let targetName: String? = requested == "dark" ? darkIconName : nil
-        let resolvedIcon = requested == "dark" ? "dark" : "light"
+        let targetName: String? = iconNames[requested]
+        let resolvedIcon = requested == "light" ? "light" : requested
 
         if UIApplication.shared.alternateIconName == targetName {
             call.resolve(["icon": resolvedIcon])
@@ -41,7 +44,17 @@ public class AppIconPlugin: CAPPlugin, CAPBridgedPlugin {
 
     @objc func getIcon(_ call: CAPPluginCall) {
         let current = UIApplication.shared.alternateIconName
-        let icon = current == darkIconName ? "dark" : "light"
-        call.resolve(["icon": icon])
+
+        if current == iconNames["dark"] {
+            call.resolve(["icon": "dark"])
+            return
+        }
+
+        if current == iconNames["supporter"] {
+            call.resolve(["icon": "supporter"])
+            return
+        }
+
+        call.resolve(["icon": "light"])
     }
 }

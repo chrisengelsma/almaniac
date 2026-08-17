@@ -20,4 +20,4 @@ Tap any calendar for its history, solar/lunar type, and an interactive map of wh
 BUILT FOR PRIVACY
 No ads. No accounts. No tracking. Works fully offline.
 
-Also includes Islamic calendar day adjustment, drag-to-reorder rows, copy-to-clipboard, and home screen widgets on iOS and Android.
+Also includes Islamic calendar day adjustment, drag-to-reorder rows, copy-to-clipboard, and home screen widgets.

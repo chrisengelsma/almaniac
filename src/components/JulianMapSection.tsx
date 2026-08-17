@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { countryName } from '../data/countryNames';
 import type { CalendarInfo } from '../data/calendarInfo';
+import type { AppLanguage } from '../i18n/language';
 import {
   JULIAN_TIMELINE_EVENT_YEARS,
   getJulianStartsInYear,
@@ -15,9 +17,19 @@ type MapTab = 'usage' | 'timeline';
 interface JulianMapSectionProps {
   info: CalendarInfo;
   mapColors: { stroke: string; fill: string };
+  language: AppLanguage;
+  usedIn: string[];
 }
 
-function TimelineEventList({ title, codes }: { title: string; codes: string[] }) {
+function TimelineEventList({
+  title,
+  codes,
+  language,
+}: {
+  title: string;
+  codes: string[];
+  language: AppLanguage;
+}) {
   if (codes.length === 0) {
     return null;
   }
@@ -27,14 +39,15 @@ function TimelineEventList({ title, codes }: { title: string; codes: string[] })
       <h4>{title}</h4>
       <ul className="info-modal__countries adoption-slider__countries">
         {codes.map((code) => (
-          <li key={code}>{countryName(code)}</li>
+          <li key={code}>{countryName(code, language)}</li>
         ))}
       </ul>
     </div>
   );
 }
 
-export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
+export function JulianMapSection({ info, mapColors, language, usedIn }: JulianMapSectionProps) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<MapTab>('usage');
   const [timelineYearIndex, setTimelineYearIndex] = useState(0);
   const timelineYear = JULIAN_TIMELINE_EVENT_YEARS[timelineYearIndex];
@@ -55,10 +68,12 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
   );
 
   const yearLabel = formatHistoricalYear(timelineYear);
+  const countryLabel =
+    activeCountries.length === 1 ? t('common.country') : t('common.countries');
 
   return (
-    <section className="info-modal__map-section" aria-label="Geographic usage">
-      <div className="info-modal__map-tabs" role="tablist" aria-label="Map views">
+    <section className="info-modal__map-section" aria-label={t('modals.calendarInfo.geoAria')}>
+      <div className="info-modal__map-tabs" role="tablist" aria-label={t('modals.calendarInfo.mapTabsAria')}>
         <button
           type="button"
           role="tab"
@@ -68,7 +83,7 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
           className={`info-modal__map-tab${activeTab === 'usage' ? ' info-modal__map-tab--active' : ''}`}
           onClick={() => setActiveTab('usage')}
         >
-          Where it is used
+          {t('modals.calendarInfo.whereUsed')}
         </button>
         <button
           type="button"
@@ -79,7 +94,7 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
           className={`info-modal__map-tab${activeTab === 'timeline' ? ' info-modal__map-tab--active' : ''}`}
           onClick={() => setActiveTab('timeline')}
         >
-          Adoption timeline
+          {t('modals.calendarInfo.timelineTab')}
         </button>
       </div>
 
@@ -95,7 +110,7 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
             fillColor={mapColors.fill}
           />
           <ul className="info-modal__countries">
-            {info.usedIn.map((place) => (
+            {usedIn.map((place) => (
               <li key={place}>{place}</li>
             ))}
           </ul>
@@ -108,7 +123,7 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
         >
           <div className="adoption-slider">
             <label className="adoption-slider__label" htmlFor="julian-timeline-year">
-              Reveal adoption and replacement through time
+              {t('modals.calendarInfo.julianSliderLabel')}
             </label>
             <div className="adoption-slider__row">
               <span className="adoption-slider__bound adoption-slider__bound--wide">
@@ -135,8 +150,10 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
               <strong>{yearLabel}</strong>
             </p>
             <p className="adoption-slider__summary">
-              {activeCountries.length} {activeCountries.length === 1 ? 'country' : 'countries'} using
-              the Julian calendar at this point in time
+              {t('modals.calendarInfo.julianUsageSummary', {
+                count: activeCountries.length,
+                countryLabel,
+              })}
             </p>
           </div>
 
@@ -147,8 +164,16 @@ export function JulianMapSection({ info, mapColors }: JulianMapSectionProps) {
           />
 
           <div className="adoption-slider__new adoption-slider__new--dual">
-            <TimelineEventList title={`Adopted in ${yearLabel}`} codes={startedInYear} />
-            <TimelineEventList title={`Stopped using in ${yearLabel}`} codes={stoppedInYear} />
+            <TimelineEventList
+              title={t('modals.calendarInfo.julianAdoptedIn', { yearLabel })}
+              codes={startedInYear}
+              language={language}
+            />
+            <TimelineEventList
+              title={t('modals.calendarInfo.julianStoppedIn', { yearLabel })}
+              codes={stoppedInYear}
+              language={language}
+            />
           </div>
         </div>
       )}

@@ -1,15 +1,15 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CALENDAR_INFO,
-  CALENDAR_TYPE_LABELS,
   type CalendarSystemType,
 } from '../data/calendarInfo';
 import type { CalendarId } from '../lib/calendarRegistry';
 import { getBannerAttribution } from '../data/imageAttributions';
 import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 import { CALENDAR_BANNERS } from '../theme/calendarBanners';
-import { CALENDAR_NAMES } from '../theme/calendarTheme';
-import type { AppSettings } from '../lib/appSettings';
+import { getResolvedAppLanguage, type AppSettings } from '../lib/appSettings';
+import { useCalendarLabels } from '../hooks/useCalendarLabels';
 import { calendarColorContext, getCalendarMapColors } from '../theme/calendarColors';
 import { BannerAttribution } from './BannerAttribution';
 import { GregorianMapSection } from './GregorianMapSection';
@@ -31,6 +31,7 @@ interface CalendarBannerImageProps {
 }
 
 function CalendarBannerImage({ src, active }: CalendarBannerImageProps) {
+  const { t } = useTranslation();
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
 
   useEffect(() => {
@@ -65,7 +66,7 @@ function CalendarBannerImage({ src, active }: CalendarBannerImageProps) {
 
   return (
     <div className="info-modal__hero-placeholder" aria-hidden="true">
-      <span>Loading banner…</span>
+      <span>{t('modals.calendarInfo.loadingBanner')}</span>
     </div>
   );
 }
@@ -116,6 +117,9 @@ function CalendarTypeIcon({ type }: { type: CalendarSystemType }) {
 }
 
 export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }: CalendarInfoModalProps) {
+  const { t } = useTranslation();
+  const { getTypeLabel } = useCalendarLabels();
+  const language = getResolvedAppLanguage(settings);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const openFrameRef = useRef<number | null>(null);
   const [renderedId, setRenderedId] = useState<CalendarId | null>(null);
@@ -191,14 +195,26 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
   }
 
   const info = CALENDAR_INFO[renderedId];
-  const title = CALENDAR_NAMES[renderedId];
+  const title = t(`calendars.name.${renderedId}`);
+  const firstImplemented = t(`calendars.info.${renderedId}.firstImplemented`);
+  const history = t(`calendars.info.${renderedId}.history`);
+  const usedIn = t(`calendars.info.${renderedId}.usedIn`, { returnObjects: true }) as string[];
   const bannerSrc = CALENDAR_BANNERS[renderedId];
   const bannerAttribution = getBannerAttribution(renderedId);
   const mapColors = getCalendarMapColors(renderedId, calendarColorContext(settings));
 
+  if (!renderedId || !visible) {
+    return null;
+  }
+
   return (
-    <div className={`info-modal${visible ? ' info-modal--visible' : ''}`} role="presentation">
-      <button type="button" className="info-modal__backdrop" aria-label="Close calendar info" onClick={onClose} />
+    <div className="info-modal info-modal--visible" role="presentation">
+      <button
+        type="button"
+        className="info-modal__backdrop"
+        aria-label={t('modals.calendarInfo.closeBackdropAria')}
+        onClick={onClose}
+      />
       <div
         className="info-modal__panel"
         role="dialog"
@@ -210,17 +226,17 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
             <CalendarBannerImage src={bannerSrc} active={visible} />
           ) : (
             <div className="info-modal__hero-placeholder" aria-hidden="true">
-              <span>Image coming soon</span>
+              <span>{t('modals.calendarInfo.imageComingSoon')}</span>
             </div>
           )}
           {bannerAttribution ? (
-            <BannerAttribution subjects={bannerAttribution.subjects} onAboutOpen={onAboutOpen} />
+            <BannerAttribution calendarId={renderedId} onAboutOpen={onAboutOpen} />
           ) : null}
           <button
             ref={closeButtonRef}
             type="button"
             className="info-modal__close"
-            aria-label="Close"
+            aria-label={t('common.close')}
             onClick={onClose}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -236,36 +252,46 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
 
           <dl className="info-modal__facts">
             <div className="info-modal__fact">
-              <dt>Type</dt>
+              <dt>{t('modals.calendarInfo.type')}</dt>
               <dd>
                 <span className="info-modal__type-badge">
                   <CalendarTypeIcon type={info.calendarType} />
-                  {CALENDAR_TYPE_LABELS[info.calendarType]}
+                  {getTypeLabel(info.calendarType)}
                 </span>
               </dd>
             </div>
             <div className="info-modal__fact">
-              <dt>First implemented</dt>
-              <dd>{info.firstImplemented}</dd>
+              <dt>{t('modals.calendarInfo.firstImplemented')}</dt>
+              <dd>{firstImplemented}</dd>
             </div>
           </dl>
 
-          <p className="info-modal__history">{info.history}</p>
+          <p className="info-modal__history">{history}</p>
 
           {renderedId === 'gregorian' ? (
-            <GregorianMapSection info={info} mapColors={mapColors} />
+            <GregorianMapSection
+              info={info}
+              mapColors={mapColors}
+              language={language}
+              usedIn={usedIn}
+            />
           ) : renderedId === 'julian' ? (
-            <JulianMapSection info={info} mapColors={mapColors} />
+            <JulianMapSection
+              info={info}
+              mapColors={mapColors}
+              language={language}
+              usedIn={usedIn}
+            />
           ) : (
-            <section className="info-modal__map-section" aria-label="Geographic usage">
-              <h3>Where it is used</h3>
+            <section className="info-modal__map-section" aria-label={t('modals.calendarInfo.geoAria')}>
+              <h3>{t('modals.calendarInfo.whereUsed')}</h3>
               <WorldUsageMap
                 highlighted={info.mapCountries}
                 strokeColor={mapColors.stroke}
                 fillColor={mapColors.fill}
               />
               <ul className="info-modal__countries">
-                {info.usedIn.map((place) => (
+                {usedIn.map((place) => (
                   <li key={place}>{place}</li>
                 ))}
               </ul>

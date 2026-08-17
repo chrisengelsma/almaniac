@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=1024, height=500"/>
+  <title>Almaniac Feature Graphic</title>
+  <style>
+    @font-face {
+      font-family: 'Pacifico';
+      font-style: normal;
+      font-weight: 400;
+      src: url('./assets/pacifico-latin.woff2') format('woff2');
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 1024px;
+      height: 500px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .feature {
+      position: relative;
+      width: 1024px;
+      height: 500px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .feature__waves {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 220px;
+      pointer-events: none;
+    }
+
+    .feature__waves img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+    }
+
+    .feature__phone {
+      position: absolute;
+      left: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 420px;
+      width: auto;
+      filter: drop-shadow(0 18px 36px rgba(38, 50, 56, 0.18));
+      z-index: 2;
+    }
+
+    .feature__logo {
+      position: absolute;
+      left: 58%;
+      top: 118px;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 1;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .feature__logo-word {
+      font-family: Pacifico, cursive;
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1;
+      color: #b8860b;
+    }
+
+    .feature__logo-tagline {
+      font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(38, 50, 56, 0.62);
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="feature">
+    <div class="feature__waves" aria-hidden="true">
+      <img src="./assets/distinct-waves.svg" alt="" width="6400" height="1200"/>
+    </div>
+
+    <img
+      class="feature__phone"
+      src="./assets/device-android.png"
+      alt=""
+      width="232"
+      height="468"
+    />
+
+    <div class="feature__logo" aria-label="Almaniac">
+      <span class="feature__logo-word">almaniac</span>
+      <span class="feature__logo-tagline">A Calendar Converter</span>
+    </div>
+  </div>
+</body>
+</html>

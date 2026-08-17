@@ -4,6 +4,27 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <script>
+      // Lock Android viewport before first layout. Do not set width=innerWidth here —
+      // on tablets it can be wrong until the WebView finishes layout and causes a zoom flash.
+      if (/Android/i.test(navigator.userAgent)) {
+        document
+          .querySelector('meta[name="viewport"]')
+          ?.setAttribute(
+            'content',
+            'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no',
+          );
+
+        var syncAndroidViewportMetrics = function () {
+          document.documentElement.style.setProperty('--app-width', Math.round(window.innerWidth) + 'px');
+          document.documentElement.style.setProperty('--app-height', Math.round(window.innerHeight) + 'px');
+        };
+
+        syncAndroidViewportMetrics();
+        document.addEventListener('DOMContentLoaded', syncAndroidViewportMetrics);
+        window.addEventListener('resize', syncAndroidViewportMetrics);
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

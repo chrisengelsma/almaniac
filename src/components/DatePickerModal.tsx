@@ -1,13 +1,13 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { GregorianCalendar } from '../lib/calendarRegistry';
 import type { CalendarId } from '../lib/calendarRegistry';
 import type { AppSettings } from '../lib/appSettings';
 import {
   clampPickerValues,
   extractPickerValues,
-  filterCalendarOptions,
   getPickerFields,
-  PICKER_CALENDAR_OPTIONS,
+  PICKER_CALENDAR_IDS,
   pickerValuesToGregorian,
   type PickerContext,
   type PickerFieldDef,
@@ -23,6 +23,12 @@ interface DatePickerModalProps {
   onApply: (date: GregorianCalendar) => void;
 }
 
+interface PickerCalendarOption {
+  id: CalendarId;
+  label: string;
+  searchText: string;
+}
+
 function pickerContextFromSettings(settings: AppSettings): PickerContext {
   return {
     islamicCalendarMode: settings.islamicCalendarMode,
@@ -30,20 +36,39 @@ function pickerContextFromSettings(settings: AppSettings): PickerContext {
   };
 }
 
+function getFieldLabel(
+  field: PickerFieldDef,
+  exists: (key: string) => boolean,
+  t: (key: string) => string,
+): string {
+  const key = `datePicker.field.${field.key}`;
+  return exists(key) ? t(key) : field.label;
+}
+
 function CalendarSearchSelect({
   calendarId,
+  options,
   onChange,
 }: {
   calendarId: CalendarId;
+  options: PickerCalendarOption[];
   onChange: (id: CalendarId) => void;
 }) {
+  const { t } = useTranslation();
   const listId = useId();
   const [query, setQuery] = useState('');
   const [openList, setOpenList] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const selected = PICKER_CALENDAR_OPTIONS.find((option) => option.id === calendarId);
+  const selected = options.find((option) => option.id === calendarId);
 
-  const filtered = useMemo(() => filterCalendarOptions(query), [query]);
+  const filtered = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) {
+      return options;
+    }
+
+    return options.filter((option) => option.searchText.includes(normalized));
+  }, [options, query]);
 
   useEffect(() => {
     if (!openList) {
@@ -63,7 +88,7 @@ function CalendarSearchSelect({
 
   return (
     <div className="date-modal__search" ref={containerRef}>
-      <label htmlFor={listId}>Calendar</label>
+      <label htmlFor={listId}>{t('datePicker.calendarLabel')}</label>
       <input
         id={listId}
         type="text"
@@ -71,7 +96,7 @@ function CalendarSearchSelect({
         aria-expanded={openList}
         aria-autocomplete="list"
         value={openList ? query : (selected?.label ?? '')}
-        placeholder="Search calendars…"
+        placeholder={t('datePicker.searchPlaceholder')}
         onFocus={() => {
           setOpenList(true);
           setQuery('');
@@ -84,7 +109,7 @@ function CalendarSearchSelect({
       {openList ? (
         <ul className="date-modal__search-results" role="listbox">
           {filtered.length === 0 ? (
-            <li className="date-modal__search-empty">No calendars match.</li>
+            <li className="date-modal__search-empty">{t('datePicker.noResults')}</li>
           ) : (
             filtered.map((option) => (
               <li key={option.id}>
@@ -120,25 +145,28 @@ function PickerField({
   values: PickerValues;
   onChange: (key: string, value: string) => void;
 }) {
+  const { t, i18n } = useTranslation();
+  const label = getFieldLabel(field, i18n.exists.bind(i18n), t);
+
   if (field.type === 'era') {
     const era = (values.era ?? 'CE') as GregorianEra;
     return (
       <div className="date-modal__field">
-        <span className="date-modal__field-label">{field.label}</span>
-        <div className="date-modal__era" role="group" aria-label="Era">
+        <span className="date-modal__field-label">{label}</span>
+        <div className="date-modal__era" role="group" aria-label={t('datePicker.eraAria')}>
           <button
             type="button"
             className={`date-modal__era-btn${era === 'CE' ? ' date-modal__era-btn--active' : ''}`}
             onClick={() => onChange('era', 'CE')}
           >
-            CE
+            {t('datePicker.eraCe')}
           </button>
           <button
             type="button"
             className={`date-modal__era-btn${era === 'BCE' ? ' date-modal__era-btn--active' : ''}`}
             onClick={() => onChange('era', 'BCE')}
           >
-            BCE
+            {t('datePicker.eraBce')}
           </button>
         </div>
       </div>
@@ -149,7 +177,7 @@ function PickerField({
     const options = field.getOptions?.(values) ?? [];
     return (
       <div className="date-modal__field">
-        <label htmlFor={`picker-${field.key}`}>{field.label}</label>
+        <label htmlFor={`picker-${field.key}`}>{label}</label>
         <select
           id={`picker-${field.key}`}
           value={values[field.key] ?? options[0]?.value ?? ''}
@@ -167,7 +195,7 @@ function PickerField({
 
   return (
     <div className="date-modal__field">
-      <label htmlFor={`picker-${field.key}`}>{field.label}</label>
+      <label htmlFor={`picker-${field.key}`}>{label}</label>
       <input
         id={`picker-${field.key}`}
         type="number"
@@ -185,11 +213,25 @@ function PickerField({
 }
 
 export function DatePickerModal({ open, anchor, settings, onClose, onApply }: DatePickerModalProps) {
+  const { t } = useTranslation();
   const titleId = useId();
   const [calendarId, setCalendarId] = useState<CalendarId>('gregorian');
   const [values, setValues] = useState<PickerValues>({});
   const [error, setError] = useState<string | null>(null);
   const pickerContext = useMemo(() => pickerContextFromSettings(settings), [settings]);
+
+  const calendarOptions = useMemo<PickerCalendarOption[]>(
+    () =>
+      PICKER_CALENDAR_IDS.map((id) => {
+        const label = t(`calendars.name.${id}`);
+        return {
+          id,
+          label,
+          searchText: `${label} ${id}`.toLowerCase(),
+        };
+      }),
+    [t],
+  );
 
   const fields = useMemo(() => getPickerFields(calendarId, pickerContext), [calendarId, pickerContext]);
 
@@ -217,7 +259,7 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
   const handleApply = () => {
     const next = pickerValuesToGregorian(calendarId, values, pickerContext);
     if (!next) {
-      setError('That date is not valid for the chosen calendar.');
+      setError(t('datePicker.invalidDate'));
       return;
     }
 
@@ -230,9 +272,13 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
   );
   const regularFields = fields.filter((field) => !mayaFields.includes(field));
 
+  if (!open) {
+    return null;
+  }
+
   return (
-    <div className={`date-modal${open ? ' date-modal--visible' : ''}`} aria-hidden={!open}>
-      <button type="button" className="date-modal__backdrop" onClick={onClose} aria-label="Close" />
+    <div className="date-modal date-modal--visible" aria-hidden={false}>
+      <button type="button" className="date-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
       <div
         className="date-modal__panel"
         role="dialog"
@@ -240,8 +286,8 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
         aria-labelledby={titleId}
       >
         <header className="date-modal__header">
-          <h2 id={titleId}>Jump to date</h2>
-          <button type="button" className="date-modal__close" onClick={onClose} aria-label="Close">
+          <h2 id={titleId}>{t('datePicker.title')}</h2>
+          <button type="button" className="date-modal__close" onClick={onClose} aria-label={t('common.close')}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
@@ -249,7 +295,11 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
         </header>
 
         <div className="date-modal__body">
-          <CalendarSearchSelect calendarId={calendarId} onChange={handleCalendarChange} />
+          <CalendarSearchSelect
+            calendarId={calendarId}
+            options={calendarOptions}
+            onChange={handleCalendarChange}
+          />
 
           {regularFields.length > 0 ? (
             <div className="date-modal__fields">
@@ -311,10 +361,10 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
 
         <footer className="date-modal__footer">
           <button type="button" className="date-modal__btn date-modal__btn--ghost" onClick={onClose}>
-            Cancel
+            {t('datePicker.cancel')}
           </button>
           <button type="button" className="date-modal__btn date-modal__btn--primary" onClick={handleApply}>
-            Go to date
+            {t('datePicker.apply')}
           </button>
         </footer>
       </div>

@@ -1,0 +1,559 @@
+{
+  "branding": {
+    "appTitle": "Almaniac",
+    "appLogo": "almaniac",
+    "tagline": "历法转换器"
+  },
+  "common": {
+    "close": "关闭",
+    "cancel": "取消",
+    "by": "作者",
+    "country": "国家",
+    "countries": "国家",
+    "era": {
+      "ce": "公元",
+      "bce": "公元前",
+      "ceYear": "公元{{year}}年",
+      "bceYear": "公元前{{year}}年"
+    }
+  },
+  "settings": {
+    "title": "自定义",
+    "selectCalendarsTitle": "选择历法",
+    "sectionCalendars": "历法",
+    "sectionSettings": "设置",
+    "about": "关于",
+    "language": "语言",
+    "languageAria": "应用语言",
+    "transliterateLabel": "转写为英文",
+    "transliterateAria": "转写为英文",
+    "colorThemeLabel": "颜色主题",
+    "colorThemeAria": "颜色主题",
+    "colorThemeOptionAria": "{{label}} 颜色主题",
+    "colorThemeDistinct": "多彩",
+    "colorThemeMono": "单色",
+    "colorThemeSepia": "棕褐",
+    "appIconLabel": "应用图标",
+    "appIconAria": "应用图标",
+    "appIconOptionAria": "{{label}} 应用图标",
+    "appIconLight": "浅色",
+    "appIconDark": "深色",
+    "selectCalendarsCount": "显示 {{count}} / {{total}}",
+    "selectCalendarsToggleAria": "切换 {{calendar}}",
+    "islamicSystemLabel": "伊斯兰历制",
+    "islamicSystemAria": "伊斯兰历制",
+    "islamicSystemTabular": "表格法（算术）",
+    "islamicSystemUmmAlQura": "乌姆古拉历（沙特官方）",
+    "islamicAdjustmentLabel": "伊斯兰历日期调整",
+    "islamicGroupAria": "伊斯兰历设置",
+    "julianDayLabel": "修正儒略日",
+    "julianDayToggle": "使用修正儒略日",
+    "julianDayGroupAria": "儒略日设置",
+    "closeAria": "关闭自定义面板",
+    "backAria": "返回设置",
+    "themeToggleLightAria": "切换到浅色模式",
+    "themeToggleDarkAria": "切换到深色模式",
+    "languageSystem": "系统默认",
+    "colorThemeSupporter": "支持者",
+    "appIconSupporter": "支持者",
+    "supporterLockedAria": "{{label}}（支持者福利）",
+    "rememberLastDateLabel": "记住上次日期",
+    "rememberLastDateAria": "打开时显示上次查看的日期"
+  },
+  "topBar": {
+    "supportAria": "支持 Almaniac",
+    "jumpToDateAria": "跳转到日期",
+    "customizeAria": "自定义历法和设置",
+    "dateNavAria": "日期导航",
+    "back30Aria": "后退 30 天",
+    "back1Aria": "后退 1 天",
+    "todayAria": "转到今天",
+    "forward1Aria": "前进 1 天",
+    "forward30Aria": "前进 30 天"
+  },
+  "modals": {
+    "donate": {
+      "title": "支持 Almaniac",
+      "intro": "我是 Chris Engelsma。我创建 Almaniac 是为了在不同历法之间比较日期，而无需在多个转换器之间切换。",
+      "free": "Almaniac 免费使用，无广告、无订阅、无跟踪。",
+      "rating": "如果你喜欢这款应用，在{{store}}给予 5 星评价会很有帮助，也能帮助其他人发现 Almaniac。",
+      "tipJar": "你也可以选择留下打赏表示感谢。打赏不会解锁任何功能。Apple 会从每笔打赏中收取 15–30% 作为佣金。",
+      "coffee": "你也可以请我喝杯咖啡表示感谢。无论如何，感谢使用 Almaniac。",
+      "thanks": "感谢使用 Almaniac。",
+      "storeAppStore": "在 App Store",
+      "storeGooglePlay": "在 Google Play",
+      "rateButton": "在{{store}}评 5 星",
+      "tipsAria": "可选打赏",
+      "loadingTips": "正在加载打赏选项…",
+      "coffeeButton": "请我喝咖啡",
+      "notNow": "暂不",
+      "feedbackSuccess": "感谢支持 Almaniac！",
+      "feedbackError": "打赏未能完成，请重试。",
+      "thankYouTitle": "谢谢！",
+      "thankYouMessage": "为表示感谢，请享用新的主题和图标选项。",
+      "thankYouDismiss": "不客气",
+      "tipSmall": "小额打赏",
+      "tipMedium": "中等打赏",
+      "tipLarge": "大额打赏",
+      "thankYouPerk": "您还将优先体验所有新内容。"
+    },
+    "about": {
+      "title": "关于 {{appTitle}}",
+      "description": "Almaniac 可同时显示同一日期在多种历法中的表示：公历、儒略历、希伯来历、伊斯兰历、农历、玛雅历等。",
+      "creditsTitle": "图片版权",
+      "bannerTitle": "{{calendar}} 横幅",
+      "version": "版本 {{version}}",
+      "copyright": "© 2026 Chris Engelsma",
+      "derivedLicensePrefix": "衍生横幅依据以下许可共享",
+      "sourceLink": "来源",
+      "banners": {
+        "gregorian": {
+          "subjects": "格里高利十三世 | 圣彼得大教堂",
+          "aboutNote": "公历横幅是根据下方来源图像改编的衍生作品。"
+        },
+        "julian": {
+          "subjects": "尤利乌斯·凯撒 | 罗马斗兽场",
+          "aboutNote": "儒略历横幅是根据下方来源照片改编的衍生作品。 "
+        },
+        "ethiopian": {
+          "subjects": "拉利贝拉祭司 | Bete Giyorgis",
+          "aboutNote": "埃塞俄比亚历横幅是根据下方来源照片改编的衍生作品。 "
+        },
+        "coptic": {
+          "subjects": "圣 Bishoy 修道院 | 圣 Anthony 修道院",
+          "aboutNote": "科普特历横幅是根据下方来源照片改编的衍生作品。 "
+        },
+        "chinese": {
+          "subjects": "黄帝 | 天坛",
+          "aboutNote": "农历横幅是根据下方来源图像改编的衍生作品。"
+        },
+        "soviet": {
+          "subjects": "Joseph Stalin | 莫斯科红场",
+          "aboutNote": "苏联革命历横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "frc": {
+          "subjects": "Triumph of the Republic | The Panthéon",
+          "aboutNote": "法兰西共和历横幅是根据下方来源图像改编的衍生作品。"
+        },
+        "japanese": {
+          "subjects": "明治天皇 | 二重桥",
+          "aboutNote": "日本年号历横幅是根据下方来源照片改编的衍生作品。 "
+        },
+        "maya": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "伊斯兰历横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "hebrew": {
+          "subjects": "Maimonides | 耶路撒冷旧城",
+          "aboutNote": "希伯来历横幅是根据下方来源照片改编的衍生作品。 "
+        },
+        "persian": {
+          "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
+          "aboutNote": "波斯历横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "bahai": {
+          "subjects": "Shrine of the Báb | Haifa",
+          "aboutNote": "巴哈伊历横幅是根据下方来源照片改编的衍生作品。"
+        },
+        "thaiBuddhist": {
+          "subjects": "King Chulalongkorn | Wat Arun",
+          "aboutNote": "泰国佛历横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "discordian": {
+          "subjects": "Eris | Asbury Lanes",
+          "aboutNote": "Discordian 历横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "indianCivil": {
+          "subjects": "Meghnad Saha | Jantar Mantar",
+          "aboutNote": "印度国定历横幅是根据下方来源图像改编的衍生作品。"
+        },
+        "isoWeek": {
+          "subjects": "NBS Atomic Clock | The Earth Seen from Apollo 17",
+          "aboutNote": "ISO 周历横幅是根据下方来源图像改编的衍生作品。"
+        },
+        "julianDay": {
+          "subjects": "Joseph Justus Scaliger | Old Observatory, Leiden",
+          "aboutNote": "儒略日横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "bengali": {
+          "subjects": "The Emperor Akbar | Ahsan Manzil",
+          "aboutNote": "孟加拉历横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "minguo": {
+          "subjects": "Sun Yat-sen | Presidential Office Building",
+          "aboutNote": "民国纪年横幅是根据下方来源图像改编的衍生作品。 "
+        }
+      }
+    },
+    "calendarInfo": {
+      "closeBackdropAria": "关闭历法信息",
+      "loadingBanner": "正在加载横幅…",
+      "imageComingSoon": "图片即将推出",
+      "source": "来源",
+      "type": "类型",
+      "firstImplemented": "首次实施",
+      "whereUsed": "使用地区",
+      "geoAria": "地理使用情况",
+      "mapTabsAria": "地图视图",
+      "adoptionTab": "采用日期",
+      "timelineTab": "采用时间线",
+      "gregorianSliderLabel": "按时间显示采用情况",
+      "julianSliderLabel": "按时间显示采用与更替",
+      "yearCe": "公元{{year}}年",
+      "gregorianAdoptionSummary": "截至该年有 {{count}} 个{{countryLabel}}使用公历",
+      "julianUsageSummary": "此时有 {{count}} 个{{countryLabel}}使用儒略历",
+      "adoptedIn": "于 {{year}} 年采用",
+      "julianAdoptedIn": "于 {{yearLabel}} 采用",
+      "julianStoppedIn": "于 {{yearLabel}} 停止使用",
+      "mapAria": "显示历法使用情况的世界地图"
+    }
+  },
+  "datePicker": {
+    "title": "跳转到日期",
+    "calendarLabel": "历法",
+    "searchPlaceholder": "搜索历法…",
+    "noResults": "没有匹配的历法。",
+    "eraAria": "纪元",
+    "eraCe": "公元",
+    "eraBce": "公元前",
+    "invalidDate": "该日期对所选历法无效。",
+    "cancel": "取消",
+    "apply": "转到日期",
+    "field": {
+      "year": "年",
+      "era": "纪元",
+      "month": "月",
+      "day": "日",
+      "eraYear": "纪元年",
+      "decade": "旬",
+      "baktun": "伯克盾",
+      "katun": "卡盾",
+      "tun": "盾",
+      "uinal": "乌纳尔",
+      "kin": "金",
+      "buddhistYear": "佛历年",
+      "bengaliYear": "孟加拉历年",
+      "minguoYear": "民国年",
+      "isoWeekYear": "ISO 周年",
+      "week": "周",
+      "weekday": "星期",
+      "yoldYear": "YOLD 年",
+      "season": "季",
+      "julianDay": "儒略日",
+      "modifiedJulianDay": "修正儒略日"
+    },
+    "hint": {
+      "gregorianYear": "输入任意年份，包括公元前 100 年等古代日期。",
+      "julianDay": "输入儒略日编号。",
+      "modifiedJulianDay": "输入修正儒略日编号。"
+    },
+    "placeholder": {
+      "year100": "例如 100",
+      "julianDay": "例如 2460000",
+      "modifiedJulianDay": "例如 60000"
+    },
+    "isoWeekWeekN": "第 {{week}} 周",
+    "discordianStTibsDay": "圣 Tib 日",
+    "frcSansculottides": "无裤日",
+    "japaneseEra": "{{nameEn}}（{{nameJa}}）"
+  },
+  "calendars": {
+    "listAria": "历法转换",
+    "addHint": "从菜单添加其他历法",
+    "copied": "已复制到剪贴板",
+    "reorderAria": "重新排序 {{label}}",
+    "holidayAria": "节日：{{names}}",
+    "copyAria": "复制 {{label}} 日期",
+    "fullscreenAria": "全屏显示 {{label}} 日期",
+    "aboutAria": "关于 {{label}}",
+    "fullscreenAriaView": "{{label}} 日期全屏",
+    "tapToClose": "再次点击关闭",
+    "islamicSystemUmmAlQura": "乌姆古拉",
+    "islamicSystemTabular": "表格法",
+    "chineseZodiacYear": "{{zodiac}}年，{{pinyin}}",
+    "japaneseGannen": "元年",
+    "isoWeekDateFormat": "{{year}} 年第 {{week}} 周（{{padded}}），{{weekday}}",
+    "name": {
+      "gregorian": "公历",
+      "julian": "儒略历",
+      "ethiopian": "埃塞俄比亚历",
+      "coptic": "科普特历",
+      "chinese": "农历",
+      "soviet": "苏联革命历",
+      "frc": "法兰西共和历",
+      "maya": "玛雅历",
+      "islamic": "伊斯兰历",
+      "hebrew": "希伯来历",
+      "persian": "波斯历",
+      "bahai": "巴哈伊历",
+      "japanese": "日本年号历",
+      "minguo": "民国历",
+      "thaiBuddhist": "泰国佛历",
+      "bengali": "孟加拉历",
+      "isoWeek": "ISO 周日期",
+      "discordian": "Discordian 历",
+      "indianCivil": "印度国定历",
+      "julianDay": "儒略日"
+    },
+    "label": {
+      "gregorian": "公历",
+      "julian": "儒略",
+      "ethiopian": "埃塞俄比亚",
+      "coptic": "科普特",
+      "chinese": "农历",
+      "soviet": "苏联",
+      "frc": "FRC",
+      "maya": "玛雅",
+      "islamic": "伊斯兰",
+      "hebrew": "希伯来",
+      "persian": "波斯",
+      "bahai": "巴哈伊",
+      "japanese": "日本",
+      "minguo": "民国",
+      "thaiBuddhist": "泰佛历",
+      "bengali": "孟加拉",
+      "isoWeek": "ISO 周",
+      "discordian": "Discordian",
+      "indianCivil": "印度国定",
+      "julianDay": "儒略日",
+      "modifiedJulianDay": "修正儒略日"
+    },
+    "type": {
+      "solar": "阳历",
+      "lunar": "阴历",
+      "lunisolar": "阴阳历",
+      "mixed": "混合周期",
+      "continuous": "连续计数"
+    },
+    "info": {
+      "gregorian": {
+        "firstImplemented": "1582 年",
+        "history": "由教皇格列高利十三世引入，以纠正儒略历的偏差。闰年跳过世纪年，除非能被 400 整除。在欧洲和美洲逐步采用，现为国际民用标准。",
+        "usedIn": [
+          "美国",
+          "加拿大",
+          "墨西哥",
+          "巴西",
+          "英国",
+          "法国",
+          "德国",
+          "意大利",
+          "西班牙",
+          "澳大利亚",
+          "日本",
+          "中国（民用）",
+          "印度（民用）",
+          "世界大部分地区"
+        ]
+      },
+      "julian": {
+        "firstImplemented": "公元前 45 年",
+        "history": "由尤利乌斯·凯撒从罗马共和历改革而来。采用简单的闰年规则（每四年一闰），仍是若干东正教会的礼仪历。",
+        "usedIn": [
+          "俄罗斯（至 1918 年）",
+          "东正教会",
+          "埃塞俄比亚（有变体）",
+          "塞尔维亚",
+          "耶路撒冷教区",
+          "阿索斯山"
+        ]
+      },
+      "ethiopian": {
+        "firstImplemented": "约公元 4 世纪",
+        "history": "由十三个 30 天月份加一个短闰日（Pagume）组成的太阳历。与儒略闰年规则相同，比公历晚约七到八年。埃塞俄比亚在民用和宗教生活中与公历并用。",
+        "usedIn": [
+          "埃塞俄比亚",
+          "厄立特里亚东正教社区"
+        ]
+      },
+      "coptic": {
+        "firstImplemented": "约公元 3 世纪",
+        "history": "科普特正教会的礼仪历，结构与埃塞俄比亚历相同，但从殉道者纪元（Anno Martyrum）起算。新年在公历 9 月 11 日（公历闰年前为 9 月 12 日）。",
+        "usedIn": [
+          "埃及",
+          "全球科普特正教会"
+        ]
+      },
+      "chinese": {
+        "firstImplemented": "约公元前 14 世纪（传说）；约公元前 104 年定规",
+        "history": "传统农历（农历）以节气锚定阴历月，年份以天干地支（干支）六十甲子命名。每年还有生肖（生肖）。闰月使节日与季节对齐。",
+        "usedIn": [
+          "中国",
+          "台湾",
+          "香港",
+          "澳门",
+          "新加坡",
+          "马来西亚",
+          "海外华人社区"
+        ]
+      },
+      "soviet": {
+        "firstImplemented": "1929 年",
+        "history": "在斯大林工业化时期引入，此革命历以五天生产周期取代七天周，并将一年重组为十二个月各 30 天加国家假日。公历仍并行用于日常生活；该实验于 1940 年前放弃。",
+        "usedIn": [
+          "苏联（1929–1940）"
+        ]
+      },
+      "frc": {
+        "firstImplemented": "1793 年",
+        "history": "法国大革命期间为十进制计时而创。年以秋分开始；月与周被重命名和重组。拿破仑于 1806 年废除；巴黎公社于 1871 年短暂恢复。",
+        "usedIn": [
+          "法国（1793–1805）",
+          "巴黎公社（1871）"
+        ]
+      },
+      "maya": {
+        "firstImplemented": "约公元前 500 年",
+        "history": "古典玛雅使用交织周期：260 天的卓尔金历、365 天的哈布历，以及从神话创世纪日起算日期的长纪。本显示采用纪念碑和抄本中常见的长纪记法。",
+        "usedIn": [
+          "墨西哥",
+          "危地马拉",
+          "伯利兹",
+          "洪都拉斯",
+          "萨尔瓦多"
+        ]
+      },
+      "islamic": {
+        "firstImplemented": "622 年（希吉拉纪元）",
+        "history": "阴历，十二个月共约 354 天。本应用支持表格（算术）转换及沙特阿拉伯官方使用的乌姆古拉历（1300–1600 AH）。可选 ±1 日调整可按当地望新月习俗微调显示日期。",
+        "usedIn": [
+          "沙特阿拉伯",
+          "埃及",
+          "巴基斯坦",
+          "伊朗（与太阳希吉拉并用）",
+          "土耳其（宗教日期）",
+          "印度尼西亚",
+          "马来西亚",
+          "摩洛哥",
+          "阿联酋"
+        ]
+      },
+      "hebrew": {
+        "firstImplemented": "约公元 4 世纪（定规）",
+        "history": "月份为阴历月，每十九年加七个闰月以使节日与季节对齐。固定算术历在 Hillel II 时代前后取代观测推算。",
+        "usedIn": [
+          "以色列",
+          "全球犹太社区"
+        ]
+      },
+      "persian": {
+        "firstImplemented": "1079 年（贾拉里改革）",
+        "history": "亦称太阳希吉拉历。月份与春分对齐，诺鲁兹为新年。奥马尔·海亚姆参与完善闰年结构；现代伊朗和阿富汗使用改进版本。",
+        "usedIn": [
+          "伊朗",
+          "阿富汗"
+        ]
+      },
+      "bahai": {
+        "firstImplemented": "1844 年",
+        "history": "巴迪历有十九个月各十九天，斋月前有闰日（Ayyám-i-Há）。Naw-Rúz 固定在德黑兰的春分。第 1 年始于 1844 年 Bab 的宣示。",
+        "usedIn": [
+          "全球巴哈伊社区"
+        ]
+      },
+      "japanese": {
+        "firstImplemented": "1873 年（采用公历月）",
+        "history": "日本官方民用历将公历月与闰年与日本年号（年号）并用。每个在位开始新纪元，从 1 年（元年，gannen）起算；令和始于 2019 年 5 月 1 日。日期以年号、年、月、日书写。",
+        "usedIn": [
+          "日本"
+        ]
+      },
+      "minguo": {
+        "firstImplemented": "1912 年（中华民国成立）",
+        "history": "民国历从 1912 年中华民国成立起计年。第 1 年对应公元 1912 年；其余日期结构遵循公历月日。在台湾与西元年并用。",
+        "usedIn": [
+          "台湾"
+        ]
+      },
+      "thaiBuddhist": {
+        "firstImplemented": "约公元前 1 世纪（佛历纪元）；1888 年起官方佛历",
+        "history": "泰国民用历结构同公历，但年份按佛历（BE）编号，比公元早 543 年。用于官方文件、报纸和日常生活，与西元年并用。",
+        "usedIn": [
+          "泰国"
+        ]
+      },
+      "bengali": {
+        "firstImplemented": "593 年（传统）；1987 年修订（孟加拉国）",
+        "history": "孟加拉历用于孟加拉国和西孟加拉。孟加拉国修订历将 Pohela Boishakh 定在 4 月 14 日，含六个 31 天月、五个 30 天月和可变长度的 Choitro。年份从传统孟加拉纪元起算。",
+        "usedIn": [
+          "孟加拉国",
+          "西孟加拉（印度）"
+        ]
+      },
+      "indianCivil": {
+        "firstImplemented": "1957 年（正式采用）",
+        "history": "印度国定历（沙卡纪元）使月份与热带黄道对齐。首月 Chaitra 约在春分附近开始。与公历并用于政府公报和广播。",
+        "usedIn": [
+          "印度"
+        ]
+      },
+      "isoWeek": {
+        "firstImplemented": "1988 年（ISO 8601）",
+        "history": "ISO 周日期从周一到周日编号周，第 1 周为包含 1 月 4 日的周。广泛用于商业规划、制造、薪酬和国际标准，以避免年界歧义。",
+        "usedIn": [
+          "欧盟（商业与统计）",
+          "北欧国家",
+          "国际标准化组织",
+          "全球制造与物流"
+        ]
+      },
+      "discordian": {
+        "firstImplemented": "1963 年（Principia Discordia）",
+        "history": "来自 Principia Discordia 的戏谑宗教历，与公历年对齐。每年五个 73 天季（Chaos、Discord、Confusion、Bureaucracy、The Aftermath）和五天周。闰年增加圣 Tib 日，介于 Chaos 59 与 60 之间。年份以 YOLD（Year of Our Lady of Discord）计数，为公历年加 1166。",
+        "usedIn": [
+          "Discordian 社区",
+          "互联网文化",
+          "反文化幽默"
+        ]
+      },
+      "julianDay": {
+        "firstImplemented": "1583 年（Scaliger）",
+        "history": "非民用历，而是天文学家和历史学家使用的连续日计数。儒略日 0 始于公元前 4713 年 1 月 1 日中午（前推儒略历）。在跨历法比较日期时可避免歧义。",
+        "usedIn": [
+          "天文学",
+          "空间科学",
+          "全球历史研究"
+        ]
+      }
+    }
+  },
+  "holidays": {
+    "bannerAria": "此日宗教节日",
+    "tradition": {
+      "christian": "基督教",
+      "jewish": "犹太教",
+      "islamic": "伊斯兰教"
+    },
+    "jewish": {
+      "roshHashanah": "犹太新年",
+      "yomKippur": "赎罪日",
+      "sukkot": "住棚节",
+      "hanukkah": "光明节",
+      "purim": "普珥节",
+      "passover": "逾越节",
+      "shavuot": "五旬节",
+      "tishaBAv": "圣殿毁灭日"
+    },
+    "christian": {
+      "epiphany": "主显节",
+      "christmas": "圣诞节",
+      "allSaintsDay": "诸圣节",
+      "ashWednesday": "圣灰星期三",
+      "palmSunday": "棕枝主日",
+      "goodFriday": "耶稣受难日",
+      "easterSunday": "复活节",
+      "ascensionDay": "耶稣升天节",
+      "pentecost": "圣灵降临节"
+    },
+    "islamic": {
+      "newYear": "伊斯兰新年",
+      "ashura": "阿舒拉节",
+      "mawlid": "圣纪节",
+      "ramadanStart": "斋月开始",
+      "laylatAlQadr": "盖德尔夜",
+      "eidAlFitr": "开斋节",
+      "eidAlAdha": "宰牲节",
+      "ramadan": "斋月"
+    }
+  }
+}

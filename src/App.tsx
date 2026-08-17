@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { syncWidgetData } from './lib/widgetData';
 import { AboutModal } from './components/AboutModal';
 import { DonateModal } from './components/DonateModal';
@@ -8,7 +9,6 @@ import { DatePickerModal } from './components/DatePickerModal';
 import { FullscreenDateView } from './components/FullscreenDateView';
 import { SettingsSheet } from './components/SettingsSheet';
 import { TopBar } from './components/TopBar';
-import { TapIndicator } from './components/TapIndicator';
 import { applyAppIcon } from './lib/appIcon';
 import {
   anchorFromPersistedState,
@@ -16,16 +16,25 @@ import {
   loadPersistedAppState,
   savePersistedAppState,
   setAppIcon,
+  setAppLanguagePreference,
   setIslamicCalendarMode,
   setIslamicDayAdjustment,
   setColorTheme,
+  setSupporterUnlocked,
+  setRememberLastOpenedDate,
   setTransliterateToEnglish,
   setUseModifiedJulianDay,
   toggleCalendarVisibility,
   toggleColorScheme,
+  type AppIconChoice,
   type AppSettings,
   type ColorTheme,
 } from './lib/appSettings';
+import {
+  isSupporterAppIcon,
+  isSupporterColorTheme,
+  SUPPORTER_COLOR_THEME,
+} from './lib/supporterPerks';
 import {
   getOrderedCalendarRows,
   shiftGregorianDate,
@@ -40,10 +49,17 @@ import { useAppReviewPrompt } from './hooks/useAppReviewPrompt';
 import { useTapHaptics } from './hooks/useTapHaptics';
 import { useThemeTransition } from './hooks/useThemeTransition';
 import { useViewportHeight } from './hooks/useViewportHeight';
+import { useAndroidViewportSync } from './hooks/useAndroidViewportSync';
+import { useAndroidSystemChrome } from './hooks/useAndroidSystemChrome';
 import { useSafeAreaInsets } from './hooks/useSafeAreaInsets';
+import { useAppLanguage } from './hooks/useAppLanguage';
+import { useSupporterUnlock } from './hooks/useSupporterUnlock';
+import { useSupporterThemeTilt } from './hooks/useSupporterThemeTilt';
+import { createCalendarCopy } from './i18n/calendarCopy';
 import './App.css';
 
 function App() {
+  const { t } = useTranslation();
   const [initialState] = useState(() => loadPersistedAppState());
   const [anchor, setAnchor] = useState<GregorianCalendar>(() => anchorFromPersistedState(initialState));
   const [order, setOrder] = useState<CalendarId[]>(() => initialState.calendarOrder);
@@ -59,9 +75,11 @@ function App() {
     textOriginRect: ViewportRect;
   } | null>(null);
 
+  const calendarCopy = useMemo(() => createCalendarCopy(t), [t]);
+
   const rows = useMemo(
-    () => getOrderedCalendarRows(order, anchor, settings),
-    [order, anchor, settings],
+    () => getOrderedCalendarRows(order, anchor, settings, calendarCopy),
+    [order, anchor, settings, calendarCopy],
   );
 
   const activeFullscreen = useMemo(() => {
@@ -112,8 +130,19 @@ function App() {
   const { isThemeTransitioning, themeTransitionDelays, beginThemeTransition } =
     useThemeTransition(visibleCalendarIds);
 
+  const grantSupporterUnlock = useCallback(() => {
+    updateSettings((current) =>
+      current.supporterUnlocked ? current : setSupporterUnlocked(current, true),
+    );
+  }, []);
+
   useDocumentTheme(settings);
+  useAppLanguage(settings.appLanguagePreference);
+  useSupporterUnlock(settings.supporterUnlocked, grantSupporterUnlock);
+  useSupporterThemeTilt(settings.colorTheme === SUPPORTER_COLOR_THEME);
   useViewportHeight();
+  useAndroidViewportSync();
+  useAndroidSystemChrome(settings);
   useSafeAreaInsets();
   useAppReviewPrompt();
   useTapHaptics();
@@ -129,9 +158,24 @@ function App() {
       return;
     }
 
+    if (!settings.supporterUnlocked && isSupporterColorTheme(value)) {
+      setDonateOpen(true);
+      return;
+    }
+
     beginThemeTransition(() => {
       updateSettings((current) => setColorTheme(current, value));
     });
+  };
+
+  const handleAppIconChange = (value: AppIconChoice) => {
+    if (!settings.supporterUnlocked && isSupporterAppIcon(value)) {
+      setDonateOpen(true);
+      return;
+    }
+
+    updateSettings((current) => setAppIcon(current, value));
+    void applyAppIcon(value);
   };
 
   return (
@@ -171,16 +215,24 @@ function App() {
         onUseModifiedJulianDayChange={(value) =>
           updateSettings((current) => setUseModifiedJulianDay(current, value))
         }
-        onAppIconChange={(value) => {
-          updateSettings((current) => setAppIcon(current, value));
-          void applyAppIcon(value);
+        onRememberLastOpenedDateChange={(value) => {
+          updateSettings((current) => setRememberLastOpenedDate(current, value));
+          if (!value) {
+            setAnchor(todayGregorianDate());
+          }
         }}
+        onAppIconChange={handleAppIconChange}
+        onRequestSupporterUnlock={() => setDonateOpen(true)}
+        onAppLanguageChange={(value) =>
+          updateSettings((current) => setAppLanguagePreference(current, value))
+        }
         onAboutOpen={() => setAboutOpen(true)}
       />
       <CalendarList
         order={order}
         anchor={anchor}
         settings={settings}
+        calendarCopy={calendarCopy}
         themeTransitionDelays={themeTransitionDelays}
         onReorder={setOrder}
         onInfoClick={setInfoCalendarId}
@@ -193,7 +245,11 @@ function App() {
         }
         fullscreenCalendarId={activeFullscreen?.row.entry.id ?? null}
       />
-      <DonateModal open={donateOpen} onClose={() => setDonateOpen(false)} />
+      <DonateModal
+        open={donateOpen}
+        onClose={() => setDonateOpen(false)}
+        onSupporterUnlock={grantSupporterUnlock}
+      />
       <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
       <CalendarInfoModal
         calendarId={infoCalendarId}
@@ -221,7 +277,6 @@ function App() {
           onClose={() => setFullscreen(null)}
         />
       ) : null}
-      <TapIndicator />
     </div>
   );
 }

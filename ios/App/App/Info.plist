@@ -66,5 +66,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSMotionUsageDescription</key>
+	<string>Almaniac adjusts supporter theme colors as you tilt your device.</string>
 </dict>
 </plist>
