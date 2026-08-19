@@ -272,12 +272,8 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
   );
   const regularFields = fields.filter((field) => !mayaFields.includes(field));
 
-  if (!open) {
-    return null;
-  }
-
   return (
-    <div className="date-modal date-modal--visible" aria-hidden={false}>
+    <div className={`date-modal${open ? ' date-modal--visible' : ''}`} aria-hidden={!open}>
       <button type="button" className="date-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
       <div
         className="date-modal__panel"

@@ -244,7 +244,7 @@ html.platform-native .settings-sheet {
   border: none;
   background: rgba(0, 0, 0, 0.52);
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 300ms ease;
 }
 
 .date-modal--visible .date-modal__backdrop {
@@ -261,10 +261,10 @@ html.platform-native .settings-sheet {
   color: var(--overlay-surface-fg);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
   opacity: 0;
-  transform: translateY(1rem) scale(0.98);
+  transform: translateY(1.25rem) scale(0.97);
   transition:
-    opacity 220ms ease,
-    transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 320ms ease,
+    transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .date-modal__panel,
@@ -577,7 +577,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
   border: none;
   background: rgba(0, 0, 0, 0.52);
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 300ms ease;
 }
 
 .donate-modal--visible .donate-modal__backdrop {
@@ -594,10 +594,10 @@ html[data-color-scheme='dark'] .info-modal__panel {
   color: var(--overlay-surface-fg);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
   opacity: 0;
-  transform: translateY(1rem) scale(0.98);
+  transform: translateY(1.25rem) scale(0.97);
   transition:
-    opacity 220ms ease,
-    transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 320ms ease,
+    transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .donate-modal--visible .donate-modal__panel {
@@ -879,7 +879,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
   border: none;
   background: rgba(0, 0, 0, 0.52);
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 300ms ease;
 }
 
 .donation-thank-you--visible .donation-thank-you__backdrop {
@@ -897,10 +897,10 @@ html[data-color-scheme='dark'] .info-modal__panel {
   box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.22);
   text-align: center;
   opacity: 0;
-  transform: translateY(0.75rem) scale(0.98);
+  transform: translateY(1rem) scale(0.97);
   transition:
-    opacity 220ms ease,
-    transform 220ms ease;
+    opacity 320ms ease,
+    transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .donation-thank-you--visible .donation-thank-you__panel {
@@ -989,7 +989,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
   border: none;
   background: rgba(0, 0, 0, 0.52);
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 300ms ease;
 }
 
 .about-modal--visible .about-modal__backdrop {
@@ -1009,10 +1009,10 @@ html[data-color-scheme='dark'] .info-modal__panel {
   color: var(--overlay-surface-fg);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
   opacity: 0;
-  transform: translateY(1rem) scale(0.98);
+  transform: translateY(1.25rem) scale(0.97);
   transition:
-    opacity 220ms ease,
-    transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 320ms ease,
+    transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .about-modal--visible .about-modal__panel {
@@ -1931,7 +1931,7 @@ html[data-color-scheme='dark'] .fullscreen-date__expand,
   background: rgba(0, 0, 0, 0.45);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 220ms ease;
+  transition: opacity 300ms ease;
 }
 
 .sheet-backdrop--open {

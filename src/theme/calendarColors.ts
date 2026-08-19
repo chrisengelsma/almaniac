@@ -97,22 +97,24 @@ export function resolveCalendarColors(
 }
 
 export function getWidgetTextColor(
-  backgroundColor: string,
+  _backgroundColor: string,
   context: Pick<CalendarColorContext, 'colorTheme' | 'colorScheme'>,
 ): string {
+  // Widget backgrounds stay light for mono/sepia/distinct even in dark mode,
+  // so text must contrast with the row color — not mirror fullscreen view colors.
   if (context.colorTheme === 'mono') {
-    return context.colorScheme === 'dark' ? '#f5f5f5' : '#212121';
+    return '#212121';
   }
 
   if (context.colorTheme === 'sepia') {
-    return context.colorScheme === 'dark' ? '#e8dcc8' : '#3d2f1f';
+    return '#3d2f1f';
   }
 
   if (context.colorTheme === 'supporter') {
     return context.colorScheme === 'dark' ? '#e8fff9' : '#263238';
   }
 
-  return context.colorScheme === 'dark' ? backgroundColor : '#263238';
+  return '#263238';
 }
 
 export function getCalendarColor(

@@ -203,12 +203,8 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
   const bannerAttribution = getBannerAttribution(renderedId);
   const mapColors = getCalendarMapColors(renderedId, calendarColorContext(settings));
 
-  if (!renderedId || !visible) {
-    return null;
-  }
-
   return (
-    <div className="info-modal info-modal--visible" role="presentation">
+    <div className={`info-modal${visible ? ' info-modal--visible' : ''}`} role="presentation" aria-hidden={!visible}>
       <button
         type="button"
         className="info-modal__backdrop"

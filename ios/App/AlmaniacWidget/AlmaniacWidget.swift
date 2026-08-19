@@ -58,29 +58,96 @@ struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
     }
 }
 
-struct AlmaniacWidgetEntryView: View {
-    @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.widgetFamily) private var family
-    var entry: AlmaniacWidgetProvider.Entry
+private enum WidgetColorParser {
+    static func color(from hex: String, fallback: Color = Color(red: 0.89, green: 0.92, blue: 0.72)) -> Color {
+        var sanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if sanitized.hasPrefix("#") {
+            sanitized.removeFirst()
+        }
 
-    private var backgroundColor: Color {
-        color(from: resolvedThemeColors.background)
+        guard sanitized.count == 6, let value = UInt64(sanitized, radix: 16) else {
+            return fallback
+        }
+
+        let red = Double((value >> 16) & 0xFF) / 255.0
+        let green = Double((value >> 8) & 0xFF) / 255.0
+        let blue = Double(value & 0xFF) / 255.0
+        return Color(red: red, green: green, blue: blue)
     }
 
-    private var textColor: Color {
-        color(from: resolvedThemeColors.text)
+    static func normalizedHex(_ hex: String) -> String {
+        var sanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if sanitized.hasPrefix("#") {
+            sanitized.removeFirst()
+        }
+        return sanitized
     }
 
-    private var resolvedThemeColors: (background: String, text: String) {
+    static func relativeLuminance(for hex: String) -> Double {
+        let sanitized = normalizedHex(hex)
+        guard sanitized.count == 6, let value = UInt64(sanitized, radix: 16) else {
+            return 0.5
+        }
+
+        let red = Double((value >> 16) & 0xFF) / 255.0
+        let green = Double((value >> 8) & 0xFF) / 255.0
+        let blue = Double(value & 0xFF) / 255.0
+        return 0.299 * red + 0.587 * green + 0.114 * blue
+    }
+
+    static func contrastingText(for backgroundHex: String, proposedTextHex: String) -> String {
+        if normalizedHex(backgroundHex) == normalizedHex(proposedTextHex) {
+            return relativeLuminance(for: backgroundHex) > 0.55 ? "#263238" : "#f5f5f5"
+        }
+        return proposedTextHex
+    }
+
+    static func themeColors(
+        for entry: AlmaniacWidgetEntry,
+        colorScheme: ColorScheme
+    ) -> (background: String, text: String) {
         guard let data = WidgetDataStore.calendarData(for: entry.calendarId) else {
             return ("#e3eab8", "#263238")
         }
 
-        return WidgetDataStore.themeColors(
+        let colors = WidgetDataStore.themeColors(
             for: data,
             colorTheme: entry.colorTheme,
             isDark: colorScheme == .dark
         )
+        return (
+            colors.background,
+            contrastingText(for: colors.background, proposedTextHex: colors.text)
+        )
+    }
+}
+
+struct AlmaniacWidgetEntryView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.widgetFamily) private var family
+    @Environment(\.widgetRenderingMode) private var renderingMode
+    var entry: AlmaniacWidgetProvider.Entry
+
+    private var resolvedThemeColors: (background: String, text: String) {
+        WidgetColorParser.themeColors(for: entry, colorScheme: colorScheme)
+    }
+
+    private var textColor: Color {
+        WidgetColorParser.color(from: resolvedThemeColors.text, fallback: Color(red: 0.15, green: 0.2, blue: 0.22))
+    }
+
+    private var usesAccentedRendering: Bool {
+        renderingMode == .accented
+    }
+
+    private var displayDateText: String {
+        let trimmed = entry.displayDate.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? "Open Almaniac to refresh" : trimmed
+    }
+
+    private var calendarNameText: String {
+        let trimmed = entry.calendarName.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? "Almaniac" : trimmed
     }
 
     private var dateFont: Font {
@@ -118,20 +185,22 @@ struct AlmaniacWidgetEntryView: View {
 
     var body: some View {
         ZStack {
-            Text(entry.displayDate)
+            Text(displayDateText)
                 .font(dateFont)
                 .fontWeight(.bold)
-                .foregroundStyle(textColor)
+                .foregroundStyle(usesAccentedRendering ? Color.primary : textColor)
+                .widgetAccentable(usesAccentedRendering)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.6)
                 .lineLimit(family == .systemSmall ? 3 : 4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
             VStack {
-                Text(entry.calendarName)
+                Text(calendarNameText)
                     .font(calendarNameFont)
                     .fontWeight(.semibold)
-                    .foregroundStyle(textColor.opacity(0.8))
+                    .foregroundStyle(usesAccentedRendering ? Color.secondary : textColor.opacity(0.8))
+                    .widgetAccentable(usesAccentedRendering)
                     .multilineTextAlignment(.center)
                     .lineLimit(family == .systemSmall ? 2 : 3)
                     .minimumScaleFactor(0.75)
@@ -141,60 +210,21 @@ struct AlmaniacWidgetEntryView: View {
             }
         }
         .padding(contentPadding)
-        .background(backgroundColor)
-    }
-
-    private func color(from hex: String) -> Color {
-        var sanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        if sanitized.hasPrefix("#") {
-            sanitized.removeFirst()
-        }
-
-        guard sanitized.count == 6, let value = UInt64(sanitized, radix: 16) else {
-            return Color(red: 0.89, green: 0.92, blue: 0.72)
-        }
-
-        let red = Double((value >> 16) & 0xFF) / 255.0
-        let green = Double((value >> 8) & 0xFF) / 255.0
-        let blue = Double(value & 0xFF) / 255.0
-        return Color(red: red, green: green, blue: blue)
     }
 }
 
 struct WidgetThemeBackground: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.widgetRenderingMode) private var renderingMode
     let entry: AlmaniacWidgetEntry
 
-    var body: some View {
-        color(from: resolvedThemeColors.background)
-    }
-
     private var resolvedThemeColors: (background: String, text: String) {
-        guard let data = WidgetDataStore.calendarData(for: entry.calendarId) else {
-            return ("#e3eab8", "#263238")
-        }
-
-        return WidgetDataStore.themeColors(
-            for: data,
-            colorTheme: entry.colorTheme,
-            isDark: colorScheme == .dark
-        )
+        WidgetColorParser.themeColors(for: entry, colorScheme: colorScheme)
     }
 
-    private func color(from hex: String) -> Color {
-        var sanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        if sanitized.hasPrefix("#") {
-            sanitized.removeFirst()
-        }
-
-        guard sanitized.count == 6, let value = UInt64(sanitized, radix: 16) else {
-            return Color(red: 0.89, green: 0.92, blue: 0.72)
-        }
-
-        let red = Double((value >> 16) & 0xFF) / 255.0
-        let green = Double((value >> 8) & 0xFF) / 255.0
-        let blue = Double(value & 0xFF) / 255.0
-        return Color(red: red, green: green, blue: blue)
+    var body: some View {
+        WidgetColorParser.color(from: resolvedThemeColors.background)
+            .opacity(renderingMode == .accented ? 0.28 : 1)
     }
 }
 

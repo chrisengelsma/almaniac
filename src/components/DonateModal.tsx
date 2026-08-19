@@ -105,24 +105,12 @@ export function DonateModal({
     window.open(getAppReviewUrl(), '_blank', 'noopener,noreferrer');
   };
 
-  if (!open) {
-    return null;
-  }
-
-  if (thankYouOpen) {
-    return (
-      <DonationThankYouModal
-        open
-        onClose={() => {
-          setThankYouOpen(false);
-          onClose();
-        }}
-      />
-    );
-  }
-
   return (
-    <div className="donate-modal donate-modal--visible" aria-hidden={false}>
+    <>
+      <div
+        className={`donate-modal${open && !thankYouOpen ? ' donate-modal--visible' : ''}`}
+        aria-hidden={!(open && !thankYouOpen)}
+      >
       <button type="button" className="donate-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
       <div
         className="donate-modal__panel"
@@ -218,6 +206,14 @@ export function DonateModal({
           </button>
         </footer>
       </div>
-    </div>
+      </div>
+      <DonationThankYouModal
+        open={open && thankYouOpen}
+        onClose={() => {
+          setThankYouOpen(false);
+          onClose();
+        }}
+      />
+    </>
   );
 }

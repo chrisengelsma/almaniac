@@ -452,24 +452,24 @@ export function SettingsSheet({
 
   return (
     <>
-      {open ? (
-        <>
-          <button
-            type="button"
-            className="sheet-backdrop sheet-backdrop--open"
-            onClick={onClose}
-            aria-label={t('settings.closeAria')}
-          />
-          <aside
-            ref={sheetRef}
-            className="settings-sheet settings-sheet--open"
-            style={sheetStyle}
-            aria-hidden={false}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="settings-sheet-title"
-            tabIndex={-1}
-          >
+      <button
+        type="button"
+        className={`sheet-backdrop${open ? ' sheet-backdrop--open' : ''}`}
+        onClick={onClose}
+        aria-label={t('settings.closeAria')}
+        aria-hidden={!open}
+        tabIndex={open ? 0 : -1}
+      />
+      <aside
+        ref={sheetRef}
+        className={`settings-sheet${open ? ' settings-sheet--open' : ''}`}
+        style={sheetStyle}
+        aria-hidden={!open}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settings-sheet-title"
+        tabIndex={-1}
+      >
         <div className="settings-sheet__header">
           <div
             className="settings-sheet__handle"
@@ -636,9 +636,7 @@ export function SettingsSheet({
             </section>
           )}
         </div>
-          </aside>
-        </>
-      ) : null}
+      </aside>
     </>
   );
 }

@@ -33,12 +33,8 @@ export function DonationThankYouModal({ open, onClose }: DonationThankYouModalPr
     };
   }, [open, onClose]);
 
-  if (!open) {
-    return null;
-  }
-
   return (
-    <div className="donation-thank-you donation-thank-you--visible" aria-hidden={false}>
+    <div className={`donation-thank-you${open ? ' donation-thank-you--visible' : ''}`} aria-hidden={!open}>
       <button
         type="button"
         className="donation-thank-you__backdrop"

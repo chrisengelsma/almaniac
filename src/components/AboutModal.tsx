@@ -38,12 +38,8 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
     };
   }, [open, onClose]);
 
-  if (!open) {
-    return null;
-  }
-
   return (
-    <div className="about-modal about-modal--visible" aria-hidden={false}>
+    <div className={`about-modal${open ? ' about-modal--visible' : ''}`} aria-hidden={!open}>
       <button type="button" className="about-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
       <div
         className="about-modal__panel"
