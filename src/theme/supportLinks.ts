@@ -43,6 +43,9 @@ export function getExternalTipUrl(tier: TipTier): string {
 }
 
 export const SITE_URL = 'https://engelsma.dev';
+export const ALMANIAC_BASE_URL = 'https://engelsma.dev/apps/almaniac';
+export const PRIVACY_POLICY_URL = `${ALMANIAC_BASE_URL}/privacy.html`;
+export const TERMS_OF_SERVICE_URL = `${ALMANIAC_BASE_URL}/terms.html`;
 
 export const APP_PACKAGE_ID = 'app.engelsma.almaniac';
 

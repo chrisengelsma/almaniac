@@ -1115,21 +1115,31 @@ html[data-color-scheme='dark'] .info-modal__panel {
   text-align: center;
 }
 
-.about-modal__site-link a {
+.about-modal__legal-links {
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.about-modal__site-link a,
+.about-modal__legal-links a {
   font-size: 0.875rem;
   color: rgba(38, 50, 56, 0.55);
   text-decoration: none;
 }
 
-.about-modal__site-link a:hover {
+.about-modal__site-link a:hover,
+.about-modal__legal-links a:hover {
   color: rgba(38, 50, 56, 0.9);
 }
 
-html[data-color-scheme='dark'] .about-modal__site-link a {
+html[data-color-scheme='dark'] .about-modal__site-link a,
+html[data-color-scheme='dark'] .about-modal__legal-links a {
   color: rgba(236, 239, 241, 0.55);
 }
 
-html[data-color-scheme='dark'] .about-modal__site-link a:hover {
+html[data-color-scheme='dark'] .about-modal__site-link a:hover,
+html[data-color-scheme='dark'] .about-modal__legal-links a:hover {
   color: rgba(236, 239, 241, 0.9);
 }
 

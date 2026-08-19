@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { APP_VERSION } from '../theme/appBranding';
-import { SITE_URL } from '../theme/supportLinks';
+import { PRIVACY_POLICY_URL, SITE_URL, TERMS_OF_SERVICE_URL } from '../theme/supportLinks';
 import { getAllBannerAttributions } from '../data/imageAttributions';
 import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 
@@ -110,6 +110,16 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           <p className="about-modal__site-link">
             <a href={SITE_URL} target="_blank" rel="noopener noreferrer">
               engelsma.dev
+            </a>
+          </p>
+
+          <p className="about-modal__legal-links">
+            <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer">
+              {t('modals.about.privacyPolicy')}
+            </a>
+            <span aria-hidden="true"> · </span>
+            <a href={TERMS_OF_SERVICE_URL} target="_blank" rel="noopener noreferrer">
+              {t('modals.about.termsOfService')}
             </a>
           </p>
 
