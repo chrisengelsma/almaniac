@@ -20,7 +20,6 @@ import {
   MinguoCalendar,
   IsoWeekCalendar,
   DiscordianCalendar,
-  JulianDay,
 } from 'calendar-converter/calendars';
 import { toIslamicCalendar, toJulianDay } from 'calendar-converter/services';
 import type { MayaLongCountParts } from '../components/MayaLongCount';
@@ -66,6 +65,7 @@ import {
 } from './nativeCalendarText';
 import type { CalendarCopy } from '../i18n/calendarCopy';
 import { calendarColorContext, getCalendarColor } from '../theme/calendarColors';
+import { displayJulianDay } from './julianDayValue';
 import { getReligiousHolidays, type HolidayTradition, type ReligiousHoliday } from './religiousHolidays';
 
 export type CalendarId =
@@ -298,6 +298,7 @@ function buildCalendarEntry(
   anchor: GregorianCalendar,
   settings: AppSettings,
   copy: CalendarCopy,
+  at?: Date,
 ): CalendarEntry {
   let calendar = buildCalendar(id, anchor, settings);
 
@@ -322,11 +323,7 @@ function buildCalendarEntry(
   };
 
   if (id === 'julianDay') {
-    const jd = toJulianDay(anchor);
-    const displayValue = settings.useModifiedJulianDay
-      ? jd.value - JulianDay.Epoch.value
-      : jd.value;
-    entry.date = String(displayValue);
+    entry.date = displayJulianDay(anchor, settings.useModifiedJulianDay, at);
   }
 
   if (id === 'maya') {
@@ -401,6 +398,7 @@ export function getOrderedCalendarRows(
   anchor: GregorianCalendar,
   settings: AppSettings,
   copy: CalendarCopy,
+  at?: Date,
 ): CalendarRowData[] {
   const holidays = getReligiousHolidays(anchor, settings);
   const context = calendarColorContext(settings);
@@ -411,7 +409,7 @@ export function getOrderedCalendarRows(
     const visibleIndex = visibleOrder.indexOf(id);
 
     return {
-      entry: buildCalendarEntry(id, anchor, settings, copy),
+      entry: buildCalendarEntry(id, anchor, settings, copy, at),
       visible,
       backgroundColor: getCalendarColor(
         id,
@@ -430,8 +428,9 @@ export function getCalendarEntries(
   anchor: GregorianCalendar,
   settings: AppSettings,
   copy: CalendarCopy,
+  at?: Date,
 ): CalendarEntry[] {
-  return getOrderedCalendarRows(order, anchor, settings, copy)
+  return getOrderedCalendarRows(order, anchor, settings, copy, at)
     .filter((row) => row.visible)
     .map((row) => row.entry);
 }

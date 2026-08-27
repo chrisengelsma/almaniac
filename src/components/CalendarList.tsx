@@ -34,6 +34,7 @@ interface CalendarListProps {
   anchor: GregorianCalendar;
   settings: AppSettings;
   calendarCopy: CalendarCopy;
+  julianDayAt?: Date;
   themeTransitionDelays?: ThemeTransitionDelays | null;
   onReorder: (order: CalendarId[]) => void;
   onInfoClick: (id: CalendarId) => void;
@@ -46,6 +47,7 @@ export function CalendarList({
   anchor,
   settings,
   calendarCopy,
+  julianDayAt,
   themeTransitionDelays = null,
   onReorder,
   onInfoClick,
@@ -59,7 +61,7 @@ export function CalendarList({
   const [showAddHint, setShowAddHint] = useState(false);
   const [fillsViewport, setFillsViewport] = useState(true);
   const [isEntering, setIsEntering] = useState(true);
-  const visibleRows = getOrderedCalendarRows(order, anchor, settings, calendarCopy).filter(
+  const visibleRows = getOrderedCalendarRows(order, anchor, settings, calendarCopy, julianDayAt).filter(
     (row) => row.visible,
   );
   const hasHiddenCalendars = visibleRows.length < DEFAULT_CALENDAR_ORDER.length;

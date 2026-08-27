@@ -56,7 +56,9 @@ import { useSafeAreaInsets } from './hooks/useSafeAreaInsets';
 import { useAppLanguage } from './hooks/useAppLanguage';
 import { useSupporterUnlock } from './hooks/useSupporterUnlock';
 import { useSupporterThemeTilt } from './hooks/useSupporterThemeTilt';
+import { useSecondClock } from './hooks/useSecondClock';
 import { createCalendarCopy } from './i18n/calendarCopy';
+import { isSameGregorianDay } from './lib/julianDayValue';
 import './App.css';
 
 function App() {
@@ -77,10 +79,21 @@ function App() {
   } | null>(null);
 
   const calendarCopy = useMemo(() => createCalendarCopy(t), [t]);
+  const julianDayTickActive =
+    settings.visibleCalendars.julianDay &&
+    isSameGregorianDay(anchor, todayGregorianDate());
+  const now = useSecondClock(julianDayTickActive);
 
   const rows = useMemo(
-    () => getOrderedCalendarRows(order, anchor, settings, calendarCopy),
-    [order, anchor, settings, calendarCopy],
+    () =>
+      getOrderedCalendarRows(
+        order,
+        anchor,
+        settings,
+        calendarCopy,
+        julianDayTickActive ? now : undefined,
+      ),
+    [order, anchor, settings, calendarCopy, julianDayTickActive, now],
   );
 
   const activeFullscreen = useMemo(() => {
@@ -237,6 +250,7 @@ function App() {
         anchor={anchor}
         settings={settings}
         calendarCopy={calendarCopy}
+        julianDayAt={julianDayTickActive ? now : undefined}
         themeTransitionDelays={themeTransitionDelays}
         onReorder={setOrder}
         onInfoClick={setInfoCalendarId}
