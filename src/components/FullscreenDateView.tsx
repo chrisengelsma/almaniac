@@ -5,8 +5,9 @@ import type { ColorScheme, ColorTheme } from '../lib/appSettings';
 import { calendarTextClassName, calendarTextStyle } from '../lib/calendarTextStyle';
 import type { CalendarRowData } from '../lib/calendarRegistry';
 import {
-  measureFullscreenFit,
+  fitMayaFullscreenInscription,
   maxFullscreenFontPx,
+  measureFullscreenFit,
 } from '../lib/fitFullscreenText';
 import {
   fullscreenScaleVars,
@@ -123,10 +124,15 @@ export function FullscreenDateView({
       return;
     }
 
+    if (entry.mayaLongCount) {
+      fitMayaFullscreenInscription(wrap, orient, text);
+      return;
+    }
+
     const { fontSizePx, scale } = measureFullscreenFit(wrap, orient, text);
     text.style.fontSize = `${fontSizePx}px`;
     orient.style.transform = `scale(${scale})`;
-  }, [isExpanded]);
+  }, [isExpanded, entry.mayaLongCount]);
 
   const scheduleFit = useCallback(() => {
     if (fitFrameRef.current != null) {
@@ -148,6 +154,8 @@ export function FullscreenDateView({
     }
 
     scheduleFit();
+    const settleFit = window.setTimeout(scheduleFit, 650);
+    return () => window.clearTimeout(settleFit);
   }, [isExpanded, scheduleFit]);
 
   useEffect(() => {
@@ -303,7 +311,14 @@ export function FullscreenDateView({
             aria-label={entry.mayaLongCount ? dateText : undefined}
           >
             {entry.mayaLongCount ? (
-              <MayaLongCount parts={entry.mayaLongCount} />
+              <MayaLongCount
+                parts={entry.mayaLongCount}
+                expanded
+                useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
+                tzolkin={entry.mayaTzolkin}
+                haab={entry.mayaHaab}
+                lordOfNight={entry.mayaLordOfNight}
+              />
             ) : (
               dateText
             )}

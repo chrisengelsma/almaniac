@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "Umm al-Qura (resmi Saudi)",
     "islamicAdjustmentLabel": "Penyesuaian Hari Kalender Islam",
     "islamicGroupAria": "Pengaturan kalender Islam",
+    "mayaUseHieroglyphsLabel": "Gunakan hieroglif",
+    "mayaUseHieroglyphsToggle": "Gunakan hieroglif",
+    "mayaGroupAria": "Pengaturan kalender Maya",
     "julianDayLabel": "Hari Julian Diubah",
     "julianDayToggle": "Gunakan Hari Julian Diubah",
     "julianDayGroupAria": "Pengaturan Hari Julian",
@@ -81,7 +84,7 @@
       "coffee": "Anda juga boleh membelikan saya kopi sebagai ucapan terima kasih. Bagaimanapun, terima kasih telah menggunakan Almaniac.",
       "thanks": "Terima kasih telah menggunakan Almaniac.",
       "storeAppStore": "di App Store",
-      "storeGooglePlay": "di Google Play",
+      "storePlayStore": "di Play Store",
       "rateButton": "Beri 5 bintang {{store}}",
       "tipsAria": "Tip opsional",
       "loadingTips": "Memuat opsi tip…",
@@ -140,8 +143,8 @@
           "aboutNote": "Spanduk kalender Wareki Jepang adalah karya turunan yang diadaptasi dari foto sumber di bawah ini. "
         },
         "maya": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "Spanduk kalender Islam adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "Spanduk kalender Maya adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. Di bawah ketentuan ShareAlike sumber CC BY-SA 2.0, spanduk yang diadaptasi ditawarkan di bawah CC BY-SA 2.0."
         },
         "hebrew": {
           "subjects": "Maimonides | Kota Tua Yerusalem",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "Spanduk kalender Minguo adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "Spanduk kalender Islam adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. Di bawah ketentuan ShareAlike sumber CC BY-SA 4.0, spanduk yang diadaptasi ditawarkan di bawah CC BY-SA 4.0."
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "Diadopsi pada {{year}}",
       "julianAdoptedIn": "Diadopsi pada {{yearLabel}}",
       "julianStoppedIn": "Berhenti digunakan pada {{yearLabel}}",
-      "mapAria": "Peta dunia yang menunjukkan penggunaan kalender"
+      "mapAria": "Peta dunia yang menunjukkan penggunaan kalender",
+      "maya": {
+        "sectionAria": "Informasi kalender Maya",
+        "tabsAria": "Tampilan kalender Maya",
+        "glyphsTab": "Glif & simbol",
+        "glyphsIntro": "Tanggal Maya Klasik menggabungkan beberapa rangkaian simbol. Almaniac menggunakan glif dari Konverter Kalender Maya Smithsonian, ditampilkan di sini beserta namanya.",
+        "glyphsCredit": "Glif dari Konverter Kalender Maya Museum Nasional Indian Amerika (Smithsonian).",
+        "sections": {
+          "longCount": "Periode Long Count",
+          "longCountDesc": "Setiap posisi dalam Long Count memiliki glif periode sendiri, dibaca dari unit terbesar (baktun) ke terkecil (kin).",
+          "numerals": "Angka",
+          "numeralsDesc": "Angka Maya memakai sistem basis dua puluh, dengan titik untuk satu dan bilah untuk lima. Nol memiliki tanda cangkang sendiri.",
+          "tzolkin": "Tanda hari Tzolk'in",
+          "tzolkinDesc": "Kalender suci 260 hari memasangkan angka (1–13) dengan salah satu dari dua puluh tanda hari ini. Setiap tanda juga merupakan nahual — teman spiritual yang disebutkan di bawah.",
+          "haab": "Bulan Haab",
+          "haabDesc": "Kalender sipil 365 hari memiliki delapan belas bulan berisi dua puluh hari, ditambah bulan pendek Wayeb di akhir tahun.",
+          "lords": "Penguasa Malam",
+          "lordsDesc": "Siklus sembilan hari yang menyertai tanggal bundar. Nama epigrafis digunakan jika diketahui; G1–G9 adalah label ilmiah."
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "Tentang {{label}}",
     "fullscreenAriaView": "Tanggal {{label}} layar penuh",
     "tapToClose": "Ketuk lagi untuk menutup",
+    "maya": {
+      "haab": "Haab",
+      "tzolkin": "Tzolk'in",
+      "lordOfTheNight": "Penguasa Malam",
+      "nahual": "Nahual"
+    },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabular",
     "chineseZodiacYear": "Tahun {{zodiac}}, {{pinyin}}",

@@ -24,7 +24,9 @@ import {
 } from 'calendar-converter/calendars';
 import { toIslamicCalendar, toJulianDay } from 'calendar-converter/services';
 import type { MayaLongCountParts } from '../components/MayaLongCount';
+import type { MayaHaabParts, MayaLordOfNight, MayaTzolkinParts } from './mayaRounds';
 import type { AppSettings } from './appSettings';
+import { getMayaParts } from './mayaRounds';
 import {
   formatChineseEnglish,
   formatChineseNative,
@@ -96,6 +98,11 @@ export interface CalendarEntry {
   date: string;
   scriptFont: ScriptFont;
   mayaLongCount?: MayaLongCountParts;
+  mayaUseGlyphs?: boolean;
+  mayaUseHieroglyphs?: boolean;
+  mayaHaab?: MayaHaabParts;
+  mayaTzolkin?: MayaTzolkinParts;
+  mayaLordOfNight?: MayaLordOfNight;
   detailLabel?: string;
   detailScriptFont?: ScriptFont;
 }
@@ -322,9 +329,28 @@ function buildCalendarEntry(
     entry.date = String(displayValue);
   }
 
-  if (id === 'maya' && !settings.transliterateToEnglish) {
+  if (id === 'maya') {
     const maya = calendar as MayaCalendar;
-    entry.mayaLongCount = [maya.baktun, maya.katun, maya.tun, maya.uinal, maya.kin];
+    const round = getMayaParts(maya);
+    entry.weekday = round.haab.label;
+    entry.detailLabel = round.tzolkin.label;
+    entry.mayaHaab = {
+      day: round.haab.day,
+      monthIndex: round.haab.monthIndex,
+      label: round.haab.label,
+    };
+    entry.mayaTzolkin = {
+      number: round.tzolkin.number,
+      dayIndex: round.tzolkin.dayIndex,
+      label: round.tzolkin.label,
+    };
+    entry.mayaLordOfNight = round.lordOfNight;
+    entry.mayaUseGlyphs = !settings.transliterateToEnglish;
+    entry.mayaUseHieroglyphs = settings.mayaUseHieroglyphs;
+    entry.detailScriptFont = 'latin';
+    if (entry.mayaUseGlyphs) {
+      entry.mayaLongCount = [maya.baktun, maya.katun, maya.tun, maya.uinal, maya.kin];
+    }
   }
 
   if (id === 'islamic') {

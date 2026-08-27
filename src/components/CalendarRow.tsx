@@ -7,6 +7,7 @@ import { calendarTextClassName, calendarTextStyle } from '../lib/calendarTextSty
 import type { CalendarRowData } from '../lib/calendarRegistry';
 import { DragHandle } from './DragHandle';
 import { MayaLongCount } from './MayaLongCount';
+import { MayaHaabDate, MayaLordOfNight, MayaTzolkinDate } from './MayaRoundDate';
 
 interface CalendarRowProps {
   row: CalendarRowData;
@@ -123,7 +124,10 @@ export function CalendarRow({
             aria-label={entry.mayaLongCount ? dateText : undefined}
           >
             {entry.mayaLongCount ? (
-              <MayaLongCount parts={entry.mayaLongCount} />
+              <MayaLongCount
+                parts={entry.mayaLongCount}
+                useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
+              />
             ) : (
               dateText
             )}
@@ -149,19 +153,40 @@ export function CalendarRow({
               {holidayNames.join(' · ')}
             </div>
           ) : null}
+          {entry.mayaLordOfNight && !entry.mayaUseGlyphs ? (
+            <div className="calendar-row__center-top">
+              <MayaLordOfNight {...entry.mayaLordOfNight} transliterated />
+            </div>
+          ) : null}
           <div className="calendar-row__meta">
             {entry.weekday ? (
-              <span className="calendar-row__weekday" style={scriptStyle}>
-                {entry.weekday}
-              </span>
+              entry.mayaHaab ? (
+                <MayaHaabDate
+                  {...entry.mayaHaab}
+                  transliterated={!entry.mayaUseGlyphs}
+                  useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
+                />
+              ) : (
+                <span className="calendar-row__weekday" style={scriptStyle}>
+                  {entry.weekday}
+                </span>
+              )
             ) : null}
             <span className="calendar-row__calendar-name">{entry.calendarName}</span>
           </div>
           {entry.detailLabel ? (
             <div className="calendar-row__meta calendar-row__meta--bottom">
-              <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle}>
-                {entry.detailLabel}
-              </span>
+              {entry.mayaTzolkin ? (
+                <MayaTzolkinDate
+                  {...entry.mayaTzolkin}
+                  transliterated={!entry.mayaUseGlyphs}
+                  useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
+                />
+              ) : (
+                <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle}>
+                  {entry.detailLabel}
+                </span>
+              )}
             </div>
           ) : null}
           <div className="calendar-row__actions">
@@ -185,7 +210,11 @@ export function CalendarRow({
               onClick={handleFullscreen}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" />
+                <rect x="8" y="8" width="8" height="8" rx="1" />
+                <path d="M4 9V4h5" />
+                <path d="M15 4h5v5" />
+                <path d="M20 15v5h-5" />
+                <path d="M9 20H4v-5" />
               </svg>
             </button>
             <button

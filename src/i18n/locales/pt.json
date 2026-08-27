@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "Umm al-Qura (oficial da Arábia Saudita)",
     "islamicAdjustmentLabel": "Ajuste de dia do calendário islâmico",
     "islamicGroupAria": "Configurações do calendário islâmico",
+    "mayaUseHieroglyphsLabel": "Usar hieróglifos",
+    "mayaUseHieroglyphsToggle": "Usar hieróglifos",
+    "mayaGroupAria": "Configurações do calendário maia",
     "julianDayLabel": "Dia juliano modificado",
     "julianDayToggle": "Usar dia juliano modificado",
     "julianDayGroupAria": "Configurações do dia juliano",
@@ -81,7 +84,7 @@
       "coffee": "Você também pode me pagar um café como agradecimento. De qualquer forma, obrigado por usar o Almaniac.",
       "thanks": "Obrigado por usar o Almaniac.",
       "storeAppStore": "na App Store",
-      "storeGooglePlay": "no Google Play",
+      "storePlayStore": "no Play Store",
       "rateButton": "Avaliar com 5 estrelas {{store}}",
       "tipsAria": "Gorjetas opcionais",
       "loadingTips": "Carregando opções de gorjeta…",
@@ -140,8 +143,8 @@
           "aboutNote": "O banner do calendário japonês Wareki é uma obra derivada adaptada das fotografias-fonte abaixo. "
         },
         "maya": {
-          "subjects": "Al-Biruni | Meca",
-          "aboutNote": "O banner do calendário islâmico é uma obra derivada adaptada das imagens-fonte abaixo. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "O banner do calendário maia é uma obra derivada adaptada das imagens-fonte abaixo. Nos termos ShareAlike da fonte CC BY-SA 2.0, o banner adaptado é oferecido sob CC BY-SA 2.0."
         },
         "hebrew": {
           "subjects": "Maimonides | Cidade Velha de Jerusalém",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Edifício do Escritório Presidencial",
           "aboutNote": "O banner do calendário Minguo é uma obra derivada adaptada das imagens-fonte abaixo. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Meca",
+          "aboutNote": "O banner do calendário islâmico é uma obra derivada adaptada das imagens-fonte abaixo. Nos termos ShareAlike da fonte CC BY-SA 4.0, o banner adaptado é oferecido sob CC BY-SA 4.0."
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "Adotado em {{year}}",
       "julianAdoptedIn": "Adotado em {{yearLabel}}",
       "julianStoppedIn": "Deixou de usar em {{yearLabel}}",
-      "mapAria": "Mapa mundial mostrando o uso do calendário"
+      "mapAria": "Mapa mundial mostrando o uso do calendário",
+      "maya": {
+        "sectionAria": "Informações do calendário maia",
+        "tabsAria": "Vistas do calendário maia",
+        "glyphsTab": "Glifos e símbolos",
+        "glyphsIntro": "As datas maias clássicas combinam vários conjuntos de símbolos. O Almaniac usa glifos do Conversor de Calendário Maia do Smithsonian, mostrados aqui com seus nomes.",
+        "glyphsCredit": "Glifos do Conversor de Calendário Maia do National Museum of the American Indian (Smithsonian).",
+        "sections": {
+          "longCount": "Períodos da Conta Longa",
+          "longCountDesc": "Cada posição da Conta Longa tem seu próprio glifo de período, lido da maior unidade (baktun) à menor (kin).",
+          "numerals": "Algarismos",
+          "numeralsDesc": "Os números maias usam um sistema vigesimal, com pontos para uns e barras para cincos. O zero tem seu próprio sinal de concha.",
+          "tzolkin": "Signos do Tzolk'in",
+          "tzolkinDesc": "O calendário sagrado de 260 dias combina um número (1–13) com um destes vinte signos do dia. Cada signo também é um nahual — um companheiro espiritual indicado abaixo.",
+          "haab": "Meses do Haab",
+          "haabDesc": "O calendário civil de 365 dias tem dezoito meses de vinte dias, mais o mês curto Wayeb no fim do ano.",
+          "lords": "Senhores da Noite",
+          "lordsDesc": "Um ciclo de nove dias que acompanha a data redonda. Nomes epigráficos são usados quando conhecidos; G1–G9 são as etiquetas acadêmicas."
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "Sobre o {{label}}",
     "fullscreenAriaView": "Data {{label}} em tela cheia",
     "tapToClose": "Toque novamente para fechar",
+    "maya": {
+      "haab": "Haab",
+      "tzolkin": "Tzolk'in",
+      "lordOfTheNight": "Senhor da Noite",
+      "nahual": "Nahual"
+    },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabular",
     "chineseZodiacYear": "Ano do {{zodiac}}, {{pinyin}}",

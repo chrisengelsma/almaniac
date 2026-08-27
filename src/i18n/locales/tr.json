@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "Ümmü'l-Kure (Suudi resmi)",
     "islamicAdjustmentLabel": "İslami Takvim Gün Ayarı",
     "islamicGroupAria": "İslami takvim ayarları",
+    "mayaUseHieroglyphsLabel": "Hiyeroglif Kullan",
+    "mayaUseHieroglyphsToggle": "Hiyeroglif kullan",
+    "mayaGroupAria": "Maya takvimi ayarları",
     "julianDayLabel": "Değiştirilmiş Jülyen Günü",
     "julianDayToggle": "Değiştirilmiş Jülyen Günü kullan",
     "julianDayGroupAria": "Jülyen Günü ayarları",
@@ -81,7 +84,7 @@
       "coffee": "Teşekkür olarak bana bir kahve ısmarlamanız da memnuniyetle karşılanır. Her iki durumda da Almaniac'ı kullandığınız için teşekkürler.",
       "thanks": "Almaniac'ı kullandığınız için teşekkürler.",
       "storeAppStore": "App Store'da",
-      "storeGooglePlay": "Google Play'de",
+      "storePlayStore": "Play Store'de",
       "rateButton": "{{store}} 5 yıldız ver",
       "tipsAria": "İsteğe bağlı bahşişler",
       "loadingTips": "Bahşiş seçenekleri yükleniyor…",
@@ -140,8 +143,8 @@
           "aboutNote": "Japon Wareki takvimi afişi, aşağıdaki kaynak fotoğraflardan uyarlanmış türev bir eserdir. "
         },
         "maya": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "İslami takvim afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "Maya takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. CC BY-SA 2.0 kaynağının ShareAlike koşulları kapsamında, uyarlanmış afiş CC BY-SA 2.0 altında sunulur."
         },
         "hebrew": {
           "subjects": "Maimonides | Kudüs Eski Şehir",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "Minguo takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "İslami takvim afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. CC BY-SA 4.0 kaynağının ShareAlike koşulları kapsamında, uyarlanmış afiş CC BY-SA 4.0 altında sunulur."
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "{{year}} yılında kabul edildi",
       "julianAdoptedIn": "{{yearLabel}} yılında kabul edildi",
       "julianStoppedIn": "{{yearLabel}} yılında kullanımı bırakıldı",
-      "mapAria": "Takvim kullanımını gösteren dünya haritası"
+      "mapAria": "Takvim kullanımını gösteren dünya haritası",
+      "maya": {
+        "sectionAria": "Maya takvimi bilgileri",
+        "tabsAria": "Maya takvimi görünümleri",
+        "glyphsTab": "Glifler ve semboller",
+        "glyphsIntro": "Klasik Maya tarihleri birkaç sembol kümesini birleştirir. Almaniac, Smithsonian Maya Takvim Dönüştürücüsü'nden glifler kullanır; burada adlarıyla gösterilir.",
+        "glyphsCredit": "Glifler: Ulusal Amerikan Kızılderili Müzesi Maya Takvim Dönüştürücüsü (Smithsonian).",
+        "sections": {
+          "longCount": "Uzun Sayım dönemleri",
+          "longCountDesc": "Uzun Sayım'daki her basamağın kendi dönem glifi vardır; en büyük birimden (baktun) en küçüğe (kin) okunur.",
+          "numerals": "Sayılar",
+          "numeralsDesc": "Maya sayıları yirmilik sistem kullanır; noktalar birleri, çubuklar beşleri gösterir. Sıfırın kendine özgü bir kabuk işareti vardır.",
+          "tzolkin": "Tzolk'in gün işaretleri",
+          "tzolkinDesc": "260 günlük kutsal takvim bir sayıyı (1–13) bu yirmi gün işaretinden biriyle eşleştirir. Her işaret aynı zamanda bir nahualdır — aşağıda adı verilen ruhani yoldaş.",
+          "haab": "Haab ayları",
+          "haabDesc": "365 günlük sivil takvimde yirmi günlük on sekiz ay ve yıl sonunda kısa Wayeb ayı vardır.",
+          "lords": "Gecenin Lordları",
+          "lordsDesc": "Yuvarlak tarihe eşlik eden dokuz günlük döngü. Bilinen yerlerde epigrafik adlar kullanılır; G1–G9 bilimsel etiketlerdir."
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "{{label}} hakkında",
     "fullscreenAriaView": "{{label}} tarihi tam ekran",
     "tapToClose": "Kapatmak için tekrar dokunun",
+    "maya": {
+      "haab": "Haab",
+      "tzolkin": "Tzolk'in",
+      "lordOfTheNight": "Gecenin Lordu",
+      "nahual": "Nahual"
+    },
     "islamicSystemUmmAlQura": "Ümmü'l-Kure",
     "islamicSystemTabular": "Tablo",
     "chineseZodiacYear": "{{zodiac}} yılı, {{pinyin}}",

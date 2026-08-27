@@ -62,7 +62,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           </button>
         </header>
 
-        <div className="about-modal__body">
+        <div className="about-modal__scroll">
           <p>{t('modals.about.description')}</p>
 
           {attributions.length > 0 ? (
@@ -102,7 +102,9 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
               ))}
             </section>
           ) : null}
+        </div>
 
+        <footer className="about-modal__footer">
           <p className="about-modal__site-link">
             <a href={SITE_URL} target="_blank" rel="noopener noreferrer">
               engelsma.dev
@@ -123,7 +125,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
             <span>{t('modals.about.version', { version: APP_VERSION })}</span>
             <span>{t('modals.about.copyright')}</span>
           </div>
-        </div>
+        </footer>
       </div>
     </div>
   );

@@ -125,12 +125,11 @@ export function buildWidgetSnapshot(
 }
 
 export async function syncWidgetData(settings: AppSettings): Promise<void> {
-  const anchor = todayGregorianDate();
-  const snapshot = buildWidgetSnapshot(anchor, settings);
-
   try {
+    const anchor = todayGregorianDate();
+    const snapshot = buildWidgetSnapshot(anchor, settings);
     await WidgetBridge.syncSnapshot({ snapshot: JSON.stringify(snapshot) });
   } catch {
-    // Widget bridge is only available on native builds.
+    // Widget sync is best-effort and may run before the native bridge is ready.
   }
 }

@@ -35,6 +35,7 @@ interface SettingsSheetProps {
   onTransliterateChange: (value: boolean) => void;
   onIslamicCalendarModeChange: (value: IslamicCalendarMode) => void;
   onIslamicAdjustmentChange: (value: IslamicDayAdjustment) => void;
+  onMayaUseHieroglyphsChange: (value: boolean) => void;
   onUseModifiedJulianDayChange: (value: boolean) => void;
   onRememberLastOpenedDateChange: (value: boolean) => void;
   onAppIconChange: (value: AppIconChoice) => void;
@@ -323,6 +324,31 @@ function IslamicCalendarOptions({
   );
 }
 
+interface MayaCalendarOptionsProps {
+  settings: AppSettings;
+  onMayaUseHieroglyphsChange: (value: boolean) => void;
+}
+
+function MayaCalendarOptions({
+  settings,
+  onMayaUseHieroglyphsChange,
+}: MayaCalendarOptionsProps) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="settings-sheet__calendar-options" role="group" aria-label={t('settings.mayaGroupAria')}>
+      <div className="settings-sheet__item settings-sheet__item--stacked">
+        <span>{t('settings.mayaUseHieroglyphsLabel')}</span>
+        <SheetToggle
+          checked={settings.mayaUseHieroglyphs}
+          label={t('settings.mayaUseHieroglyphsToggle')}
+          onChange={() => onMayaUseHieroglyphsChange(!settings.mayaUseHieroglyphs)}
+        />
+      </div>
+    </div>
+  );
+}
+
 interface JulianDayOptionsProps {
   settings: AppSettings;
   onUseModifiedJulianDayChange: (value: boolean) => void;
@@ -357,6 +383,7 @@ export function SettingsSheet({
   onTransliterateChange,
   onIslamicCalendarModeChange,
   onIslamicAdjustmentChange,
+  onMayaUseHieroglyphsChange,
   onUseModifiedJulianDayChange,
   onRememberLastOpenedDateChange,
   onAppIconChange,
@@ -622,6 +649,12 @@ export function SettingsSheet({
                         settings={settings}
                         onIslamicCalendarModeChange={onIslamicCalendarModeChange}
                         onIslamicAdjustmentChange={onIslamicAdjustmentChange}
+                      />
+                    ) : null}
+                    {id === 'maya' && settings.visibleCalendars.maya ? (
+                      <MayaCalendarOptions
+                        settings={settings}
+                        onMayaUseHieroglyphsChange={onMayaUseHieroglyphsChange}
                       />
                     ) : null}
                     {id === 'julianDay' && settings.visibleCalendars.julianDay ? (

@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "أم القرى (الرسمي السعودي)",
     "islamicAdjustmentLabel": "تعديل يوم التقويم الهجري",
     "islamicGroupAria": "إعدادات التقويم الهجري",
+    "mayaUseHieroglyphsLabel": "استخدام الهيروغليفية",
+    "mayaUseHieroglyphsToggle": "استخدام الهيروغليفية",
+    "mayaGroupAria": "إعدادات تقويم المايا",
     "julianDayLabel": "اليوم الجولياني المعدّل",
     "julianDayToggle": "استخدام اليوم الجولياني المعدّل",
     "julianDayGroupAria": "إعدادات اليوم الجولياني",
@@ -81,7 +84,7 @@
       "coffee": "يمكنك أيضًا شراء قهوة لي كشكر. في كل الأحوال، شكرًا لاستخدام Almaniac.",
       "thanks": "شكرًا لاستخدام Almaniac.",
       "storeAppStore": "على App Store",
-      "storeGooglePlay": "على Google Play",
+      "storePlayStore": "على Play Store",
       "rateButton": "تقييم 5 نجوم {{store}}",
       "tipsAria": "إكراميات اختيارية",
       "loadingTips": "جارٍ تحميل خيارات الإكرامية…",
@@ -140,8 +143,8 @@
           "aboutNote": "شعار تقويم Wareki الياباني عمل فني مشتق مُكيّف من الصور الفوتوغرافية المصدرية أدناه. "
         },
         "maya": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "شعار التقويم الإسلامي عمل فني مشتق مُكيّف من الصور المصدرية أدناه. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "شعار تقويم المايا عمل فني مشتق مُكيّف من الصور المصدرية أدناه. بموجب شروط المشاركة بالمثل لمصدر CC BY-SA 2.0، يُقدَّم الشعار المُكيَّف بموجب CC BY-SA 2.0."
         },
         "hebrew": {
           "subjects": "Maimonides | Jerusalem Old City",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "شعار تقويم Minguo عمل فني مشتق مُكيّف من الصور المصدرية أدناه. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "شعار التقويم الإسلامي عمل فني مشتق مُكيّف من الصور المصدرية أدناه. بموجب شروط المشاركة بالمثل لمصدر CC BY-SA 4.0، يُقدَّم الشعار المُكيَّف بموجب CC BY-SA 4.0."
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "تُبنّي في {{year}}",
       "julianAdoptedIn": "تُبنّي في {{yearLabel}}",
       "julianStoppedIn": "توقّف الاستخدام في {{yearLabel}}",
-      "mapAria": "خريطة العالم تُظهر استخدام التقويم"
+      "mapAria": "خريطة العالم تُظهر استخدام التقويم",
+      "maya": {
+        "sectionAria": "معلومات تقويم المايا",
+        "tabsAria": "عروض تقويم المايا",
+        "glyphsTab": "الرموز والحروف",
+        "glyphsIntro": "تجمع تواريخ المايا الكلاسيكية عدة مجموعات من الرموز. يستخدم Almaniac رموزًا من محوّل تقويم المايا التابع لسميثسونيان، معروضة هنا بأسمائها.",
+        "glyphsCredit": "الرموز من محوّل تقويم المايا في المتحف الوطني للهنود الأمريكي (سميثسونيان).",
+        "sections": {
+          "longCount": "فترات العد الطويل",
+          "longCountDesc": "لكل منزلة في العد الطويل رمز فترة خاص بها، تُقرأ من أكبر وحدة (باكتون) إلى أصغرها (كين).",
+          "numerals": "الأرقام",
+          "numeralsDesc": "تستخدم أرقام المايا نظام العشرينيات، بنقاط للواحدات وأشرطة للخمسات. للصفر علامة صدفة خاصة.",
+          "tzolkin": "علامات أيام تزولكين",
+          "tzolkinDesc": "يربط التقويم المقدس ذو 260 يومًا رقمًا (1–13) بأحد هذه العشرين علامة يوم. كل علامة هي أيضًا ناوال — رفيق روحي يُذكر أدناه.",
+          "haab": "أشهر هاب",
+          "haabDesc": "يتكون التقويم المدني ذو 365 يومًا من ثمانية عشر شهرًا من عشرين يومًا، إضافة إلى الشهر القصير واييب في نهاية السنة.",
+          "lords": "آلهة الليل",
+          "lordsDesc": "دورة من تسعة أيام ترافق التاريخ الدائري. تُستخدم الأسماء النقوشية حيث عُرفت؛ G1–G9 هي التسميات العلمية."
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "حول {{label}}",
     "fullscreenAriaView": "تاريخ {{label}} بملء الشاشة",
     "tapToClose": "انقر مرة أخرى للإغلاق",
+    "maya": {
+      "haab": "هاب",
+      "tzolkin": "تزولكين",
+      "lordOfTheNight": "آلهة الليل",
+      "nahual": "ناوال"
+    },
     "islamicSystemUmmAlQura": "أم القرى",
     "islamicSystemTabular": "جدولي",
     "chineseZodiacYear": "سنة {{zodiac}}، {{pinyin}}",

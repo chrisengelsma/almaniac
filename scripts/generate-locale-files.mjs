@@ -87,7 +87,7 @@ const UI = {
         "You're also welcome to buy me a coffee as a thank-you. Either way, thanks for using Almaniac.",
       thanks: 'Thanks for using Almaniac.',
       storeAppStore: 'on the App Store',
-      storeGooglePlay: 'on Google Play',
+      storePlayStore: 'on the Play Store',
       rateButton: 'Rate 5 stars {{store}}',
       tipsAria: 'Optional tips',
       loadingTips: 'Loading tip options…',

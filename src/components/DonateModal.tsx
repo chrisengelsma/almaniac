@@ -4,7 +4,7 @@ import { DonationThankYouModal } from './DonationThankYouModal';
 import { useTranslation } from 'react-i18next';
 import { IconTipJar } from './IconTipJar';
 import { useTipJar } from '../hooks/useTipJar';
-import { requestNativeAppReview } from '../lib/appReview';
+import { getReviewStoreLabelKey, openAppReview } from '../lib/appReview';
 import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 import {
   TIP_PRODUCT_IDS,
@@ -16,7 +16,7 @@ import {
 } from '../data/tipProducts';
 import { toIntlLocale, type AppLanguage } from '../i18n/language';
 import {
-  getAppReviewUrl,
+  DONATION_URL,
   getDonationChannel,
   getExternalTipUrl,
 } from '../theme/supportLinks';
@@ -56,10 +56,13 @@ export function DonateModal({
   }, [onSupporterUnlock]);
   const { products, status, purchasingId, feedback, buyTip, isAvailable: tipJarAvailable } =
     useTipJar(open, handlePurchaseSuccess);
+  const platform = Capacitor.getPlatform();
   const donationChannel = getDonationChannel();
   const showIapTips = donationChannel === 'iap' && tipJarAvailable;
   const showExternalTips = donationChannel === 'external';
-  const showTips = showIapTips || showExternalTips;
+  const showAndroidCoffeeLink = platform === 'android';
+  const showTips = showIapTips || (showExternalTips && !showAndroidCoffeeLink);
+  const showCoffeeLink = showAndroidCoffeeLink;
   const productById = new Map(products.map((product) => [product.id, product]));
 
   useEffect(() => {
@@ -90,19 +93,10 @@ export function DonateModal({
     };
   }, [open, onClose]);
 
-  const platform = Capacitor.getPlatform();
-  const reviewStoreLabel =
-    platform === 'android'
-      ? t('modals.donate.storeGooglePlay')
-      : t('modals.donate.storeAppStore');
+  const reviewStoreLabel = t(getReviewStoreLabelKey());
 
-  const openAppReview = () => {
-    if (Capacitor.isNativePlatform()) {
-      void requestNativeAppReview();
-      return;
-    }
-
-    window.open(getAppReviewUrl(), '_blank', 'noopener,noreferrer');
+  const handleOpenAppReview = () => {
+    void openAppReview();
   };
 
   return (
@@ -142,17 +136,34 @@ export function DonateModal({
           <p>{t('modals.donate.intro')}</p>
           <p>{t('modals.donate.free')}</p>
           <p>{t('modals.donate.rating', { store: reviewStoreLabel })}</p>
-          {showTips ? <p>{t('modals.donate.tipJar')}</p> : <p>{t('modals.donate.thanks')}</p>}
+          {showCoffeeLink ? (
+            <p>{t('modals.donate.coffee')}</p>
+          ) : showTips ? (
+            <p>{t('modals.donate.tipJar')}</p>
+          ) : (
+            <p>{t('modals.donate.thanks')}</p>
+          )}
         </div>
 
         <footer className="donate-modal__footer">
           <div className="donate-modal__footer-actions">
-            <button type="button" className="donate-modal__btn donate-modal__btn--primary" onClick={openAppReview}>
+            <button type="button" className="donate-modal__btn donate-modal__btn--primary" onClick={handleOpenAppReview}>
               <span className="donate-modal__btn-star" aria-hidden="true">
                 <IconStar />
               </span>
               {t('modals.donate.rateButton', { store: reviewStoreLabel })}
             </button>
+
+            {showCoffeeLink ? (
+              <a
+                className="donate-modal__btn donate-modal__btn--secondary"
+                href={DONATION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t('modals.donate.coffeeButton')}
+              </a>
+            ) : null}
 
             {showTips ? (
               <div className="donate-modal__tip-jar" aria-label={t('modals.donate.tipsAria')}>

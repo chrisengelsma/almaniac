@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "Umm al-Qura (ufficiale saudita)",
     "islamicAdjustmentLabel": "Regolazione del giorno del calendario islamico",
     "islamicGroupAria": "Impostazioni del calendario islamico",
+    "mayaUseHieroglyphsLabel": "Usa geroglifici",
+    "mayaUseHieroglyphsToggle": "Usa geroglifici",
+    "mayaGroupAria": "Impostazioni del calendario maya",
     "julianDayLabel": "Giorno giuliano modificato",
     "julianDayToggle": "Usa giorno giuliano modificato",
     "julianDayGroupAria": "Impostazioni del giorno giuliano",
@@ -81,7 +84,7 @@
       "coffee": "Puoi anche offrirmi un caffè come ringraziamento. In ogni caso, grazie per usare Almaniac.",
       "thanks": "Grazie per usare Almaniac.",
       "storeAppStore": "sull'App Store",
-      "storeGooglePlay": "su Google Play",
+      "storePlayStore": "su Play Store",
       "rateButton": "Valuta con 5 stelle {{store}}",
       "tipsAria": "Mance opzionali",
       "loadingTips": "Caricamento opzioni mancia…",
@@ -140,8 +143,8 @@
           "aboutNote": "Il banner del calendario giapponese Wareki è un'opera derivata adattata dalle fotografie fonte qui sotto. "
         },
         "maya": {
-          "subjects": "Al-Biruni | La Mecca",
-          "aboutNote": "Il banner del calendario islamico è un'opera derivata adattata dalle immagini fonte qui sotto. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "Il banner del calendario maya è un'opera derivata adattata dalle immagini fonte qui sotto. Ai sensi dei termini ShareAlike della fonte CC BY-SA 2.0, il banner adattato è offerto sotto CC BY-SA 2.0."
         },
         "hebrew": {
           "subjects": "Maimonide | Città Vecchia di Gerusalemme",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Edificio dell'Ufficio presidenziale",
           "aboutNote": "Il banner del calendario Minguo è un'opera derivata adattata dalle immagini fonte qui sotto. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | La Mecca",
+          "aboutNote": "Il banner del calendario islamico è un'opera derivata adattata dalle immagini fonte qui sotto. Ai sensi dei termini ShareAlike della fonte CC BY-SA 4.0, il banner adattato è offerto sotto CC BY-SA 4.0."
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "Adottato nel {{year}}",
       "julianAdoptedIn": "Adottato nel {{yearLabel}}",
       "julianStoppedIn": "Non più in uso dal {{yearLabel}}",
-      "mapAria": "Mappa mondiale che mostra l'uso del calendario"
+      "mapAria": "Mappa mondiale che mostra l'uso del calendario",
+      "maya": {
+        "sectionAria": "Informazioni sul calendario maya",
+        "tabsAria": "Viste del calendario maya",
+        "glyphsTab": "Glifi e simboli",
+        "glyphsIntro": "Le date maya classiche combinano diversi insiemi di simboli. Almaniac usa glifi dal Convertitore di calendario maya dello Smithsonian, mostrati qui con i loro nomi.",
+        "glyphsCredit": "Glifi dal Convertitore di calendario maya del National Museum of the American Indian (Smithsonian).",
+        "sections": {
+          "longCount": "Periodi del conto lungo",
+          "longCountDesc": "Ogni posizione del conto lungo ha il proprio glifo di periodo, letto dall'unità maggiore (baktun) alla minore (kin).",
+          "numerals": "Numeri",
+          "numeralsDesc": "I numeri maya usano un sistema vigesimale, con punti per le unità e barre per le cinque. Lo zero ha un proprio segno a conchiglia.",
+          "tzolkin": "Segni del Tzolk'in",
+          "tzolkinDesc": "Il calendario sacro di 260 giorni abbina un numero (1–13) a uno di questi venti segni del giorno. Ogni segno è anche un nahual — un compagno spirituale indicato sotto.",
+          "haab": "Mesi dell'Haab",
+          "haabDesc": "Il calendario civile di 365 giorni ha diciotto mesi di venti giorni, più il breve mese Wayeb a fine anno.",
+          "lords": "Signori della Notte",
+          "lordsDesc": "Un ciclo di nove giorni che accompagna la data rotonda. Si usano nomi epigrafici dove noti; G1–G9 sono le etichette accademiche."
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "Informazioni sul {{label}}",
     "fullscreenAriaView": "Data {{label}} a schermo intero",
     "tapToClose": "Tocca di nuovo per chiudere",
+    "maya": {
+      "haab": "Haab",
+      "tzolkin": "Tzolk'in",
+      "lordOfTheNight": "Signore della Notte",
+      "nahual": "Nahual"
+    },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabulare",
     "chineseZodiacYear": "Anno del {{zodiac}}, {{pinyin}}",

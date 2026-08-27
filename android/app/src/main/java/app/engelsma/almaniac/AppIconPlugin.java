@@ -32,9 +32,23 @@ public class AppIconPlugin extends Plugin {
                 break;
         }
 
-        setAliasEnabled(ALIAS_LIGHT, ALIAS_LIGHT.equals(activeAlias));
-        setAliasEnabled(ALIAS_DARK, ALIAS_DARK.equals(activeAlias));
-        setAliasEnabled(ALIAS_TEAL, ALIAS_TEAL.equals(activeAlias));
+        try {
+            // Enable the target alias before disabling the others so a launcher entry
+            // always remains available.
+            setAliasEnabled(activeAlias, true);
+            if (!ALIAS_LIGHT.equals(activeAlias)) {
+                setAliasEnabled(ALIAS_LIGHT, false);
+            }
+            if (!ALIAS_DARK.equals(activeAlias)) {
+                setAliasEnabled(ALIAS_DARK, false);
+            }
+            if (!ALIAS_TEAL.equals(activeAlias)) {
+                setAliasEnabled(ALIAS_TEAL, false);
+            }
+        } catch (RuntimeException exception) {
+            call.reject("Unable to update app icon", exception);
+            return;
+        }
 
         JSObject result = new JSObject();
         result.put("icon", icon);
@@ -82,6 +96,7 @@ public class AppIconPlugin extends Plugin {
     }
 
     private ComponentName aliasComponent(String alias) {
-        return new ComponentName(getContext(), alias);
+        String packageName = getContext().getPackageName();
+        return new ComponentName(packageName, packageName + alias);
     }
 }

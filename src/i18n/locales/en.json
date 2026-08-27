@@ -48,6 +48,9 @@
     "islamicSystemUmmAlQura": "Umm al-Qura (Saudi official)",
     "islamicAdjustmentLabel": "Islamic Calendar Day Adjustment",
     "islamicGroupAria": "Islamic calendar settings",
+    "mayaUseHieroglyphsLabel": "Use Hieroglyphs",
+    "mayaUseHieroglyphsToggle": "Use hieroglyphs",
+    "mayaGroupAria": "Maya calendar settings",
     "julianDayLabel": "Modified Julian Day",
     "julianDayToggle": "Use Modified Julian Day",
     "julianDayGroupAria": "Julian Day settings",
@@ -81,7 +84,7 @@
       "coffee": "You're also welcome to buy me a coffee as a thank-you. Either way, thanks for using Almaniac.",
       "thanks": "Thanks for using Almaniac.",
       "storeAppStore": "on the App Store",
-      "storeGooglePlay": "on Google Play",
+      "storePlayStore": "on the Play Store",
       "rateButton": "Rate 5 stars {{store}}",
       "tipsAria": "Optional tips",
       "loadingTips": "Loading tip options…",
@@ -142,8 +145,8 @@
           "aboutNote": "The Japanese Wareki calendar banner is derivative artwork adapted from the source photographs below. "
         },
         "maya": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "The Islamic calendar banner is derivative artwork adapted from the source images below. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "The Maya calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 2.0 source, the adapted banner is offered under CC BY-SA 2.0."
         },
         "hebrew": {
           "subjects": "Maimonides | Jerusalem Old City",
@@ -184,6 +187,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "The Minguo calendar banner is derivative artwork adapted from the source images below. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "The Islamic calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0."
         }
       }
     },
@@ -207,7 +214,26 @@
       "adoptedIn": "Adopted in {{year}}",
       "julianAdoptedIn": "Adopted in {{yearLabel}}",
       "julianStoppedIn": "Stopped using in {{yearLabel}}",
-      "mapAria": "World map showing calendar usage"
+      "mapAria": "World map showing calendar usage",
+      "maya": {
+        "sectionAria": "Maya calendar information",
+        "tabsAria": "Maya calendar views",
+        "glyphsTab": "Glyphs & symbols",
+        "glyphsIntro": "Classic Maya dates combine several symbol sets. Almaniac uses glyphs from the Smithsonian’s Maya Calendar Converter, shown here with their names.",
+        "glyphsCredit": "Glyphs from the National Museum of the American Indian Maya Calendar Converter (Smithsonian).",
+        "sections": {
+          "longCount": "Long Count periods",
+          "longCountDesc": "Each position in the Long Count has its own period glyph, read from the largest unit (baktun) to the smallest (kin).",
+          "numerals": "Numerals",
+          "numeralsDesc": "Maya numbers use a base-20 system with dots for ones and bars for fives. Zero has its own shell sign.",
+          "tzolkin": "Tzolk'in day signs",
+          "tzolkinDesc": "The 260-day sacred calendar pairs a number (1–13) with one of these twenty day signs. Each sign is also a nahual — a spirit companion named below.",
+          "haab": "Haab months",
+          "haabDesc": "The 365-day civil calendar has eighteen months of twenty days, plus the short month Wayeb at year’s end.",
+          "lords": "Lords of the Night",
+          "lordsDesc": "A nine-day cycle that accompanies the round date. Epigraphic names are used where known; G1–G9 are the scholarly labels."
+        }
+      }
     }
   },
   "datePicker": {
@@ -270,6 +296,12 @@
     "aboutAria": "About the {{label}}",
     "fullscreenAriaView": "{{label}} date fullscreen",
     "tapToClose": "Tap again to close",
+    "maya": {
+      "haab": "Haab",
+      "tzolkin": "Tzolk'in",
+      "lordOfTheNight": "Lord of the Night",
+      "nahual": "Nahual"
+    },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabular",
     "chineseZodiacYear": "Year of the {{zodiac}}, {{pinyin}}",

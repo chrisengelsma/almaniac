@@ -23,10 +23,23 @@ public class SystemChromePlugin extends Plugin {
         String background = call.getString("background", "#faf9f4");
         boolean lightStatusBarIcons = call.getBoolean("lightStatusBarIcons", false);
 
+        if (getActivity() == null) {
+            call.resolve();
+            return;
+        }
+
         getActivity().runOnUiThread(() -> {
             try {
+                if (getActivity() == null) {
+                    return;
+                }
+
                 int color = Color.parseColor(background);
                 Window window = getActivity().getWindow();
+                if (window == null) {
+                    return;
+                }
+
                 window.setStatusBarColor(color);
                 window.setNavigationBarColor(color);
                 window.getDecorView().setBackgroundColor(color);
@@ -36,49 +49,73 @@ public class SystemChromePlugin extends Plugin {
                 controller.setAppearanceLightNavigationBars(!lightStatusBarIcons);
             } catch (IllegalArgumentException ignored) {
                 // Ignore invalid color strings from the web layer.
+            } finally {
+                call.resolve();
             }
-
-            call.resolve();
         });
     }
 
     @PluginMethod
     public void getSafeArea(PluginCall call) {
+        if (getActivity() == null) {
+            call.resolve(emptyInsets());
+            return;
+        }
+
         getActivity().runOnUiThread(() -> {
-            Window window = getActivity().getWindow();
-            View decorView = window.getDecorView();
-            WindowInsetsCompat windowInsets = ViewCompat.getRootWindowInsets(decorView);
+            try {
+                if (getActivity() == null) {
+                    call.resolve(emptyInsets());
+                    return;
+                }
 
-            if (windowInsets == null) {
+                Window window = getActivity().getWindow();
+                if (window == null) {
+                    call.resolve(emptyInsets());
+                    return;
+                }
+
+                View decorView = window.getDecorView();
+                WindowInsetsCompat windowInsets = ViewCompat.getRootWindowInsets(decorView);
+
+                if (windowInsets == null) {
+                    call.resolve(emptyInsets());
+                    return;
+                }
+
+                if (getBridge() == null || getBridge().getWebView() == null) {
+                    call.resolve(emptyInsets());
+                    return;
+                }
+
+                Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                float density = getActivity().getResources().getDisplayMetrics().density;
+
+                WebView webView = getBridge().getWebView();
+                int[] location = new int[2];
+                webView.getLocationOnScreen(location);
+
+                int webViewTop = location[1];
+                int webViewBottom = webViewTop + webView.getHeight();
+                int screenHeight = decorView.getHeight();
+
+                int cssTop = webViewTop >= systemBars.top ? 0 : Math.round(systemBars.top / density);
+                int cssBottom =
+                    webViewBottom <= screenHeight - systemBars.bottom
+                        ? 0
+                        : Math.round(systemBars.bottom / density);
+                int cssLeft = Math.round(systemBars.left / density);
+                int cssRight = Math.round(systemBars.right / density);
+
+                JSObject result = new JSObject();
+                result.put("top", cssTop);
+                result.put("right", cssRight);
+                result.put("bottom", cssBottom);
+                result.put("left", cssLeft);
+                call.resolve(result);
+            } catch (RuntimeException exception) {
                 call.resolve(emptyInsets());
-                return;
             }
-
-            Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            float density = getActivity().getResources().getDisplayMetrics().density;
-
-            WebView webView = getBridge().getWebView();
-            int[] location = new int[2];
-            webView.getLocationOnScreen(location);
-
-            int webViewTop = location[1];
-            int webViewBottom = webViewTop + webView.getHeight();
-            int screenHeight = decorView.getHeight();
-
-            int cssTop = webViewTop >= systemBars.top ? 0 : Math.round(systemBars.top / density);
-            int cssBottom =
-                webViewBottom <= screenHeight - systemBars.bottom
-                    ? 0
-                    : Math.round(systemBars.bottom / density);
-            int cssLeft = Math.round(systemBars.left / density);
-            int cssRight = Math.round(systemBars.right / density);
-
-            JSObject result = new JSObject();
-            result.put("top", cssTop);
-            result.put("right", cssRight);
-            result.put("bottom", cssBottom);
-            result.put("left", cssLeft);
-            call.resolve(result);
         });
     }
 

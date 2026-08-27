@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "움 알쿠라(사우디 공식)",
     "islamicAdjustmentLabel": "이슬람 역법 일자 조정",
     "islamicGroupAria": "이슬람 역법 설정",
+    "mayaUseHieroglyphsLabel": "상형문자 사용",
+    "mayaUseHieroglyphsToggle": "상형문자 사용",
+    "mayaGroupAria": "마야 역법 설정",
     "julianDayLabel": "수정 율리우스일",
     "julianDayToggle": "수정 율리우스일 사용",
     "julianDayGroupAria": "율리우스일 설정",
@@ -81,7 +84,7 @@
       "coffee": "감사의 표시로 커피를 사 주셔도 좋습니다. 어느 쪽이든 Almaniac을 이용해 주셔서 감사합니다.",
       "thanks": "Almaniac을 이용해 주셔서 감사합니다.",
       "storeAppStore": "App Store에서",
-      "storeGooglePlay": "Google Play에서",
+      "storePlayStore": "Play Store에서",
       "rateButton": "{{store}} 별 5개 평가",
       "tipsAria": "선택적 팁",
       "loadingTips": "팁 옵션 불러오는 중…",
@@ -140,8 +143,8 @@
           "aboutNote": "일본 연호력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다. "
         },
         "maya": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "이슬람력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "마야력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. CC BY-SA 2.0 원본의 ShareAlike 조건에 따라,改작 배너는 CC BY-SA 2.0으로 제공됩니다."
         },
         "hebrew": {
           "subjects": "Maimonides | 예루살렘 구시가지",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "민국력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "이슬람력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. CC BY-SA 4.0 원본의 ShareAlike 조건에 따라,改작 배너는 CC BY-SA 4.0으로 제공됩니다."
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "{{year}}년에 도입",
       "julianAdoptedIn": "{{yearLabel}}에 도입",
       "julianStoppedIn": "{{yearLabel}}에 사용 중단",
-      "mapAria": "역법 사용을 보여 주는 세계 지도"
+      "mapAria": "역법 사용을 보여 주는 세계 지도",
+      "maya": {
+        "sectionAria": "마야 역 정보",
+        "tabsAria": "마야 역 보기",
+        "glyphsTab": "문자와 상징",
+        "glyphsIntro": "고전기 마야 날짜는 여러 기호 체계를 결합합니다. Almaniac은 스미스소니언 마야 역 변환기의 문자를 사용하며, 여기서 이름과 함께 표시합니다.",
+        "glyphsCredit": "문자 출처: 국립 미국 원주민 박물관 마야 역 변환기(스미스소니언).",
+        "sections": {
+          "longCount": "장기력 주기",
+          "longCountDesc": "장기력의 각 자리에는 주기 문자가 있으며, 가장 큰 단위(박툰)에서 가장 작은 단위(킨) 순으로 읽습니다.",
+          "numerals": "숫자",
+          "numeralsDesc": "마야 숫자는 이십진법을 사용하며, 점은 1, 막대는 5를 나타냅니다. 0에는 조개 모양 기호가 있습니다.",
+          "tzolkin": "쫄킨 일진",
+          "tzolkinDesc": "260일 신성 역은 숫자(1–13)와 20개 일진 중 하나를 짝짓습니다. 각 일진은 나왈(영적 동반자)이기도 하며 아래에 그 이름이 있습니다.",
+          "haab": "하аб 월",
+          "haabDesc": "365일 민간 역은 20일짜리 18개월과 연말의 짧은 웨이에브 월로 이루어집니다.",
+          "lords": "밤의 신",
+          "lordsDesc": "역일을 수반하는 9일 주기. 알려진 경우 비문 이름을 사용하며, G1–G9는 학술적 표기입니다."
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "{{label}} 정보",
     "fullscreenAriaView": "{{label}} 날짜 전체 화면",
     "tapToClose": "다시 탭하여 닫기",
+    "maya": {
+      "haab": "하브",
+      "tzolkin": "쫄킨",
+      "lordOfTheNight": "밤의 신",
+      "nahual": "나왈"
+    },
     "islamicSystemUmmAlQura": "움 알쿠라",
     "islamicSystemTabular": "표 형식",
     "chineseZodiacYear": "{{zodiac}}띠 해, {{pinyin}}",

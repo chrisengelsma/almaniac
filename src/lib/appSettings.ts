@@ -30,6 +30,7 @@ export interface AppSettings {
   colorTheme: ColorTheme;
   colorScheme: ColorScheme;
   transliterateToEnglish: boolean;
+  mayaUseHieroglyphs: boolean;
   islamicCalendarMode: IslamicCalendarMode;
   islamicDayAdjustment: IslamicDayAdjustment;
   useModifiedJulianDay: boolean;
@@ -86,6 +87,10 @@ function defaultVisibility(): Record<CalendarId, boolean> {
   );
 }
 
+function devSupporterUnlockEnabled(): boolean {
+  return import.meta.env.VITE_DEV_SUPPORTER_UNLOCK === 'true';
+}
+
 export function defaultAppSettings(): AppSettings {
   return {
     appLanguagePreference: 'system',
@@ -94,6 +99,7 @@ export function defaultAppSettings(): AppSettings {
     colorTheme: 'distinct',
     colorScheme: systemColorScheme(),
     transliterateToEnglish: false,
+    mayaUseHieroglyphs: true,
     islamicCalendarMode: 'tabular',
     islamicDayAdjustment: 0,
     useModifiedJulianDay: false,
@@ -101,7 +107,7 @@ export function defaultAppSettings(): AppSettings {
     showJewishHolidays: true,
     showIslamicHolidays: true,
     appIcon: 'light',
-    supporterUnlocked: false,
+    supporterUnlocked: devSupporterUnlockEnabled(),
     rememberLastOpenedDate: true,
   };
 }
@@ -136,6 +142,7 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage
           : defaults.colorTheme,
     colorScheme: parsed.colorScheme ?? defaults.colorScheme,
     transliterateToEnglish: parsed.transliterateToEnglish ?? defaults.transliterateToEnglish,
+    mayaUseHieroglyphs: parsed.mayaUseHieroglyphs ?? defaults.mayaUseHieroglyphs,
     islamicCalendarMode: parsed.islamicCalendarMode ?? defaults.islamicCalendarMode,
     islamicDayAdjustment: parsed.islamicDayAdjustment ?? defaults.islamicDayAdjustment,
     useModifiedJulianDay: parsed.useModifiedJulianDay ?? defaults.useModifiedJulianDay,
@@ -150,7 +157,7 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage
             parsed.appIcon === 'supporter'
           ? parsed.appIcon
           : defaults.appIcon,
-    supporterUnlocked: parsed.supporterUnlocked === true,
+    supporterUnlocked: devSupporterUnlockEnabled() || parsed.supporterUnlocked === true,
     rememberLastOpenedDate: parsed.rememberLastOpenedDate ?? defaults.rememberLastOpenedDate,
   });
 }
@@ -309,6 +316,13 @@ export function setTransliterateToEnglish(
   value: boolean,
 ): AppSettings {
   return { ...settings, transliterateToEnglish: value };
+}
+
+export function setMayaUseHieroglyphs(
+  settings: AppSettings,
+  value: boolean,
+): AppSettings {
+  return { ...settings, mayaUseHieroglyphs: value };
 }
 
 export function setIslamicCalendarMode(

@@ -14,6 +14,7 @@ import { calendarColorContext, getCalendarMapColors } from '../theme/calendarCol
 import { BannerAttribution } from './BannerAttribution';
 import { GregorianMapSection } from './GregorianMapSection';
 import { JulianMapSection } from './JulianMapSection';
+import { MayaInfoSection } from './MayaInfoSection';
 import { WorldUsageMap } from './WorldUsageMap';
 
 interface CalendarInfoModalProps {
@@ -276,6 +277,12 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
               info={info}
               mapColors={mapColors}
               language={language}
+              usedIn={usedIn}
+            />
+          ) : renderedId === 'maya' ? (
+            <MayaInfoSection
+              info={info}
+              mapColors={mapColors}
               usedIn={usedIn}
             />
           ) : (

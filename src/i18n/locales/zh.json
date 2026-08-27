@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "乌姆古拉历（沙特官方）",
     "islamicAdjustmentLabel": "伊斯兰历日期调整",
     "islamicGroupAria": "伊斯兰历设置",
+    "mayaUseHieroglyphsLabel": "使用象形文字",
+    "mayaUseHieroglyphsToggle": "使用象形文字",
+    "mayaGroupAria": "玛雅历设置",
     "julianDayLabel": "修正儒略日",
     "julianDayToggle": "使用修正儒略日",
     "julianDayGroupAria": "儒略日设置",
@@ -81,7 +84,7 @@
       "coffee": "你也可以请我喝杯咖啡表示感谢。无论如何，感谢使用 Almaniac。",
       "thanks": "感谢使用 Almaniac。",
       "storeAppStore": "在 App Store",
-      "storeGooglePlay": "在 Google Play",
+      "storePlayStore": "在 Play Store",
       "rateButton": "在{{store}}评 5 星",
       "tipsAria": "可选打赏",
       "loadingTips": "正在加载打赏选项…",
@@ -140,8 +143,8 @@
           "aboutNote": "日本年号历横幅是根据下方来源照片改编的衍生作品。 "
         },
         "maya": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "伊斯兰历横幅是根据下方来源图像改编的衍生作品。 "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "玛雅历横幅是根据下方来源图像改编的衍生作品。根据 CC BY-SA 2.0 来源的相同方式共享条款，改编横幅以 CC BY-SA 2.0 提供。"
         },
         "hebrew": {
           "subjects": "Maimonides | 耶路撒冷旧城",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "民国纪年横幅是根据下方来源图像改编的衍生作品。 "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "伊斯兰历横幅是根据下方来源图像改编的衍生作品。根据 CC BY-SA 4.0 来源的相同方式共享条款，改编横幅以 CC BY-SA 4.0 提供。"
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "于 {{year}} 年采用",
       "julianAdoptedIn": "于 {{yearLabel}} 采用",
       "julianStoppedIn": "于 {{yearLabel}} 停止使用",
-      "mapAria": "显示历法使用情况的世界地图"
+      "mapAria": "显示历法使用情况的世界地图",
+      "maya": {
+        "sectionAria": "玛雅历信息",
+        "tabsAria": "玛雅历视图",
+        "glyphsTab": "符号与字形",
+        "glyphsIntro": "古典玛雅日期结合多组符号。Almaniac 使用史密森尼玛雅历转换器的字形，在此连同名称一并展示。",
+        "glyphsCredit": "字形来自国立美国印第安人博物馆玛雅历转换器（史密森尼学会）。",
+        "sections": {
+          "longCount": "长纪历周期",
+          "longCountDesc": "长纪历每一位都有对应的周期字形，从最大单位（巴克吞）到最小（金）依次读取。",
+          "numerals": "数字",
+          "numeralsDesc": "玛雅数字采用二十进制，点表示一，横表示五。零有专用的贝壳符号。",
+          "tzolkin": "卓尔金日名",
+          "tzolkinDesc": "260 日神圣历将数字（1–13）与二十日名之一配对。每个日名也是一种纳瓦尔（灵性伴侣），名称见下方。",
+          "haab": "哈阿布月",
+          "haabDesc": "365 日民用历有十八个二十天的月份，年末还有短暂的维耶布月。",
+          "lords": "夜之神",
+          "lordsDesc": "伴随合历日期的九日周期。已知处使用铭文名称；G1–G9 为学术标注。"
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "关于 {{label}}",
     "fullscreenAriaView": "{{label}} 日期全屏",
     "tapToClose": "再次点击关闭",
+    "maya": {
+      "haab": "哈阿布",
+      "tzolkin": "卓尔金",
+      "lordOfTheNight": "夜之神",
+      "nahual": "纳瓦尔"
+    },
     "islamicSystemUmmAlQura": "乌姆古拉",
     "islamicSystemTabular": "表格法",
     "chineseZodiacYear": "{{zodiac}}年，{{pinyin}}",

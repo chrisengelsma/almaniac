@@ -1,5 +1,14 @@
 import { Capacitor } from '@capacitor/core';
 import { InAppReview } from '@capacitor-community/in-app-review';
+import { getAppReviewUrl } from '../theme/supportLinks';
+
+export type ReviewStoreLabelKey = 'modals.donate.storeAppStore' | 'modals.donate.storePlayStore';
+
+export function getReviewStoreLabelKey(): ReviewStoreLabelKey {
+  return Capacitor.getPlatform() === 'ios'
+    ? 'modals.donate.storeAppStore'
+    : 'modals.donate.storePlayStore';
+}
 
 const USAGE_STORAGE_KEY = 'almaniac.usage.v1';
 const MIN_USAGE_DAYS = 4;
@@ -87,6 +96,15 @@ export async function requestNativeAppReview(): Promise<void> {
   } catch {
     // The OS may decline to show the dialog; we still stop auto-prompting.
   }
+}
+
+export async function openAppReview(): Promise<void> {
+  if (Capacitor.isNativePlatform()) {
+    await requestNativeAppReview();
+    return;
+  }
+
+  window.open(getAppReviewUrl(), '_blank', 'noopener,noreferrer');
 }
 
 export function markReviewPrompted(): void {

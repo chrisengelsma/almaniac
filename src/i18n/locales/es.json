@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "Umm al-Qura (oficial de Arabia Saudita)",
     "islamicAdjustmentLabel": "Ajuste del día del calendario islámico",
     "islamicGroupAria": "Ajustes del calendario islámico",
+    "mayaUseHieroglyphsLabel": "Usar jeroglíficos",
+    "mayaUseHieroglyphsToggle": "Usar jeroglíficos",
+    "mayaGroupAria": "Ajustes del calendario maya",
     "julianDayLabel": "Día juliano modificado",
     "julianDayToggle": "Usar día juliano modificado",
     "julianDayGroupAria": "Ajustes del día juliano",
@@ -81,7 +84,7 @@
       "coffee": "También puedes invitarme un café como agradecimiento. En cualquier caso, gracias por usar Almaniac.",
       "thanks": "Gracias por usar Almaniac.",
       "storeAppStore": "en el App Store",
-      "storeGooglePlay": "en Google Play",
+      "storePlayStore": "en Play Store",
       "rateButton": "Valorar con 5 estrellas {{store}}",
       "tipsAria": "Propinas opcionales",
       "loadingTips": "Cargando opciones de propina…",
@@ -140,8 +143,8 @@
           "aboutNote": "El banner del calendario japonés Wareki es una obra derivada adaptada a partir de las fotografías fuente que aparecen a continuación. "
         },
         "maya": {
-          "subjects": "Al-Biruni | La Meca",
-          "aboutNote": "El banner del calendario islámico es una obra derivada adaptada a partir de las imágenes fuente que aparecen a continuación. "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "El banner del calendario maya es una obra derivada adaptada a partir de las imágenes fuente que aparecen a continuación. Bajo los términos ShareAlike de la fuente CC BY-SA 2.0, el banner adaptado se ofrece bajo CC BY-SA 2.0."
         },
         "hebrew": {
           "subjects": "Maimónides | Ciudad Vieja de Jerusalén",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Edificio de la Oficina Presidencial",
           "aboutNote": "El banner del calendario Minguo es una obra derivada adaptada a partir de las imágenes fuente que aparecen a continuación. "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | La Meca",
+          "aboutNote": "El banner del calendario islámico es una obra derivada adaptada a partir de las imágenes fuente que aparecen a continuación. Bajo los términos ShareAlike de la fuente CC BY-SA 4.0, el banner adaptado se ofrece bajo CC BY-SA 4.0."
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "Adoptado en {{year}}",
       "julianAdoptedIn": "Adoptado en {{yearLabel}}",
       "julianStoppedIn": "Abandonado en {{yearLabel}}",
-      "mapAria": "Mapa mundial que muestra el uso del calendario"
+      "mapAria": "Mapa mundial que muestra el uso del calendario",
+      "maya": {
+        "sectionAria": "Información del calendario maya",
+        "tabsAria": "Vistas del calendario maya",
+        "glyphsTab": "Glifos y símbolos",
+        "glyphsIntro": "Las fechas mayas clásicas combinan varios conjuntos de símbolos. Almaniac usa glifos del Conversor de calendario maya del Smithsonian, mostrados aquí con sus nombres.",
+        "glyphsCredit": "Glifos del Conversor de calendario maya del Museo Nacional del Indígena Americano (Smithsonian).",
+        "sections": {
+          "longCount": "Períodos de la Cuenta Larga",
+          "longCountDesc": "Cada posición de la Cuenta Larga tiene su propio glifo de período, leído de la unidad mayor (baktún) a la menor (kin).",
+          "numerals": "Números",
+          "numeralsDesc": "Los números mayas usan un sistema vigesimal, con puntos para unos y barras para cincos. El cero tiene su propio signo de concha.",
+          "tzolkin": "Signos del Tzolk'in",
+          "tzolkinDesc": "El calendario sagrado de 260 días combina un número (1–13) con uno de estos veinte signos del día. Cada signo es también un nahual — un compañero espiritual indicado abajo.",
+          "haab": "Meses del Haab",
+          "haabDesc": "El calendario civil de 365 días tiene dieciocho meses de veinte días, más el mes corto Wayeb al final del año.",
+          "lords": "Señores de la Noche",
+          "lordsDesc": "Un ciclo de nueve días que acompaña la fecha redonda. Se usan nombres epigráficos cuando se conocen; G1–G9 son las etiquetas académicas."
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "Acerca del {{label}}",
     "fullscreenAriaView": "Fecha {{label}} a pantalla completa",
     "tapToClose": "Toca otra vez para cerrar",
+    "maya": {
+      "haab": "Haab",
+      "tzolkin": "Tzolk'in",
+      "lordOfTheNight": "Señor de la Noche",
+      "nahual": "Nahual"
+    },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabular",
     "chineseZodiacYear": "Año del {{zodiac}}, {{pinyin}}",

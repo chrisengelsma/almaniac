@@ -46,6 +46,9 @@
     "islamicSystemUmmAlQura": "ウンム・アルクラ（サウジ公式）",
     "islamicAdjustmentLabel": "イスラム暦の日付調整",
     "islamicGroupAria": "イスラム暦の設定",
+    "mayaUseHieroglyphsLabel": "象形文字を使用",
+    "mayaUseHieroglyphsToggle": "象形文字を使用",
+    "mayaGroupAria": "マヤ暦の設定",
     "julianDayLabel": "修正ユリウス日",
     "julianDayToggle": "修正ユリウス日を使用",
     "julianDayGroupAria": "ユリウス日の設定",
@@ -81,7 +84,7 @@
       "coffee": "感謝の気持ちとしてコーヒーを奢ってくれることも歓迎です。いずれにせよ、Almaniac をご利用いただきありがとうございます。",
       "thanks": "Almaniac をご利用いただきありがとうございます。",
       "storeAppStore": "App Store で",
-      "storeGooglePlay": "Google Play で",
+      "storePlayStore": "Play Store で",
       "rateButton": "{{store}}で 5 つ星を付ける",
       "tipsAria": "任意のチップ",
       "loadingTips": "チップのオプションを読み込み中…",
@@ -140,8 +143,8 @@
           "aboutNote": "日本の和暦バナーは、下記のソース写真を基に改作した派生作品です。 "
         },
         "maya": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "イスラム暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "マヤ暦のバナーは、下記のソース画像を基に改作した派生作品です。CC BY-SA 2.0 のソースの ShareAlike 条件に基づき、改作バナーは CC BY-SA 2.0 で提供されます。"
         },
         "hebrew": {
           "subjects": "Maimonides | エルサレム旧市街",
@@ -182,6 +185,10 @@
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "民国暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
+        },
+        "islamic": {
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "イスラム暦のバナーは、下記のソース画像を基に改作した派生作品です。CC BY-SA 4.0 のソースの ShareAlike 条件に基づき、改作バナーは CC BY-SA 4.0 で提供されます。"
         }
       }
     },
@@ -205,7 +212,26 @@
       "adoptedIn": "{{year}} 年に採用",
       "julianAdoptedIn": "{{yearLabel}} に採用",
       "julianStoppedIn": "{{yearLabel}} に使用停止",
-      "mapAria": "暦法の使用状況を示す世界地図"
+      "mapAria": "暦法の使用状況を示す世界地図",
+      "maya": {
+        "sectionAria": "マヤ暦の情報",
+        "tabsAria": "マヤ暦の表示",
+        "glyphsTab": "グリフと記号",
+        "glyphsIntro": "古典期マヤの日付は複数の記号体系を組み合わせます。Almaniac はスミソニアン学会のマヤ暦コンバーターのグリフを使用し、ここで名称とともに示します。",
+        "glyphsCredit": "グリフは国立アメリカインディアン博物館マヤ暦コンバーター（スミソニアン学会）より。",
+        "sections": {
+          "longCount": "長期暦の周期",
+          "longCountDesc": "長期暦の各桁には周期グリフがあり、最大単位（バクトゥン）から最小（キン）の順に読みます。",
+          "numerals": "数字",
+          "numeralsDesc": "マヤ数字は二十進法で、点が1、棒が5を表します。ゼロには貝の記号があります。",
+          "tzolkin": "ツォルキン日名",
+          "tzolkinDesc": "260日の神聖暦は数字（1〜13）と20の日名のいずれかを組み合わせます。各日名はナワル（精霊の伴侶）でもあり、下にその名を示します。",
+          "haab": "ハアブ月",
+          "haabDesc": "365日の民用暦は18か月×20日に、年末の短い月ウェイエブがあります。",
+          "lords": "夜の神",
+          "lordsDesc": "暦日を伴う9日周期。解読された名称を用い、G1〜G9は学術上のラベルです。"
+        }
+      }
     }
   },
   "datePicker": {
@@ -268,6 +294,12 @@
     "aboutAria": "{{label}} について",
     "fullscreenAriaView": "{{label}} の日付 全画面",
     "tapToClose": "もう一度タップして閉じる",
+    "maya": {
+      "haab": "ハアブ",
+      "tzolkin": "ツォルキン",
+      "lordOfTheNight": "夜の神",
+      "nahual": "ナワル"
+    },
     "islamicSystemUmmAlQura": "ウンム・アルクラ",
     "islamicSystemTabular": "表形式",
     "chineseZodiacYear": "{{zodiac}}年（{{pinyin}}）",

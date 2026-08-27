@@ -23,6 +23,7 @@ import {
   setSupporterUnlocked,
   setRememberLastOpenedDate,
   setTransliterateToEnglish,
+  setMayaUseHieroglyphs,
   setUseModifiedJulianDay,
   toggleCalendarVisibility,
   toggleColorScheme,
@@ -211,6 +212,9 @@ function App() {
         }
         onIslamicAdjustmentChange={(value) =>
           updateSettings((current) => setIslamicDayAdjustment(current, value))
+        }
+        onMayaUseHieroglyphsChange={(value) =>
+          updateSettings((current) => setMayaUseHieroglyphs(current, value))
         }
         onUseModifiedJulianDayChange={(value) =>
           updateSettings((current) => setUseModifiedJulianDay(current, value))

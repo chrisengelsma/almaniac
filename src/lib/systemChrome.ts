@@ -25,7 +25,11 @@ export async function syncAndroidSystemChrome(background: string, lightStatusBar
     return;
   }
 
-  await SystemChrome.setColors({ background, lightStatusBarIcons });
+  try {
+    await SystemChrome.setColors({ background, lightStatusBarIcons });
+  } catch {
+    // System chrome is cosmetic; ignore bridge failures during startup.
+  }
 }
 
 export async function readAndroidSafeArea(): Promise<SafeAreaInsets> {
@@ -33,5 +37,9 @@ export async function readAndroidSafeArea(): Promise<SafeAreaInsets> {
     return { top: 0, right: 0, bottom: 0, left: 0 };
   }
 
-  return SystemChrome.getSafeArea();
+  try {
+    return await SystemChrome.getSafeArea();
+  } catch {
+    return { top: 0, right: 0, bottom: 0, left: 0 };
+  }
 }

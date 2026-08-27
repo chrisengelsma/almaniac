@@ -76,8 +76,8 @@ export function getReviewStoreLabel(): string {
   }
 
   if (platform === 'android') {
-    return 'on Google Play';
+    return 'on the Play Store';
   }
 
-  return 'on the App Store';
+  return 'on the Play Store';
 }

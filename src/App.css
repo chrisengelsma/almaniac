@@ -1003,6 +1003,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
   flex-direction: column;
   width: min(100%, 24rem);
   max-height: min(90dvh, 36rem);
+  overflow: hidden;
   border: 1px solid var(--overlay-surface-border);
   border-radius: 1rem;
   background: var(--overlay-surface-bg);
@@ -1056,15 +1057,36 @@ html[data-color-scheme='dark'] .info-modal__panel {
   stroke-linecap: round;
 }
 
-.about-modal__body {
+.about-modal__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
-  padding: 0.35rem 1rem 1.15rem;
+  padding: 0.35rem 1rem 1.5rem;
   font-size: 0.92rem;
   line-height: 1.55;
 }
 
-.about-modal__body p {
+.about-modal__scroll p {
   margin: 0 0 0.85rem;
+}
+
+.about-modal__footer {
+  position: relative;
+  flex-shrink: 0;
+  padding: 0.85rem 1rem 1.15rem;
+  background: var(--overlay-surface-bg);
+  border-top: 1px solid var(--overlay-surface-divider);
+}
+
+.about-modal__footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 1.75rem;
+  background: linear-gradient(to bottom, transparent, var(--overlay-surface-bg));
+  pointer-events: none;
 }
 
 .about-modal__credits h3 {
@@ -1109,9 +1131,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
 }
 
 .about-modal__site-link {
-  margin: 1.25rem 0 0;
-  padding-top: 1rem;
-  border-top: 1px solid var(--overlay-surface-divider);
+  margin: 0;
   text-align: center;
 }
 
@@ -1639,6 +1659,18 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   pointer-events: none;
 }
 
+.calendar-row__center-top {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  z-index: 2;
+  max-width: calc(100% - 5.5rem);
+  transform: translateX(-50%);
+  color: var(--almaniac-text-muted);
+  text-align: center;
+  pointer-events: none;
+}
+
 .calendar-row__date-wrap {
   position: absolute;
   inset: 0;
@@ -1668,7 +1700,7 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 .calendar-row__meta--bottom {
   top: auto;
   bottom: 1rem;
-  padding-right: 6.5rem;
+  padding-right: 9.5rem;
 }
 
 .calendar-row__weekday {
@@ -1698,8 +1730,8 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 .calendar-row__action {
   display: grid;
   place-items: center;
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 1.86rem;
+  height: 1.86rem;
   padding: 0;
   border: none;
   background: transparent;
@@ -1713,8 +1745,8 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 }
 
 .calendar-row__action svg {
-  width: 1.05rem;
-  height: 1.05rem;
+  width: 1.185rem;
+  height: 1.185rem;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -1738,6 +1770,21 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   pointer-events: none;
 }
 
+/* Maya row: unified foreground; glyph sizes scoped per region below */
+.calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: var(--almaniac-text);
+}
+
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__date {
+  --maya-list-numeral-w: clamp(1.0625rem, 3.25vw, 1.4375rem);
+  --maya-list-numeral-h: clamp(1.6875rem, 5.25vw, 2.3125rem);
+}
+
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__meta {
+  --maya-list-numeral-w: clamp(0.85rem, 2.6vw, 1.15rem);
+  --maya-list-numeral-h: clamp(1.35rem, 4.2vw, 1.85rem);
+}
+
 .calendar-row__text--rtl {
   direction: rtl;
 }
@@ -1746,26 +1793,162 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.05rem;
+  gap: 0.2rem;
   max-width: 100%;
 }
 
 .maya-long-count__group {
   display: inline-flex;
   align-items: center;
+  gap: 0.08rem;
 }
 
-.maya-long-count__separator {
-  margin: 0 0.08rem;
-  color: var(--almaniac-text-muted);
-  font-size: 0.55em;
-  line-height: 1;
+.maya-glyph {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-image: var(--maya-glyph-src);
+  mask-image: var(--maya-glyph-src);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .maya-numeral {
-  width: clamp(1.15rem, 3.6vw, 1.55rem);
-  height: clamp(1.45rem, 4.5vw, 1.95rem);
+  width: var(--maya-list-numeral-w, clamp(0.85rem, 2.6vw, 1.15rem));
+  height: var(--maya-list-numeral-h, clamp(1.35rem, 4.2vw, 1.85rem));
+}
+
+.maya-font-numeral {
+  display: inline-block;
   flex-shrink: 0;
+  width: var(--maya-list-numeral-w, clamp(0.85rem, 2.6vw, 1.15rem));
+  height: var(--maya-list-numeral-h, clamp(1.35rem, 4.2vw, 1.85rem));
+  color: var(--maya-row-fg, currentColor);
+}
+
+.maya-long-count--font {
+  gap: 0.65rem;
+}
+
+.maya-long-count--font .maya-long-count__group {
+  gap: 0;
+}
+
+.maya-inscription--font {
+  gap: 0.65rem;
+}
+
+.maya-inscription__column--font {
+  gap: 0.2rem;
+}
+
+.maya-round-date__sign {
+  width: var(--maya-list-numeral-w, clamp(0.85rem, 2.6vw, 1.15rem));
+  height: var(--maya-list-numeral-h, clamp(1.35rem, 4.2vw, 1.85rem));
+  transform: rotate(-90deg) scale(1.8);
+  transform-origin: center center;
+}
+
+.maya-long-count__glyph {
+  width: var(--maya-list-numeral-h, clamp(1.35rem, 4.2vw, 1.85rem));
+  height: var(--maya-list-numeral-h, clamp(1.35rem, 4.2vw, 1.85rem));
+}
+
+.maya-round-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.maya-inscription {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.35rem;
+  max-width: 100%;
+}
+
+.maya-inscription__column {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.15rem;
+}
+
+.maya-inscription__numeral {
+  width: 0.95em;
+  height: 1.55em;
+}
+
+.maya-inscription__glyph {
+  width: 1.55em;
+  height: 1.55em;
+  transform: rotate(-90deg);
+}
+
+.maya-round-date--lord {
+  display: inline-flex;
+}
+
+.maya-round-date--text {
+  font-size: 0.95rem;
+  line-height: 1.1;
+  gap: 0.25rem;
+}
+
+.maya-round-date__label {
+  color: var(--almaniac-text-muted);
+}
+
+.maya-round-date__value {
+  white-space: nowrap;
+}
+
+/* Maya row: unified foreground on date, meta, glyphs, and labels */
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__date,
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__meta,
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__calendar-name,
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__center-top,
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__action,
+.calendar-row--visible[data-calendar-row='maya'] .maya-round-date,
+.calendar-row--visible[data-calendar-row='maya'] .maya-round-date__label,
+.calendar-row--visible[data-calendar-row='maya'] .maya-round-date__value {
+  color: var(--maya-row-fg);
+  opacity: 1;
+}
+
+html[data-color-scheme='dark'] .calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: var(--calendar-accent);
+}
+
+html[data-color-theme='mono'] .calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: #212121;
+}
+
+html[data-color-theme='mono'][data-color-scheme='dark'] .calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: #f5f5f5;
+}
+
+html[data-color-theme='sepia'] .calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: #3d2f1f;
+}
+
+html[data-color-theme='sepia'][data-color-scheme='dark'] .calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: #e8dcc8;
+}
+
+html[data-color-theme='supporter'] .calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: #263238;
+}
+
+html[data-color-theme='supporter'][data-color-scheme='dark'] .calendar-row--visible[data-calendar-row='maya'] {
+  --maya-row-fg: #e8fff9;
 }
 
 .copy-notice {
@@ -1866,26 +2049,25 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 }
 
 .fullscreen-date--open .fullscreen-date__orient {
-  width: 100%;
-  height: 100%;
+  width: max-content;
+  height: max-content;
 }
 
 .fullscreen-date__text {
   margin: 0;
-  max-width: 100%;
   text-align: center;
   font-weight: 400;
   line-height: 1.2;
   word-break: break-word;
 }
 
+.fullscreen-date__text:has(.maya-inscription) {
+  width: max-content;
+}
+
 html[data-color-scheme='dark'] .fullscreen-date__expand,
 .fullscreen-date[data-color-scheme='dark'] .fullscreen-date__expand {
   background-color: var(--almaniac-text) !important;
-}
-
-.fullscreen-date .maya-long-count__separator {
-  color: inherit;
 }
 
 .fullscreen-date__prompt {
@@ -1905,14 +2087,51 @@ html[data-color-scheme='dark'] .fullscreen-date__expand,
   pointer-events: none;
 }
 
-.fullscreen-date .maya-numeral {
-  width: 1.55em;
-  height: 1.95em;
+.fullscreen-date .maya-numeral,
+.fullscreen-date .maya-font-numeral,
+.fullscreen-date--open .maya-inscription__numeral {
+  width: 0.95em;
+  height: 1.55em;
 }
 
-.fullscreen-date--open .maya-numeral {
+.fullscreen-date--open .maya-inscription__glyph {
   width: 1.55em;
-  height: 1.95em;
+  height: 1.55em;
+  transform: none;
+}
+
+.fullscreen-date--open .maya-inscription {
+  gap: 0.35em;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.fullscreen-date--open .maya-inscription--font {
+  gap: 0.65em;
+}
+
+.fullscreen-date--open .maya-inscription__column {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+}
+
+@media (orientation: portrait) {
+  .fullscreen-date--open .maya-inscription {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3em;
+  }
+
+  .fullscreen-date--open .maya-inscription__column {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2726,6 +2945,82 @@ html[data-color-scheme='dark'] .fullscreen-date__expand,
   background: var(--overlay-tab-active-bg);
   color: var(--overlay-tab-active-fg);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.maya-glyphs-ref__intro,
+.maya-glyphs-ref__credit {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--overlay-surface-fg-subtle);
+}
+
+.maya-glyphs-ref__credit {
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+  font-size: 0.82rem;
+  color: var(--overlay-surface-fg-muted);
+}
+
+.maya-glyphs-ref__section + .maya-glyphs-ref__section {
+  margin-top: 1.15rem;
+}
+
+.maya-glyphs-ref__section-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--overlay-surface-fg);
+}
+
+.maya-glyphs-ref__section-desc {
+  margin: 0 0 0.65rem;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--overlay-surface-fg-subtle);
+}
+
+.maya-glyphs-ref__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
+  gap: 0.55rem;
+}
+
+.maya-glyphs-ref__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.45rem 0.25rem 0.5rem;
+  border-radius: 0.45rem;
+  background: var(--overlay-control-bg);
+  text-align: center;
+}
+
+.maya-glyphs-ref__glyph {
+  width: 2rem;
+  height: 2.75rem;
+}
+
+.maya-glyphs-ref__glyph--rotated {
+  width: 2.75rem;
+  height: 2rem;
+  transform: rotate(-90deg);
+}
+
+.maya-glyphs-ref__label {
+  font-size: 0.72rem;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--overlay-surface-fg);
+  word-break: break-word;
+}
+
+.maya-glyphs-ref__detail {
+  font-size: 0.66rem;
+  line-height: 1.2;
+  color: var(--overlay-surface-fg-muted);
+  word-break: break-word;
 }
 
 .adoption-slider {
