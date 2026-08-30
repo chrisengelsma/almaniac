@@ -37,11 +37,33 @@ function pickerContextFromSettings(settings: AppSettings): PickerContext {
   };
 }
 
+const CALENDAR_YEAR_FIELD_KEYS: Partial<Record<CalendarId, string>> = {
+  thaiBuddhist: 'buddhistYear',
+  bengali: 'bengaliYear',
+  nepali: 'nepaliYear',
+  minguo: 'minguoYear',
+  koreanDangi: 'dangiYear',
+  juche: 'jucheYear',
+  isoWeek: 'isoWeekYear',
+  discordian: 'yoldYear',
+};
+
 function getFieldLabel(
   field: PickerFieldDef,
+  calendarId: CalendarId,
   exists: (key: string) => boolean,
   t: (key: string) => string,
 ): string {
+  if (field.key === 'year') {
+    const specializedKey = CALENDAR_YEAR_FIELD_KEYS[calendarId];
+    if (specializedKey) {
+      const specializedI18nKey = `datePicker.field.${specializedKey}`;
+      if (exists(specializedI18nKey)) {
+        return t(specializedI18nKey);
+      }
+    }
+  }
+
   const key = `datePicker.field.${field.key}`;
   return exists(key) ? t(key) : field.label;
 }
@@ -138,16 +160,18 @@ function CalendarSearchSelect({
 }
 
 function PickerField({
+  calendarId,
   field,
   values,
   onChange,
 }: {
+  calendarId: CalendarId;
   field: PickerFieldDef;
   values: PickerValues;
   onChange: (key: string, value: string) => void;
 }) {
   const { t, i18n } = useTranslation();
-  const label = getFieldLabel(field, i18n.exists.bind(i18n), t);
+  const label = getFieldLabel(field, calendarId, i18n.exists.bind(i18n), t);
 
   if (field.type === 'era') {
     const era = (values.era ?? 'CE') as GregorianEra;
@@ -304,11 +328,13 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
                 <>
                   <div className="date-modal__year-row">
                     <PickerField
+                      calendarId={calendarId}
                       field={regularFields.find((field) => field.key === 'year')!}
                       values={values}
                       onChange={handleValueChange}
                     />
                     <PickerField
+                      calendarId={calendarId}
                       field={regularFields.find((field) => field.key === 'era')!}
                       values={values}
                       onChange={handleValueChange}
@@ -316,11 +342,13 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
                   </div>
                   <div className="date-modal__row">
                     <PickerField
+                      calendarId={calendarId}
                       field={regularFields.find((field) => field.key === 'month')!}
                       values={values}
                       onChange={handleValueChange}
                     />
                     <PickerField
+                      calendarId={calendarId}
                       field={regularFields.find((field) => field.key === 'day')!}
                       values={values}
                       onChange={handleValueChange}
@@ -331,6 +359,7 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
                 regularFields.map((field) => (
                   <PickerField
                     key={field.key}
+                    calendarId={calendarId}
                     field={field}
                     values={values}
                     onChange={handleValueChange}
@@ -345,6 +374,7 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
               {mayaFields.map((field) => (
                 <PickerField
                   key={field.key}
+                  calendarId={calendarId}
                   field={field}
                   values={values}
                   onChange={handleValueChange}

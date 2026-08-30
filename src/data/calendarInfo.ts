@@ -95,6 +95,15 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     usedIn: ['China', 'Taiwan', 'Hong Kong', 'Macau', 'Singapore', 'Malaysia', 'Overseas Chinese communities'],
     mapCountries: ['CN', 'TW', 'HK', 'MO', 'SG', 'MY'],
   },
+  vietnamese: {
+    id: 'vietnamese',
+    calendarType: 'lunisolar',
+    firstImplemented: 'c. 14th century BCE (legendary); fixed rules c. 104 BCE',
+    history:
+      'The Vietnamese lunisolar calendar (âm lịch) shares astronomical rules with the Chinese calendar but uses Vietnamese month names and cultural conventions — notably the Cat (Mèo) instead of Rabbit for the fourth zodiac animal. Years are named by the Can-Chi sexagenary cycle. Tết Nguyên Đán marks the lunar new year.',
+    usedIn: ['Vietnam', 'Vietnamese communities worldwide'],
+    mapCountries: ['VN'],
+  },
   soviet: {
     id: 'soviet',
     calendarType: 'solar',
@@ -185,6 +194,24 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
       'The Minguo calendar numbers years from the founding of the Republic of China in 1912. Year 1 corresponds to 1912 CE; dates otherwise follow the Gregorian month and day structure. It remains in official use in Taiwan alongside the Western year.',
     usedIn: ['Taiwan'],
     mapCountries: ['TW'],
+  },
+  koreanDangi: {
+    id: 'koreanDangi',
+    calendarType: 'solar',
+    firstImplemented: '2333 BCE (Dangun era); modern use from 1948 CE',
+    history:
+      'The Dangi calendar (단기, 檀紀) numbers years from the legendary founding of Gojoseon by Dangun. Year 1 is 2333 BCE, so the Dangi year is the Gregorian year plus 2333. South Korea uses it on some official documents and nationalistic occasions alongside the Western year.',
+    usedIn: ['South Korea', 'Korean diaspora communities'],
+    mapCountries: ['KR'],
+  },
+  juche: {
+    id: 'juche',
+    calendarType: 'solar',
+    firstImplemented: '1997 CE (official adoption)',
+    history:
+      'The Juche calendar (주체, “self-reliance”) numbers years from 1912, the birth year of Kim Il-sung. Year 1 corresponds to 1912 CE; dates otherwise follow the Gregorian month and day structure. It appears on official DPRK documents alongside the Western year.',
+    usedIn: ['DPRK'],
+    mapCountries: ['KP'],
   },
   thaiBuddhist: {
     id: 'thaiBuddhist',

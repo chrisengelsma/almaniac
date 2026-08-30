@@ -7,12 +7,14 @@ const SCRIPT_CLASS: Record<ScriptFont, string> = {
   persian: 'calendar-row__text--rtl',
   hebrew: 'calendar-row__text--rtl',
   devanagari: '',
+  nepali: '',
   bengali: '',
   chinese: '',
   cyrillic: '',
   ethiopic: '',
   coptic: '',
   japanese: '',
+  korean: '',
   thai: '',
 };
 
@@ -22,12 +24,14 @@ const SCRIPT_LANG: Record<ScriptFont, string | undefined> = {
   persian: 'fa',
   hebrew: 'he',
   devanagari: 'hi',
+  nepali: 'ne',
   bengali: 'bn',
   chinese: 'zh',
   cyrillic: 'ru',
   ethiopic: 'am',
   coptic: 'cop',
   japanese: 'ja',
+  korean: 'ko',
   thai: 'th',
 };
 

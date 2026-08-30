@@ -24,13 +24,10 @@
     "sectionSettings": "Settings",
     "about": "About",
     "language": "Language",
+    "languageSystem": "System default",
     "languageAria": "App language",
     "transliterateLabel": "Transliterate To English",
     "transliterateAria": "Transliterate to English",
-    "rememberLastDateLabel": "Remember last date",
-    "rememberLastDateAria": "Open on the last date you viewed",
-    "hapticsLabel": "Vibrations",
-    "hapticsAria": "Vibrate on tap and drag",
     "colorThemeLabel": "Color theme",
     "colorThemeAria": "Color theme",
     "colorThemeOptionAria": "{{label}} color theme",
@@ -55,20 +52,13 @@
     "julianSystemJulian": "Julian (traditional)",
     "julianSystemRevisedJulian": "Revised Julian (Milanković)",
     "julianGroupAria": "Julian calendar settings",
-    "mayaUseHieroglyphsLabel": "Use Hieroglyphs",
-    "mayaUseHieroglyphsToggle": "Use hieroglyphs",
-    "mayaGroupAria": "Maya calendar settings",
     "julianDayLabel": "Modified Julian Day",
     "julianDayToggle": "Use Modified Julian Day",
     "julianDayGroupAria": "Julian Day settings",
     "closeAria": "Close customize panel",
     "backAria": "Back to settings",
     "themeToggleLightAria": "Switch to light mode",
-    "themeToggleDarkAria": "Switch to dark mode",
-    "languageSystem": "System default",
-    "colorThemeSupporter": "Supporter",
-    "appIconSupporter": "Supporter",
-    "supporterLockedAria": "{{label}} (supporter perk)"
+    "themeToggleDarkAria": "Switch to dark mode"
   },
   "topBar": {
     "supportAria": "Support Almaniac",
@@ -87,7 +77,7 @@
       "intro": "I'm Chris Engelsma. I built Almaniac to compare dates across calendar systems without jumping between converters.",
       "free": "Almaniac is free to use, with no ads, subscriptions, or tracking.",
       "rating": "If you like the app, a 5-star rating {{store}} helps a lot. It also helps other people find Almaniac.",
-      "tipJar": "You can also leave an optional tip as a thank-you. Tips unlock the Supporter theme and app icon. Apple keeps 15–30% of each tip as its commission.",
+      "tipJar": "You can also leave an optional tip as a thank-you. Tips don't unlock anything. Apple keeps 15–30% of each tip as its commission.",
       "coffee": "You're also welcome to buy me a coffee as a thank-you. Either way, thanks for using Almaniac.",
       "thanks": "Thanks for using Almaniac.",
       "storeAppStore": "on the App Store",
@@ -99,10 +89,6 @@
       "notNow": "Not now",
       "feedbackSuccess": "Thank you for supporting Almaniac!",
       "feedbackError": "Tip could not be completed. Please try again.",
-      "thankYouTitle": "Thank you!",
-      "thankYouMessage": "To say thanks, enjoy a new theme and icon option.",
-      "thankYouPerk": "You'll also get first access to anything new.",
-      "thankYouDismiss": "You're welcome",
       "tipSmall": "Small tip",
       "tipMedium": "Medium tip",
       "tipLarge": "Large tip"
@@ -110,13 +96,10 @@
     "about": {
       "title": "About {{appTitle}}",
       "description": "Almaniac shows one date in many calendar systems at once: Gregorian, Julian, Hebrew, Islamic, Chinese, Maya, and more.",
-      "mayaCommunityThanks": "Thanks to <link>/r/Mayan</link> for feedback and help on the Maya calendar.",
       "creditsTitle": "Image credits",
       "bannerTitle": "{{calendar}} banner",
       "version": "Version {{version}}",
       "copyright": "© 2026 Chris Engelsma",
-      "privacyPolicy": "Privacy Policy",
-      "termsOfService": "Terms of Service",
       "derivedLicensePrefix": "Derivative banner shared under",
       "sourceLink": "Source",
       "banners": {
@@ -140,6 +123,10 @@
           "subjects": "Huangdi | Temple of Heaven",
           "aboutNote": "The Chinese calendar banner is derivative artwork adapted from the source images below."
         },
+        "vietnamese": {
+          "subjects": "Emperor Gia Long | Meridian Gate, Huế",
+          "aboutNote": "The Vietnamese calendar banner is derivative artwork adapted from the source images below. "
+        },
         "soviet": {
           "subjects": "Joseph Stalin | Moscow Red Square",
           "aboutNote": "The Soviet Revolutionary calendar banner is derivative artwork adapted from the source images below. "
@@ -153,8 +140,8 @@
           "aboutNote": "The Japanese Wareki calendar banner is derivative artwork adapted from the source photographs below. "
         },
         "maya": {
-          "subjects": "K'inich Janaab Pakal I | Palenque",
-          "aboutNote": "The Maya calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 2.0 source, the adapted banner is offered under CC BY-SA 2.0."
+          "subjects": "Al-Biruni | Mecca",
+          "aboutNote": "The Islamic calendar banner is derivative artwork adapted from the source images below. "
         },
         "hebrew": {
           "subjects": "Maimonides | Jerusalem Old City",
@@ -174,7 +161,7 @@
         },
         "discordian": {
           "subjects": "Eris | Asbury Lanes",
-          "aboutNote": "The Discordian calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0."
+          "aboutNote": "The Discordian calendar banner is derivative artwork adapted from the source images below. "
         },
         "indianCivil": {
           "subjects": "Meghnad Saha | Jantar Mantar",
@@ -192,13 +179,21 @@
           "subjects": "The Emperor Akbar | Ahsan Manzil",
           "aboutNote": "The Bengali calendar banner is derivative artwork adapted from the source images below. "
         },
+        "nepali": {
+          "subjects": "Chandra Shumsher Rana | Bhaktapur Durbar Square",
+          "aboutNote": "The Nepali calendar banner is derivative artwork adapted from the source images below. "
+        },
+        "koreanDangi": {
+          "subjects": "Dangun | Samseonggung",
+          "aboutNote": "The Korean Dangi calendar banner is derivative artwork adapted from the source images below. "
+        },
+        "juche": {
+          "subjects": "Kim Il-sung | Juche Tower",
+          "aboutNote": "The Juche calendar banner is derivative artwork adapted from the source images below. "
+        },
         "minguo": {
           "subjects": "Sun Yat-sen | Presidential Office Building",
           "aboutNote": "The Minguo calendar banner is derivative artwork adapted from the source images below. "
-        },
-        "islamic": {
-          "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "The Islamic calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0."
         }
       }
     },
@@ -222,28 +217,7 @@
       "adoptedIn": "Adopted in {{year}}",
       "julianAdoptedIn": "Adopted in {{yearLabel}}",
       "julianStoppedIn": "Stopped using in {{yearLabel}}",
-      "mapAria": "World map showing calendar usage",
-      "maya": {
-        "sectionAria": "Maya calendar information",
-        "tabsAria": "Maya calendar views",
-        "glyphsTab": "Glyphs & symbols",
-        "glyphsIntro": "Classic Maya dates combine several symbol sets. Almaniac uses glyphs from the Smithsonian’s Maya Calendar Converter, shown here with their names.",
-        "glyphsCredit": "Glyphs from the National Museum of the American Indian Maya Calendar Converter (Smithsonian).",
-        "glyphExpandAria": "View {{label}} glyph fullscreen",
-        "glyphFullscreenAria": "{{label}} glyph",
-        "sections": {
-          "longCount": "Long Count periods",
-          "longCountDesc": "Each position in the Long Count has its own period glyph, read from the largest unit (baktun) to the smallest (kin).",
-          "numerals": "Numerals",
-          "numeralsDesc": "Maya numbers use a base-20 system with dots for ones and bars for fives. Zero has its own shell sign.",
-          "tzolkin": "Tzolk'in day signs",
-          "tzolkinDesc": "The 260-day sacred calendar pairs a number (1–13) with one of these twenty day signs. Each sign is also a nahual — a spirit companion named below.",
-          "haab": "Haab months",
-          "haabDesc": "The 365-day civil calendar has eighteen months of twenty days, plus the short month Wayeb at year’s end.",
-          "lords": "Lords of the Night",
-          "lordsDesc": "A nine-day cycle that accompanies the round date. Epigraphic names are used where known; G1–G9 are the scholarly labels."
-        }
-      }
+      "mapAria": "World map showing calendar usage"
     }
   },
   "datePicker": {
@@ -273,6 +247,8 @@
       "bengaliYear": "Bengali year",
       "nepaliYear": "Bikram Sambat year",
       "minguoYear": "Minguo year",
+      "dangiYear": "Dangi year",
+      "jucheYear": "Juche year",
       "isoWeekYear": "ISO week-year",
       "week": "Week",
       "weekday": "Weekday",
@@ -307,26 +283,19 @@
     "aboutAria": "About the {{label}}",
     "fullscreenAriaView": "{{label}} date fullscreen",
     "tapToClose": "Tap again to close",
-    "maya": {
-      "haab": "Haab",
-      "tzolkin": "Tzolk'in",
-      "lordOfTheNight": "Lord of the Night",
-      "nahual": "Nahual"
-    },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabular",
-    "julianSystemJulian": "Julian",
-    "julianSystemRevisedJulian": "Revised Julian",
     "chineseZodiacYear": "Year of the {{zodiac}}, {{pinyin}}",
+    "vietnameseZodiacYear": "Year of the {{zodiac}}, {{canChi}}",
     "japaneseGannen": "Gannen",
     "isoWeekDateFormat": "{{year}} Week {{week}} ({{padded}}), {{weekday}}",
     "name": {
       "gregorian": "Gregorian Calendar",
       "julian": "Julian Calendar",
-      "revisedJulian": "Revised Julian Calendar",
       "ethiopian": "Ethiopian Calendar",
       "coptic": "Coptic Calendar",
       "chinese": "Chinese Calendar",
+      "vietnamese": "Vietnamese Calendar",
       "soviet": "Soviet Revolutionary Calendar",
       "frc": "French Republican Calendar",
       "maya": "Maya Calendar",
@@ -336,6 +305,8 @@
       "bahai": "Baháʼí Calendar",
       "japanese": "Japanese Wareki Calendar",
       "minguo": "Minguo Calendar",
+      "koreanDangi": "Korean Dangi Calendar",
+      "juche": "Juche Calendar",
       "thaiBuddhist": "Thai Buddhist Calendar",
       "bengali": "Bengali Calendar",
       "nepali": "Nepali Calendar",
@@ -350,6 +321,7 @@
       "ethiopian": "Ethiopian",
       "coptic": "Coptic",
       "chinese": "Chinese",
+      "vietnamese": "Vietnamese",
       "soviet": "Soviet",
       "frc": "FRC",
       "maya": "Maya",
@@ -359,6 +331,8 @@
       "bahai": "Baháʼí",
       "japanese": "Japanese",
       "minguo": "Minguo",
+      "koreanDangi": "Dangi",
+      "juche": "Juche",
       "thaiBuddhist": "Thai Buddhist",
       "bengali": "Bengali",
       "nepali": "Nepali",
@@ -436,6 +410,14 @@
           "Singapore",
           "Malaysia",
           "Overseas Chinese communities"
+        ]
+      },
+      "vietnamese": {
+        "firstImplemented": "c. 14th century BCE (legendary); fixed rules c. 104 BCE",
+        "history": "The Vietnamese lunisolar calendar (âm lịch) shares astronomical rules with the Chinese calendar but uses Vietnamese month names and cultural conventions — notably the Cat (Mèo) instead of Rabbit for the fourth zodiac animal. Years are named by the Can-Chi sexagenary cycle. Tết Nguyên Đán marks the lunar new year.",
+        "usedIn": [
+          "Vietnam",
+          "Vietnamese communities worldwide"
         ]
       },
       "soviet": {
@@ -516,6 +498,21 @@
           "Taiwan"
         ]
       },
+      "koreanDangi": {
+        "firstImplemented": "2333 BCE (Dangun era); modern use from 1948 CE",
+        "history": "The Dangi calendar (단기, 檀紀) numbers years from the legendary founding of Gojoseon by Dangun. Year 1 is 2333 BCE, so the Dangi year is the Gregorian year plus 2333. South Korea uses it on some official documents and nationalistic occasions alongside the Western year.",
+        "usedIn": [
+          "South Korea",
+          "Korean diaspora communities"
+        ]
+      },
+      "juche": {
+        "firstImplemented": "1997 CE (official adoption)",
+        "history": "The Juche calendar (주체, “self-reliance”) numbers years from 1912, the birth year of Kim Il-sung. Year 1 corresponds to 1912 CE; dates otherwise follow the Gregorian month and day structure. It appears on official DPRK documents alongside the Western year.",
+        "usedIn": [
+          "DPRK"
+        ]
+      },
       "thaiBuddhist": {
         "firstImplemented": "c. 1st century BCE (BE epoch); official BE dates from 1888 CE",
         "history": "Thailand’s civil calendar follows the Gregorian structure but numbers years in the Buddhist Era (BE), which is 543 years ahead of the Common Era. It is used on official documents, newspapers, and everyday life alongside the Western year.",
@@ -558,7 +555,7 @@
       },
       "discordian": {
         "firstImplemented": "1963 CE (Principia Discordia)",
-        "history": "A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons (Chaos, Discord, Confusion, Bureaucracy, and The Aftermath) and a five-day week. Leap years gain St. Tib's Day between Chaos 59 and 60. Years are counted in YOLD (Year of Our Lady of Discord), Gregorian year plus 1166.",
+        "history": "A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons (Chaos, Discord, Confusion, Bureaucracy, and The Aftermath) and a five-day week. Leap years gain St. Tib\\",
         "usedIn": [
           "United States (origin)",
           "Australia",

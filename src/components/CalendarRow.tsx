@@ -32,10 +32,10 @@ export function CalendarRow({
   const [copied, setCopied] = useState(false);
   const scriptClass = calendarTextClassName(entry.scriptFont);
   const scriptStyle = calendarTextStyle(entry.scriptFont);
-  const scriptLang = calendarTextLang(entry.scriptFont);
+  const textLang = calendarTextLang(entry.scriptFont);
   const detailScriptClass = calendarTextClassName(entry.detailScriptFont ?? entry.scriptFont);
   const detailScriptStyle = calendarTextStyle(entry.detailScriptFont ?? entry.scriptFont);
-  const detailScriptLang = calendarTextLang(entry.detailScriptFont ?? entry.scriptFont);
+  const detailTextLang = calendarTextLang(entry.detailScriptFont ?? entry.scriptFont);
   const dateText = entry.date || '-';
   const canCopy = Boolean(entry.date && entry.date !== '-');
   const {
@@ -52,11 +52,19 @@ export function CalendarRow({
 
   const style: CSSProperties & {
     '--calendar-accent'?: string;
+    '--calendar-row-fg'?: string;
+    '--calendar-row-fg-muted'?: string;
+    '--calendar-row-text-shadow'?: string;
+    '--maya-row-fg'?: string;
     '--stagger-index'?: number;
     '--theme-transition-delay'?: string;
   } = {
     backgroundColor: row.backgroundColor,
     '--calendar-accent': row.backgroundColor,
+    '--calendar-row-fg': row.textStyle.foreground,
+    '--calendar-row-fg-muted': row.textStyle.foregroundMuted,
+    '--calendar-row-text-shadow': row.textStyle.textShadow,
+    '--maya-row-fg': row.textStyle.foreground,
     transform: isEntering ? undefined : CSS.Transform.toString(transform),
     transition: isDragging ? transition : undefined,
     ...(isEntering ? { '--stagger-index': staggerIndex } : {}),
@@ -123,7 +131,7 @@ export function CalendarRow({
           <p
             className={`calendar-row__date ${scriptClass}`.trim()}
             style={scriptStyle}
-            lang={scriptLang}
+            lang={textLang}
             aria-label={entry.mayaLongCount ? dateText : undefined}
           >
             {entry.mayaLongCount ? (
@@ -156,9 +164,9 @@ export function CalendarRow({
               {holidayNames.join(' · ')}
             </div>
           ) : null}
-          {entry.mayaLordOfNight && !entry.mayaUseGlyphs ? (
+          {entry.mayaLordOfNight && entry.mayaUseGlyphs ? (
             <div className="calendar-row__center-top">
-              <MayaLordOfNight {...entry.mayaLordOfNight} transliterated />
+              <MayaLordOfNight {...entry.mayaLordOfNight} />
             </div>
           ) : null}
           <div className="calendar-row__meta">
@@ -170,7 +178,7 @@ export function CalendarRow({
                   useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
                 />
               ) : (
-                <span className="calendar-row__weekday" style={scriptStyle} lang={scriptLang}>
+                <span className="calendar-row__weekday" style={scriptStyle} lang={textLang}>
                   {entry.weekday}
                 </span>
               )
@@ -186,7 +194,7 @@ export function CalendarRow({
                   useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
                 />
               ) : (
-                <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle} lang={detailScriptLang}>
+                <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle} lang={detailTextLang}>
                   {entry.detailLabel}
                 </span>
               )}

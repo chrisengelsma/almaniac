@@ -42,7 +42,7 @@ export function FullscreenDateView({
   onClose,
 }: FullscreenDateViewProps) {
   const { t } = useTranslation();
-  const { entry, backgroundColor } = row;
+  const { entry, backgroundColor, textStyle: rowTextStyle } = row;
   const [phase, setPhase] = useState<FullscreenPhase>(() => (prefersReducedMotion() ? 'open' : 'enter'));
   const [exitRect, setExitRect] = useState(originRect);
   const [exitTextRect, setExitTextRect] = useState(textOriginRect);
@@ -54,43 +54,14 @@ export function FullscreenDateView({
   const fitFrameRef = useRef<number | null>(null);
   const scriptClass = calendarTextClassName(entry.scriptFont);
   const scriptStyle = calendarTextStyle(entry.scriptFont);
-  const scriptLang = calendarTextLang(entry.scriptFont);
+  const textLang = calendarTextLang(entry.scriptFont);
   const dateText = entry.date || '-';
   const isExpanded = phase === 'open';
   const scaleRect = phase === 'exit' ? exitRect : originRect;
   const textRect = phase === 'exit' ? exitTextRect : textOriginRect;
-  const textColor =
-    colorTheme === 'mono'
-      ? colorScheme === 'dark'
-        ? '#f5f5f5'
-        : '#212121'
-      : colorTheme === 'sepia'
-        ? colorScheme === 'dark'
-          ? '#e8dcc8'
-          : '#3d2f1f'
-      : colorTheme === 'supporter'
-        ? colorScheme === 'dark'
-          ? '#e8fff9'
-          : '#263238'
-        : colorScheme === 'dark'
-          ? backgroundColor
-          : '#263238';
-  const expandBackgroundColor =
-    colorTheme === 'mono'
-      ? colorScheme === 'dark'
-        ? '#2a2a2a'
-        : backgroundColor
-      : colorTheme === 'sepia'
-        ? colorScheme === 'dark'
-          ? '#3d3228'
-          : backgroundColor
-        : colorTheme === 'supporter'
-          ? colorScheme === 'dark'
-            ? '#2a3050'
-            : backgroundColor
-          : colorScheme === 'dark'
-            ? '#263238'
-            : backgroundColor;
+  const textColor = rowTextStyle.foreground;
+  const textShadow = rowTextStyle.textShadow;
+  const expandBackgroundColor = backgroundColor;
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current != null) {
@@ -272,9 +243,10 @@ export function FullscreenDateView({
         padding: 0,
       };
 
-  const textStyle: CSSProperties = {
+  const dateTextStyle: CSSProperties = {
     ...scriptStyle,
     color: textColor,
+    textShadow,
     fontSize: isExpanded ? `${maxFullscreenFontPx()}px` : ROW_TEXT_SIZE,
   };
 
@@ -308,8 +280,8 @@ export function FullscreenDateView({
           <p
             ref={textRef}
             className={`fullscreen-date__text ${scriptClass}`.trim()}
-            style={textStyle}
-            lang={scriptLang}
+            style={dateTextStyle}
+            lang={textLang}
             aria-label={entry.mayaLongCount ? dateText : undefined}
           >
             {entry.mayaLongCount ? (
@@ -319,7 +291,7 @@ export function FullscreenDateView({
                 useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
                 tzolkin={entry.mayaTzolkin}
                 haab={entry.mayaHaab}
-                lordOfNight={entry.mayaLordOfNight}
+                lordOfNight={entry.mayaUseGlyphs ? entry.mayaLordOfNight : undefined}
               />
             ) : (
               dateText

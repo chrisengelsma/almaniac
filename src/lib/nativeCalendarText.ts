@@ -1,6 +1,7 @@
 import {
   BahaiCalendar,
   ChineseCalendar,
+  VietnameseCalendar,
   CopticCalendar,
   EthiopianCalendar,
 } from 'calendar-converter/calendars';
@@ -14,6 +15,8 @@ import type {
   BengaliCalendar,
   MinguoCalendar,
   NepaliCalendar,
+  KoreanDangiCalendar,
+  JucheCalendar,
   PersianCalendar,
   SovietCalendar,
   ThaiBuddhistCalendar,
@@ -21,7 +24,7 @@ import type {
 import type { CalendarId } from './calendarRegistry';
 import type { IslamicCalendarMode } from './appSettings';
 
-export type ScriptFont = 'latin' | 'arabic' | 'persian' | 'hebrew' | 'devanagari' | 'bengali' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'thai';
+export type ScriptFont = 'latin' | 'arabic' | 'persian' | 'hebrew' | 'devanagari' | 'nepali' | 'bengali' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'korean' | 'thai';
 
 const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
 const PERSIAN_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -205,6 +208,16 @@ const CHINESE_WEEKDAYS = [
   '星期六',
 ];
 
+const VIETNAMESE_WEEKDAYS = [
+  'Chủ nhật',
+  'Thứ hai',
+  'Thứ ba',
+  'Thứ tư',
+  'Thứ năm',
+  'Thứ sáu',
+  'Thứ bảy',
+];
+
 const SOVIET_MONTHS = [
   'января',
   'февраля',
@@ -322,6 +335,16 @@ const JAPANESE_WEEKDAYS = [
   '土曜日',
 ];
 
+const KOREAN_WEEKDAYS = [
+  '일요일',
+  '월요일',
+  '화요일',
+  '수요일',
+  '목요일',
+  '금요일',
+  '토요일',
+];
+
 const THAI_MONTHS = [
   'มกราคม',
   'กุมภาพันธ์',
@@ -370,7 +393,7 @@ function toPersianDigits(value: number): string {
 
 export { toPersianDigits };
 
-function toDevanagariDigits(value: number): string {
+export function toDevanagariDigits(value: number): string {
   return String(value)
     .split('')
     .map((digit) => DEVANAGARI_DIGITS[Number(digit)])
@@ -401,7 +424,7 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
     case 'bengali':
       return 'bengali';
     case 'nepali':
-      return 'devanagari';
+      return 'nepali';
     case 'chinese':
       return 'chinese';
     case 'soviet':
@@ -415,11 +438,23 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
     case 'japanese':
     case 'minguo':
       return 'japanese';
+    case 'koreanDangi':
+      return 'korean';
+    case 'juche':
+      return 'korean';
     case 'thaiBuddhist':
       return 'thai';
     default:
       return 'latin';
   }
+}
+
+export function bahaiMonthName(month: number): string {
+  return BAHAI_MONTHS_AR[month - 1] ?? '';
+}
+
+export function nepaliMonthName(month: number): string {
+  return NEPALI_MONTHS[month - 1] ?? '';
 }
 
 export function formatIslamicNative(calendar: IslamicCalendar): string {
@@ -486,6 +521,19 @@ export function formatChineseEnglish(calendar: ChineseCalendar): string {
 export function chineseYearDetailLabel(calendar: ChineseCalendar): string {
   const pillar = ChineseCalendar.YearPillar(calendar.year);
   return `Year of the ${pillar.zodiacEnglish}, ${pillar.sexagenaryPinyin}`;
+}
+
+export function formatVietnameseNative(calendar: VietnameseCalendar): string {
+  return `ngày ${calendar.day} ${calendar.getMonthName()} năm ${calendar.year}`;
+}
+
+export function formatVietnameseEnglish(calendar: VietnameseCalendar): string {
+  return `${calendar.day} ${calendar.getMonthName()}, ${calendar.year}`;
+}
+
+export function vietnameseYearDetailLabel(calendar: VietnameseCalendar): string {
+  const pillar = VietnameseCalendar.YearPillar(calendar.year);
+  return `Year of the ${pillar.zodiacEnglish}, ${pillar.sexagenary}`;
 }
 
 export function formatSovietNative(calendar: SovietCalendar): string {
@@ -567,6 +615,22 @@ export function formatNepaliEnglish(calendar: NepaliCalendar): string {
   return calendar.getDate();
 }
 
+export function formatKoreanDangiNative(calendar: KoreanDangiCalendar): string {
+  return `${calendar.year}년 ${calendar.month}월 ${calendar.day}일`;
+}
+
+export function formatKoreanDangiEnglish(calendar: KoreanDangiCalendar): string {
+  return calendar.getDate();
+}
+
+export function formatJucheNative(calendar: JucheCalendar): string {
+  return `주체${calendar.year}년 ${calendar.month}월 ${calendar.day}일`;
+}
+
+export function formatJucheEnglish(calendar: JucheCalendar): string {
+  return calendar.getDate();
+}
+
 export function formatMinguoNative(calendar: MinguoCalendar): string {
   return `民國${calendar.year}年${calendar.month}月${calendar.day}日`;
 }
@@ -626,6 +690,8 @@ export function nativeWeekday(
       return NEPALI_WEEKDAYS[weekdayIndex];
     case 'chinese':
       return CHINESE_WEEKDAYS[weekdayIndex];
+    case 'vietnamese':
+      return VIETNAMESE_WEEKDAYS[weekdayIndex];
     case 'soviet':
       return SOVIET_WEEKDAYS[weekdayIndex];
     case 'ethiopian':
@@ -636,6 +702,10 @@ export function nativeWeekday(
       return ISLAMIC_WEEKDAYS_AR[weekdayIndex];
     case 'japanese':
       return JAPANESE_WEEKDAYS[weekdayIndex];
+    case 'koreanDangi':
+      return KOREAN_WEEKDAYS[weekdayIndex];
+    case 'juche':
+      return KOREAN_WEEKDAYS[weekdayIndex];
     case 'minguo':
       return CHINESE_WEEKDAYS[weekdayIndex];
     case 'thaiBuddhist':

@@ -1,6 +1,7 @@
 import {
   BahaiCalendar,
   ChineseCalendar,
+  VietnameseCalendar,
   CopticCalendar,
   EthiopianCalendar,
   FrenchRepublicanCalendar,
@@ -19,6 +20,8 @@ import {
   ThaiBuddhistCalendar,
   BengaliCalendar,
   MinguoCalendar,
+  KoreanDangiCalendar,
+  JucheCalendar,
   NepaliCalendar,
   IsoWeekCalendar,
   DiscordianCalendar,
@@ -34,7 +37,7 @@ import {
   daysInGregorianMonth,
   type GregorianEra,
 } from './gregorianDate';
-import { persianMonthName, toPersianDigits } from './nativeCalendarText';
+import { bahaiMonthName, nepaliMonthName, persianMonthName, toDevanagariDigits, toPersianDigits } from './nativeCalendarText';
 
 export type PickerValues = Record<string, string>;
 
@@ -132,7 +135,7 @@ function persianMonthOptions(): PickerFieldOption[] {
 function bahaiMonthOptions(): PickerFieldOption[] {
   return Array.from({ length: 20 }, (_, index) => ({
     value: String(index + 1),
-    label: BahaiCalendar.MonthName(index + 1),
+    label: bahaiMonthName(index + 1),
   }));
 }
 
@@ -174,7 +177,7 @@ function bengaliMonthOptions(): PickerFieldOption[] {
 function nepaliMonthOptions(): PickerFieldOption[] {
   return Array.from({ length: 12 }, (_, index) => ({
     value: String(index + 1),
-    label: NepaliCalendar.MonthName(index + 1),
+    label: nepaliMonthName(index + 1),
   }));
 }
 
@@ -185,17 +188,31 @@ function minguoMonthOptions(): PickerFieldOption[] {
   }));
 }
 
+function koreanDangiMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: KoreanDangiCalendar.MonthName(index + 1),
+  }));
+}
+
+function jucheMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: JucheCalendar.MonthName(index + 1),
+  }));
+}
+
 function isoWeekWeekOptions(year: number): PickerFieldOption[] {
   return Array.from({ length: IsoWeekCalendar.NumberOfWeeksInYear(year) }, (_, index) => ({
     value: String(index + 1),
-    label: `Week ${index + 1}`,
+    label: `W${String(index + 1).padStart(2, '0')}`,
   }));
 }
 
 function isoWeekDayOptions(): PickerFieldOption[] {
   return Array.from({ length: 7 }, (_, index) => ({
     value: String(index + 1),
-    label: IsoWeekCalendar.WeekdayName(index + 1),
+    label: `${IsoWeekCalendar.WeekdayName(index + 1)} (${index + 1})`,
   }));
 }
 
@@ -237,6 +254,26 @@ function chineseMonthOptions(year: number): PickerFieldOption[] {
       options.push({
         value: `${month}:1`,
         label: ChineseCalendar.MonthName(month, true),
+      });
+    } catch {
+      // Not a leap month for this year.
+    }
+  }
+  return options;
+}
+
+function vietnameseMonthOptions(year: number): PickerFieldOption[] {
+  const options: PickerFieldOption[] = [];
+  for (let month = 1; month <= 12; month++) {
+    options.push({
+      value: `${month}:0`,
+      label: VietnameseCalendar.MonthName(month),
+    });
+    try {
+      VietnameseCalendar.NumberOfDaysInMonth(year, month, true);
+      options.push({
+        value: `${month}:1`,
+        label: VietnameseCalendar.MonthName(month, true),
       });
     } catch {
       // Not a leap month for this year.
@@ -400,6 +437,38 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
             let maxDay = 30;
             try {
               maxDay = ChineseCalendar.NumberOfDaysInMonth(year, month, isLeapMonth);
+            } catch {
+              maxDay = 30;
+            }
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'vietnamese':
+      return [
+        { key: 'year', label: 'Year', type: 'number', placeholder: 'e.g. 2026' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: (values) => vietnameseMonthOptions(parseNumber(values, 'year') ?? 1),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const monthKey = values.month ?? '1:0';
+            const [monthPart, leapPart] = monthKey.split(':');
+            const month = Number.parseInt(monthPart, 10);
+            const isLeapMonth = leapPart === '1';
+            let maxDay = 30;
+            try {
+              maxDay = VietnameseCalendar.NumberOfDaysInMonth(year, month, isLeapMonth);
             } catch {
               maxDay = 30;
             }
@@ -688,7 +757,7 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
             const maxDay = NepaliCalendar.NumberOfDaysInMonth(year, month);
             return Array.from({ length: maxDay }, (_, index) => ({
               value: String(index + 1),
-              label: String(index + 1),
+              label: toDevanagariDigits(index + 1),
             }));
           },
         },
@@ -710,6 +779,54 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
             const year = parseNumber(values, 'year') ?? 1;
             const month = parseNumber(values, 'month') ?? 1;
             const maxDay = MinguoCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'koreanDangi':
+      return [
+        { key: 'year', label: 'Dangi year', type: 'number', placeholder: 'e.g. 4358' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => koreanDangiMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = KoreanDangiCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'juche':
+      return [
+        { key: 'year', label: 'Juche year', type: 'number', placeholder: 'e.g. 114' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => jucheMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = JucheCalendar.NumberOfDaysInMonth(year, month);
             return Array.from({ length: maxDay }, (_, index) => ({
               value: String(index + 1),
               label: String(index + 1),
@@ -816,6 +933,14 @@ export function extractPickerValues(
         year: String(chinese.year),
         month: `${chinese.month}:${chinese.isLeapMonth ? 1 : 0}`,
         day: String(chinese.day),
+      };
+    }
+    case 'vietnamese': {
+      const vietnamese = new VietnameseCalendar(anchor);
+      return {
+        year: String(vietnamese.year),
+        month: `${vietnamese.month}:${vietnamese.isLeapMonth ? 1 : 0}`,
+        day: String(vietnamese.day),
       };
     }
     case 'japanese': {
@@ -926,6 +1051,22 @@ export function extractPickerValues(
         day: String(minguo.day),
       };
     }
+    case 'koreanDangi': {
+      const dangi = new KoreanDangiCalendar(anchor);
+      return {
+        year: String(dangi.year),
+        month: String(dangi.month),
+        day: String(dangi.day),
+      };
+    }
+    case 'juche': {
+      const juche = new JucheCalendar(anchor);
+      return {
+        year: String(juche.year),
+        month: String(juche.month),
+        day: String(juche.day),
+      };
+    }
     case 'isoWeek': {
       const iso = new IsoWeekCalendar(anchor);
       return {
@@ -1022,6 +1163,21 @@ export function pickerValuesToGregorian(
           return null;
         }
         return toGregorianCalendar(new ChineseCalendar(year, month, day, isLeapMonth));
+      }
+      case 'vietnamese': {
+        const year = parseNumber(values, 'year');
+        const monthKey = values.month ?? '1:0';
+        const [monthPart, leapPart] = monthKey.split(':');
+        const month = Number.parseInt(monthPart, 10);
+        const isLeapMonth = leapPart === '1';
+        const day = parseNumber(values, 'day');
+        if (!year || !month || !day) {
+          return null;
+        }
+        if (day > VietnameseCalendar.NumberOfDaysInMonth(year, month, isLeapMonth)) {
+          return null;
+        }
+        return toGregorianCalendar(new VietnameseCalendar(year, month, day, isLeapMonth));
       }
       case 'japanese': {
         const eraId = values.eraId ?? 'reiwa';
@@ -1204,6 +1360,30 @@ export function pickerValuesToGregorian(
           return null;
         }
         return toGregorianCalendar(new MinguoCalendar(year, month, day));
+      }
+      case 'koreanDangi': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (year === null || !month || !day) {
+          return null;
+        }
+        if (day > KoreanDangiCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new KoreanDangiCalendar(year, month, day));
+      }
+      case 'juche': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (year === null || !month || !day) {
+          return null;
+        }
+        if (day > JucheCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new JucheCalendar(year, month, day));
       }
       case 'isoWeek': {
         const year = parseNumber(values, 'year');

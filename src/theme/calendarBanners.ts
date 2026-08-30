@@ -7,6 +7,7 @@ export const CALENDAR_BANNERS: Partial<Record<CalendarId, string>> = {
   ethiopian: '/banners/ethiopian.png',
   coptic: '/banners/coptic.png',
   chinese: '/banners/chinese.png',
+  vietnamese: '/banners/vietnamese.png',
   soviet: '/banners/soviet.png',
   frc: '/banners/frc.png',
   japanese: '/banners/japanese.png',
@@ -21,5 +22,8 @@ export const CALENDAR_BANNERS: Partial<Record<CalendarId, string>> = {
   isoWeek: '/banners/isoWeek.png',
   julianDay: '/banners/julianDay.png',
   bengali: '/banners/bengali.png',
+  nepali: '/banners/nepali.png',
+  koreanDangi: '/banners/koreanDangi.png',
+  juche: '/banners/juche.png',
   minguo: '/banners/minguo.png',
 };

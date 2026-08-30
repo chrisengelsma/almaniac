@@ -105,7 +105,7 @@ export const COUNTRY_NAMES: Record<string, string> = {
   KH: 'Cambodia',
   KM: 'Comoros',
   KN: 'Saint Kitts and Nevis',
-  KP: 'North Korea',
+  KP: 'DPRK',
   KR: 'South Korea',
   KW: 'Kuwait',
   KZ: 'Kazakhstan',

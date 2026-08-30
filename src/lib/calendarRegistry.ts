@@ -2,6 +2,7 @@ import {
   type Calendar,
   BahaiCalendar,
   ChineseCalendar,
+  VietnameseCalendar,
   CopticCalendar,
   EthiopianCalendar,
   FrenchRepublicanCalendar,
@@ -22,6 +23,8 @@ import {
   IsoWeekCalendar,
   DiscordianCalendar,
   NepaliCalendar,
+  KoreanDangiCalendar,
+  JucheCalendar,
 } from 'calendar-converter/calendars';
 import { toIslamicCalendar, toJulianCalendar, toJulianDay } from 'calendar-converter/services';
 import type { MayaLongCountParts } from '../components/MayaLongCount';
@@ -32,6 +35,9 @@ import {
   formatChineseEnglish,
   formatChineseNative,
   chineseYearDetailLabel,
+  formatVietnameseEnglish,
+  formatVietnameseNative,
+  vietnameseYearDetailLabel,
   formatCopticEnglish,
   formatCopticNative,
   formatEthiopianEnglish,
@@ -63,12 +69,16 @@ import {
   formatDiscordianNative,
   formatNepaliEnglish,
   formatNepaliNative,
+  formatKoreanDangiEnglish,
+  formatKoreanDangiNative,
+  formatJucheEnglish,
+  formatJucheNative,
   nativeWeekday,
   scriptFontForCalendar,
   type ScriptFont,
 } from './nativeCalendarText';
 import type { CalendarCopy } from '../i18n/calendarCopy';
-import { calendarColorContext, getCalendarColor } from '../theme/calendarColors';
+import { calendarColorContext, getCalendarColor, getCalendarRowTextStyle, type CalendarRowTextStyle } from '../theme/calendarColors';
 import { displayJulianDay } from './julianDayValue';
 import { getReligiousHolidays, type HolidayTradition, type ReligiousHoliday } from './religiousHolidays';
 
@@ -78,6 +88,7 @@ export type CalendarId =
   | 'ethiopian'
   | 'coptic'
   | 'chinese'
+  | 'vietnamese'
   | 'soviet'
   | 'frc'
   | 'maya'
@@ -87,6 +98,8 @@ export type CalendarId =
   | 'bahai'
   | 'japanese'
   | 'minguo'
+  | 'koreanDangi'
+  | 'juche'
   | 'thaiBuddhist'
   | 'bengali'
   | 'nepali'
@@ -118,8 +131,11 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'ethiopian',
   'coptic',
   'chinese',
+  'vietnamese',
   'japanese',
   'minguo',
+  'koreanDangi',
+  'juche',
   'soviet',
   'frc',
   'maya',
@@ -175,6 +191,8 @@ function buildCalendar(id: CalendarId, anchor: GregorianCalendar, settings: AppS
       return new CopticCalendar(anchor);
     case 'chinese':
       return new ChineseCalendar(anchor);
+    case 'vietnamese':
+      return new VietnameseCalendar(anchor);
     case 'soviet':
       return new SovietCalendar(anchor);
     case 'frc':
@@ -193,6 +211,10 @@ function buildCalendar(id: CalendarId, anchor: GregorianCalendar, settings: AppS
       return new JapaneseWarekiCalendar(anchor);
     case 'minguo':
       return new MinguoCalendar(anchor);
+    case 'koreanDangi':
+      return new KoreanDangiCalendar(anchor);
+    case 'juche':
+      return new JucheCalendar(anchor);
     case 'thaiBuddhist':
       return new ThaiBuddhistCalendar(anchor);
     case 'bengali':
@@ -250,6 +272,8 @@ function formatDate(
         return formatIndianCivilEnglish(calendar as IndianCivilCalendar);
       case 'chinese':
         return formatChineseEnglish(calendar as ChineseCalendar);
+      case 'vietnamese':
+        return formatVietnameseEnglish(calendar as VietnameseCalendar);
       case 'soviet':
         return formatSovietEnglish(calendar as SovietCalendar);
       case 'ethiopian':
@@ -266,6 +290,10 @@ function formatDate(
         return formatBengaliEnglish(calendar as BengaliCalendar);
       case 'nepali':
         return formatNepaliEnglish(calendar as NepaliCalendar);
+      case 'koreanDangi':
+        return formatKoreanDangiEnglish(calendar as KoreanDangiCalendar);
+      case 'juche':
+        return formatJucheEnglish(calendar as JucheCalendar);
       case 'minguo':
         return formatMinguoEnglish(calendar as MinguoCalendar);
       case 'isoWeek':
@@ -288,6 +316,8 @@ function formatDate(
       return formatIndianCivilNative(calendar as IndianCivilCalendar);
     case 'chinese':
       return formatChineseNative(calendar as ChineseCalendar);
+    case 'vietnamese':
+      return formatVietnameseNative(calendar as VietnameseCalendar);
     case 'soviet':
       return formatSovietNative(calendar as SovietCalendar);
     case 'ethiopian':
@@ -304,6 +334,10 @@ function formatDate(
       return formatBengaliNative(calendar as BengaliCalendar);
     case 'nepali':
       return formatNepaliNative(calendar as NepaliCalendar);
+    case 'koreanDangi':
+      return formatKoreanDangiNative(calendar as KoreanDangiCalendar);
+    case 'juche':
+      return formatJucheNative(calendar as JucheCalendar);
     case 'minguo':
       return formatMinguoNative(calendar as MinguoCalendar);
     case 'isoWeek':
@@ -388,6 +422,11 @@ function buildCalendarEntry(
     entry.detailScriptFont = 'latin';
   }
 
+  if (id === 'vietnamese') {
+    entry.detailLabel = vietnameseYearDetailLabel(calendar as VietnameseCalendar);
+    entry.detailScriptFont = 'latin';
+  }
+
   return entry;
 }
 
@@ -395,6 +434,7 @@ export interface CalendarRowData {
   entry: CalendarEntry;
   visible: boolean;
   backgroundColor: string;
+  textStyle: CalendarRowTextStyle;
   holidays: ReligiousHoliday[];
 }
 
@@ -433,17 +473,19 @@ export function getOrderedCalendarRows(
   return order.map((id) => {
     const visible = settings.visibleCalendars[id];
     const visibleIndex = visibleOrder.indexOf(id);
+    const backgroundColor = getCalendarColor(
+      id,
+      context,
+      context.colorTheme === 'supporter' && visible
+        ? { index: visibleIndex, total: visibleOrder.length }
+        : undefined,
+    );
 
     return {
       entry: buildCalendarEntry(id, anchor, settings, copy, at),
       visible,
-      backgroundColor: getCalendarColor(
-        id,
-        context,
-        context.colorTheme === 'supporter' && visible
-          ? { index: visibleIndex, total: visibleOrder.length }
-          : undefined,
-      ),
+      backgroundColor,
+      textStyle: getCalendarRowTextStyle(backgroundColor, context),
       holidays: holidaysForCalendar(id, holidays),
     };
   });

@@ -146,6 +146,38 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
     derivedLicense: 'CC0 1.0',
     derivedLicenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
   },
+  vietnamese: {
+    calendarId: 'vietnamese',
+    subjects: 'Emperor Gia Long | Meridian Gate, Huế',
+    aboutNote:
+      'The Vietnamese calendar banner is derivative artwork adapted from the source images below. ' +
+      'Under the terms of the CC BY 4.0 source, the adapted banner is offered under CC BY 4.0.',
+    sources: [
+      {
+        title: 'Emperor Gia Long',
+        author: 'Unknown artist, restored by Nguyễn Phước Vĩnh Khánh',
+        license: 'Public domain',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:Emperor_Gia_Long.jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Emperor_Gia_Long.jpg',
+      },
+      {
+        title: 'Meridian Gate, Huế',
+        author: 'Supanut Arunoprayote',
+        license: 'CC BY 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Meridian_Gate,_Hue_(I).jpg',
+      },
+      {
+        title: 'Terraced paddy fields, Vietnam',
+        author: 'Quangpraha',
+        license: 'CC0 1.0',
+        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Terraced_paddy_fields,_Vietnam.jpg',
+      },
+    ],
+    derivedLicense: 'CC BY 4.0',
+    derivedLicenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+  },
   soviet: {
     calendarId: 'soviet',
     subjects: 'Joseph Stalin | Moscow Red Square',
@@ -506,6 +538,88 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
     ],
     derivedLicense: 'CC BY-SA 4.0',
     derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  nepali: {
+    calendarId: 'nepali',
+    subjects: 'Chandra Shumsher Rana | Bhaktapur Durbar Square',
+    aboutNote:
+      'The Nepali calendar banner is derivative artwork adapted from the source images below. ' +
+      'Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0.',
+    sources: [
+      {
+        title: 'Sir Chandra Shumsher Jang Bahadur Rana (restoration)',
+        author: 'CAPTAIN MEDUSA / Madan Puraskar Pustakalaya',
+        license: 'Public domain',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:Sir_Chandra_Shumsher_Jang_Bahadur_Rana_(restoration).jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Sir_Chandra_Shumsher_Jang_Bahadur_Rana_(restoration).jpg',
+      },
+      {
+        title: 'Bhaktapur Durbar Square',
+        author: 'Suzalgurungz',
+        license: 'CC BY-SA 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bhaktapur_Durbar_square.jpg',
+      },
+      {
+        title: 'Snowy Annapurna Range—panorama',
+        author: 'Ali Sabbagh',
+        license: 'CC0 1.0',
+        licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Snowy_Annapurna_Range_-_panorama.jpg',
+      },
+    ],
+    derivedLicense: 'CC BY-SA 4.0',
+    derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  koreanDangi: {
+    calendarId: 'koreanDangi',
+    subjects: 'Dangun | Samseonggung',
+    aboutNote:
+      'The Korean Dangi calendar banner is derivative artwork adapted from the source images below. ' +
+      'Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0.',
+    sources: [
+      {
+        title: 'Portrait of Dangun',
+        author: 'Chae Yong-sin',
+        license: 'Public domain',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:Portrait_of_Dangun.jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Portrait_of_Dangun.jpg',
+      },
+      {
+        title: 'Samseonggung main grounds',
+        author: 'Steve46814',
+        license: 'CC BY-SA 3.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Korea-Samseonggung_11-07500.JPG',
+      },
+    ],
+    derivedLicense: 'CC BY-SA 3.0',
+    derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+  },
+  juche: {
+    calendarId: 'juche',
+    subjects: 'Kim Il-sung | Juche Tower',
+    aboutNote:
+      'The Juche calendar banner is derivative artwork adapted from the source images below. ' +
+      'Under the terms of the CC BY 2.0 source, the adapted banner is offered under CC BY 2.0.',
+    sources: [
+      {
+        title: 'Kim Il-sung official photograph, 1 October 1948',
+        author: "Government of the Democratic People's Republic of Korea",
+        license: 'Public domain',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:Kim_Il-sung_official_photograph,_1_October_1948.jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Kim_Il-sung_official_photograph,_1_October_1948.jpg',
+      },
+      {
+        title: 'Taedong River, Pyongyang',
+        author: 'Mark Scott Johnson',
+        license: 'CC BY 2.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Taedong_River,_Pyongyang.jpg',
+      },
+    ],
+    derivedLicense: 'CC BY 2.0',
+    derivedLicenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
   },
   minguo: {
     calendarId: 'minguo',
