@@ -1681,6 +1681,9 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   transform: translateX(-50%);
   color: var(--almaniac-text-muted);
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   pointer-events: none;
 }
 
@@ -1796,6 +1799,17 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 .calendar-row--visible[data-calendar-row='maya'] .calendar-row__meta {
   --maya-list-numeral-w: clamp(0.85rem, 2.6vw, 1.15rem);
   --maya-list-numeral-h: clamp(1.35rem, 4.2vw, 1.85rem);
+}
+
+.calendar-row--visible[data-calendar-row='maya'] .calendar-row__surface {
+  container-type: inline-size;
+  container-name: maya-row;
+}
+
+@container maya-row (max-width: 24rem) {
+  .maya-round-date--lord .maya-round-date__label {
+    display: none;
+  }
 }
 
 .calendar-row__text--rtl {

@@ -130,11 +130,13 @@ export function MayaLordOfNight({ label, lord, transliterated }: MayaLordOfNight
   const { t } = useTranslation();
 
   if (transliterated) {
+    const fieldLabel = t('calendars.maya.lordOfTheNight');
+
     return (
       <MayaRoundDateText
-        fieldLabel={t('calendars.maya.lordOfTheNight')}
+        fieldLabel={fieldLabel}
         value={label}
-        ariaLabel={label}
+        ariaLabel={`${fieldLabel}: ${label}`}
         className="maya-round-date--lord"
       />
     );
