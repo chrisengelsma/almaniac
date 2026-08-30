@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useState, useRef, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MayaCalendarConstants } from 'calendar-converter/constants';
 import type { CalendarInfo } from '../data/calendarInfo';
@@ -10,7 +10,9 @@ import {
   mayaNumeralSrc,
   mayaTzolkinSrc,
 } from '../data/mayaGlyphAssets';
+import { viewportRectFromDom } from '../lib/fullscreenRect';
 import { MayaGlyph } from './MayaGlyph';
+import { MayaGlyphFullscreen, type MayaGlyphFullscreenTarget } from './MayaGlyphFullscreen';
 import { WorldUsageMap } from './WorldUsageMap';
 
 type MayaInfoTab = 'usage' | 'glyphs';
@@ -26,23 +28,54 @@ function GlyphReferenceItem({
   label,
   detail,
   rotated,
+  onExpand,
 }: {
   src: string;
   label: string;
   detail?: string;
   rotated?: boolean;
+  onExpand: (target: MayaGlyphFullscreenTarget) => void;
 }) {
+  const { t } = useTranslation();
+  const glyphRef = useRef<HTMLSpanElement>(null);
+
+  const handleClick = () => {
+    const glyph = glyphRef.current;
+    if (!glyph) {
+      return;
+    }
+
+    onExpand({
+      src,
+      label,
+      detail,
+      rotated,
+      originRect: viewportRectFromDom(glyph.getBoundingClientRect()),
+    });
+  };
+
   return (
-    <div className="maya-glyphs-ref__item">
-      <MayaGlyph
-        className={['maya-glyphs-ref__glyph', rotated ? 'maya-glyphs-ref__glyph--rotated' : '']
+    <button
+      type="button"
+      className="maya-glyphs-ref__item"
+      onClick={handleClick}
+      aria-label={t('modals.calendarInfo.maya.glyphExpandAria', { label })}
+    >
+      <span
+        ref={glyphRef}
+        className={[
+          'maya-glyphs-ref__glyph-wrap',
+          rotated ? 'maya-glyphs-ref__glyph-wrap--rotated' : '',
+        ]
           .filter(Boolean)
           .join(' ')}
-        src={src}
-      />
+        aria-hidden="true"
+      >
+        <MayaGlyph className="maya-glyphs-ref__glyph" src={src} />
+      </span>
       <span className="maya-glyphs-ref__label">{label}</span>
       {detail ? <span className="maya-glyphs-ref__detail">{detail}</span> : null}
-    </div>
+    </button>
   );
 }
 
@@ -67,8 +100,13 @@ function GlyphReferenceSection({
 export function MayaInfoSection({ info, mapColors, usedIn }: MayaInfoSectionProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<MayaInfoTab>('usage');
+  const [fullscreenGlyph, setFullscreenGlyph] = useState<MayaGlyphFullscreenTarget | null>(null);
 
   const periodKeys = ['baktun', 'katun', 'tun', 'uinal', 'kin'] as const;
+
+  const openGlyphFullscreen = (target: MayaGlyphFullscreenTarget) => {
+    setFullscreenGlyph(target);
+  };
 
   return (
     <section className="info-modal__map-section" aria-label={t('modals.calendarInfo.maya.sectionAria')}>
@@ -133,6 +171,7 @@ export function MayaInfoSection({ info, mapColors, usedIn }: MayaInfoSectionProp
                 key={periodId}
                 src={mayaLongPeriodSrc(index)}
                 label={t(`datePicker.field.${periodKeys[index]}`)}
+                onExpand={openGlyphFullscreen}
               />
             ))}
           </GlyphReferenceSection>
@@ -146,6 +185,7 @@ export function MayaInfoSection({ info, mapColors, usedIn }: MayaInfoSectionProp
                 key={value}
                 src={mayaNumeralSrc(value)}
                 label={String(value)}
+                onExpand={openGlyphFullscreen}
               />
             ))}
           </GlyphReferenceSection>
@@ -161,6 +201,7 @@ export function MayaInfoSection({ info, mapColors, usedIn }: MayaInfoSectionProp
                 label={dayName}
                 detail={MayaCalendarConstants.nahualNames[index]}
                 rotated
+                onExpand={openGlyphFullscreen}
               />
             ))}
           </GlyphReferenceSection>
@@ -175,6 +216,7 @@ export function MayaInfoSection({ info, mapColors, usedIn }: MayaInfoSectionProp
                 src={mayaHaabSrc(index)}
                 label={monthName}
                 rotated
+                onExpand={openGlyphFullscreen}
               />
             ))}
           </GlyphReferenceSection>
@@ -190,6 +232,7 @@ export function MayaInfoSection({ info, mapColors, usedIn }: MayaInfoSectionProp
                 label={lordName}
                 detail={`G${index + 1}`}
                 rotated
+                onExpand={openGlyphFullscreen}
               />
             ))}
           </GlyphReferenceSection>
@@ -197,6 +240,13 @@ export function MayaInfoSection({ info, mapColors, usedIn }: MayaInfoSectionProp
           <p className="maya-glyphs-ref__credit">{t('modals.calendarInfo.maya.glyphsCredit')}</p>
         </div>
       )}
+
+      {fullscreenGlyph ? (
+        <MayaGlyphFullscreen
+          target={fullscreenGlyph}
+          onClose={() => setFullscreenGlyph(null)}
+        />
+      ) : null}
     </section>
   );
 }

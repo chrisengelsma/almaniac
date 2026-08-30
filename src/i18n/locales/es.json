@@ -61,7 +61,9 @@
     "appIconSupporter": "Supporter",
     "supporterLockedAria": "{{label}} (ventaja de supporter)",
     "rememberLastDateLabel": "Recordar última fecha",
-    "rememberLastDateAria": "Abrir en la última fecha vista"
+    "rememberLastDateAria": "Abrir en la última fecha vista",
+    "hapticsLabel": "Vibración",
+    "hapticsAria": "Vibrar al tocar y arrastrar"
   },
   "topBar": {
     "supportAria": "Apoyar Almaniac",
@@ -103,6 +105,7 @@
     "about": {
       "title": "Acerca de {{appTitle}}",
       "description": "Almaniac muestra una misma fecha en muchos sistemas de calendario: gregoriano, juliano, hebreo, islámico, chino, maya y más.",
+      "mayaCommunityThanks": "Gracias a <link>/r/Mayan</link> por sus comentarios y ayuda con el calendario maya.",
       "creditsTitle": "Créditos de imágenes",
       "bannerTitle": "Banner de {{calendar}}",
       "version": "Versión {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "Glifos y símbolos",
         "glyphsIntro": "Las fechas mayas clásicas combinan varios conjuntos de símbolos. Almaniac usa glifos del Conversor de calendario maya del Smithsonian, mostrados aquí con sus nombres.",
         "glyphsCredit": "Glifos del Conversor de calendario maya del Museo Nacional del Indígena Americano (Smithsonian).",
+        "glyphExpandAria": "Ver glifo {{label}} a pantalla completa",
+        "glyphFullscreenAria": "Glifo {{label}}",
         "sections": {
           "longCount": "Períodos de la Cuenta Larga",
           "longCountDesc": "Cada posición de la Cuenta Larga tiene su propio glifo de período, leído de la unidad mayor (baktún) a la menor (kin).",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 d. C. (Principia Discordia)",
         "history": "Un calendario paródico de la Principia Discordia, alineado con el año gregoriano. Cada año tiene cinco estaciones de 73 días (Chaos, Discord, Confusion, Bureaucracy y The Aftermath) y una semana de cinco días. Los años bisiestos ganan el Día de San Tib entre Chaos 59 y 60. Los años se cuentan en YOLD (Year of Our Lady of Discord), año gregoriano más 1166.",
         "usedIn": [
-          "Comunidades discordianas",
-          "Cultura de Internet",
-          "Humor contracultural"
+          "Estados Unidos (origen)",
+          "Australia",
+          "Canadá",
+          "Irlanda",
+          "Nueva Zelanda",
+          "Reino Unido",
+          "Comunidades en línea en todo el mundo"
         ]
       },
       "julianDay": {

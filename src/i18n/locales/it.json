@@ -61,7 +61,9 @@
     "appIconSupporter": "Supporter",
     "supporterLockedAria": "{{label}} (vantaggio supporter)",
     "rememberLastDateLabel": "Ricorda ultima data",
-    "rememberLastDateAria": "Apri sull'ultima data visualizzata"
+    "rememberLastDateAria": "Apri sull'ultima data visualizzata",
+    "hapticsLabel": "Vibrazione",
+    "hapticsAria": "Vibra al tocco e al trascinamento"
   },
   "topBar": {
     "supportAria": "Supporta Almaniac",
@@ -103,6 +105,7 @@
     "about": {
       "title": "Informazioni su {{appTitle}}",
       "description": "Almaniac mostra una stessa data in molti sistemi di calendario: gregoriano, giuliano, ebraico, islamico, cinese, maya e altri.",
+      "mayaCommunityThanks": "Grazie a <link>/r/Mayan</link> per il feedback e l'aiuto sul calendario maya.",
       "creditsTitle": "Crediti immagini",
       "bannerTitle": "Banner {{calendar}}",
       "version": "Versione {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "Glifi e simboli",
         "glyphsIntro": "Le date maya classiche combinano diversi insiemi di simboli. Almaniac usa glifi dal Convertitore di calendario maya dello Smithsonian, mostrati qui con i loro nomi.",
         "glyphsCredit": "Glifi dal Convertitore di calendario maya del National Museum of the American Indian (Smithsonian).",
+        "glyphExpandAria": "Visualizza il glifo {{label}} a schermo intero",
+        "glyphFullscreenAria": "Glifo {{label}}",
         "sections": {
           "longCount": "Periodi del conto lungo",
           "longCountDesc": "Ogni posizione del conto lungo ha il proprio glifo di periodo, letto dall'unità maggiore (baktun) alla minore (kin).",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 d.C. (Principia Discordia)",
         "history": "Un calendario parodico della Principia Discordia, allineato all'anno gregoriano. Ogni anno ha cinque stagioni da 73 giorni (Chaos, Discord, Confusion, Bureaucracy e The Aftermath) e una settimana di cinque giorni. Gli anni bisestili guadagnano il Giorno di San Tib tra Chaos 59 e 60. Gli anni sono contati in YOLD (Year of Our Lady of Discord), anno gregoriano più 1166.",
         "usedIn": [
-          "Comunità discordiane",
-          "Cultura di Internet",
-          "Umorismo controculturale"
+          "Stati Uniti (origine)",
+          "Australia",
+          "Canada",
+          "Irlanda",
+          "Nuova Zelanda",
+          "Regno Unito",
+          "Comunità online in tutto il mondo"
         ]
       },
       "julianDay": {

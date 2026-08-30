@@ -17,6 +17,7 @@ import { sanitizeSupporterSelections } from './supporterPerks';
 
 export type IslamicDayAdjustment = -1 | 0 | 1;
 export type IslamicCalendarMode = 'tabular' | 'ummAlQura';
+export type JulianCalendarMode = 'julian' | 'revisedJulian';
 export type ColorScheme = 'light' | 'dark';
 export type ColorTheme = 'distinct' | 'mono' | 'sepia' | 'supporter';
 export type AppIconChoice = 'light' | 'dark' | 'supporter';
@@ -33,6 +34,7 @@ export interface AppSettings {
   mayaUseHieroglyphs: boolean;
   islamicCalendarMode: IslamicCalendarMode;
   islamicDayAdjustment: IslamicDayAdjustment;
+  julianCalendarMode: JulianCalendarMode;
   useModifiedJulianDay: boolean;
   showChristianHolidays: boolean;
   showJewishHolidays: boolean;
@@ -40,6 +42,7 @@ export interface AppSettings {
   appIcon: AppIconChoice;
   supporterUnlocked: boolean;
   rememberLastOpenedDate: boolean;
+  hapticsEnabled: boolean;
 }
 
 const STORAGE_KEY = 'almaniac.settings.v1';
@@ -102,6 +105,7 @@ export function defaultAppSettings(): AppSettings {
     mayaUseHieroglyphs: true,
     islamicCalendarMode: 'tabular',
     islamicDayAdjustment: 0,
+    julianCalendarMode: 'julian',
     useModifiedJulianDay: false,
     showChristianHolidays: true,
     showJewishHolidays: true,
@@ -109,6 +113,7 @@ export function defaultAppSettings(): AppSettings {
     appIcon: 'light',
     supporterUnlocked: devSupporterUnlockEnabled(),
     rememberLastOpenedDate: true,
+    hapticsEnabled: true,
   };
 }
 
@@ -145,6 +150,10 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage
     mayaUseHieroglyphs: parsed.mayaUseHieroglyphs ?? defaults.mayaUseHieroglyphs,
     islamicCalendarMode: parsed.islamicCalendarMode ?? defaults.islamicCalendarMode,
     islamicDayAdjustment: parsed.islamicDayAdjustment ?? defaults.islamicDayAdjustment,
+    julianCalendarMode:
+      parsed.julianCalendarMode === 'julian' || parsed.julianCalendarMode === 'revisedJulian'
+        ? parsed.julianCalendarMode
+        : defaults.julianCalendarMode,
     useModifiedJulianDay: parsed.useModifiedJulianDay ?? defaults.useModifiedJulianDay,
     showChristianHolidays: parsed.showChristianHolidays ?? defaults.showChristianHolidays,
     showJewishHolidays: parsed.showJewishHolidays ?? defaults.showJewishHolidays,
@@ -159,6 +168,7 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage
           : defaults.appIcon,
     supporterUnlocked: devSupporterUnlockEnabled() || parsed.supporterUnlocked === true,
     rememberLastOpenedDate: parsed.rememberLastOpenedDate ?? defaults.rememberLastOpenedDate,
+    hapticsEnabled: parsed.hapticsEnabled ?? defaults.hapticsEnabled,
   });
 }
 
@@ -339,6 +349,13 @@ export function setIslamicDayAdjustment(
   return { ...settings, islamicDayAdjustment: value };
 }
 
+export function setJulianCalendarMode(
+  settings: AppSettings,
+  value: JulianCalendarMode,
+): AppSettings {
+  return { ...settings, julianCalendarMode: value };
+}
+
 export function setUseModifiedJulianDay(
   settings: AppSettings,
   value: boolean,
@@ -351,6 +368,10 @@ export function setRememberLastOpenedDate(
   value: boolean,
 ): AppSettings {
   return { ...settings, rememberLastOpenedDate: value };
+}
+
+export function setHapticsEnabled(settings: AppSettings, value: boolean): AppSettings {
+  return { ...settings, hapticsEnabled: value };
 }
 
 export function setShowChristianHolidays(settings: AppSettings, value: boolean): AppSettings {

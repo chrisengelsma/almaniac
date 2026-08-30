@@ -61,7 +61,9 @@
     "appIconSupporter": "Apoiador",
     "supporterLockedAria": "{{label}} (vantagem de apoiador)",
     "rememberLastDateLabel": "Lembrar última data",
-    "rememberLastDateAria": "Abrir na última data visualizada"
+    "rememberLastDateAria": "Abrir na última data visualizada",
+    "hapticsLabel": "Vibração",
+    "hapticsAria": "Vibrar ao tocar e arrastar"
   },
   "topBar": {
     "supportAria": "Apoiar o Almaniac",
@@ -103,6 +105,7 @@
     "about": {
       "title": "Sobre o {{appTitle}}",
       "description": "O Almaniac mostra uma mesma data em muitos sistemas de calendário: gregoriano, juliano, hebraico, islâmico, chinês, maia e mais.",
+      "mayaCommunityThanks": "Agradecimentos ao <link>/r/Mayan</link> pelo feedback e ajuda com o calendário maia.",
       "creditsTitle": "Créditos de imagens",
       "bannerTitle": "Banner de {{calendar}}",
       "version": "Versão {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "Glifos e símbolos",
         "glyphsIntro": "As datas maias clássicas combinam vários conjuntos de símbolos. O Almaniac usa glifos do Conversor de Calendário Maia do Smithsonian, mostrados aqui com seus nomes.",
         "glyphsCredit": "Glifos do Conversor de Calendário Maia do National Museum of the American Indian (Smithsonian).",
+        "glyphExpandAria": "Ver glifo {{label}} em tela cheia",
+        "glyphFullscreenAria": "Glifo {{label}}",
         "sections": {
           "longCount": "Períodos da Conta Longa",
           "longCountDesc": "Cada posição da Conta Longa tem seu próprio glifo de período, lido da maior unidade (baktun) à menor (kin).",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 d.C. (Principia Discordia)",
         "history": "Um calendário paródico da Principia Discordia, alinhado ao ano gregoriano. Cada ano tem cinco estações de 73 dias (Chaos, Discord, Confusion, Bureaucracy e The Aftermath) e uma semana de cinco dias. Anos bissextos ganham o Dia de São Tib entre Chaos 59 e 60. Os anos são contados em YOLD (Year of Our Lady of Discord), ano gregoriano mais 1166.",
         "usedIn": [
-          "Comunidades discordianas",
-          "Cultura da internet",
-          "Humor contracultural"
+          "Estados Unidos (origem)",
+          "Austrália",
+          "Canadá",
+          "Irlanda",
+          "Nova Zelândia",
+          "Reino Unido",
+          "Comunidades online em todo o mundo"
         ]
       },
       "julianDay": {

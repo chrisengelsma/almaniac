@@ -13,11 +13,6 @@ export interface FitFullscreenResult {
   scale: number;
 }
 
-export interface FitFullscreenOptions {
-  mayaInscription?: boolean;
-  allowUpscale?: boolean;
-}
-
 function getContentBoxSize(container: HTMLElement): { width: number; height: number } {
   const style = window.getComputedStyle(container);
   const paddingX = Number.parseFloat(style.paddingLeft) + Number.parseFloat(style.paddingRight);
@@ -26,13 +21,6 @@ function getContentBoxSize(container: HTMLElement): { width: number; height: num
   return {
     width: Math.max(container.clientWidth - paddingX, 1),
     height: Math.max(container.clientHeight - paddingY, 1),
-  };
-}
-
-function measureContentSize(textElement: HTMLElement): { width: number; height: number } {
-  return {
-    width: Math.max(textElement.scrollWidth, textElement.offsetWidth, 1),
-    height: Math.max(textElement.scrollHeight, textElement.offsetHeight, 1),
   };
 }
 
@@ -86,28 +74,19 @@ export function fitMayaFullscreenInscription(
   return fontSizePx;
 }
 
-/** Size text at the max font, then scale to fit the container with margin. */
+/** Size text at the max font, then scale down to fit the container with margin. */
 export function measureFullscreenFit(
   container: HTMLElement,
   content: HTMLElement,
   textElement: HTMLElement,
-  options: FitFullscreenOptions = {},
 ): FitFullscreenResult {
-  const { allowUpscale = false } = options;
   const fontSizePx = maxFullscreenFontPx();
   textElement.style.fontSize = `${fontSizePx}px`;
   content.style.transform = 'scale(1)';
 
-  const available = getContentBoxSize(container);
-  const measured = measureContentSize(textElement);
-  const widthScale = available.width / measured.width;
-  const heightScale = available.height / measured.height;
-
-  let scale = Math.min(widthScale, heightScale);
-  scale = Math.max(MIN_SCALE, scale * MARGIN);
-  if (!allowUpscale) {
-    scale = Math.min(scale, 1);
-  }
+  const widthScale = container.clientWidth > 0 ? container.clientWidth / content.scrollWidth : 1;
+  const heightScale = container.clientHeight > 0 ? container.clientHeight / content.scrollHeight : 1;
+  const scale = Math.max(MIN_SCALE, Math.min(widthScale, heightScale, 1) * MARGIN);
 
   return { fontSizePx, scale };
 }

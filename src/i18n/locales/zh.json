@@ -61,7 +61,9 @@
     "appIconSupporter": "支持者",
     "supporterLockedAria": "{{label}}（支持者福利）",
     "rememberLastDateLabel": "记住上次日期",
-    "rememberLastDateAria": "打开时显示上次查看的日期"
+    "rememberLastDateAria": "打开时显示上次查看的日期",
+    "hapticsLabel": "振动",
+    "hapticsAria": "点击和拖动时振动"
   },
   "topBar": {
     "supportAria": "支持 Almaniac",
@@ -103,6 +105,7 @@
     "about": {
       "title": "关于 {{appTitle}}",
       "description": "Almaniac 可同时显示同一日期在多种历法中的表示：公历、儒略历、希伯来历、伊斯兰历、农历、玛雅历等。",
+      "mayaCommunityThanks": "感谢 <link>/r/Mayan</link> 对玛雅历的反馈与帮助。",
       "creditsTitle": "图片版权",
       "bannerTitle": "{{calendar}} 横幅",
       "version": "版本 {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "符号与字形",
         "glyphsIntro": "古典玛雅日期结合多组符号。Almaniac 使用史密森尼玛雅历转换器的字形，在此连同名称一并展示。",
         "glyphsCredit": "字形来自国立美国印第安人博物馆玛雅历转换器（史密森尼学会）。",
+        "glyphExpandAria": "全屏查看{{label}}字形",
+        "glyphFullscreenAria": "{{label}}字形",
         "sections": {
           "longCount": "长纪历周期",
           "longCountDesc": "长纪历每一位都有对应的周期字形，从最大单位（巴克吞）到最小（金）依次读取。",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 年（Principia Discordia）",
         "history": "来自 Principia Discordia 的戏谑宗教历，与公历年对齐。每年五个 73 天季（Chaos、Discord、Confusion、Bureaucracy、The Aftermath）和五天周。闰年增加圣 Tib 日，介于 Chaos 59 与 60 之间。年份以 YOLD（Year of Our Lady of Discord）计数，为公历年加 1166。",
         "usedIn": [
-          "Discordian 社区",
-          "互联网文化",
-          "反文化幽默"
+          "美国（起源地）",
+          "澳大利亚",
+          "加拿大",
+          "爱尔兰",
+          "新西兰",
+          "英国",
+          "全球网络社区"
         ]
       },
       "julianDay": {

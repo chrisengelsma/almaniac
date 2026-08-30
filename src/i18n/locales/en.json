@@ -29,6 +29,8 @@
     "transliterateAria": "Transliterate to English",
     "rememberLastDateLabel": "Remember last date",
     "rememberLastDateAria": "Open on the last date you viewed",
+    "hapticsLabel": "Vibrations",
+    "hapticsAria": "Vibrate on tap and drag",
     "colorThemeLabel": "Color theme",
     "colorThemeAria": "Color theme",
     "colorThemeOptionAria": "{{label}} color theme",
@@ -48,6 +50,11 @@
     "islamicSystemUmmAlQura": "Umm al-Qura (Saudi official)",
     "islamicAdjustmentLabel": "Islamic Calendar Day Adjustment",
     "islamicGroupAria": "Islamic calendar settings",
+    "julianSystemLabel": "Julian Calendar System",
+    "julianSystemAria": "Julian calendar system",
+    "julianSystemJulian": "Julian (traditional)",
+    "julianSystemRevisedJulian": "Revised Julian (Milanković)",
+    "julianGroupAria": "Julian calendar settings",
     "mayaUseHieroglyphsLabel": "Use Hieroglyphs",
     "mayaUseHieroglyphsToggle": "Use hieroglyphs",
     "mayaGroupAria": "Maya calendar settings",
@@ -103,6 +110,7 @@
     "about": {
       "title": "About {{appTitle}}",
       "description": "Almaniac shows one date in many calendar systems at once: Gregorian, Julian, Hebrew, Islamic, Chinese, Maya, and more.",
+      "mayaCommunityThanks": "Thanks to <link>/r/Mayan</link> for feedback and help on the Maya calendar.",
       "creditsTitle": "Image credits",
       "bannerTitle": "{{calendar}} banner",
       "version": "Version {{version}}",
@@ -166,7 +174,7 @@
         },
         "discordian": {
           "subjects": "Eris | Asbury Lanes",
-          "aboutNote": "The Discordian calendar banner is derivative artwork adapted from the source images below. "
+          "aboutNote": "The Discordian calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0."
         },
         "indianCivil": {
           "subjects": "Meghnad Saha | Jantar Mantar",
@@ -221,6 +229,8 @@
         "glyphsTab": "Glyphs & symbols",
         "glyphsIntro": "Classic Maya dates combine several symbol sets. Almaniac uses glyphs from the Smithsonian’s Maya Calendar Converter, shown here with their names.",
         "glyphsCredit": "Glyphs from the National Museum of the American Indian Maya Calendar Converter (Smithsonian).",
+        "glyphExpandAria": "View {{label}} glyph fullscreen",
+        "glyphFullscreenAria": "{{label}} glyph",
         "sections": {
           "longCount": "Long Count periods",
           "longCountDesc": "Each position in the Long Count has its own period glyph, read from the largest unit (baktun) to the smallest (kin).",
@@ -261,6 +271,7 @@
       "kin": "Kin",
       "buddhistYear": "Buddhist year",
       "bengaliYear": "Bengali year",
+      "nepaliYear": "Bikram Sambat year",
       "minguoYear": "Minguo year",
       "isoWeekYear": "ISO week-year",
       "week": "Week",
@@ -304,6 +315,8 @@
     },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabular",
+    "julianSystemJulian": "Julian",
+    "julianSystemRevisedJulian": "Revised Julian",
     "chineseZodiacYear": "Year of the {{zodiac}}, {{pinyin}}",
     "japaneseGannen": "Gannen",
     "isoWeekDateFormat": "{{year}} Week {{week}} ({{padded}}), {{weekday}}",
@@ -324,6 +337,7 @@
       "minguo": "Minguo Calendar",
       "thaiBuddhist": "Thai Buddhist Calendar",
       "bengali": "Bengali Calendar",
+      "nepali": "Nepali Calendar",
       "isoWeek": "ISO Week Date",
       "discordian": "Discordian Calendar",
       "indianCivil": "Indian Civil Calendar",
@@ -346,6 +360,7 @@
       "minguo": "Minguo",
       "thaiBuddhist": "Thai Buddhist",
       "bengali": "Bengali",
+      "nepali": "Nepali",
       "isoWeek": "ISO Week",
       "discordian": "Discordian",
       "indianCivil": "Indian Civil",
@@ -381,15 +396,16 @@
         ]
       },
       "julian": {
-        "firstImplemented": "45 BCE",
-        "history": "Reformed by Julius Caesar from the Roman republican calendar. It uses a simple leap-year rule (every fourth year) and remains the liturgical calendar of several Eastern Orthodox churches.",
+        "firstImplemented": "45 BCE; revised 1923 CE",
+        "history": "Reformed by Julius Caesar from the Roman republican calendar. It uses a simple leap-year rule (every fourth year) and remains the liturgical calendar of several Eastern Orthodox churches. The Revised Julian (Milanković) calendar uses a more accurate leap-year rule and matches the Gregorian calendar from 1923 through 2800; many Orthodox churches use it for fixed feasts.",
         "usedIn": [
           "Russia (until 1918)",
           "Eastern Orthodox churches",
           "Ethiopia (with variations)",
           "Serbia",
           "Jerusalem Patriarchate",
-          "Mount Athos"
+          "Mount Athos",
+          "Greece, Romania, Bulgaria (Revised Julian for fixed feasts)"
         ]
       },
       "ethiopian": {
@@ -514,6 +530,14 @@
           "West Bengal (India)"
         ]
       },
+      "nepali": {
+        "firstImplemented": "57 BCE (traditional era); official civil use from 1960 CE",
+        "history": "Bikram Sambat (BS) is Nepal’s official civil calendar. The year begins in mid-April on Baisakh 1, with months of fixed lengths and an extra day in leap years. Years run about 57 years ahead of the Gregorian calendar.",
+        "usedIn": [
+          "Nepal",
+          "Nepali diaspora communities"
+        ]
+      },
       "indianCivil": {
         "firstImplemented": "1957 CE (official adoption)",
         "history": "The Indian national calendar (Śaka era) aligns months with the tropical zodiac. Chaitra, the first month, begins near the March equinox. It is used alongside the Gregorian calendar for government gazettes and radio broadcasts.",
@@ -533,11 +557,15 @@
       },
       "discordian": {
         "firstImplemented": "1963 CE (Principia Discordia)",
-        "history": "A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons (Chaos, Discord, Confusion, Bureaucracy, and The Aftermath) and a five-day week. Leap years gain St. Tib\\",
+        "history": "A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons (Chaos, Discord, Confusion, Bureaucracy, and The Aftermath) and a five-day week. Leap years gain St. Tib's Day between Chaos 59 and 60. Years are counted in YOLD (Year of Our Lady of Discord), Gregorian year plus 1166.",
         "usedIn": [
-          "Discordian communities",
-          "Internet culture",
-          "Counterculture humor"
+          "United States (origin)",
+          "Australia",
+          "Canada",
+          "Ireland",
+          "New Zealand",
+          "United Kingdom",
+          "Online communities worldwide"
         ]
       },
       "julianDay": {

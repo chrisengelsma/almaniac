@@ -19,9 +19,11 @@ import {
   setAppLanguagePreference,
   setIslamicCalendarMode,
   setIslamicDayAdjustment,
+  setJulianCalendarMode,
   setColorTheme,
   setSupporterUnlocked,
   setRememberLastOpenedDate,
+  setHapticsEnabled,
   setTransliterateToEnglish,
   setMayaUseHieroglyphs,
   setUseModifiedJulianDay,
@@ -48,6 +50,7 @@ import { viewportRectFromDom, type ViewportRect } from './lib/fullscreenRect';
 import { useDocumentTheme } from './hooks/useDocumentTheme';
 import { useAppReviewPrompt } from './hooks/useAppReviewPrompt';
 import { useTapHaptics } from './hooks/useTapHaptics';
+import { setHapticsEnabled as setHapticsRuntimeEnabled } from './lib/haptics';
 import { useThemeTransition } from './hooks/useThemeTransition';
 import { useViewportHeight } from './hooks/useViewportHeight';
 import { useAndroidViewportSync } from './hooks/useAndroidViewportSync';
@@ -120,6 +123,10 @@ function App() {
   useEffect(() => {
     void applyAppIcon(settings.appIcon);
   }, [settings.appIcon]);
+
+  useEffect(() => {
+    setHapticsRuntimeEnabled(settings.hapticsEnabled);
+  }, [settings.hapticsEnabled]);
 
   useEffect(() => {
     const syncOnForeground = () => {
@@ -226,6 +233,9 @@ function App() {
         onIslamicAdjustmentChange={(value) =>
           updateSettings((current) => setIslamicDayAdjustment(current, value))
         }
+        onJulianCalendarModeChange={(value) =>
+          updateSettings((current) => setJulianCalendarMode(current, value))
+        }
         onMayaUseHieroglyphsChange={(value) =>
           updateSettings((current) => setMayaUseHieroglyphs(current, value))
         }
@@ -238,6 +248,9 @@ function App() {
             setAnchor(todayGregorianDate());
           }
         }}
+        onHapticsEnabledChange={(value) =>
+          updateSettings((current) => setHapticsEnabled(current, value))
+        }
         onAppIconChange={handleAppIconChange}
         onRequestSupporterUnlock={() => setDonateOpen(true)}
         onAppLanguageChange={(value) =>

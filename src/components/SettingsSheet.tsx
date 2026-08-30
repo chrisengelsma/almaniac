@@ -5,7 +5,7 @@ import {
   DEFAULT_CALENDAR_ORDER,
   type CalendarId,
 } from '../lib/calendarRegistry';
-import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, ColorTheme, AppIconChoice } from '../lib/appSettings';
+import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, JulianCalendarMode, ColorTheme, AppIconChoice } from '../lib/appSettings';
 import appIconLight from '../assets/app-icon-light.png';
 import appIconDark from '../assets/app-icon-dark.png';
 import appIconSupporter from '../assets/app-icon-teal.png';
@@ -35,9 +35,11 @@ interface SettingsSheetProps {
   onTransliterateChange: (value: boolean) => void;
   onIslamicCalendarModeChange: (value: IslamicCalendarMode) => void;
   onIslamicAdjustmentChange: (value: IslamicDayAdjustment) => void;
+  onJulianCalendarModeChange: (value: JulianCalendarMode) => void;
   onMayaUseHieroglyphsChange: (value: boolean) => void;
   onUseModifiedJulianDayChange: (value: boolean) => void;
   onRememberLastOpenedDateChange: (value: boolean) => void;
+  onHapticsEnabledChange: (value: boolean) => void;
   onAppIconChange: (value: AppIconChoice) => void;
   onRequestSupporterUnlock: () => void;
   onAppLanguageChange: (value: AppLanguagePreference) => void;
@@ -324,6 +326,37 @@ function IslamicCalendarOptions({
   );
 }
 
+interface JulianCalendarOptionsProps {
+  settings: AppSettings;
+  onJulianCalendarModeChange: (value: JulianCalendarMode) => void;
+}
+
+function JulianCalendarOptions({
+  settings,
+  onJulianCalendarModeChange,
+}: JulianCalendarOptionsProps) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="settings-sheet__calendar-options" role="group" aria-label={t('settings.julianGroupAria')}>
+      <div className="settings-sheet__item settings-sheet__item--stacked">
+        <span>{t('settings.julianSystemLabel')}</span>
+        <select
+          className="settings-sheet__select"
+          value={settings.julianCalendarMode}
+          onChange={(event) =>
+            onJulianCalendarModeChange(event.target.value as JulianCalendarMode)
+          }
+          aria-label={t('settings.julianSystemAria')}
+        >
+          <option value="julian">{t('settings.julianSystemJulian')}</option>
+          <option value="revisedJulian">{t('settings.julianSystemRevisedJulian')}</option>
+        </select>
+      </div>
+    </div>
+  );
+}
+
 interface MayaCalendarOptionsProps {
   settings: AppSettings;
   onMayaUseHieroglyphsChange: (value: boolean) => void;
@@ -337,7 +370,7 @@ function MayaCalendarOptions({
 
   return (
     <div className="settings-sheet__calendar-options" role="group" aria-label={t('settings.mayaGroupAria')}>
-      <div className="settings-sheet__item settings-sheet__item--stacked">
+      <div className="settings-sheet__item">
         <span>{t('settings.mayaUseHieroglyphsLabel')}</span>
         <SheetToggle
           checked={settings.mayaUseHieroglyphs}
@@ -383,9 +416,11 @@ export function SettingsSheet({
   onTransliterateChange,
   onIslamicCalendarModeChange,
   onIslamicAdjustmentChange,
+  onJulianCalendarModeChange,
   onMayaUseHieroglyphsChange,
   onUseModifiedJulianDayChange,
   onRememberLastOpenedDateChange,
+  onHapticsEnabledChange,
   onAppIconChange,
   onRequestSupporterUnlock,
   onAppLanguageChange,
@@ -592,6 +627,14 @@ export function SettingsSheet({
                       }
                     />
                   </li>
+                  <li className="settings-sheet__item">
+                    <span>{t('settings.hapticsLabel')}</span>
+                    <SheetToggle
+                      checked={settings.hapticsEnabled}
+                      label={t('settings.hapticsAria')}
+                      onChange={() => onHapticsEnabledChange(!settings.hapticsEnabled)}
+                    />
+                  </li>
                   <li className="settings-sheet__item settings-sheet__item--stacked">
                     <span>{t('settings.colorThemeLabel')}</span>
                     <ColorThemePicker
@@ -649,6 +692,12 @@ export function SettingsSheet({
                         settings={settings}
                         onIslamicCalendarModeChange={onIslamicCalendarModeChange}
                         onIslamicAdjustmentChange={onIslamicAdjustmentChange}
+                      />
+                    ) : null}
+                    {id === 'julian' && settings.visibleCalendars.julian ? (
+                      <JulianCalendarOptions
+                        settings={settings}
+                        onJulianCalendarModeChange={onJulianCalendarModeChange}
                       />
                     ) : null}
                     {id === 'maya' && settings.visibleCalendars.maya ? (

@@ -11,6 +11,7 @@ import {
   IslamicCalendarMode,
   JapaneseWarekiCalendar,
   JulianCalendar,
+  JulianCalendarMode,
   JulianDay,
   MayaCalendar,
   PersianCalendar,
@@ -18,25 +19,28 @@ import {
   ThaiBuddhistCalendar,
   BengaliCalendar,
   MinguoCalendar,
+  NepaliCalendar,
   IsoWeekCalendar,
   DiscordianCalendar,
 } from 'calendar-converter/calendars';
-import { toGregorianCalendar, toIslamicCalendar } from 'calendar-converter/services';
+import { toGregorianCalendar, toIslamicCalendar, toJulianCalendar } from 'calendar-converter/services';
 import type { CalendarId } from './calendarRegistry';
 import { DEFAULT_CALENDAR_ORDER } from './calendarRegistry';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
-import type { IslamicCalendarMode as AppIslamicCalendarMode } from './appSettings';
+import type { IslamicCalendarMode as AppIslamicCalendarMode, JulianCalendarMode as AppJulianCalendarMode } from './appSettings';
 import {
   astronomicalToDisplay,
   createGregorianDate,
   daysInGregorianMonth,
   type GregorianEra,
 } from './gregorianDate';
+import { persianMonthName, toPersianDigits } from './nativeCalendarText';
 
 export type PickerValues = Record<string, string>;
 
 export interface PickerContext {
   islamicCalendarMode?: AppIslamicCalendarMode;
+  julianCalendarMode?: AppJulianCalendarMode;
   useModifiedJulianDay?: boolean;
 }
 
@@ -44,6 +48,12 @@ function converterIslamicMode(context?: PickerContext): IslamicCalendarMode {
   return context?.islamicCalendarMode === 'ummAlQura'
     ? IslamicCalendarMode.UmmAlQura
     : IslamicCalendarMode.Tabular;
+}
+
+function converterJulianMode(context?: PickerContext): JulianCalendarMode {
+  return context?.julianCalendarMode === 'revisedJulian'
+    ? JulianCalendarMode.RevisedJulian
+    : JulianCalendarMode.Julian;
 }
 
 export interface PickerFieldOption {
@@ -115,7 +125,7 @@ function hebrewMonthOptions(year: number): PickerFieldOption[] {
 function persianMonthOptions(): PickerFieldOption[] {
   return Array.from({ length: 12 }, (_, index) => ({
     value: String(index + 1),
-    label: PersianCalendar.MonthName(index + 1),
+    label: persianMonthName(index + 1),
   }));
 }
 
@@ -158,6 +168,13 @@ function bengaliMonthOptions(): PickerFieldOption[] {
   return Array.from({ length: 12 }, (_, index) => ({
     value: String(index + 1),
     label: BengaliCalendar.MonthName(index + 1),
+  }));
+}
+
+function nepaliMonthOptions(): PickerFieldOption[] {
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: NepaliCalendar.MonthName(index + 1),
   }));
 }
 
@@ -551,7 +568,7 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
             const maxDay = PersianCalendar.NumberOfDaysInMonth(year, month);
             return Array.from({ length: maxDay }, (_, index) => ({
               value: String(index + 1),
-              label: String(index + 1),
+              label: toPersianDigits(index + 1),
             }));
           },
         },
@@ -645,6 +662,30 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
             const year = parseNumber(values, 'year') ?? 1;
             const month = parseNumber(values, 'month') ?? 1;
             const maxDay = BengaliCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: String(index + 1),
+            }));
+          },
+        },
+      ];
+    case 'nepali':
+      return [
+        { key: 'year', label: 'Bikram Sambat year', type: 'number', placeholder: 'e.g. 2082' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => nepaliMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = NepaliCalendar.NumberOfDaysInMonth(year, month);
             return Array.from({ length: maxDay }, (_, index) => ({
               value: String(index + 1),
               label: String(index + 1),
@@ -746,7 +787,7 @@ export function extractPickerValues(
       };
     }
     case 'julian': {
-      const julian = new JulianCalendar(anchor);
+      const julian = toJulianCalendar(anchor, converterJulianMode(context));
       return {
         year: String(julian.year),
         month: String(julian.month),
@@ -869,6 +910,14 @@ export function extractPickerValues(
         day: String(bengali.day),
       };
     }
+    case 'nepali': {
+      const nepali = new NepaliCalendar(anchor);
+      return {
+        year: String(nepali.year),
+        month: String(nepali.month),
+        day: String(nepali.day),
+      };
+    }
     case 'minguo': {
       const minguo = new MinguoCalendar(anchor);
       return {
@@ -929,10 +978,11 @@ export function pickerValuesToGregorian(
         if (year === null || !month || !day) {
           return null;
         }
-        if (day > JulianCalendar.NumberOfDaysInMonth(year, month)) {
+        const mode = converterJulianMode(context);
+        if (day > JulianCalendar.NumberOfDaysInMonth(year, month, mode)) {
           return null;
         }
-        return toGregorianCalendar(new JulianCalendar(year, month, day));
+        return toGregorianCalendar(new JulianCalendar(year, month, day, mode));
       }
       case 'ethiopian': {
         const year = parseNumber(values, 'year');
@@ -1130,6 +1180,18 @@ export function pickerValuesToGregorian(
           return null;
         }
         return toGregorianCalendar(new BengaliCalendar(year, month, day));
+      }
+      case 'nepali': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (year === null || !month || !day) {
+          return null;
+        }
+        if (day > NepaliCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new NepaliCalendar(year, month, day));
       }
       case 'minguo': {
         const year = parseNumber(values, 'year');

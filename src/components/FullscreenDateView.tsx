@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProp
 import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
 import type { ColorScheme, ColorTheme } from '../lib/appSettings';
-import { calendarTextClassName, calendarTextStyle } from '../lib/calendarTextStyle';
+import { calendarTextClassName, calendarTextLang, calendarTextStyle } from '../lib/calendarTextStyle';
 import type { CalendarRowData } from '../lib/calendarRegistry';
 import {
   fitMayaFullscreenInscription,
@@ -54,6 +54,7 @@ export function FullscreenDateView({
   const fitFrameRef = useRef<number | null>(null);
   const scriptClass = calendarTextClassName(entry.scriptFont);
   const scriptStyle = calendarTextStyle(entry.scriptFont);
+  const scriptLang = calendarTextLang(entry.scriptFont);
   const dateText = entry.date || '-';
   const isExpanded = phase === 'open';
   const scaleRect = phase === 'exit' ? exitRect : originRect;
@@ -279,7 +280,7 @@ export function FullscreenDateView({
 
   const content = (
     <div
-      className={`fullscreen-date${isExpanded ? ' fullscreen-date--open' : ''}`}
+      className={`fullscreen-date${isExpanded ? ' fullscreen-date--open' : ''}${entry.mayaLongCount ? ' fullscreen-date--maya' : ''}`}
       style={shellStyle}
       data-color-scheme={colorScheme}
       data-color-theme={colorTheme}
@@ -308,6 +309,7 @@ export function FullscreenDateView({
             ref={textRef}
             className={`fullscreen-date__text ${scriptClass}`.trim()}
             style={textStyle}
+            lang={scriptLang}
             aria-label={entry.mayaLongCount ? dateText : undefined}
           >
             {entry.mayaLongCount ? (

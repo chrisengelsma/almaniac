@@ -61,7 +61,9 @@
     "appIconSupporter": "サポーター",
     "supporterLockedAria": "{{label}}（サポーター特典）",
     "rememberLastDateLabel": "最後の日付を記憶",
-    "rememberLastDateAria": "最後に表示した日付で開く"
+    "rememberLastDateAria": "最後に表示した日付で開く",
+    "hapticsLabel": "バイブレーション",
+    "hapticsAria": "タップとドラッグ時に振動"
   },
   "topBar": {
     "supportAria": "Almaniac を支援",
@@ -103,6 +105,7 @@
     "about": {
       "title": "{{appTitle}} について",
       "description": "Almaniac は、グレゴリオ暦、ユリウス暦、ユダヤ暦、イスラム暦、中国暦、マヤ暦など、多くの暦法で同じ日付を一度に表示します。",
+      "mayaCommunityThanks": "マヤ暦へのフィードバックとご支援をいただいた<link>/r/Mayan</link>に感謝します。",
       "creditsTitle": "画像クレジット",
       "bannerTitle": "{{calendar}} バナー",
       "version": "バージョン {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "グリフと記号",
         "glyphsIntro": "古典期マヤの日付は複数の記号体系を組み合わせます。Almaniac はスミソニアン学会のマヤ暦コンバーターのグリフを使用し、ここで名称とともに示します。",
         "glyphsCredit": "グリフは国立アメリカインディアン博物館マヤ暦コンバーター（スミソニアン学会）より。",
+        "glyphExpandAria": "{{label}}のグリフを全画面表示",
+        "glyphFullscreenAria": "{{label}}のグリフ",
         "sections": {
           "longCount": "長期暦の周期",
           "longCountDesc": "長期暦の各桁には周期グリフがあり、最大単位（バクトゥン）から最小（キン）の順に読みます。",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 年（Principia Discordia）",
         "history": "Principia Discordia 由来のパロディ宗教暦で、グレゴリオ年に合わせています。毎年 73 日の季が 5 つ（Chaos、Discord、Confusion、Bureaucracy、The Aftermath）と 5 日週があります。閏年には Chaos 59 と 60 の間に聖 Tib の日が加わります。年は YOLD（Year of Our Lady of Discord）、グレゴリオ年 + 1166 で数えます。",
         "usedIn": [
-          "ディスコーディアンコミュニティ",
-          "インターネット文化",
-          "カウンターカルチャーのユーモア"
+          "アメリカ合衆国（発祥地）",
+          "オーストラリア",
+          "カナダ",
+          "アイルランド",
+          "ニュージーランド",
+          "イギリス",
+          "世界中のオンラインコミュニティ"
         ]
       },
       "julianDay": {

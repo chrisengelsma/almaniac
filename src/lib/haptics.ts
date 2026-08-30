@@ -13,8 +13,14 @@ const INTERACTIVE_SELECTOR = [
   'label[for]',
 ].join(', ');
 
+let hapticsEnabled = true;
+
+export function setHapticsEnabled(enabled: boolean): void {
+  hapticsEnabled = enabled;
+}
+
 function canUseHaptics(): boolean {
-  return Capacitor.isNativePlatform();
+  return hapticsEnabled && Capacitor.isNativePlatform();
 }
 
 async function runHaptic(action: () => Promise<void>): Promise<void> {

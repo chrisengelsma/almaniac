@@ -17,6 +17,7 @@ export const CALENDAR_NAMES: Record<CalendarId, string> = {
   minguo: 'Minguo Calendar',
   thaiBuddhist: 'Thai Buddhist Calendar',
   bengali: 'Bengali Calendar',
+  nepali: 'Nepali Calendar',
   isoWeek: 'ISO Week Date',
   discordian: 'Discordian Calendar',
   indianCivil: 'Indian Civil Calendar',

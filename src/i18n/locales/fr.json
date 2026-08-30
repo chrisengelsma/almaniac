@@ -61,7 +61,9 @@
     "appIconSupporter": "Supporter",
     "supporterLockedAria": "{{label}} (avantage supporter)",
     "rememberLastDateLabel": "Mémoriser la dernière date",
-    "rememberLastDateAria": "Ouvrir sur la dernière date consultée"
+    "rememberLastDateAria": "Ouvrir sur la dernière date consultée",
+    "hapticsLabel": "Vibrations",
+    "hapticsAria": "Vibrer au toucher et au glissement"
   },
   "topBar": {
     "supportAria": "Soutenir Almaniac",
@@ -103,6 +105,7 @@
     "about": {
       "title": "À propos de {{appTitle}}",
       "description": "Almaniac affiche une même date dans de nombreux calendriers : grégorien, julien, hébraïque, islamique, chinois, maya, et plus encore.",
+      "mayaCommunityThanks": "Merci à <link>/r/Mayan</link> pour leurs retours et leur aide sur le calendrier maya.",
       "creditsTitle": "Crédits des images",
       "bannerTitle": "Bannière {{calendar}}",
       "version": "Version {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "Glifes et symboles",
         "glyphsIntro": "Les dates mayas classiques combinent plusieurs jeux de symboles. Almaniac utilise des glifes du convertisseur de calendrier maya du Smithsonian, présentés ici avec leurs noms.",
         "glyphsCredit": "Glifes du convertisseur de calendrier maya du National Museum of the American Indian (Smithsonian).",
+        "glyphExpandAria": "Afficher le glyphe {{label}} en plein écran",
+        "glyphFullscreenAria": "Glyphe {{label}}",
         "sections": {
           "longCount": "Périodes du compte long",
           "longCountDesc": "Chaque position du compte long a son propre glife de période, lu de la plus grande unité (baktun) à la plus petite (kin).",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 ap. J.-C. (Principia Discordia)",
         "history": "Un calendrier parodique issu de la Principia Discordia, aligné sur l’année grégorienne. Chaque année a cinq saisons de 73 jours (Chaos, Discord, Confusion, Bureaucracy et The Aftermath) et une semaine de cinq jours. Les années bissextiles gagnent la Saint Tib entre Chaos 59 et 60. Les années sont comptées en YOLD (Year of Our Lady of Discord), année grégorienne plus 1166.",
         "usedIn": [
-          "Communautés discordiennes",
-          "Culture Internet",
-          "Humour contre-culturel"
+          "États-Unis (origine)",
+          "Australie",
+          "Canada",
+          "Irlande",
+          "Nouvelle-Zélande",
+          "Royaume-Uni",
+          "Communautés en ligne dans le monde"
         ]
       },
       "julianDay": {

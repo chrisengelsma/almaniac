@@ -6,6 +6,7 @@
  */
 export const SCRIPT_FONTS = {
   arabic: '"IBM Plex Sans Arabic", "IBM Plex Sans", sans-serif',
+  persian: '"Vazirmatn", "IBM Plex Sans Arabic", "IBM Plex Sans", sans-serif',
   hebrew: '"IBM Plex Sans Hebrew", "IBM Plex Sans", sans-serif',
   devanagari: '"IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif',
   bengali: '"Noto Sans Bengali", sans-serif',

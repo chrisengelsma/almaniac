@@ -12,6 +12,7 @@ import {
   IslamicCalendarMode,
   JapaneseWarekiCalendar,
   JulianCalendar,
+  JulianCalendarMode,
   MayaCalendar,
   PersianCalendar,
   SovietCalendar,
@@ -20,8 +21,9 @@ import {
   MinguoCalendar,
   IsoWeekCalendar,
   DiscordianCalendar,
+  NepaliCalendar,
 } from 'calendar-converter/calendars';
-import { toIslamicCalendar, toJulianDay } from 'calendar-converter/services';
+import { toIslamicCalendar, toJulianCalendar, toJulianDay } from 'calendar-converter/services';
 import type { MayaLongCountParts } from '../components/MayaLongCount';
 import type { MayaHaabParts, MayaLordOfNight, MayaTzolkinParts } from './mayaRounds';
 import type { AppSettings } from './appSettings';
@@ -59,6 +61,9 @@ import {
   formatIsoWeekNative,
   formatDiscordianEnglish,
   formatDiscordianNative,
+  formatNepaliEnglish,
+  formatNepaliNative,
+  julianCalendarSystemLabel,
   nativeWeekday,
   scriptFontForCalendar,
   type ScriptFont,
@@ -85,6 +90,7 @@ export type CalendarId =
   | 'minguo'
   | 'thaiBuddhist'
   | 'bengali'
+  | 'nepali'
   | 'isoWeek'
   | 'discordian'
   | 'indianCivil'
@@ -124,6 +130,7 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'bahai',
   'thaiBuddhist',
   'bengali',
+  'nepali',
   'isoWeek',
   'discordian',
   'indianCivil',
@@ -134,6 +141,16 @@ function islamicCalendarMode(settings: AppSettings): IslamicCalendarMode {
   return settings.islamicCalendarMode === 'ummAlQura'
     ? IslamicCalendarMode.UmmAlQura
     : IslamicCalendarMode.Tabular;
+}
+
+function julianCalendarMode(settings: AppSettings): JulianCalendarMode {
+  return settings.julianCalendarMode === 'revisedJulian'
+    ? JulianCalendarMode.RevisedJulian
+    : JulianCalendarMode.Julian;
+}
+
+function buildJulianCalendar(anchor: GregorianCalendar, settings: AppSettings): JulianCalendar {
+  return toJulianCalendar(anchor, julianCalendarMode(settings));
 }
 
 function buildIslamicCalendar(anchor: GregorianCalendar, settings: AppSettings): IslamicCalendar {
@@ -152,7 +169,7 @@ function buildCalendar(id: CalendarId, anchor: GregorianCalendar, settings: AppS
     case 'gregorian':
       return new GregorianCalendar(anchor);
     case 'julian':
-      return new JulianCalendar(anchor);
+      return buildJulianCalendar(anchor, settings);
     case 'ethiopian':
       return new EthiopianCalendar(anchor);
     case 'coptic':
@@ -181,6 +198,8 @@ function buildCalendar(id: CalendarId, anchor: GregorianCalendar, settings: AppS
       return new ThaiBuddhistCalendar(anchor);
     case 'bengali':
       return new BengaliCalendar(anchor);
+    case 'nepali':
+      return new NepaliCalendar(anchor);
     case 'isoWeek':
       return new IsoWeekCalendar(anchor);
     case 'discordian':
@@ -246,6 +265,8 @@ function formatDate(
         return formatThaiBuddhistEnglish(calendar as ThaiBuddhistCalendar);
       case 'bengali':
         return formatBengaliEnglish(calendar as BengaliCalendar);
+      case 'nepali':
+        return formatNepaliEnglish(calendar as NepaliCalendar);
       case 'minguo':
         return formatMinguoEnglish(calendar as MinguoCalendar);
       case 'isoWeek':
@@ -282,6 +303,8 @@ function formatDate(
       return formatThaiBuddhistNative(calendar as ThaiBuddhistCalendar);
     case 'bengali':
       return formatBengaliNative(calendar as BengaliCalendar);
+    case 'nepali':
+      return formatNepaliNative(calendar as NepaliCalendar);
     case 'minguo':
       return formatMinguoNative(calendar as MinguoCalendar);
     case 'isoWeek':
@@ -355,6 +378,14 @@ function buildCalendarEntry(
       settings.islamicCalendarMode,
       settings.transliterateToEnglish,
     );
+  }
+
+  if (id === 'julian') {
+    entry.detailLabel = julianCalendarSystemLabel(
+      settings.julianCalendarMode,
+      settings.transliterateToEnglish,
+    );
+    entry.detailScriptFont = 'latin';
   }
 
   if (id === 'chinese') {

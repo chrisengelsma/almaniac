@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { copyTextToClipboard } from '../lib/copyText';
-import { calendarTextClassName, calendarTextStyle } from '../lib/calendarTextStyle';
+import { calendarTextClassName, calendarTextLang, calendarTextStyle } from '../lib/calendarTextStyle';
 import type { CalendarRowData } from '../lib/calendarRegistry';
 import { DragHandle } from './DragHandle';
 import { MayaLongCount } from './MayaLongCount';
@@ -32,8 +32,10 @@ export function CalendarRow({
   const [copied, setCopied] = useState(false);
   const scriptClass = calendarTextClassName(entry.scriptFont);
   const scriptStyle = calendarTextStyle(entry.scriptFont);
+  const scriptLang = calendarTextLang(entry.scriptFont);
   const detailScriptClass = calendarTextClassName(entry.detailScriptFont ?? entry.scriptFont);
   const detailScriptStyle = calendarTextStyle(entry.detailScriptFont ?? entry.scriptFont);
+  const detailScriptLang = calendarTextLang(entry.detailScriptFont ?? entry.scriptFont);
   const dateText = entry.date || '-';
   const canCopy = Boolean(entry.date && entry.date !== '-');
   const {
@@ -121,6 +123,7 @@ export function CalendarRow({
           <p
             className={`calendar-row__date ${scriptClass}`.trim()}
             style={scriptStyle}
+            lang={scriptLang}
             aria-label={entry.mayaLongCount ? dateText : undefined}
           >
             {entry.mayaLongCount ? (
@@ -167,7 +170,7 @@ export function CalendarRow({
                   useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
                 />
               ) : (
-                <span className="calendar-row__weekday" style={scriptStyle}>
+                <span className="calendar-row__weekday" style={scriptStyle} lang={scriptLang}>
                   {entry.weekday}
                 </span>
               )
@@ -183,7 +186,7 @@ export function CalendarRow({
                   useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
                 />
               ) : (
-                <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle}>
+                <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle} lang={detailScriptLang}>
                   {entry.detailLabel}
                 </span>
               )}

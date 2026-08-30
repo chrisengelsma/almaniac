@@ -54,9 +54,9 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
   julian: {
     id: 'julian',
     calendarType: 'solar',
-    firstImplemented: '45 BCE',
+    firstImplemented: '45 BCE; revised 1923 CE',
     history:
-      'Reformed by Julius Caesar from the Roman republican calendar. It uses a simple leap-year rule (every fourth year) and remains the liturgical calendar of several Eastern Orthodox churches.',
+      'Reformed by Julius Caesar from the Roman republican calendar. It uses a simple leap-year rule (every fourth year) and remains the liturgical calendar of several Eastern Orthodox churches. The Revised Julian (Milanković) calendar uses a more accurate leap-year rule and matches the Gregorian calendar from 1923 through 2800; many Orthodox churches use it for fixed feasts.',
     usedIn: [
       'Russia (until 1918)',
       'Eastern Orthodox churches',
@@ -64,6 +64,7 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
       'Serbia',
       'Jerusalem Patriarchate',
       'Mount Athos',
+      'Greece, Romania, Bulgaria (Revised Julian for fixed feasts)',
     ],
     mapCountries: [...JULIAN_CHURCH_COUNTRIES],
   },
@@ -203,6 +204,15 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     usedIn: ['Bangladesh', 'West Bengal (India)'],
     mapCountries: ['BD', 'IN'],
   },
+  nepali: {
+    id: 'nepali',
+    calendarType: 'solar',
+    firstImplemented: '57 BCE (traditional era); official civil use from 1960 CE',
+    history:
+      'Bikram Sambat (BS) is Nepal’s official civil calendar. The year begins in mid-April on Baisakh 1, with months of fixed lengths and an extra day in leap years. Years run about 57 years ahead of the Gregorian calendar.',
+    usedIn: ['Nepal', 'Nepali diaspora communities'],
+    mapCountries: ['NP'],
+  },
   indianCivil: {
     id: 'indianCivil',
     calendarType: 'solar',
@@ -232,8 +242,16 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     firstImplemented: '1963 CE (Principia Discordia)',
     history:
       'A parody religion calendar from the Principia Discordia, aligned to the Gregorian year. Each year has five 73-day seasons (Chaos, Discord, Confusion, Bureaucracy, and The Aftermath) and a five-day week. Leap years gain St. Tib\'s Day between Chaos 59 and 60. Years are counted in YOLD (Year of Our Lady of Discord), Gregorian year plus 1166.',
-    usedIn: ['Discordian communities', 'Internet culture', 'Counterculture humor'],
-    mapCountries: ['US', 'GB', 'CA', 'AU', 'DE'],
+    usedIn: [
+      'United States (origin)',
+      'Australia',
+      'Canada',
+      'Ireland',
+      'New Zealand',
+      'United Kingdom',
+      'Online communities worldwide',
+    ],
+    mapCountries: ['US', 'CA', 'GB', 'IE', 'AU', 'NZ'],
   },
   julianDay: {
     id: 'julianDay',

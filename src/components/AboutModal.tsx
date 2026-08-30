@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { APP_VERSION } from '../theme/appBranding';
 import { PRIVACY_POLICY_URL, SITE_URL, TERMS_OF_SERVICE_URL } from '../theme/supportLinks';
 import { getAllBannerAttributions } from '../data/imageAttributions';
@@ -98,6 +98,22 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
                     </a>
                     .
                   </p>
+                  {entry.calendarId === 'maya' ? (
+                    <p className="about-modal__thanks">
+                      <Trans
+                        i18nKey="modals.about.mayaCommunityThanks"
+                        components={{
+                          link: (
+                            <a
+                              href="https://www.reddit.com/r/Mayan/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            />
+                          ),
+                        }}
+                      />
+                    </p>
+                  ) : null}
                 </article>
               ))}
             </section>

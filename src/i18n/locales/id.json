@@ -61,7 +61,9 @@
     "appIconSupporter": "Pendukung",
     "supporterLockedAria": "{{label}} (keuntungan pendukung)",
     "rememberLastDateLabel": "Ingat tanggal terakhir",
-    "rememberLastDateAria": "Buka pada tanggal terakhir yang dilihat"
+    "rememberLastDateAria": "Buka pada tanggal terakhir yang dilihat",
+    "hapticsLabel": "Getaran",
+    "hapticsAria": "Bergetar saat ketuk dan seret"
   },
   "topBar": {
     "supportAria": "Dukung Almaniac",
@@ -103,6 +105,7 @@
     "about": {
       "title": "Tentang {{appTitle}}",
       "description": "Almaniac menampilkan satu tanggal dalam banyak sistem kalender sekaligus: Gregorian, Julian, Ibrani, Islam, Tionghoa, Maya, dan lainnya.",
+      "mayaCommunityThanks": "Terima kasih kepada <link>/r/Mayan</link> atas masukan dan bantuan pada kalender Maya.",
       "creditsTitle": "Kredit gambar",
       "bannerTitle": "Spanduk {{calendar}}",
       "version": "Versi {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "Glif & simbol",
         "glyphsIntro": "Tanggal Maya Klasik menggabungkan beberapa rangkaian simbol. Almaniac menggunakan glif dari Konverter Kalender Maya Smithsonian, ditampilkan di sini beserta namanya.",
         "glyphsCredit": "Glif dari Konverter Kalender Maya Museum Nasional Indian Amerika (Smithsonian).",
+        "glyphExpandAria": "Lihat glif {{label}} layar penuh",
+        "glyphFullscreenAria": "Glif {{label}}",
         "sections": {
           "longCount": "Periode Long Count",
           "longCountDesc": "Setiap posisi dalam Long Count memiliki glif periode sendiri, dibaca dari unit terbesar (baktun) ke terkecil (kin).",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 M (Principia Discordia)",
         "history": "Kalender agama parodi dari Principia Discordia, selaras dengan tahun Gregorian. Setiap tahun memiliki lima musim 73 hari (Chaos, Discord, Confusion, Bureaucracy, dan The Aftermath) dan minggu lima hari. Tahun kabisat mendapat Hari St. Tib antara Chaos 59 dan 60. Tahun dihitung dalam YOLD (Year of Our Lady of Discord), tahun Gregorian ditambah 1166.",
         "usedIn": [
-          "Komunitas Discordian",
-          "Budaya internet",
-          "Humor kontra-budaya"
+          "Amerika Serikat (asal)",
+          "Australia",
+          "Kanada",
+          "Irlandia",
+          "Selandia Baru",
+          "Britania Raya",
+          "Komunitas daring di seluruh dunia"
         ]
       },
       "julianDay": {

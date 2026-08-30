@@ -6,7 +6,7 @@ ANDROID_DIR="$ROOT/android"
 BUILD_DIR="$ROOT/build/android"
 PROPS_FILE="$ANDROID_DIR/keystore.properties"
 BUNDLE_SRC="$ANDROID_DIR/app/build/outputs/bundle/release/app-release.aab"
-BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.7-signed.aab"
+BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.11-signed.aab"
 
 export JAVA_HOME="${JAVA_HOME:-/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home}"
 
@@ -47,12 +47,12 @@ zip -d "$BUNDLE_OUT" 'META-INF/*.SF' 'META-INF/*.RSA' 'META-INF/*.DSA' 'META-INF
 
 "$JAVA_HOME/bin/jarsigner" -verify "$BUNDLE_OUT"
 
-if ! unzip -l "$BUNDLE_OUT" | grep -q 'META-INF/.*\.RSA'; then
+if ! unzip -l "$BUNDLE_OUT" | grep -qE 'META-INF/[^/]+\.(RSA|DSA|EC)'; then
   echo "Bundle is missing a JAR signature." >&2
   exit 1
 fi
 
-cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.7-release.aab"
+cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.11-release.aab"
 
 echo ""
 echo "Signed bundle ready for Play Console:"

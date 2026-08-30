@@ -61,7 +61,9 @@
     "appIconSupporter": "داعم",
     "supporterLockedAria": "{{label}} (ميزة الداعم)",
     "rememberLastDateLabel": "تذكر آخر تاريخ",
-    "rememberLastDateAria": "افتح آخر تاريخ شاهدته"
+    "rememberLastDateAria": "افتح آخر تاريخ شاهدته",
+    "hapticsLabel": "الاهتزاز",
+    "hapticsAria": "الاهتزاز عند النقر والسحب"
   },
   "topBar": {
     "supportAria": "دعم Almaniac",
@@ -103,6 +105,7 @@
     "about": {
       "title": "حول {{appTitle}}",
       "description": "يعرض Almaniac تاريخًا واحدًا في العديد من أنظمة التقويم: الميلادي، الجولياني، الهجري، الصيني، المايا، وغيرها.",
+      "mayaCommunityThanks": "شكرًا لـ <link>/r/Mayan</link> على ملاحظاتهم ومساعدتهم في تقويم المايا.",
       "creditsTitle": "حقوق الصور",
       "bannerTitle": "شعار {{calendar}}",
       "version": "الإصدار {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "الرموز والحروف",
         "glyphsIntro": "تجمع تواريخ المايا الكلاسيكية عدة مجموعات من الرموز. يستخدم Almaniac رموزًا من محوّل تقويم المايا التابع لسميثسونيان، معروضة هنا بأسمائها.",
         "glyphsCredit": "الرموز من محوّل تقويم المايا في المتحف الوطني للهنود الأمريكي (سميثسونيان).",
+        "glyphExpandAria": "عرض رمز {{label}} بملء الشاشة",
+        "glyphFullscreenAria": "رمز {{label}}",
         "sections": {
           "longCount": "فترات العد الطويل",
           "longCountDesc": "لكل منزلة في العد الطويل رمز فترة خاص بها، تُقرأ من أكبر وحدة (باكتون) إلى أصغرها (كين).",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 م (Principia Discordia)",
         "history": "تقويم دين ساخر من Principia Discordia، مُوافق للسنة الميلادية. كل سنة لها خمس فصول من 73 يومًا (Chaos، Discord، Confusion، Bureaucracy، وThe Aftermath) وأسبوع من خمسة أيام. تكتسب السنوات الكبيسة يوم القديس Tib بين Chaos 59 و60. تُحسب السنوات بـ YOLD (Year of Our Lady of Discord)، السنة الميلادية زائد 1166.",
         "usedIn": [
-          "مجتمعات Discordian",
-          "ثقافة الإنترنت",
-          "فكاهة مضادة للثقافة"
+          "الولايات المتحدة (الأصل)",
+          "أستراليا",
+          "كندا",
+          "أيرلندا",
+          "نيوزيلندا",
+          "المملكة المتحدة",
+          "مجتمعات على الإنترنت حول العالم"
         ]
       },
       "julianDay": {

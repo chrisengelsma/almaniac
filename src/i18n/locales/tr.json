@@ -61,7 +61,9 @@
     "appIconSupporter": "Destekçi",
     "supporterLockedAria": "{{label}} (destekçi ayrıcalığı)",
     "rememberLastDateLabel": "Son tarihi hatırla",
-    "rememberLastDateAria": "Son görüntülenen tarihte aç"
+    "rememberLastDateAria": "Son görüntülenen tarihte aç",
+    "hapticsLabel": "Titreşim",
+    "hapticsAria": "Dokunma ve sürüklerken titreşim"
   },
   "topBar": {
     "supportAria": "Almaniac'ı destekle",
@@ -103,6 +105,7 @@
     "about": {
       "title": "{{appTitle}} Hakkında",
       "description": "Almaniac, bir tarihi aynı anda birçok takvim sisteminde gösterir: Gregoryen, Jülyen, İbrani, İslami, Çin, Maya ve daha fazlası.",
+      "mayaCommunityThanks": "Maya takvimi hakkındaki geri bildirim ve yardım için <link>/r/Mayan</link> topluluğuna teşekkürler.",
       "creditsTitle": "Görsel kaynakları",
       "bannerTitle": "{{calendar}} afişi",
       "version": "Sürüm {{version}}",
@@ -219,6 +222,8 @@
         "glyphsTab": "Glifler ve semboller",
         "glyphsIntro": "Klasik Maya tarihleri birkaç sembol kümesini birleştirir. Almaniac, Smithsonian Maya Takvim Dönüştürücüsü'nden glifler kullanır; burada adlarıyla gösterilir.",
         "glyphsCredit": "Glifler: Ulusal Amerikan Kızılderili Müzesi Maya Takvim Dönüştürücüsü (Smithsonian).",
+        "glyphExpandAria": "{{label}} glifini tam ekranda görüntüle",
+        "glyphFullscreenAria": "{{label}} glifi",
         "sections": {
           "longCount": "Uzun Sayım dönemleri",
           "longCountDesc": "Uzun Sayım'daki her basamağın kendi dönem glifi vardır; en büyük birimden (baktun) en küçüğe (kin) okunur.",
@@ -533,9 +538,13 @@
         "firstImplemented": "1963 MS (Principia Discordia)",
         "history": "Principia Discordia'dan bir parodi din takvimi, Gregoryen yılla hizalıdır. Her yıl beş 73 günlük mevsim (Chaos, Discord, Confusion, Bureaucracy ve The Aftermath) ve beş günlük hafta vardır. Artık yıllar Chaos 59 ve 60 arasında Aziz Tib Günü kazanır. Yıllar YOLD (Year of Our Lady of Discord) olarak, Gregoryen yıl + 1166 ile sayılır.",
         "usedIn": [
-          "Discordian toplulukları",
-          "İnternet kültürü",
-          "Karşı kültür mizahı"
+          "Amerika Birleşik Devletleri (köken)",
+          "Avustralya",
+          "Kanada",
+          "İrlanda",
+          "Yeni Zelanda",
+          "Birleşik Krallık",
+          "Dünya çapında çevrimiçi topluluklar"
         ]
       },
       "julianDay": {

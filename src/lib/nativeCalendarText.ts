@@ -13,16 +13,18 @@ import type {
   JapaneseWarekiCalendar,
   BengaliCalendar,
   MinguoCalendar,
+  NepaliCalendar,
   PersianCalendar,
   SovietCalendar,
   ThaiBuddhistCalendar,
 } from 'calendar-converter/calendars';
 import type { CalendarId } from './calendarRegistry';
-import type { IslamicCalendarMode } from './appSettings';
+import type { IslamicCalendarMode, JulianCalendarMode } from './appSettings';
 
-export type ScriptFont = 'latin' | 'arabic' | 'hebrew' | 'devanagari' | 'bengali' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'thai';
+export type ScriptFont = 'latin' | 'arabic' | 'persian' | 'hebrew' | 'devanagari' | 'bengali' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'thai';
 
 const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+const PERSIAN_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 const DEVANAGARI_DIGITS = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
 const BENGALI_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 const THAI_DIGITS = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
@@ -151,6 +153,31 @@ const BENGALI_WEEKDAYS = [
   'বৃহস্পতিবার',
   'শুক্রবার',
   'শনিবার',
+];
+
+const NEPALI_MONTHS = [
+  'बैशाख',
+  'जेठ',
+  'असार',
+  'साउन',
+  'भदौ',
+  'असोज',
+  'कात्तिक',
+  'मंसिर',
+  'पुष',
+  'माघ',
+  'फागुन',
+  'चैत',
+];
+
+const NEPALI_WEEKDAYS = [
+  'आइतबार',
+  'सोमबार',
+  'मंगलबार',
+  'बुधबार',
+  'बिहिबार',
+  'शुक्रबार',
+  'शनिबार',
 ];
 
 const CHINESE_MONTHS = [
@@ -334,6 +361,15 @@ function toArabicDigits(value: number): string {
     .join('');
 }
 
+function toPersianDigits(value: number): string {
+  return String(value)
+    .split('')
+    .map((digit) => PERSIAN_DIGITS[Number(digit)])
+    .join('');
+}
+
+export { toPersianDigits };
+
 function toDevanagariDigits(value: number): string {
   return String(value)
     .split('')
@@ -355,14 +391,17 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
 
   switch (id) {
     case 'islamic':
-    case 'persian':
       return 'arabic';
+    case 'persian':
+      return 'persian';
     case 'hebrew':
       return 'hebrew';
     case 'indianCivil':
       return 'devanagari';
     case 'bengali':
       return 'bengali';
+    case 'nepali':
+      return 'devanagari';
     case 'chinese':
       return 'chinese';
     case 'soviet':
@@ -403,9 +442,24 @@ export function islamicCalendarSystemLabel(
   return mode === 'ummAlQura' ? 'أُمُّ القُرَى' : 'جَدَوْلِي';
 }
 
+export function julianCalendarSystemLabel(
+  mode: JulianCalendarMode,
+  transliterateToEnglish: boolean,
+): string {
+  if (transliterateToEnglish) {
+    return mode === 'revisedJulian' ? 'Revised Julian' : 'Julian';
+  }
+
+  return mode === 'revisedJulian' ? 'Revised Julian' : 'Julian';
+}
+
+export function persianMonthName(month: number): string {
+  return PERSIAN_MONTHS_FA[month - 1] ?? '';
+}
+
 export function formatPersianNative(calendar: PersianCalendar): string {
-  const month = PERSIAN_MONTHS_FA[calendar.month - 1] ?? '';
-  return `${toArabicDigits(calendar.day)} ${month} ${toArabicDigits(calendar.year)}`;
+  const month = persianMonthName(calendar.month);
+  return `${toPersianDigits(calendar.day)} ${month} ${toPersianDigits(calendar.year)}`;
 }
 
 export function formatPersianEnglish(calendar: PersianCalendar): string {
@@ -515,6 +569,15 @@ export function formatBengaliEnglish(calendar: BengaliCalendar): string {
   return calendar.getDate();
 }
 
+export function formatNepaliNative(calendar: NepaliCalendar): string {
+  const month = NEPALI_MONTHS[calendar.month - 1] ?? '';
+  return `${toDevanagariDigits(calendar.day)} ${month} ${toDevanagariDigits(calendar.year)}`;
+}
+
+export function formatNepaliEnglish(calendar: NepaliCalendar): string {
+  return calendar.getDate();
+}
+
 export function formatMinguoNative(calendar: MinguoCalendar): string {
   return `民國${calendar.year}年${calendar.month}月${calendar.day}日`;
 }
@@ -570,6 +633,8 @@ export function nativeWeekday(
       return INDIAN_WEEKDAYS_HI[weekdayIndex];
     case 'bengali':
       return BENGALI_WEEKDAYS[weekdayIndex];
+    case 'nepali':
+      return NEPALI_WEEKDAYS[weekdayIndex];
     case 'chinese':
       return CHINESE_WEEKDAYS[weekdayIndex];
     case 'soviet':

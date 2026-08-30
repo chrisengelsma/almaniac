@@ -52,6 +52,7 @@ export const DEFAULT_CALENDAR_COLORS: CalendarColorMap = {
   minguo: '#d0dce8', // republic blue-grey
   thaiBuddhist: '#e0d4a8', // temple saffron gold
   bengali: '#d8e8c8', // monsoon green
+  nepali: '#dce8d0', // Himalayan foothill green
   isoWeek: '#c8d8ec', // standards blue
   discordian: '#e0b8e8', // fnord purple
   indianCivil: '#ecd8b0', // saffron cream
