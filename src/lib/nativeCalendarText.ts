@@ -24,7 +24,7 @@ import type {
 import type { CalendarId } from './calendarRegistry';
 import type { IslamicCalendarMode } from './appSettings';
 
-export type ScriptFont = 'latin' | 'arabic' | 'persian' | 'hebrew' | 'devanagari' | 'nepali' | 'bengali' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'korean' | 'thai';
+export type ScriptFont = 'latin' | 'arabic' | 'persian' | 'hebrew' | 'devanagari' | 'nepali' | 'bengali' | 'chinese' | 'vietnamese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'korean' | 'thai';
 
 const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
 const PERSIAN_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -208,6 +208,21 @@ const CHINESE_WEEKDAYS = [
   '星期六',
 ];
 
+const VIETNAMESE_MONTHS = [
+  'Giêng',
+  'Hai',
+  'Ba',
+  'Tư',
+  'Năm',
+  'Sáu',
+  'Bảy',
+  'Tám',
+  'Chín',
+  'Mười',
+  'Mười Một',
+  'Chạp',
+];
+
 const VIETNAMESE_WEEKDAYS = [
   'Chủ nhật',
   'Thứ hai',
@@ -217,6 +232,14 @@ const VIETNAMESE_WEEKDAYS = [
   'Thứ sáu',
   'Thứ bảy',
 ];
+
+function vietnameseMonthLabel(month: number, isLeap: boolean, english: boolean): string {
+  const name = VIETNAMESE_MONTHS[month - 1] ?? '';
+  if (english) {
+    return isLeap ? `Leap ${name}` : name;
+  }
+  return isLeap ? `tháng nhuận ${name}` : `tháng ${name}`;
+}
 
 const SOVIET_MONTHS = [
   'января',
@@ -427,6 +450,8 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
       return 'nepali';
     case 'chinese':
       return 'chinese';
+    case 'vietnamese':
+      return transliterateToEnglish ? 'latin' : 'vietnamese';
     case 'soviet':
       return 'cyrillic';
     case 'ethiopian':
@@ -524,16 +549,24 @@ export function chineseYearDetailLabel(calendar: ChineseCalendar): string {
 }
 
 export function formatVietnameseNative(calendar: VietnameseCalendar): string {
-  return `ngày ${calendar.day} ${calendar.getMonthName()} năm ${calendar.year}`;
+  const month = vietnameseMonthLabel(calendar.month, calendar.isLeapMonth, false);
+  return `Ngày ${calendar.day} ${month} năm ${calendar.year}`;
 }
 
 export function formatVietnameseEnglish(calendar: VietnameseCalendar): string {
-  return `${calendar.day} ${calendar.getMonthName()}, ${calendar.year}`;
+  const month = vietnameseMonthLabel(calendar.month, calendar.isLeapMonth, true);
+  return `${calendar.day} ${month}, ${calendar.year}`;
 }
 
-export function vietnameseYearDetailLabel(calendar: VietnameseCalendar): string {
+export function vietnameseYearDetailLabel(
+  calendar: VietnameseCalendar,
+  transliterateToEnglish: boolean,
+): string {
   const pillar = VietnameseCalendar.YearPillar(calendar.year);
-  return `Year of the ${pillar.zodiacEnglish}, ${pillar.sexagenary}`;
+  if (transliterateToEnglish) {
+    return `Year of the ${pillar.zodiacEnglish}, ${pillar.sexagenaryEnglish}`;
+  }
+  return `Năm ${pillar.zodiac}, ${pillar.sexagenary}`;
 }
 
 export function formatSovietNative(calendar: SovietCalendar): string {

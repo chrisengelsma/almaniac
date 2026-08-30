@@ -6,7 +6,7 @@ export const CALENDAR_NAMES: Record<CalendarId, string> = {
   ethiopian: 'Ethiopian Calendar',
   coptic: 'Coptic Calendar',
   chinese: 'Chinese Calendar',
-  vietnamese: 'Vietnamese Calendar',
+  vietnamese: 'Vietnamese Lunisolar Calendar',
   soviet: 'Soviet Revolutionary Calendar',
   frc: 'French Republican Calendar',
   maya: 'Maya Calendar',

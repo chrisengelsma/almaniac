@@ -423,8 +423,11 @@ function buildCalendarEntry(
   }
 
   if (id === 'vietnamese') {
-    entry.detailLabel = vietnameseYearDetailLabel(calendar as VietnameseCalendar);
-    entry.detailScriptFont = 'latin';
+    entry.detailLabel = vietnameseYearDetailLabel(
+      calendar as VietnameseCalendar,
+      settings.transliterateToEnglish,
+    );
+    entry.detailScriptFont = settings.transliterateToEnglish ? 'latin' : 'vietnamese';
   }
 
   return entry;

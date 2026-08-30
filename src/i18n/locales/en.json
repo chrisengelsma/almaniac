@@ -295,7 +295,7 @@
       "ethiopian": "Ethiopian Calendar",
       "coptic": "Coptic Calendar",
       "chinese": "Chinese Calendar",
-      "vietnamese": "Vietnamese Calendar",
+      "vietnamese": "Vietnamese Lunisolar Calendar",
       "soviet": "Soviet Revolutionary Calendar",
       "frc": "French Republican Calendar",
       "maya": "Maya Calendar",
@@ -321,7 +321,7 @@
       "ethiopian": "Ethiopian",
       "coptic": "Coptic",
       "chinese": "Chinese",
-      "vietnamese": "Vietnamese",
+      "vietnamese": "Âm lịch",
       "soviet": "Soviet",
       "frc": "FRC",
       "maya": "Maya",
@@ -414,7 +414,7 @@
       },
       "vietnamese": {
         "firstImplemented": "c. 14th century BCE (legendary); fixed rules c. 104 BCE",
-        "history": "The Vietnamese lunisolar calendar (âm lịch) shares astronomical rules with the Chinese calendar but uses Vietnamese month names and cultural conventions — notably the Cat (Mèo) instead of Rabbit for the fourth zodiac animal. Years are named by the Can-Chi sexagenary cycle. Tết Nguyên Đán marks the lunar new year.",
+        "history": "The Vietnamese lunisolar calendar (âm lịch) shares astronomical rules with the Chinese calendar but uses Vietnamese month names and cultural conventions, notably the Cat (Mèo) instead of Rabbit for the fourth zodiac animal. Years are named by the Can-Chi sexagenary cycle. Tết Nguyên Đán marks the lunar new year.",
         "usedIn": [
           "Vietnam",
           "Vietnamese communities worldwide"

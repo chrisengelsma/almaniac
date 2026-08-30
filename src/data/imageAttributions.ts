@@ -561,7 +561,7 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
         sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bhaktapur_Durbar_square.jpg',
       },
       {
-        title: 'Snowy Annapurna Range—panorama',
+        title: 'Snowy Annapurna Range, panorama',
         author: 'Ali Sabbagh',
         license: 'CC0 1.0',
         licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',

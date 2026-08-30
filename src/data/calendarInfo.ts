@@ -100,7 +100,7 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     calendarType: 'lunisolar',
     firstImplemented: 'c. 14th century BCE (legendary); fixed rules c. 104 BCE',
     history:
-      'The Vietnamese lunisolar calendar (âm lịch) shares astronomical rules with the Chinese calendar but uses Vietnamese month names and cultural conventions — notably the Cat (Mèo) instead of Rabbit for the fourth zodiac animal. Years are named by the Can-Chi sexagenary cycle. Tết Nguyên Đán marks the lunar new year.',
+      'The Vietnamese lunisolar calendar (âm lịch) shares astronomical rules with the Chinese calendar but uses Vietnamese month names and cultural conventions, notably the Cat (Mèo) instead of Rabbit for the fourth zodiac animal. Years are named by the Can-Chi sexagenary cycle. Tết Nguyên Đán marks the lunar new year.',
     usedIn: ['Vietnam', 'Vietnamese communities worldwide'],
     mapCountries: ['VN'],
   },
