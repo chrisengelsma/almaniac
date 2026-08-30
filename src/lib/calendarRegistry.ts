@@ -63,7 +63,6 @@ import {
   formatDiscordianNative,
   formatNepaliEnglish,
   formatNepaliNative,
-  julianCalendarSystemLabel,
   nativeWeekday,
   scriptFontForCalendar,
   type ScriptFont,
@@ -381,11 +380,7 @@ function buildCalendarEntry(
   }
 
   if (id === 'julian') {
-    entry.detailLabel = julianCalendarSystemLabel(
-      settings.julianCalendarMode,
-      settings.transliterateToEnglish,
-    );
-    entry.detailScriptFont = 'latin';
+    entry.calendarName = copy.getJulianName(settings.julianCalendarMode);
   }
 
   if (id === 'chinese') {

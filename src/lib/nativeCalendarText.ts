@@ -19,7 +19,7 @@ import type {
   ThaiBuddhistCalendar,
 } from 'calendar-converter/calendars';
 import type { CalendarId } from './calendarRegistry';
-import type { IslamicCalendarMode, JulianCalendarMode } from './appSettings';
+import type { IslamicCalendarMode } from './appSettings';
 
 export type ScriptFont = 'latin' | 'arabic' | 'persian' | 'hebrew' | 'devanagari' | 'bengali' | 'chinese' | 'cyrillic' | 'ethiopic' | 'coptic' | 'japanese' | 'thai';
 
@@ -440,17 +440,6 @@ export function islamicCalendarSystemLabel(
   }
 
   return mode === 'ummAlQura' ? 'أُمُّ القُرَى' : 'جَدَوْلِي';
-}
-
-export function julianCalendarSystemLabel(
-  mode: JulianCalendarMode,
-  transliterateToEnglish: boolean,
-): string {
-  if (transliterateToEnglish) {
-    return mode === 'revisedJulian' ? 'Revised Julian' : 'Julian';
-  }
-
-  return mode === 'revisedJulian' ? 'Revised Julian' : 'Julian';
 }
 
 export function persianMonthName(month: number): string {

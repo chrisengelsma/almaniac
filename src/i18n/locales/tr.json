@@ -313,6 +313,7 @@
     "name": {
       "gregorian": "Gregoryen Takvimi",
       "julian": "Jülyen Takvimi",
+      "revisedJulian": "Revize Jülyen Takvimi",
       "ethiopian": "Etiyopya Takvimi",
       "coptic": "Kıpti Takvimi",
       "chinese": "Çin Takvimi",

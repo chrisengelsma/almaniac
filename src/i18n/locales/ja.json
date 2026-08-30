@@ -313,6 +313,7 @@
     "name": {
       "gregorian": "グレゴリオ暦",
       "julian": "ユリウス暦",
+      "revisedJulian": "新ユリウス暦",
       "ethiopian": "エチオピア暦",
       "coptic": "コプト暦",
       "chinese": "中国暦",

@@ -313,6 +313,7 @@
     "name": {
       "gregorian": "Calendario gregoriano",
       "julian": "Calendario giuliano",
+      "revisedJulian": "Calendario giuliano rivisto",
       "ethiopian": "Calendario etiope",
       "coptic": "Calendario copto",
       "chinese": "Calendario cinese",

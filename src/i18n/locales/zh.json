@@ -313,6 +313,7 @@
     "name": {
       "gregorian": "公历",
       "julian": "儒略历",
+      "revisedJulian": "新儒略历",
       "ethiopian": "埃塞俄比亚历",
       "coptic": "科普特历",
       "chinese": "农历",
