@@ -14,6 +14,7 @@ import {
   type AppLanguagePreference,
 } from '../i18n/language';
 import { sanitizeSupporterSelections } from './supporterPerks';
+import { isBuildTimeDeveloperSupporterUnlockEnabled } from './developerSupporterUnlock';
 
 export type IslamicDayAdjustment = -1 | 0 | 1;
 export type IslamicCalendarMode = 'tabular' | 'ummAlQura';
@@ -91,7 +92,7 @@ function defaultVisibility(): Record<CalendarId, boolean> {
 }
 
 function devSupporterUnlockEnabled(): boolean {
-  return import.meta.env.VITE_DEV_SUPPORTER_UNLOCK === 'true';
+  return isBuildTimeDeveloperSupporterUnlockEnabled();
 }
 
 export function defaultAppSettings(): AppSettings {
@@ -306,6 +307,26 @@ export function anchorFromPersistedState(state: PersistedAppState): GregorianCal
   }
 
   return todayGregorianDate();
+}
+
+export function areAllCalendarsVisible(settings: AppSettings): boolean {
+  return DEFAULT_CALENDAR_ORDER.every((id) => settings.visibleCalendars[id]);
+}
+
+export function setAllCalendarsVisibility(
+  settings: AppSettings,
+  visible: boolean,
+): AppSettings {
+  const visibleCalendars = { ...settings.visibleCalendars };
+
+  for (const id of DEFAULT_CALENDAR_ORDER) {
+    visibleCalendars[id] = visible;
+  }
+
+  return {
+    ...settings,
+    visibleCalendars,
+  };
 }
 
 export function toggleCalendarVisibility(

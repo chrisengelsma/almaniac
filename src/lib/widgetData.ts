@@ -8,6 +8,7 @@ import {
 } from './calendarRegistry';
 import {
   calendarColorContext,
+  getCalendarAccentColor,
   getCalendarColor,
   getWidgetTextColor,
 } from '../theme/calendarColors';
@@ -61,6 +62,7 @@ function buildThemeVariants(
         (acc, colorScheme) => {
           const context = calendarColorContext({ ...settings, colorTheme, colorScheme });
           const orderIndex = DEFAULT_CALENDAR_ORDER.indexOf(id);
+          const accentColor = getCalendarAccentColor(id, context);
           const backgroundColor = getCalendarColor(
             id,
             context,
@@ -70,7 +72,7 @@ function buildThemeVariants(
           );
           acc[colorScheme] = {
             backgroundColor,
-            textColor: getWidgetTextColor(backgroundColor, context),
+            textColor: getWidgetTextColor(backgroundColor, context, accentColor),
           };
           return acc;
         },

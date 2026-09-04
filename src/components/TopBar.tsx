@@ -2,11 +2,13 @@ import type { CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ColorScheme } from '../lib/appSettings';
 import type { ThemeTransitionDelays } from '../lib/themeTransition';
+import { IconSupporterStar } from './IconSupporterStar';
 import { IconTipJar } from './IconTipJar';
 import { ThemeToggleButton } from './ThemeToggleButton';
 
 interface TopBarProps {
   colorScheme: ColorScheme;
+  supporterUnlocked: boolean;
   onDonateOpen: () => void;
   onCustomizeOpen: () => void;
   onDateClick: () => void;
@@ -78,6 +80,7 @@ function IconToday() {
 
 export function TopBar({
   colorScheme,
+  supporterUnlocked,
   onDonateOpen,
   onCustomizeOpen,
   onDateClick,
@@ -101,14 +104,25 @@ export function TopBar({
             : undefined
         }
       >
-        <button
-          type="button"
-          className="icon-button"
-          onClick={onDonateOpen}
-          aria-label={t('topBar.supportAria')}
-        >
-          <IconTipJar />
-        </button>
+        {supporterUnlocked ? (
+          <button
+            type="button"
+            className="icon-button top-bar__supporter-badge"
+            onClick={onDonateOpen}
+            aria-label={t('topBar.supporterAria')}
+          >
+            <IconSupporterStar />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="icon-button"
+            onClick={onDonateOpen}
+            aria-label={t('topBar.supportAria')}
+          >
+            <IconTipJar />
+          </button>
+        )}
         <h1 className="top-bar__logo" aria-label={t('branding.appTitle')}>
           <span className="top-bar__logo-word">{t('branding.appLogo')}</span>
           <span className="top-bar__logo-tagline">{t('branding.tagline')}</span>

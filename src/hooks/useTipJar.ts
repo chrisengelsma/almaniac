@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  fetchTipProduct,
   isTipJarAvailable,
   isTipPurchaseCancelled,
   loadTipProducts,
+  mergeTipProducts,
   purchaseTip,
   type TipProduct,
 } from '../lib/tipJar';
@@ -56,16 +58,27 @@ export function useTipJar(active: boolean, onPurchaseSuccess?: () => void) {
     setFeedback(null);
 
     try {
+      if (!products.some((product) => product.id === productId)) {
+        const product = await fetchTipProduct(productId);
+        if (!product) {
+          setFeedback(t('modals.donate.feedbackUnavailable'));
+          return;
+        }
+
+        setProducts((current) => mergeTipProducts(current, product));
+      }
+
       await purchaseTip(productId);
       onPurchaseSuccess?.();
     } catch (error) {
       if (!isTipPurchaseCancelled(error)) {
+        console.warn('[tipJar] purchase failed', productId, error);
         setFeedback(t('modals.donate.feedbackError'));
       }
     } finally {
       setPurchasingId(null);
     }
-  }, [t, onPurchaseSuccess]);
+  }, [products, t, onPurchaseSuccess]);
 
   return {
     products,

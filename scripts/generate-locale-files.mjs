@@ -87,7 +87,7 @@ const UI = {
       rating:
         'If you like the app, a 5-star rating {{store}} helps a lot. It also helps other people find Almaniac.',
       tipJar:
-        "You can also leave an optional tip as a thank-you. Tips don't unlock anything. Apple keeps 15–30% of each tip as its commission.",
+        "You can also leave an optional tip as a thank-you. Tips don't unlock anything.",
       coffee:
         "You're also welcome to buy me a coffee as a thank-you. Either way, thanks for using Almaniac.",
       thanks: 'Thanks for using Almaniac.',

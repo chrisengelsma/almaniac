@@ -78,7 +78,13 @@ import {
   type ScriptFont,
 } from './nativeCalendarText';
 import type { CalendarCopy } from '../i18n/calendarCopy';
-import { calendarColorContext, getCalendarColor, getCalendarRowTextStyle, type CalendarRowTextStyle } from '../theme/calendarColors';
+import {
+  calendarColorContext,
+  getCalendarAccentColor,
+  getCalendarColor,
+  getCalendarRowTextStyle,
+  type CalendarRowTextStyle,
+} from '../theme/calendarColors';
 import { displayJulianDay } from './julianDayValue';
 import { getReligiousHolidays, type HolidayTradition, type ReligiousHoliday } from './religiousHolidays';
 
@@ -437,6 +443,7 @@ export interface CalendarRowData {
   entry: CalendarEntry;
   visible: boolean;
   backgroundColor: string;
+  accentColor: string;
   textStyle: CalendarRowTextStyle;
   holidays: ReligiousHoliday[];
 }
@@ -476,6 +483,7 @@ export function getOrderedCalendarRows(
   return order.map((id) => {
     const visible = settings.visibleCalendars[id];
     const visibleIndex = visibleOrder.indexOf(id);
+    const accentColor = getCalendarAccentColor(id, context);
     const backgroundColor = getCalendarColor(
       id,
       context,
@@ -488,7 +496,8 @@ export function getOrderedCalendarRows(
       entry: buildCalendarEntry(id, anchor, settings, copy, at),
       visible,
       backgroundColor,
-      textStyle: getCalendarRowTextStyle(backgroundColor, context),
+      accentColor,
+      textStyle: getCalendarRowTextStyle(backgroundColor, context, accentColor),
       holidays: holidaysForCalendar(id, holidays),
     };
   });

@@ -1,6 +1,6 @@
 import type { CalendarId } from '../lib/calendarRegistry';
 import type { ColorScheme, ColorTheme } from '../lib/appSettings';
-import { rowTextColors, type RowTextColors } from './rowTextColors';
+import { rowTextColorsForBackground, type RowTextColors } from './rowTextColors';
 
 export type CalendarColorMap = Record<CalendarId, string>;
 
@@ -17,13 +17,17 @@ export interface SupporterGradientIndex {
 
 const SUPPORTER_GRADIENT_LIGHT_START = { h: 72, s: 48, l: 86 };
 const SUPPORTER_GRADIENT_LIGHT_END = { h: 168, s: 42, l: 78 };
+const SUPPORTER_GRADIENT_DARK_START = { h: 172, s: 58, l: 42 };
+const SUPPORTER_GRADIENT_DARK_END = { h: 282, s: 54, l: 46 };
 
 export function getSupporterThemeRowColor(
   index: number,
   total: number,
+  colorScheme: ColorScheme = 'light',
 ): string {
-  const start = SUPPORTER_GRADIENT_LIGHT_START;
-  const end = SUPPORTER_GRADIENT_LIGHT_END;
+  const start =
+    colorScheme === 'dark' ? SUPPORTER_GRADIENT_DARK_START : SUPPORTER_GRADIENT_LIGHT_START;
+  const end = colorScheme === 'dark' ? SUPPORTER_GRADIENT_DARK_END : SUPPORTER_GRADIENT_LIGHT_END;
   const t = total <= 1 ? 0 : index / (total - 1);
   const h = start.h + (end.h - start.h) * t;
   const s = start.s + (end.s - start.s) * t;
@@ -60,8 +64,12 @@ export const DEFAULT_CALENDAR_COLORS: CalendarColorMap = {
   julianDay: '#b8c4d4', // astronomical slate
 };
 
-const MONO_ROW = '#e8e8e8';
-const SEPIA_ROW = '#ebe0c8';
+const DISTINCT_DARK_ROW = '#263238';
+const MONO_LIGHT_ROW = '#e8e8e8';
+const MONO_DARK_ROW = '#2a2a2a';
+
+const SEPIA_LIGHT_ROW = '#ebe0c8';
+const SEPIA_DARK_ROW = '#3d3228';
 
 /** Five-swatch previews for the color-theme picker in settings. */
 export const COLOR_THEME_SWATCHES: Record<ColorTheme, readonly string[]> = {
@@ -74,7 +82,7 @@ export const COLOR_THEME_SWATCHES: Record<ColorTheme, readonly string[]> = {
   ],
   mono: ['#f5f5f5', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#616161'],
   sepia: ['#f8f0e0', '#ebe0c8', '#d4c4a0', '#b8a078', '#8b6914'],
-  supporter: ['#e8edc8', '#b8e4c4', '#c8e8e4', '#d4c8e8', '#e0d4f0'],
+  supporter: ['#e8edc8', '#b8e4c4', '#4a9e9a', '#6a5a9a', '#7d5cad'],
 };
 
 export function calendarColorContext(
@@ -95,21 +103,35 @@ export function resolveCalendarColors(
   return { ...DEFAULT_CALENDAR_COLORS, ...overrides };
 }
 
-export function getWidgetTextColor(
-  _backgroundColor: string,
-  context: Pick<CalendarColorContext, 'colorTheme' | 'colorScheme'>,
+export function getCalendarAccentColor(
+  id: CalendarId,
+  context: CalendarColorContext,
 ): string {
-  return getCalendarRowTextStyle(_backgroundColor, context).foreground;
+  return context.calendarColors?.[id] ?? DEFAULT_CALENDAR_COLORS[id];
+}
+
+export function getWidgetTextColor(
+  backgroundColor: string,
+  context: Pick<CalendarColorContext, 'colorTheme' | 'colorScheme'>,
+  accentColor?: string,
+): string {
+  return getCalendarRowTextStyle(backgroundColor, context, accentColor).foreground;
 }
 
 export type CalendarRowTextStyle = RowTextColors;
 
-/** Foreground colors for calendar rows — always dark text on pastel backgrounds. */
+/** Foreground colors tuned for text sitting on each calendar row background. */
 export function getCalendarRowTextStyle(
-  _backgroundColor: string,
+  backgroundColor: string,
   context: Pick<CalendarColorContext, 'colorTheme' | 'colorScheme'>,
+  accentColor?: string,
 ): CalendarRowTextStyle {
-  return rowTextColors(context.colorTheme);
+  return rowTextColorsForBackground(
+    backgroundColor,
+    context.colorTheme,
+    context.colorScheme,
+    accentColor,
+  );
 }
 
 export function getCalendarColor(
@@ -118,22 +140,30 @@ export function getCalendarColor(
   gradientIndex?: SupporterGradientIndex,
 ): string {
   if (context.colorTheme === 'mono') {
-    return MONO_ROW;
+    return context.colorScheme === 'dark' ? MONO_DARK_ROW : MONO_LIGHT_ROW;
   }
 
   if (context.colorTheme === 'sepia') {
-    return SEPIA_ROW;
+    return context.colorScheme === 'dark' ? SEPIA_DARK_ROW : SEPIA_LIGHT_ROW;
   }
 
   if (context.colorTheme === 'supporter') {
     if (gradientIndex) {
-      return getSupporterThemeRowColor(gradientIndex.index, gradientIndex.total);
+      return getSupporterThemeRowColor(
+        gradientIndex.index,
+        gradientIndex.total,
+        context.colorScheme,
+      );
     }
 
-    return getSupporterThemeRowColor(4, 9);
+    return getSupporterThemeRowColor(4, 9, context.colorScheme);
   }
 
-  return context.calendarColors?.[id] ?? DEFAULT_CALENDAR_COLORS[id];
+  if (context.colorScheme === 'dark') {
+    return DISTINCT_DARK_ROW;
+  }
+
+  return getCalendarAccentColor(id, context);
 }
 
 export function getCalendarMapColors(
@@ -141,23 +171,39 @@ export function getCalendarMapColors(
   context: CalendarColorContext,
 ): { stroke: string; fill: string } {
   if (context.colorTheme === 'mono') {
+    if (context.colorScheme === 'dark') {
+      return {
+        stroke: 'rgba(255, 255, 255, 0.35)',
+        fill: '#bdbdbd',
+      };
+    }
+
     return {
       stroke: 'rgba(0, 0, 0, 0.28)',
-      fill: '#9e9e9e',
+      fill: '#616161',
     };
   }
 
   if (context.colorTheme === 'sepia') {
+    if (context.colorScheme === 'dark') {
+      return {
+        stroke: 'rgba(232, 220, 200, 0.35)',
+        fill: '#c4a882',
+      };
+    }
+
     return {
       stroke: 'rgba(61, 47, 31, 0.28)',
-      fill: '#b8a078',
+      fill: '#8b6914',
     };
   }
 
   const accent = getCalendarColor(id, context);
+  const stroke =
+    context.colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.55)';
 
   return {
-    stroke: 'rgba(0, 0, 0, 0.45)',
+    stroke,
     fill: accent,
   };
 }

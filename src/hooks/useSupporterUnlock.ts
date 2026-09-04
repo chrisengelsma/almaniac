@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { shouldForceDeveloperSupporterUnlock } from '../lib/developerSupporterUnlock';
 import { detectSupporterUnlockFromPurchases } from '../lib/supporterUnlock';
 
 export function useSupporterUnlock(supporterUnlocked: boolean, onUnlock: () => void): void {
@@ -9,11 +10,13 @@ export function useSupporterUnlock(supporterUnlocked: boolean, onUnlock: () => v
 
     let cancelled = false;
 
-    void detectSupporterUnlockFromPurchases().then((unlocked) => {
-      if (!cancelled && unlocked) {
-        onUnlock();
-      }
-    });
+    void Promise.all([detectSupporterUnlockFromPurchases(), shouldForceDeveloperSupporterUnlock()]).then(
+      ([fromPurchases, fromDeveloper]) => {
+        if (!cancelled && (fromPurchases || fromDeveloper)) {
+          onUnlock();
+        }
+      },
+    );
 
     return () => {
       cancelled = true;

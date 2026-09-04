@@ -42,7 +42,7 @@ export function FullscreenDateView({
   onClose,
 }: FullscreenDateViewProps) {
   const { t } = useTranslation();
-  const { entry, backgroundColor, textStyle: rowTextStyle } = row;
+  const { entry, backgroundColor, accentColor, textStyle: rowTextStyle } = row;
   const [phase, setPhase] = useState<FullscreenPhase>(() => (prefersReducedMotion() ? 'open' : 'enter'));
   const [exitRect, setExitRect] = useState(originRect);
   const [exitTextRect, setExitTextRect] = useState(textOriginRect);
@@ -225,7 +225,7 @@ export function FullscreenDateView({
 
   const shellStyle = {
     ...fullscreenScaleVars(scaleRect),
-    '--calendar-accent': backgroundColor,
+    '--calendar-accent': accentColor,
   } as CSSProperties;
 
   const textWrapStyle: CSSProperties = isExpanded

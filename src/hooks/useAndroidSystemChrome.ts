@@ -19,11 +19,12 @@ function applyChromeBackground(background: string): void {
   document.body.style.backgroundColor = background;
 }
 
-async function syncAndroidChrome(): Promise<void> {
+async function syncAndroidChrome(colorScheme: AppSettings['colorScheme']): Promise<void> {
   const background = readThemeBackground();
+  const lightStatusBarIcons = colorScheme === 'dark';
 
   applyChromeBackground(background);
-  await syncAndroidSystemChrome(background, false);
+  await syncAndroidSystemChrome(background, lightStatusBarIcons);
 
   const insets = await readAndroidSafeArea();
   applySafeAreaInsets(insets);
@@ -38,7 +39,7 @@ export function useAndroidSystemChrome(settings: Pick<AppSettings, 'colorScheme'
     let cancelled = false;
 
     const sync = () => {
-      void syncAndroidChrome().then(() => {
+      void syncAndroidChrome(settings.colorScheme).then(() => {
         if (cancelled) {
           return;
         }

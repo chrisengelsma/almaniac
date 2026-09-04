@@ -6,7 +6,7 @@ ANDROID_DIR="$ROOT/android"
 BUILD_DIR="$ROOT/build/android"
 PROPS_FILE="$ANDROID_DIR/keystore.properties"
 BUNDLE_SRC="$ANDROID_DIR/app/build/outputs/bundle/release/app-release.aab"
-BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.11-signed.aab"
+BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.12-signed.aab"
 
 export JAVA_HOME="${JAVA_HOME:-/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home}"
 
@@ -52,7 +52,7 @@ if ! unzip -l "$BUNDLE_OUT" | grep -qE 'META-INF/[^/]+\.(RSA|DSA|EC)'; then
   exit 1
 fi
 
-cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.11-release.aab"
+cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.12-release.aab"
 
 echo ""
 echo "Signed bundle ready for Play Console:"

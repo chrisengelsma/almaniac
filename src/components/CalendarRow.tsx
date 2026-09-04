@@ -60,7 +60,7 @@ export function CalendarRow({
     '--theme-transition-delay'?: string;
   } = {
     backgroundColor: row.backgroundColor,
-    '--calendar-accent': row.backgroundColor,
+    '--calendar-accent': row.accentColor,
     '--calendar-row-fg': row.textStyle.foreground,
     '--calendar-row-fg-muted': row.textStyle.foregroundMuted,
     '--calendar-row-text-shadow': row.textStyle.textShadow,

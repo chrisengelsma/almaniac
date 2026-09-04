@@ -1,6 +1,4 @@
-Create these consumable In-App Purchases in App Store Connect for the tip jar.
-
-Note: Apple takes a 15–30% commission on each tip (15% for developers in the Small Business Program, 30% otherwise).
+Consumable In-App Purchases in App Store Connect for the tip jar.
 
 Product ID: app.engelsma.almaniac.tip.small
 Reference name: Small Tip
@@ -9,16 +7,16 @@ Description: Optional tip to support Almaniac development. Unlocks the Teal & Ye
 Type: Consumable
 Price tier: $0.99 (Tier 1)
 
-Product ID: app.engelsma.almaniac.tip.medium
+Product ID: app.engelsma.almaniac.tip.med
 Reference name: Medium Tip
 Display name: Medium Tip
 Description: Optional tip to support Almaniac development. Unlocks the Teal & Yellow theme and app icon.
 Type: Consumable
 Price tier: $2.99 (Tier 3)
 
-Product ID: app.engelsma.almaniac.tip.large
-Reference name: Large Tip
-Display name: Large Tip
+Product ID: app.engelsma.almaniac.tip.big
+Reference name: Big Tip
+Display name: Big Tip
 Description: Optional tip to support Almaniac development. Unlocks the Teal & Yellow theme and app icon.
 Type: Consumable
 Price tier: $4.99 (Tier 5)
@@ -28,3 +26,8 @@ Before submitting:
 2. Complete Paid Applications Agreement, tax, and banking in App Store Connect.
 3. Attach these IAP products to the app version you submit for review.
 4. Add a screenshot of the tip jar UI to each IAP review note if requested.
+
+Product IDs must match exactly (case-sensitive):
+  app.engelsma.almaniac.tip.small
+  app.engelsma.almaniac.tip.med
+  app.engelsma.almaniac.tip.big

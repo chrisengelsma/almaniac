@@ -5,7 +5,15 @@ import {
   DEFAULT_CALENDAR_ORDER,
   type CalendarId,
 } from '../lib/calendarRegistry';
-import type { AppSettings, IslamicCalendarMode, IslamicDayAdjustment, JulianCalendarMode, ColorTheme, AppIconChoice } from '../lib/appSettings';
+import {
+  areAllCalendarsVisible,
+  type AppSettings,
+  type IslamicCalendarMode,
+  type IslamicDayAdjustment,
+  type JulianCalendarMode,
+  type ColorTheme,
+  type AppIconChoice,
+} from '../lib/appSettings';
 import appIconLight from '../assets/app-icon-light.png';
 import appIconDark from '../assets/app-icon-dark.png';
 import appIconSupporter from '../assets/app-icon-teal.png';
@@ -31,6 +39,7 @@ interface SettingsSheetProps {
   settings: AppSettings;
   onClose: () => void;
   onToggleCalendar: (id: CalendarId) => void;
+  onSetAllCalendarsVisible: (visible: boolean) => void;
   onColorThemeChange: (value: ColorTheme) => void;
   onTransliterateChange: (value: boolean) => void;
   onIslamicCalendarModeChange: (value: IslamicCalendarMode) => void;
@@ -412,6 +421,7 @@ export function SettingsSheet({
   settings,
   onClose,
   onToggleCalendar,
+  onSetAllCalendarsVisible,
   onColorThemeChange,
   onTransliterateChange,
   onIslamicCalendarModeChange,
@@ -436,6 +446,7 @@ export function SettingsSheet({
   const visibleCalendarCount = DEFAULT_CALENDAR_ORDER.filter(
     (id) => settings.visibleCalendars[id],
   ).length;
+  const allCalendarsVisible = areAllCalendarsVisible(settings);
 
   useEffect(() => {
     if (!open) {
@@ -677,6 +688,14 @@ export function SettingsSheet({
           ) : (
             <section className="settings-sheet__section">
               <ul className="settings-sheet__list">
+                <li className="settings-sheet__item settings-sheet__item--all-calendars">
+                  <span>{t('settings.selectCalendarsAllLabel')}</span>
+                  <SheetToggle
+                    checked={allCalendarsVisible}
+                    label={t('settings.selectCalendarsAllAria')}
+                    onChange={() => onSetAllCalendarsVisible(!allCalendarsVisible)}
+                  />
+                </li>
                 {DEFAULT_CALENDAR_ORDER.map((id) => (
                   <li key={id} className="settings-sheet__calendar-group">
                     <div className="settings-sheet__item">

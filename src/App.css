@@ -282,7 +282,7 @@ html[data-color-scheme='dark'] .donation-thank-you__panel,
 html[data-color-scheme='dark'] .about-modal__panel,
 html[data-color-scheme='dark'] .settings-sheet,
 html[data-color-scheme='dark'] .info-modal__panel {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 .date-modal--visible .date-modal__panel {
@@ -1253,6 +1253,50 @@ html[data-color-scheme='dark'] .about-modal__legal-links a:hover {
   opacity: 0.75;
 }
 
+.top-bar__supporter-badge {
+  color: var(--top-bar-logo);
+}
+
+.top-bar__supporter-badge svg {
+  transform-origin: center;
+  filter: drop-shadow(0 0 0.35rem rgba(255, 235, 59, 0.35));
+  animation: supporter-star-twinkle 12s ease-in-out infinite;
+}
+
+@keyframes supporter-star-twinkle {
+  0%,
+  88%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0.35rem rgba(255, 235, 59, 0.35));
+    opacity: 1;
+  }
+
+  90% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 0.85rem rgba(255, 235, 59, 0.9));
+    opacity: 1;
+  }
+
+  93% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 0.55rem rgba(255, 235, 59, 0.55));
+    opacity: 0.94;
+  }
+
+  96% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 0.75rem rgba(255, 255, 255, 0.75));
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-bar__supporter-badge svg {
+    animation: none;
+  }
+}
+
 .theme-toggle {
   padding: 0;
 }
@@ -1416,7 +1460,7 @@ html.platform-native .date-modal__panel {
 }
 
 html[data-color-scheme='dark'] .calendar-list__hint {
-  color: rgba(38, 50, 56, 0.42);
+  color: rgba(236, 239, 241, 0.42);
 }
 
 .calendar-row--visible {
@@ -2249,6 +2293,11 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   flex-direction: column;
   align-items: stretch;
   padding-bottom: 1rem;
+}
+
+.settings-sheet__item--all-calendars {
+  border-bottom: 1px solid var(--overlay-surface-divider);
+  font-weight: 500;
 }
 
 .settings-sheet__expander-group {

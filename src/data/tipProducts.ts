@@ -1,16 +1,16 @@
 /** Consumable tip product IDs — smallest to largest. */
 export const TIP_PRODUCT_IDS = [
   'app.engelsma.almaniac.tip.small',
-  'app.engelsma.almaniac.tip.medium',
-  'app.engelsma.almaniac.tip.large',
+  'app.engelsma.almaniac.tip.med',
+  'app.engelsma.almaniac.tip.big',
 ] as const;
 
 export type TipProductId = (typeof TIP_PRODUCT_IDS)[number];
 
 export const TIP_PRODUCT_LABEL_KEYS: Record<TipProductId, string> = {
   'app.engelsma.almaniac.tip.small': 'modals.donate.tipSmall',
-  'app.engelsma.almaniac.tip.medium': 'modals.donate.tipMedium',
-  'app.engelsma.almaniac.tip.large': 'modals.donate.tipLarge',
+  'app.engelsma.almaniac.tip.med': 'modals.donate.tipMedium',
+  'app.engelsma.almaniac.tip.big': 'modals.donate.tipLarge',
 };
 
 /** Suggested App Store Connect price tiers (USD). */
@@ -32,8 +32,8 @@ export const TIP_TIER_LABEL_KEYS: Record<TipTier, string> = {
 
 export const TIP_PRODUCT_TIERS: Record<TipProductId, TipTier> = {
   'app.engelsma.almaniac.tip.small': 'small',
-  'app.engelsma.almaniac.tip.medium': 'medium',
-  'app.engelsma.almaniac.tip.large': 'large',
+  'app.engelsma.almaniac.tip.med': 'medium',
+  'app.engelsma.almaniac.tip.big': 'large',
 };
 
 /** Buy Me a Coffee `amount` query values for external tips (USD, whole dollars). */

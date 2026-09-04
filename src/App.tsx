@@ -27,6 +27,7 @@ import {
   setTransliterateToEnglish,
   setMayaUseHieroglyphs,
   setUseModifiedJulianDay,
+  setAllCalendarsVisibility,
   toggleCalendarVisibility,
   toggleColorScheme,
   type AppIconChoice,
@@ -209,6 +210,7 @@ function App() {
     >
       <TopBar
         colorScheme={settings.colorScheme}
+        supporterUnlocked={settings.supporterUnlocked}
         onDonateOpen={() => setDonateOpen(true)}
         onCustomizeOpen={() => setSheetOpen(true)}
         onDateClick={() => setDatePickerOpen(true)}
@@ -226,6 +228,9 @@ function App() {
         onClose={() => setSheetOpen(false)}
         onColorThemeChange={handleColorThemeChange}
         onToggleCalendar={(id) => updateSettings((current) => toggleCalendarVisibility(current, id))}
+        onSetAllCalendarsVisible={(visible) =>
+          updateSettings((current) => setAllCalendarsVisibility(current, visible))
+        }
         onTransliterateChange={(value) => updateSettings((current) => setTransliterateToEnglish(current, value))}
         onIslamicCalendarModeChange={(value) =>
           updateSettings((current) => setIslamicCalendarMode(current, value))

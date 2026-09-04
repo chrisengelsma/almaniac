@@ -12,6 +12,14 @@ export function isTipJarAvailable(): boolean {
   return getDonationChannel() === 'iap';
 }
 
+function sortTipProductList(products: TipProduct[]): TipProduct[] {
+  const order = new Map<string, number>(TIP_PRODUCT_IDS.map((id, index) => [id, index]));
+
+  return [...products].sort(
+    (left, right) => (order.get(left.id) ?? 99) - (order.get(right.id) ?? 99),
+  );
+}
+
 function sortTipProducts(products: Product[]): TipProduct[] {
   const order = new Map<string, number>(TIP_PRODUCT_IDS.map((id, index) => [id, index]));
 
@@ -39,7 +47,32 @@ export async function loadTipProducts(): Promise<TipProduct[]> {
     productType: PURCHASE_TYPE.INAPP,
   });
 
-  return sortTipProducts(products);
+  const loadedById = new Map(products.map((product) => [product.identifier, product]));
+  const missingIds = TIP_PRODUCT_IDS.filter((id) => !loadedById.has(id));
+
+  if (missingIds.length > 0) {
+    const extraProducts = await Promise.all(
+      missingIds.map(async (productIdentifier) => {
+        try {
+          const { product } = await NativePurchases.getProduct({
+            productIdentifier,
+            productType: PURCHASE_TYPE.INAPP,
+          });
+          return product;
+        } catch {
+          return null;
+        }
+      }),
+    );
+
+    for (const product of extraProducts) {
+      if (product) {
+        loadedById.set(product.identifier, product);
+      }
+    }
+  }
+
+  return sortTipProducts([...loadedById.values()]);
 }
 
 export async function purchaseTip(productId: string): Promise<void> {
@@ -48,6 +81,29 @@ export async function purchaseTip(productId: string): Promise<void> {
     productType: PURCHASE_TYPE.INAPP,
     quantity: 1,
   });
+}
+
+export function mergeTipProducts(current: TipProduct[], next: TipProduct): TipProduct[] {
+  const merged = new Map(current.map((product) => [product.id, product]));
+  merged.set(next.id, next);
+  return sortTipProductList([...merged.values()]);
+}
+
+export async function fetchTipProduct(productId: string): Promise<TipProduct | null> {
+  try {
+    const { product } = await NativePurchases.getProduct({
+      productIdentifier: productId,
+      productType: PURCHASE_TYPE.INAPP,
+    });
+
+    return {
+      id: product.identifier,
+      title: product.title,
+      priceString: product.priceString,
+    };
+  } catch {
+    return null;
+  }
 }
 
 export function isTipPurchaseCancelled(error: unknown): boolean {

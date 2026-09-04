@@ -61,8 +61,10 @@ export function DonateModal({
   const showIapTips = donationChannel === 'iap' && tipJarAvailable;
   const showExternalTips = donationChannel === 'external';
   const showAndroidCoffeeLink = platform === 'android';
-  const showTips = showIapTips || (showExternalTips && !showAndroidCoffeeLink);
   const showCoffeeLink = showAndroidCoffeeLink;
+  const showTips =
+    showIapTips ||
+    (showExternalTips && !showAndroidCoffeeLink);
   const productById = new Map(products.map((product) => [product.id, product]));
 
   useEffect(() => {

@@ -40,6 +40,8 @@
     "appIconLight": "Light",
     "appIconDark": "Dark",
     "selectCalendarsCount": "{{count}} of {{total}} shown",
+    "selectCalendarsAllLabel": "All calendars",
+    "selectCalendarsAllAria": "Show all calendars",
     "selectCalendarsToggleAria": "Toggle {{calendar}}",
     "islamicSystemLabel": "Islamic Calendar System",
     "islamicSystemAria": "Islamic calendar system",
@@ -55,6 +57,16 @@
     "julianDayLabel": "Modified Julian Day",
     "julianDayToggle": "Use Modified Julian Day",
     "julianDayGroupAria": "Julian Day settings",
+    "mayaUseHieroglyphsLabel": "Use hieroglyphs",
+    "mayaUseHieroglyphsToggle": "Use hieroglyphs",
+    "mayaGroupAria": "Maya calendar settings",
+    "colorThemeSupporter": "Supporter",
+    "appIconSupporter": "Supporter",
+    "supporterLockedAria": "{{label}} (supporter perk)",
+    "rememberLastDateLabel": "Remember last date",
+    "rememberLastDateAria": "Open on the last date you viewed",
+    "hapticsLabel": "Haptics",
+    "hapticsAria": "Vibrate on tap and drag",
     "closeAria": "Close customize panel",
     "backAria": "Back to settings",
     "themeToggleLightAria": "Switch to light mode",
@@ -62,6 +74,7 @@
   },
   "topBar": {
     "supportAria": "Support Almaniac",
+    "supporterAria": "Supporter — thank you!",
     "jumpToDateAria": "Jump to date",
     "customizeAria": "Customize calendars and settings",
     "dateNavAria": "Date navigation",
@@ -77,7 +90,8 @@
       "intro": "I'm Chris Engelsma. I built Almaniac to compare dates across calendar systems without jumping between converters.",
       "free": "Almaniac is free to use, with no ads, subscriptions, or tracking.",
       "rating": "If you like the app, a 5-star rating {{store}} helps a lot. It also helps other people find Almaniac.",
-      "tipJar": "You can also leave an optional tip as a thank-you. Tips don't unlock anything. Apple keeps 15–30% of each tip as its commission.",
+      "tipJar": "If you do want to help financially support this app, supporters get a unique theme, icon, and my gratitude.",
+      "support": "Enjoying it? A 5-star rating {{store}} helps. Tips are optional.",
       "coffee": "You're also welcome to buy me a coffee as a thank-you. Either way, thanks for using Almaniac.",
       "thanks": "Thanks for using Almaniac.",
       "storeAppStore": "on the App Store",
@@ -89,6 +103,11 @@
       "notNow": "Not now",
       "feedbackSuccess": "Thank you for supporting Almaniac!",
       "feedbackError": "Tip could not be completed. Please try again.",
+      "feedbackUnavailable": "This tip option isn't available right now.",
+      "thankYouTitle": "Thank you!",
+      "thankYouMessage": "As a thank-you, enjoy the supporter theme and app icon.",
+      "thankYouDismiss": "You're welcome",
+      "thankYouPerk": "You also get early access to everything new.",
       "tipSmall": "Small tip",
       "tipMedium": "Medium tip",
       "tipLarge": "Large tip"
@@ -96,6 +115,7 @@
     "about": {
       "title": "About {{appTitle}}",
       "description": "Almaniac shows one date in many calendar systems at once: Gregorian, Julian, Hebrew, Islamic, Chinese, Maya, and more.",
+      "mayaCommunityThanks": "Thanks to <link>/r/Mayan</link> for feedback and help with the Maya calendar.",
       "creditsTitle": "Image credits",
       "bannerTitle": "{{calendar}} banner",
       "version": "Version {{version}}",
@@ -140,8 +160,12 @@
           "aboutNote": "The Japanese Wareki calendar banner is derivative artwork adapted from the source photographs below. "
         },
         "maya": {
+          "subjects": "K'inich Janaab Pakal I | Palenque",
+          "aboutNote": "The Maya calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 2.0 source, the adapted banner is offered under CC BY-SA 2.0."
+        },
+        "islamic": {
           "subjects": "Al-Biruni | Mecca",
-          "aboutNote": "The Islamic calendar banner is derivative artwork adapted from the source images below. "
+          "aboutNote": "The Islamic calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 4.0 source, the adapted banner is offered under CC BY-SA 4.0."
         },
         "hebrew": {
           "subjects": "Maimonides | Jerusalem Old City",
@@ -217,7 +241,28 @@
       "adoptedIn": "Adopted in {{year}}",
       "julianAdoptedIn": "Adopted in {{yearLabel}}",
       "julianStoppedIn": "Stopped using in {{yearLabel}}",
-      "mapAria": "World map showing calendar usage"
+      "mapAria": "World map showing calendar usage",
+      "maya": {
+        "sectionAria": "Maya calendar information",
+        "tabsAria": "Maya calendar views",
+        "glyphsTab": "Glyphs & symbols",
+        "glyphsIntro": "Classic Maya dates combine several symbol cycles. Almaniac uses glyphs from the Smithsonian Maya Calendar Converter, shown here with their names.",
+        "glyphsCredit": "Glyphs from the National Museum of the American Indian Maya Calendar Converter (Smithsonian).",
+        "glyphExpandAria": "Show {{label}} glyph fullscreen",
+        "glyphFullscreenAria": "{{label}} glyph",
+        "sections": {
+          "longCount": "Long Count periods",
+          "longCountDesc": "Each position in the Long Count has its own period glyph, read from the largest unit (baktun) to the smallest (kin).",
+          "numerals": "Numerals",
+          "numeralsDesc": "Maya numbers use a base-20 system with dots for ones and bars for fives. Zero has its own shell sign.",
+          "tzolkin": "Tzolk'in day signs",
+          "tzolkinDesc": "The 260-day sacred calendar pairs a number (1–13) with one of these twenty day signs. Each sign is also a nahual, a spirit companion named below.",
+          "haab": "Haab months",
+          "haabDesc": "The 365-day civil calendar has eighteen twenty-day months, plus the short month Wayeb at the end of the year.",
+          "lords": "Lords of the Night",
+          "lordsDesc": "A nine-day cycle that accompanies the round date. Epigraphic names are used where known; G1–G9 are the scholarly designations."
+        }
+      }
     }
   },
   "datePicker": {
@@ -283,6 +328,12 @@
     "aboutAria": "About the {{label}}",
     "fullscreenAriaView": "{{label}} date fullscreen",
     "tapToClose": "Tap again to close",
+    "maya": {
+      "haab": "Haab",
+      "tzolkin": "Tzolk'in",
+      "lordOfTheNight": "Lord of the Night",
+      "nahual": "Nahual"
+    },
     "islamicSystemUmmAlQura": "Umm al-Qura",
     "islamicSystemTabular": "Tabular",
     "chineseZodiacYear": "Year of the {{zodiac}}, {{pinyin}}",
@@ -292,6 +343,7 @@
     "name": {
       "gregorian": "Gregorian Calendar",
       "julian": "Julian Calendar",
+      "revisedJulian": "Revised Julian Calendar",
       "ethiopian": "Ethiopian Calendar",
       "coptic": "Coptic Calendar",
       "chinese": "Chinese Calendar",
@@ -560,6 +612,7 @@
           "United States (origin)",
           "Australia",
           "Canada",
+          "Germany",
           "Ireland",
           "New Zealand",
           "United Kingdom",
