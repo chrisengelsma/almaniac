@@ -52,11 +52,15 @@
   --overlay-hero-gradient-end: #b0c4d8;
   --overlay-color-scheme: light;
 
+  --font-family-ui: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-display: 300;
+
   color: var(--almaniac-text);
   background: var(--top-bar-bg);
-  font-family: Roboto, 'Segoe UI', sans-serif;
+  font-family: var(--font-family-ui);
   line-height: 1.4;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -85,7 +89,15 @@ html.platform-native #root {
   min-height: 100%;
 }
 
+html.platform-ios {
+  --font-family-ui: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* Android WebView: pin root to the WebView viewport, not dynamic viewport units. */
+html.platform-android {
+  --font-family-ui: sans-serif;
+}
+
 html.platform-android,
 html.platform-android body,
 html.platform-android #root {

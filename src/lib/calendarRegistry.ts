@@ -16,6 +16,7 @@ import {
   JulianCalendarMode,
   MayaCalendar,
   PersianCalendar,
+  ShahanshahiCalendar,
   SovietCalendar,
   ThaiBuddhistCalendar,
   BengaliCalendar,
@@ -55,6 +56,8 @@ import {
   formatJapaneseNative,
   formatPersianEnglish,
   formatPersianNative,
+  formatShahanshahiEnglish,
+  formatShahanshahiNative,
   formatSovietEnglish,
   formatSovietNative,
   formatThaiBuddhistEnglish,
@@ -85,6 +88,7 @@ import {
   getCalendarRowTextStyle,
   type CalendarRowTextStyle,
 } from '../theme/calendarColors';
+import { getThemeBehavior } from '../theme/themePalette';
 import { displayJulianDay } from './julianDayValue';
 import { getReligiousHolidays, type HolidayTradition, type ReligiousHoliday } from './religiousHolidays';
 
@@ -101,6 +105,7 @@ export type CalendarId =
   | 'islamic'
   | 'hebrew'
   | 'persian'
+  | 'shahanshahi'
   | 'bahai'
   | 'japanese'
   | 'minguo'
@@ -148,6 +153,7 @@ export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
   'islamic',
   'hebrew',
   'persian',
+  'shahanshahi',
   'bahai',
   'thaiBuddhist',
   'bengali',
@@ -211,6 +217,8 @@ function buildCalendar(id: CalendarId, anchor: GregorianCalendar, settings: AppS
       return new HebrewCalendar(anchor);
     case 'persian':
       return new PersianCalendar(anchor);
+    case 'shahanshahi':
+      return new ShahanshahiCalendar(anchor);
     case 'bahai':
       return new BahaiCalendar(anchor);
     case 'japanese':
@@ -272,6 +280,8 @@ function formatDate(
         return formatIslamicEnglish(calendar as IslamicCalendar);
       case 'persian':
         return formatPersianEnglish(calendar as PersianCalendar);
+      case 'shahanshahi':
+        return formatShahanshahiEnglish(calendar as ShahanshahiCalendar);
       case 'hebrew':
         return formatHebrewEnglish(calendar as HebrewCalendar);
       case 'indianCivil':
@@ -316,6 +326,8 @@ function formatDate(
       return formatIslamicNative(calendar as IslamicCalendar);
     case 'persian':
       return formatPersianNative(calendar as PersianCalendar);
+    case 'shahanshahi':
+      return formatShahanshahiNative(calendar as ShahanshahiCalendar);
     case 'hebrew':
       return formatHebrewNative(calendar as HebrewCalendar);
     case 'indianCivil':
@@ -487,7 +499,7 @@ export function getOrderedCalendarRows(
     const backgroundColor = getCalendarColor(
       id,
       context,
-      context.colorTheme === 'supporter' && visible
+      getThemeBehavior(context.colorTheme) === 'supporter' && visible
         ? { index: visibleIndex, total: visibleOrder.length }
         : undefined,
     );

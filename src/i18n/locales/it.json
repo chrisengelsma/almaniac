@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Piazza Naqsh-e Jahan",
           "aboutNote": "Il banner del calendario persiano è un'opera derivata adattata dalle immagini fonte qui sotto. "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "Il banner del calendario Shahanshahi è un’opera derivata adattata dalle immagini sorgente sotto. Ai sensi dei termini ShareAlike della fonte CC BY-SA 2.5, il banner adattato è offerto con licenza CC BY-SA 2.5."
+        },
         "bahai": {
           "subjects": "Santuario del Báb | Haifa",
           "aboutNote": "Il banner del calendario baháʼí è un'opera derivata adattata dalla fotografia fonte qui sotto."
@@ -294,6 +298,7 @@
     "listAria": "Conversioni di calendario",
     "addHint": "Aggiungi un altro calendario dal menu",
     "copied": "Copiato negli appunti",
+    "dismissLabel": "Nascondi",
     "reorderAria": "Riordina {{label}}",
     "holidayAria": "Festività: {{names}}",
     "copyAria": "Copia data {{label}}",
@@ -325,6 +330,7 @@
       "islamic": "Calendario islamico",
       "hebrew": "Calendario ebraico",
       "persian": "Calendario persiano",
+      "shahanshahi": "Calendario Shahanshahi",
       "bahai": "Calendario baháʼí",
       "japanese": "Calendario giapponese Wareki",
       "minguo": "Calendario Minguo",
@@ -347,6 +353,7 @@
       "islamic": "Islamico",
       "hebrew": "Ebraico",
       "persian": "Persiano",
+      "shahanshahi": "Shahanshahi",
       "bahai": "Baháʼí",
       "japanese": "Giapponese",
       "minguo": "Minguo",
@@ -482,6 +489,13 @@
         "usedIn": [
           "Iran",
           "Afghanistan"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976 d.C. (2535 Shahanshahi)",
+        "history": "Il calendario Shahanshahi (iraniano imperiale) è il calendario Solar Hijri con anni numerati da un’era legata a Ciro il Grande, con uno scostamento di +1180 rispetto all’anno persiano. Fu il calendario civile ufficiale in Iran dal 1976 al 1978; Nowruz 2535 cadde il 21 marzo 1976.",
+        "usedIn": [
+          "Iran (storico, 1976–1978)"
         ]
       },
       "bahai": {

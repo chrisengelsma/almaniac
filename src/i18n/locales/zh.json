@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
           "aboutNote": "波斯历横幅是根据下方来源图像改编的衍生作品。 "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "沙汉沙希历横幅是根据下方源图像改编的衍生作品。根据 CC BY-SA 2.5 源的 ShareAlike 条款，改编横幅以 CC BY-SA 2.5 提供。"
+        },
         "bahai": {
           "subjects": "Shrine of the Báb | Haifa",
           "aboutNote": "巴哈伊历横幅是根据下方来源照片改编的衍生作品。"
@@ -294,6 +298,7 @@
     "listAria": "历法转换",
     "addHint": "从菜单添加其他历法",
     "copied": "已复制到剪贴板",
+    "dismissLabel": "隐藏",
     "reorderAria": "重新排序 {{label}}",
     "holidayAria": "节日：{{names}}",
     "copyAria": "复制 {{label}} 日期",
@@ -325,6 +330,7 @@
       "islamic": "伊斯兰历",
       "hebrew": "希伯来历",
       "persian": "波斯历",
+      "shahanshahi": "沙汉沙希历",
       "bahai": "巴哈伊历",
       "japanese": "日本年号历",
       "minguo": "民国历",
@@ -347,6 +353,7 @@
       "islamic": "伊斯兰",
       "hebrew": "希伯来",
       "persian": "波斯",
+      "shahanshahi": "沙汉沙希",
       "bahai": "巴哈伊",
       "japanese": "日本",
       "minguo": "民国",
@@ -482,6 +489,13 @@
         "usedIn": [
           "伊朗",
           "阿富汗"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976年（沙汉沙希2535年）",
+        "history": "沙汉沙希（帝国伊朗）历是以居鲁士大帝为纪元的太阳回历，在波斯年上加1180年偏移。1976至1978年间为伊朗官方民用历；2535年诺鲁兹落在1976年3月21日。",
+        "usedIn": [
+          "伊朗（历史，1976–1978）"
         ]
       },
       "bahai": {

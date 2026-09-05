@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { APP_LANGUAGES, LANGUAGE_LABELS, type AppLanguagePreference } from '../i18n/language';
 import {
@@ -17,22 +17,16 @@ import {
 import appIconLight from '../assets/app-icon-light.png';
 import appIconDark from '../assets/app-icon-dark.png';
 import appIconSupporter from '../assets/app-icon-teal.png';
-import { COLOR_THEME_SWATCHES } from '../theme/calendarColors';
-import { isSupporterAppIcon, isSupporterColorTheme } from '../lib/supporterPerks';
+import { isSupporterAppIcon } from '../lib/supporterPerks';
 import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
 import { SheetSlider, SheetToggle } from './DrawerControls';
-
-const COLOR_THEME_OPTIONS: Array<{ id: ColorTheme; labelKey: string }> = [
-  { id: 'distinct', labelKey: 'settings.colorThemeDistinct' },
-  { id: 'mono', labelKey: 'settings.colorThemeMono' },
-  { id: 'sepia', labelKey: 'settings.colorThemeSepia' },
-  { id: 'supporter', labelKey: 'settings.colorThemeSupporter' },
-];
+import { ColorThemePicker } from './ColorThemePicker';
+import { getThemePaletteEntry } from '../theme/themePalette';
 
 const DISMISS_THRESHOLD_PX = 80;
 const SHEET_TRANSITION_MS = 320;
 
-type SettingsPanel = 'main' | 'calendars';
+type SettingsPanel = 'main' | 'calendars' | 'themes';
 
 interface SettingsSheetProps {
   open: boolean;
@@ -90,78 +84,6 @@ function IconLock() {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M7 10V8a5 5 0 0 1 10 0v2M6 10h12v10H6V10Z" />
     </svg>
-  );
-}
-
-interface ColorThemePickerProps {
-  value: ColorTheme;
-  supporterUnlocked: boolean;
-  onChange: (value: ColorTheme) => void;
-  onRequestSupporterUnlock: () => void;
-}
-
-function ColorThemePicker({
-  value,
-  supporterUnlocked,
-  onChange,
-  onRequestSupporterUnlock,
-}: ColorThemePickerProps) {
-  const { t } = useTranslation();
-
-  return (
-    <div className="settings-sheet__theme-grid" role="radiogroup" aria-label={t('settings.colorThemeAria')}>
-      {COLOR_THEME_OPTIONS.map((option) => {
-        const selected = value === option.id;
-        const locked = !supporterUnlocked && isSupporterColorTheme(option.id);
-        const label = t(option.labelKey);
-        return (
-          <button
-            key={option.id}
-            type="button"
-            className={[
-              'settings-sheet__theme-option',
-              selected ? 'settings-sheet__theme-option--selected' : '',
-              locked ? 'settings-sheet__theme-option--locked' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            onClick={() => {
-              if (locked) {
-                onRequestSupporterUnlock();
-                return;
-              }
-              onChange(option.id);
-            }}
-            role="radio"
-            aria-checked={selected}
-            aria-disabled={locked}
-            aria-label={
-              locked
-                ? t('settings.supporterLockedAria', { label })
-                : t('settings.colorThemeOptionAria', { label })
-            }
-          >
-            <span className="settings-sheet__theme-swatches" aria-hidden="true">
-              {COLOR_THEME_SWATCHES[option.id].map((color, index) => (
-                <span
-                  key={index}
-                  className="settings-sheet__theme-swatch"
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </span>
-            <span className="settings-sheet__theme-label">
-              {label}
-              {locked ? (
-                <span className="settings-sheet__lock-badge" aria-hidden="true">
-                  <IconLock />
-                </span>
-              ) : null}
-            </span>
-          </button>
-        );
-      })}
-    </div>
   );
 }
 
@@ -224,6 +146,89 @@ function AppIconPicker({
         );
       })}
     </div>
+  );
+}
+
+interface LanguagePickerProps {
+  value: AppLanguagePreference;
+  onChange: (value: AppLanguagePreference) => void;
+  sheetOpen: boolean;
+}
+
+function LanguagePicker({ value, onChange, sheetOpen }: LanguagePickerProps) {
+  const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(false);
+
+  const options = useMemo(
+    () => [
+      { value: 'system' as const, label: t('settings.languageSystem') },
+      ...APP_LANGUAGES.map((language) => ({
+        value: language,
+        label: LANGUAGE_LABELS[language],
+      })),
+    ],
+    [t],
+  );
+
+  const selectedLabel = options.find((option) => option.value === value)?.label ?? options[0].label;
+
+  useEffect(() => {
+    if (!sheetOpen) {
+      setExpanded(false);
+    }
+  }, [sheetOpen]);
+
+  return (
+    <li className="settings-sheet__expander-group">
+      <button
+        type="button"
+        className="settings-sheet__expander-trigger"
+        aria-expanded={expanded}
+        aria-controls="settings-language-panel"
+        onClick={() => setExpanded((current) => !current)}
+      >
+        <span>{t('settings.language')}</span>
+        <span className="settings-sheet__expander-summary">
+          <span className="settings-sheet__expander-value">{selectedLabel}</span>
+          <span
+            className={`settings-sheet__expander-chevron${expanded ? ' settings-sheet__expander-chevron--open' : ''}`}
+            aria-hidden="true"
+          >
+            <IconChevronDown />
+          </span>
+        </span>
+      </button>
+      {expanded ? (
+        <ul
+          id="settings-language-panel"
+          className="settings-sheet__option-list"
+          role="listbox"
+          aria-label={t('settings.languageAria')}
+        >
+          {options.map((option) => (
+            <li key={option.value}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={option.value === value}
+                className={[
+                  'settings-sheet__option-button',
+                  option.value === value ? 'settings-sheet__option-button--selected' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onClick={() => {
+                  onChange(option.value);
+                  setExpanded(false);
+                }}
+              >
+                {option.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </li>
   );
 }
 
@@ -447,6 +452,8 @@ export function SettingsSheet({
     (id) => settings.visibleCalendars[id],
   ).length;
   const allCalendarsVisible = areAllCalendarsVisible(settings);
+  const selectedTheme = getThemePaletteEntry(settings.colorTheme);
+  const selectedThemeLabel = t(selectedTheme.labelKey);
 
   useEffect(() => {
     if (!open) {
@@ -461,7 +468,7 @@ export function SettingsSheet({
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        if (panel === 'calendars') {
+        if (panel === 'calendars' || panel === 'themes') {
           setPanel('main');
           return;
         }
@@ -553,7 +560,7 @@ export function SettingsSheet({
             onPointerCancel={handlePointerCancel}
           />
           <div className="settings-sheet__header-row">
-            {panel === 'calendars' ? (
+            {panel === 'calendars' || panel === 'themes' ? (
               <button
                 type="button"
                 className="settings-sheet__back"
@@ -566,7 +573,11 @@ export function SettingsSheet({
               <span className="settings-sheet__header-spacer" aria-hidden="true" />
             )}
             <h2 id="settings-sheet-title" className="settings-sheet__title">
-              {panel === 'calendars' ? t('settings.selectCalendarsTitle') : t('settings.title')}
+              {panel === 'calendars'
+                ? t('settings.selectCalendarsTitle')
+                : panel === 'themes'
+                  ? t('settings.colorThemeLabel')
+                  : t('settings.title')}
             </h2>
             <span className="settings-sheet__header-spacer" aria-hidden="true" />
           </div>
@@ -602,24 +613,11 @@ export function SettingsSheet({
               <section className="settings-sheet__section">
                 <h3>{t('settings.sectionSettings')}</h3>
                 <ul className="settings-sheet__list">
-                  <li className="settings-sheet__item settings-sheet__item--stacked">
-                    <span>{t('settings.language')}</span>
-                    <select
-                      className="settings-sheet__select"
-                      value={settings.appLanguagePreference}
-                      onChange={(event) =>
-                        onAppLanguageChange(event.target.value as AppLanguagePreference)
-                      }
-                      aria-label={t('settings.languageAria')}
-                    >
-                      <option value="system">{t('settings.languageSystem')}</option>
-                      {APP_LANGUAGES.map((language) => (
-                        <option key={language} value={language}>
-                          {LANGUAGE_LABELS[language]}
-                        </option>
-                      ))}
-                    </select>
-                  </li>
+                  <LanguagePicker
+                    value={settings.appLanguagePreference}
+                    onChange={onAppLanguageChange}
+                    sheetOpen={open}
+                  />
                   <li className="settings-sheet__item">
                     <span>{t('settings.transliterateLabel')}</span>
                     <SheetToggle
@@ -646,14 +644,27 @@ export function SettingsSheet({
                       onChange={() => onHapticsEnabledChange(!settings.hapticsEnabled)}
                     />
                   </li>
-                  <li className="settings-sheet__item settings-sheet__item--stacked">
-                    <span>{t('settings.colorThemeLabel')}</span>
-                    <ColorThemePicker
-                      value={settings.colorTheme}
-                      supporterUnlocked={settings.supporterUnlocked}
-                      onChange={onColorThemeChange}
-                      onRequestSupporterUnlock={onRequestSupporterUnlock}
-                    />
+                  <li>
+                    <button
+                      type="button"
+                      className="settings-sheet__nav-item"
+                      onClick={() => setPanel('themes')}
+                    >
+                      <span className="settings-sheet__nav-copy">
+                        <span className="settings-sheet__nav-label">{t('settings.colorThemeLabel')}</span>
+                        <span className="settings-sheet__nav-detail">{selectedThemeLabel}</span>
+                      </span>
+                      <span className="settings-sheet__nav-swatches" aria-hidden="true">
+                        {selectedTheme.previewColors.map((color, index) => (
+                          <span
+                            key={index}
+                            className="settings-sheet__nav-swatch"
+                            style={{ backgroundColor: color }}
+                          />
+                        ))}
+                      </span>
+                      <IconChevronRight />
+                    </button>
                   </li>
                   <AppIconExpander
                     value={settings.appIcon}
@@ -685,7 +696,7 @@ export function SettingsSheet({
                 </ul>
               </section>
             </>
-          ) : (
+          ) : panel === 'calendars' ? (
             <section className="settings-sheet__section">
               <ul className="settings-sheet__list">
                 <li className="settings-sheet__item settings-sheet__item--all-calendars">
@@ -734,6 +745,15 @@ export function SettingsSheet({
                   </li>
                 ))}
               </ul>
+            </section>
+          ) : (
+            <section className="settings-sheet__section settings-sheet__section--themes">
+              <ColorThemePicker
+                value={settings.colorTheme}
+                supporterUnlocked={settings.supporterUnlocked}
+                onChange={onColorThemeChange}
+                onRequestSupporterUnlock={onRequestSupporterUnlock}
+              />
             </section>
           )}
         </div>

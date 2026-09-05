@@ -6,7 +6,9 @@ ANDROID_DIR="$ROOT/android"
 BUILD_DIR="$ROOT/build/android"
 PROPS_FILE="$ANDROID_DIR/keystore.properties"
 BUNDLE_SRC="$ANDROID_DIR/app/build/outputs/bundle/release/app-release.aab"
-BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.12-signed.aab"
+MAPPING_SRC="$ANDROID_DIR/app/build/outputs/mapping/release/mapping.txt"
+BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.14-signed.aab"
+MAPPING_OUT="$BUILD_DIR/Almaniac-1.0.14-mapping.txt"
 
 export JAVA_HOME="${JAVA_HOME:-/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home}"
 
@@ -47,14 +49,32 @@ zip -d "$BUNDLE_OUT" 'META-INF/*.SF' 'META-INF/*.RSA' 'META-INF/*.DSA' 'META-INF
 
 "$JAVA_HOME/bin/jarsigner" -verify "$BUNDLE_OUT"
 
-if ! unzip -l "$BUNDLE_OUT" | grep -qE 'META-INF/[^/]+\.(RSA|DSA|EC)'; then
+if ! unzip -l "$BUNDLE_OUT" | grep -q 'META-INF/.*\.\(RSA\|DSA\|EC\)'; then
   echo "Bundle is missing a JAR signature." >&2
   exit 1
 fi
 
-cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.12-release.aab"
+cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.14-release.aab"
+
+if [[ -f "$MAPPING_SRC" ]]; then
+  cp "$MAPPING_SRC" "$MAPPING_OUT"
+  mkdir -p "$ROOT/store/google-play"
+  cp "$MAPPING_OUT" "$ROOT/store/google-play/Almaniac-1.0.14-mapping.txt"
+else
+  echo "Warning: mapping.txt not found at $MAPPING_SRC" >&2
+fi
+
+mkdir -p "$ROOT/store/google-play"
+cp "$BUILD_DIR/Almaniac-1.0.14-release.aab" "$ROOT/store/google-play/Almaniac-1.0.14.aab"
 
 echo ""
 echo "Signed bundle ready for Play Console:"
 echo "  $BUNDLE_OUT"
+if [[ -f "$MAPPING_OUT" ]]; then
+  echo "Deobfuscation mapping file:"
+  echo "  $MAPPING_OUT"
+fi
 shasum -a 256 "$BUNDLE_OUT"
+if [[ -f "$MAPPING_OUT" ]]; then
+  shasum -a 256 "$MAPPING_OUT"
+fi

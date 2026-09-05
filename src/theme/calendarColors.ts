@@ -1,11 +1,13 @@
 import type { CalendarId } from '../lib/calendarRegistry';
-import type { ColorScheme, ColorTheme } from '../lib/appSettings';
+import type { ColorScheme } from '../lib/appSettings';
+import type { ColorThemeId } from './themePalette';
+import { getThemeBehavior } from './themePalette';
 import { rowTextColorsForBackground, type RowTextColors } from './rowTextColors';
 
 export type CalendarColorMap = Record<CalendarId, string>;
 
 export interface CalendarColorContext {
-  colorTheme: ColorTheme;
+  colorTheme: ColorThemeId;
   colorScheme: ColorScheme;
   calendarColors?: Partial<CalendarColorMap>;
 }
@@ -50,6 +52,7 @@ export const DEFAULT_CALENDAR_COLORS: CalendarColorMap = {
   islamic: '#b8d4b0', // sage green
   hebrew: '#c8d4ec', // ceremonial blue
   persian: '#a8d4dc', // turquoise tile
+  shahanshahi: '#9cc8d8', // imperial turquoise
   bahai: '#d4c8e0', // soft lavender
   japanese: '#e8d0d8', // cherry blossom blush
   minguo: '#d0dce8', // republic blue-grey
@@ -72,7 +75,10 @@ const SEPIA_LIGHT_ROW = '#ebe0c8';
 const SEPIA_DARK_ROW = '#3d3228';
 
 /** Five-swatch previews for the color-theme picker in settings. */
-export const COLOR_THEME_SWATCHES: Record<ColorTheme, readonly string[]> = {
+export const COLOR_THEME_SWATCHES: Record<
+  'distinct' | 'mono' | 'sepia' | 'supporter',
+  readonly string[]
+> = {
   distinct: [
     DEFAULT_CALENDAR_COLORS.gregorian,
     DEFAULT_CALENDAR_COLORS.julian,
@@ -139,15 +145,17 @@ export function getCalendarColor(
   context: CalendarColorContext,
   gradientIndex?: SupporterGradientIndex,
 ): string {
-  if (context.colorTheme === 'mono') {
+  const behavior = getThemeBehavior(context.colorTheme);
+
+  if (behavior === 'mono') {
     return context.colorScheme === 'dark' ? MONO_DARK_ROW : MONO_LIGHT_ROW;
   }
 
-  if (context.colorTheme === 'sepia') {
+  if (behavior === 'sepia') {
     return context.colorScheme === 'dark' ? SEPIA_DARK_ROW : SEPIA_LIGHT_ROW;
   }
 
-  if (context.colorTheme === 'supporter') {
+  if (behavior === 'supporter') {
     if (gradientIndex) {
       return getSupporterThemeRowColor(
         gradientIndex.index,
@@ -170,7 +178,9 @@ export function getCalendarMapColors(
   id: CalendarId,
   context: CalendarColorContext,
 ): { stroke: string; fill: string } {
-  if (context.colorTheme === 'mono') {
+  const behavior = getThemeBehavior(context.colorTheme);
+
+  if (behavior === 'mono') {
     if (context.colorScheme === 'dark') {
       return {
         stroke: 'rgba(255, 255, 255, 0.35)',
@@ -184,7 +194,7 @@ export function getCalendarMapColors(
     };
   }
 
-  if (context.colorTheme === 'sepia') {
+  if (behavior === 'sepia') {
     if (context.colorScheme === 'dark') {
       return {
         stroke: 'rgba(232, 220, 200, 0.35)',

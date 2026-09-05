@@ -16,6 +16,7 @@ import {
   JulianDay,
   MayaCalendar,
   PersianCalendar,
+  ShahanshahiCalendar,
   SovietCalendar,
   ThaiBuddhistCalendar,
   BengaliCalendar,
@@ -30,7 +31,7 @@ import { toGregorianCalendar, toIslamicCalendar, toJulianCalendar } from 'calend
 import type { CalendarId } from './calendarRegistry';
 import { DEFAULT_CALENDAR_ORDER } from './calendarRegistry';
 import { CALENDAR_NAMES } from '../theme/calendarTheme';
-import type { IslamicCalendarMode as AppIslamicCalendarMode, JulianCalendarMode as AppJulianCalendarMode } from './appSettings';
+import type { IslamicCalendarMode as AppIslamicCalendarMode, IslamicDayAdjustment, JulianCalendarMode as AppJulianCalendarMode } from './appSettings';
 import {
   astronomicalToDisplay,
   createGregorianDate,
@@ -43,8 +44,61 @@ export type PickerValues = Record<string, string>;
 
 export interface PickerContext {
   islamicCalendarMode?: AppIslamicCalendarMode;
+  islamicDayAdjustment?: IslamicDayAdjustment;
   julianCalendarMode?: AppJulianCalendarMode;
   useModifiedJulianDay?: boolean;
+}
+
+function islamicDayAdjustment(context?: PickerContext): IslamicDayAdjustment {
+  return context?.islamicDayAdjustment ?? 0;
+}
+
+function applyIslamicPickerAdjustment(
+  calendar: IslamicCalendar,
+  adjustment: IslamicDayAdjustment,
+): IslamicCalendar {
+  if (adjustment === 0) {
+    return calendar;
+  }
+
+  const adjusted = new IslamicCalendar(
+    calendar.year,
+    calendar.month,
+    calendar.day,
+    calendar.calendarType,
+    calendar.leapYearRule,
+    calendar.calendarMode,
+  );
+  if (adjustment > 0) {
+    adjusted.addDays(adjustment);
+  } else {
+    adjusted.subtractDays(-adjustment);
+  }
+  return adjusted;
+}
+
+function removeIslamicPickerAdjustment(
+  calendar: IslamicCalendar,
+  adjustment: IslamicDayAdjustment,
+): IslamicCalendar {
+  if (adjustment === 0) {
+    return calendar;
+  }
+
+  const astronomical = new IslamicCalendar(
+    calendar.year,
+    calendar.month,
+    calendar.day,
+    calendar.calendarType,
+    calendar.leapYearRule,
+    calendar.calendarMode,
+  );
+  if (adjustment > 0) {
+    astronomical.subtractDays(adjustment);
+  } else {
+    astronomical.addDays(-adjustment);
+  }
+  return astronomical;
 }
 
 function converterIslamicMode(context?: PickerContext): IslamicCalendarMode {
@@ -642,6 +696,30 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
           },
         },
       ];
+    case 'shahanshahi':
+      return [
+        { key: 'year', label: 'Year', type: 'number', placeholder: 'e.g. 2585' },
+        {
+          key: 'month',
+          label: 'Month',
+          type: 'select',
+          getOptions: () => persianMonthOptions(),
+        },
+        {
+          key: 'day',
+          label: 'Day',
+          type: 'select',
+          getOptions: (values) => {
+            const year = parseNumber(values, 'year') ?? 1;
+            const month = parseNumber(values, 'month') ?? 1;
+            const maxDay = ShahanshahiCalendar.NumberOfDaysInMonth(year, month);
+            return Array.from({ length: maxDay }, (_, index) => ({
+              value: String(index + 1),
+              label: toPersianDigits(index + 1),
+            }));
+          },
+        },
+      ];
     case 'bahai':
       return [
         { key: 'year', label: 'Year', type: 'number', min: 1, placeholder: 'e.g. 181' },
@@ -980,7 +1058,10 @@ export function extractPickerValues(
       };
     }
     case 'islamic': {
-      const islamic = toIslamicCalendar(anchor, converterIslamicMode(context));
+      const islamic = applyIslamicPickerAdjustment(
+        toIslamicCalendar(anchor, converterIslamicMode(context)),
+        islamicDayAdjustment(context),
+      );
       return {
         year: String(islamic.year),
         month: String(islamic.month),
@@ -1001,6 +1082,14 @@ export function extractPickerValues(
         year: String(persian.year),
         month: String(persian.month),
         day: String(persian.day),
+      };
+    }
+    case 'shahanshahi': {
+      const shahanshahi = new ShahanshahiCalendar(anchor);
+      return {
+        year: String(shahanshahi.year),
+        month: String(shahanshahi.month),
+        day: String(shahanshahi.day),
       };
     }
     case 'bahai': {
@@ -1258,9 +1347,12 @@ export function pickerValuesToGregorian(
           return null;
         }
         const mode = converterIslamicMode(context);
-        return toGregorianCalendar(
-          new IslamicCalendar(year, month, day, undefined, undefined, mode),
+        const adjusted = new IslamicCalendar(year, month, day, undefined, undefined, mode);
+        const astronomical = removeIslamicPickerAdjustment(
+          adjusted,
+          islamicDayAdjustment(context),
         );
+        return toGregorianCalendar(astronomical);
       }
       case 'hebrew': {
         const year = parseNumber(values, 'year');
@@ -1288,6 +1380,18 @@ export function pickerValuesToGregorian(
           return null;
         }
         return toGregorianCalendar(new PersianCalendar(year, month, day));
+      }
+      case 'shahanshahi': {
+        const year = parseNumber(values, 'year');
+        const month = parseNumber(values, 'month');
+        const day = parseNumber(values, 'day');
+        if (year === null || !month || !day) {
+          return null;
+        }
+        if (day > ShahanshahiCalendar.NumberOfDaysInMonth(year, month)) {
+          return null;
+        }
+        return toGregorianCalendar(new ShahanshahiCalendar(year, month, day));
       }
       case 'bahai': {
         const year = parseNumber(values, 'year');

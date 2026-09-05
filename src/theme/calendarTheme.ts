@@ -13,6 +13,7 @@ export const CALENDAR_NAMES: Record<CalendarId, string> = {
   islamic: 'Islamic Calendar',
   hebrew: 'Hebrew Calendar',
   persian: 'Persian Calendar',
+  shahanshahi: 'Shahanshahi Calendar',
   bahai: 'Baháʼí Calendar',
   japanese: 'Japanese Wareki Calendar',
   minguo: 'Minguo Calendar',

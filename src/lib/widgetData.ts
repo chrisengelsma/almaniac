@@ -1,4 +1,4 @@
-import { getResolvedAppLanguage, type AppSettings, type ColorScheme, type ColorTheme } from './appSettings';
+import { getResolvedAppLanguage, type AppSettings, type ColorScheme } from './appSettings';
 import {
   DEFAULT_CALENDAR_ORDER,
   getAllCalendarEntries,
@@ -12,6 +12,7 @@ import {
   getCalendarColor,
   getWidgetTextColor,
 } from '../theme/calendarColors';
+import { COLOR_THEME_IDS, getThemeBehavior, type ColorThemeId } from '../theme/themePalette';
 import { WidgetBridge } from '../plugins/widgetBridge';
 import i18n from '../i18n';
 import { createCalendarCopy } from '../i18n/calendarCopy';
@@ -32,7 +33,7 @@ export interface WidgetCalendarSnapshot {
   weekday: string;
   date: string;
   dateTransliterated: string;
-  themes: Record<ColorTheme, WidgetThemeVariants>;
+  themes: Record<ColorThemeId, WidgetThemeVariants>;
 }
 
 export interface WidgetSnapshot {
@@ -42,7 +43,7 @@ export interface WidgetSnapshot {
   calendars: Record<CalendarId, WidgetCalendarSnapshot>;
 }
 
-const COLOR_THEMES: ColorTheme[] = ['distinct', 'mono', 'sepia', 'supporter'];
+const COLOR_THEMES = COLOR_THEME_IDS;
 const COLOR_SCHEMES: ColorScheme[] = ['light', 'dark'];
 
 function formatGregorianDate(anchor: GregorianCalendar): string {
@@ -55,7 +56,7 @@ function formatGregorianDate(anchor: GregorianCalendar): string {
 function buildThemeVariants(
   id: CalendarId,
   settings: AppSettings,
-): Record<ColorTheme, WidgetThemeVariants> {
+): Record<ColorThemeId, WidgetThemeVariants> {
   return COLOR_THEMES.reduce(
     (themes, colorTheme) => {
       const variants = COLOR_SCHEMES.reduce(
@@ -66,7 +67,7 @@ function buildThemeVariants(
           const backgroundColor = getCalendarColor(
             id,
             context,
-            colorTheme === 'supporter'
+            getThemeBehavior(colorTheme) === 'supporter'
               ? { index: orderIndex, total: DEFAULT_CALENDAR_ORDER.length }
               : undefined,
           );
@@ -82,7 +83,7 @@ function buildThemeVariants(
       themes[colorTheme] = variants;
       return themes;
     },
-    {} as Record<ColorTheme, WidgetThemeVariants>,
+    {} as Record<ColorThemeId, WidgetThemeVariants>,
   );
 }
 

@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Praça Naqsh-e Jahan",
           "aboutNote": "O banner do calendário persa é uma obra derivada adaptada das imagens-fonte abaixo. "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "O banner do calendário Shahanshahi é uma obra derivada adaptada das imagens-fonte abaixo. Nos termos ShareAlike da fonte CC BY-SA 2.5, o banner adaptado é oferecido sob CC BY-SA 2.5."
+        },
         "bahai": {
           "subjects": "Santuário do Báb | Haifa",
           "aboutNote": "O banner do calendário baháʼí é uma obra derivada adaptada da fotografia-fonte abaixo."
@@ -294,6 +298,7 @@
     "listAria": "Conversões de calendário",
     "addHint": "Adicione outro calendário no menu",
     "copied": "Copiado para a área de transferência",
+    "dismissLabel": "Ocultar",
     "reorderAria": "Reordenar {{label}}",
     "holidayAria": "Feriado: {{names}}",
     "copyAria": "Copiar data {{label}}",
@@ -325,6 +330,7 @@
       "islamic": "Calendário islâmico",
       "hebrew": "Calendário hebraico",
       "persian": "Calendário persa",
+      "shahanshahi": "Calendário Shahanshahi",
       "bahai": "Calendário baháʼí",
       "japanese": "Calendário japonês Wareki",
       "minguo": "Calendário Minguo",
@@ -347,6 +353,7 @@
       "islamic": "Islâmico",
       "hebrew": "Hebraico",
       "persian": "Persa",
+      "shahanshahi": "Shahanshahi",
       "bahai": "Baháʼí",
       "japanese": "Japonês",
       "minguo": "Minguo",
@@ -482,6 +489,13 @@
         "usedIn": [
           "Irã",
           "Afeganistão"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976 d.C. (2535 Shahanshahi)",
+        "history": "O calendário Shahanshahi (iraniano imperial) é o calendário Solar Hijri com anos numerados a partir de uma era ligada a Ciro, o Grande, com um deslocamento de +1180 em relação ao ano persa. Foi o calendário civil oficial no Irã de 1976 a 1978; Nowruz 2535 caiu em 21 de março de 1976.",
+        "usedIn": [
+          "Irã (histórico, 1976–1978)"
         ]
       },
       "bahai": {

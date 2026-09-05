@@ -168,6 +168,15 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     usedIn: ['Iran', 'Afghanistan'],
     mapCountries: ['IR', 'AF'],
   },
+  shahanshahi: {
+    id: 'shahanshahi',
+    calendarType: 'solar',
+    firstImplemented: '1976 CE (2535 Shahanshahi)',
+    history:
+      'The Shahanshahi (Imperial Iranian) calendar is the Solar Hijri calendar with years numbered from an era tied to Cyrus the Great, using a +1180 year offset on the Persian year. It was the official civil calendar in Iran from 1976 to 1978; Nowruz 2535 fell on 21 March 1976.',
+    usedIn: ['Iran (historical, 1976–1978)'],
+    mapCountries: ['IR'],
+  },
   bahai: {
     id: 'bahai',
     calendarType: 'solar',

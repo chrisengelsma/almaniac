@@ -111,6 +111,7 @@ public class CalendarWidgetConfigureActivity extends Activity {
                     "islamic",
                     "hebrew",
                     "persian",
+                    "shahanshahi",
                     "bahai",
                     "thaiBuddhist",
                     "bengali",
@@ -145,6 +146,7 @@ public class CalendarWidgetConfigureActivity extends Activity {
             options.add(new CalendarOption("islamic", "Islamic"));
             options.add(new CalendarOption("hebrew", "Hebrew"));
             options.add(new CalendarOption("persian", "Persian"));
+            options.add(new CalendarOption("shahanshahi", "Shahanshahi"));
             options.add(new CalendarOption("bahai", "Baháʼí"));
             options.add(new CalendarOption("thaiBuddhist", "Thai Buddhist"));
             options.add(new CalendarOption("bengali", "Bengali"));

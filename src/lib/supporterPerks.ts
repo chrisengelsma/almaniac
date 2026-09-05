@@ -1,10 +1,15 @@
-import type { AppIconChoice, AppSettings, ColorTheme } from './appSettings';
+import type { AppIconChoice, AppSettings } from './appSettings';
+import {
+  DEFAULT_COLOR_THEME,
+  isSupporterOnlyTheme,
+  type ColorThemeId,
+} from '../theme/themePalette';
 
-export const SUPPORTER_COLOR_THEME = 'supporter' as const satisfies ColorTheme;
+export const SUPPORTER_COLOR_THEME = 'supporter' as const satisfies ColorThemeId;
 export const SUPPORTER_APP_ICON = 'supporter' as const satisfies AppIconChoice;
 
-export function isSupporterColorTheme(theme: ColorTheme): boolean {
-  return theme === SUPPORTER_COLOR_THEME;
+export function isSupporterColorTheme(theme: ColorThemeId): boolean {
+  return isSupporterOnlyTheme(theme);
 }
 
 export function isSupporterAppIcon(icon: AppIconChoice): boolean {
@@ -18,7 +23,7 @@ export function sanitizeSupporterSelections(settings: AppSettings): AppSettings 
 
   return {
     ...settings,
-    colorTheme: isSupporterColorTheme(settings.colorTheme) ? 'distinct' : settings.colorTheme,
+    colorTheme: isSupporterColorTheme(settings.colorTheme) ? DEFAULT_COLOR_THEME : settings.colorTheme,
     appIcon: isSupporterAppIcon(settings.appIcon) ? 'light' : settings.appIcon,
   };
 }

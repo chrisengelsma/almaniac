@@ -18,6 +18,7 @@ import type {
   KoreanDangiCalendar,
   JucheCalendar,
   PersianCalendar,
+  ShahanshahiCalendar,
   SovietCalendar,
   ThaiBuddhistCalendar,
 } from 'calendar-converter/calendars';
@@ -348,6 +349,16 @@ const BAHAI_MONTHS_AR = [
   'علاء',
 ];
 
+const BAHAI_WEEKDAYS_AR = [
+  'جمال',
+  'كمال',
+  'فضل',
+  'عدل',
+  'استجلال',
+  'استقلال',
+  'جلال',
+];
+
 const JAPANESE_WEEKDAYS = [
   '日曜日',
   '月曜日',
@@ -440,6 +451,8 @@ export function scriptFontForCalendar(id: CalendarId, transliterateToEnglish: bo
       return 'arabic';
     case 'persian':
       return 'persian';
+    case 'shahanshahi':
+      return 'persian';
     case 'hebrew':
       return 'hebrew';
     case 'indianCivil':
@@ -512,6 +525,15 @@ export function formatPersianNative(calendar: PersianCalendar): string {
 }
 
 export function formatPersianEnglish(calendar: PersianCalendar): string {
+  return `${calendar.getMonthName()} ${calendar.day}, ${calendar.year}`;
+}
+
+export function formatShahanshahiNative(calendar: ShahanshahiCalendar): string {
+  const month = persianMonthName(calendar.month);
+  return `${toPersianDigits(calendar.day)} ${month} ${toPersianDigits(calendar.year)}`;
+}
+
+export function formatShahanshahiEnglish(calendar: ShahanshahiCalendar): string {
   return `${calendar.getMonthName()} ${calendar.day}, ${calendar.year}`;
 }
 
@@ -601,8 +623,8 @@ export function formatCopticEnglish(calendar: CopticCalendar): string {
 }
 
 export function formatBahaiNative(calendar: BahaiCalendar): string {
-  const month = BAHAI_MONTHS_AR[calendar.month - 1] ?? '';
-  return `${toArabicDigits(calendar.day)} ${month} ${toArabicDigits(calendar.year)}`;
+  const month = bahaiMonthName(calendar.month);
+  return `${calendar.day} ${month} ${calendar.year}`;
 }
 
 export function formatBahaiEnglish(calendar: BahaiCalendar): string {
@@ -713,6 +735,8 @@ export function nativeWeekday(
       return ISLAMIC_WEEKDAYS_AR[weekdayIndex];
     case 'persian':
       return PERSIAN_WEEKDAYS_FA[weekdayIndex];
+    case 'shahanshahi':
+      return PERSIAN_WEEKDAYS_FA[weekdayIndex];
     case 'hebrew':
       return HEBREW_WEEKDAYS[weekdayIndex];
     case 'indianCivil':
@@ -732,7 +756,7 @@ export function nativeWeekday(
     case 'coptic':
       return COPTIC_WEEKDAYS[weekdayIndex];
     case 'bahai':
-      return ISLAMIC_WEEKDAYS_AR[weekdayIndex];
+      return BAHAI_WEEKDAYS_AR[weekdayIndex];
     case 'japanese':
       return JAPANESE_WEEKDAYS[weekdayIndex];
     case 'koreanDangi':

@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
           "aboutNote": "페르시아력 배너는 아래 원본 이미지를 바탕으로 제작한 파생 작품입니다. "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "샤한샤히력 배너는 아래 원본 이미지를 바탕으로 한 2차 저작물입니다. CC BY-SA 2.5 원본의 ShareAlike 조건에 따라, 개작된 배너는 CC BY-SA 2.5로 제공됩니다."
+        },
         "bahai": {
           "subjects": "Shrine of the Báb | Haifa",
           "aboutNote": "바하이력 배너는 아래 원본 사진을 바탕으로 제작한 파생 작품입니다."
@@ -296,6 +300,7 @@
     "listAria": "역법 변환",
     "addHint": "메뉴에서 다른 역법 추가",
     "copied": "클립보드에 복사됨",
+    "dismissLabel": "숨기기",
     "reorderAria": "{{label}} 순서 변경",
     "holidayAria": "공휴일: {{names}}",
     "copyAria": "{{label}} 날짜 복사",
@@ -327,6 +332,7 @@
       "islamic": "이슬람력",
       "hebrew": "히브리력",
       "persian": "페르시아력",
+      "shahanshahi": "샤한샤히력",
       "bahai": "바하이력",
       "japanese": "일본 연호력",
       "minguo": "민국력",
@@ -351,6 +357,7 @@
       "islamic": "이슬람",
       "hebrew": "히브리",
       "persian": "페르시아",
+      "shahanshahi": "샤한샤히",
       "bahai": "바하이",
       "japanese": "일본",
       "minguo": "민국",
@@ -488,6 +495,13 @@
         "usedIn": [
           "이란",
           "아프가니스탄"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976년 (샤한샤히 2535년)",
+        "history": "샤한샤히(제국 이란)력은 키루스 대왕과 연결된 기원을 사용하고 페르시아 연도에 +1180년을 더한 태양 히즈라력입니다. 1976년부터 1978년까지 이란의 공식 민간력이었으며, 2535년 노루즈는 1976년 3월 21일이었습니다.",
+        "usedIn": [
+          "이란 (역사적, 1976–1978)"
         ]
       },
       "bahai": {

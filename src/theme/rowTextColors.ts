@@ -1,4 +1,6 @@
-import type { ColorScheme, ColorTheme } from '../lib/appSettings';
+import type { ColorScheme } from '../lib/appSettings';
+import type { ColorThemeId } from '../theme/themePalette';
+import { getThemeBehavior } from '../theme/themePalette';
 
 export const ROW_TEXT_PRIMARY = '#1e2a31';
 export const ROW_TEXT_MUTED = '#4f5f68';
@@ -117,8 +119,8 @@ function relativeLuminance({ r, g, b }: Rgb): number {
 }
 
 /** Dark foreground for text on light row backgrounds. */
-export function rowTextColors(colorTheme: ColorTheme): RowTextColors {
-  if (colorTheme === 'sepia') {
+export function rowTextColors(colorTheme: ColorThemeId): RowTextColors {
+  if (getThemeBehavior(colorTheme) === 'sepia') {
     return {
       foreground: SEPIA_TEXT_PRIMARY,
       foregroundMuted: SEPIA_TEXT_MUTED,
@@ -126,7 +128,7 @@ export function rowTextColors(colorTheme: ColorTheme): RowTextColors {
     };
   }
 
-  if (colorTheme === 'mono') {
+  if (getThemeBehavior(colorTheme) === 'mono') {
     return {
       foreground: MONO_TEXT_PRIMARY,
       foregroundMuted: MONO_TEXT_MUTED,
@@ -166,8 +168,8 @@ export function sepiaDarkRowTextColors(): RowTextColors {
   };
 }
 
-function darkRowTextColors(colorTheme: ColorTheme): RowTextColors {
-  if (colorTheme === 'supporter') {
+function darkRowTextColors(colorTheme: ColorThemeId): RowTextColors {
+  if (getThemeBehavior(colorTheme) === 'supporter') {
     return {
       foreground: SUPPORTER_DARK_TEXT_PRIMARY,
       foregroundMuted: SUPPORTER_DARK_TEXT_MUTED,
@@ -185,11 +187,13 @@ function darkRowTextColors(colorTheme: ColorTheme): RowTextColors {
 /** Foreground colors tuned for each row background. */
 export function rowTextColorsForBackground(
   backgroundColor: string,
-  colorTheme: ColorTheme,
+  colorTheme: ColorThemeId,
   colorScheme: ColorScheme,
   accentColor?: string,
 ): RowTextColors {
-  if (colorTheme === 'distinct') {
+  const behavior = getThemeBehavior(colorTheme);
+
+  if (behavior === 'distinct') {
     if (colorScheme === 'dark') {
       return accentColor
         ? distinctDarkRowTextColors(accentColor)
@@ -200,7 +204,7 @@ export function rowTextColorsForBackground(
   }
 
   if (colorScheme === 'dark') {
-    if (colorTheme === 'sepia') {
+    if (behavior === 'sepia') {
       return sepiaDarkRowTextColors();
     }
   }

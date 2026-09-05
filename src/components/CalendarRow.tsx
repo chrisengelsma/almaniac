@@ -1,10 +1,11 @@
 import { useRef, useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CSS } from '@dnd-kit/utilities';
-import { useSortable } from '@dnd-kit/sortable';
+import { defaultAnimateLayoutChanges, useSortable } from '@dnd-kit/sortable';
 import { copyTextToClipboard } from '../lib/copyText';
 import { calendarTextClassName, calendarTextLang, calendarTextStyle } from '../lib/calendarTextStyle';
 import type { CalendarRowData } from '../lib/calendarRegistry';
+import { useSwipeToDismiss } from '../hooks/useSwipeToDismiss';
 import { DragHandle } from './DragHandle';
 import { MayaLongCount } from './MayaLongCount';
 import { MayaHaabDate, MayaLordOfNight, MayaTzolkinDate } from './MayaRoundDate';
@@ -13,7 +14,11 @@ interface CalendarRowProps {
   row: CalendarRowData;
   staggerIndex?: number;
   themeTransitionDelay?: number;
+  isExiting?: boolean;
   onInfoClick: (id: CalendarRowData['entry']['id']) => void;
+  onHide: () => void;
+  onRemoveComplete?: () => void;
+  onDismissStart?: () => void;
   onFullscreen: (row: CalendarRowData, originRect: DOMRectReadOnly, textOriginRect: DOMRectReadOnly) => void;
   isFullscreenSource?: boolean;
 }
@@ -22,12 +27,17 @@ export function CalendarRow({
   row,
   staggerIndex,
   themeTransitionDelay,
+  isExiting = false,
   onInfoClick,
+  onHide,
+  onRemoveComplete,
+  onDismissStart,
   onFullscreen,
   isFullscreenSource = false,
 }: CalendarRowProps) {
   const { t } = useTranslation();
   const { entry, visible } = row;
+  const showAsVisible = visible || isExiting;
   const rowRef = useRef<HTMLElement | null>(null);
   const [copied, setCopied] = useState(false);
   const scriptClass = calendarTextClassName(entry.scriptFont);
@@ -38,6 +48,24 @@ export function CalendarRow({
   const detailTextLang = calendarTextLang(entry.detailScriptFont ?? entry.scriptFont);
   const dateText = entry.date || '-';
   const canCopy = Boolean(entry.date && entry.date !== '-');
+  const isEntering = staggerIndex !== undefined;
+
+  const {
+    surfaceRef,
+    offsetX,
+    phase,
+    slideDirection,
+    isSwiping,
+    isRemoving,
+    swipeHandlers,
+  } = useSwipeToDismiss({
+    onDismiss: onHide,
+    onDismissComplete: onRemoveComplete,
+    rowRef,
+    disabled: !showAsVisible || isEntering,
+    onDismissStart,
+  });
+
   const {
     attributes,
     listeners,
@@ -46,9 +74,15 @@ export function CalendarRow({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: entry.id, disabled: !visible });
-
-  const isEntering = staggerIndex !== undefined;
+  } = useSortable({
+    id: entry.id,
+    disabled: !showAsVisible || isRemoving,
+    animateLayoutChanges: defaultAnimateLayoutChanges,
+    transition: {
+      duration: 250,
+      easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+    },
+  });
 
   const style: CSSProperties & {
     '--calendar-accent'?: string;
@@ -59,14 +93,13 @@ export function CalendarRow({
     '--stagger-index'?: number;
     '--theme-transition-delay'?: string;
   } = {
-    backgroundColor: row.backgroundColor,
     '--calendar-accent': row.accentColor,
     '--calendar-row-fg': row.textStyle.foreground,
     '--calendar-row-fg-muted': row.textStyle.foregroundMuted,
     '--calendar-row-text-shadow': row.textStyle.textShadow,
     '--maya-row-fg': row.textStyle.foreground,
-    transform: isEntering ? undefined : CSS.Transform.toString(transform),
-    transition: isDragging ? transition : undefined,
+    transform: isEntering || isRemoving ? undefined : CSS.Transform.toString(transform),
+    transition: isEntering || isRemoving ? undefined : transition,
     ...(isEntering ? { '--stagger-index': staggerIndex } : {}),
     ...(themeTransitionDelay !== undefined
       ? { '--theme-transition-delay': `${themeTransitionDelay}ms` }
@@ -117,16 +150,49 @@ export function CalendarRow({
       className={[
         'calendar-row',
         'theme-chunk',
-        visible ? 'calendar-row--visible' : 'calendar-row--hidden',
+        showAsVisible ? 'calendar-row--visible' : 'calendar-row--hidden',
         isEntering ? 'calendar-row--entering' : '',
         isDragging ? 'calendar-row--dragging' : '',
+        isSwiping ? 'calendar-row--swiping' : '',
+        phase === 'slideOut' ? 'calendar-row--slide-out' : '',
+        phase === 'snapBack' ? 'calendar-row--snap-back' : '',
+        phase === 'collapse' ? 'calendar-row--removing' : '',
+        isRemoving ? 'calendar-row--removing-active' : '',
         isFullscreenSource ? 'calendar-row--fullscreen-source' : '',
       ]
         .filter(Boolean)
         .join(' ')}
-      aria-hidden={!visible}
+      aria-hidden={!showAsVisible}
     >
-      <div className="calendar-row__surface">
+      <div className="calendar-row__swipe">
+        <div
+          className={[
+            'calendar-row__swipe-action',
+            slideDirection < 0 ? 'calendar-row__swipe-action--left' : '',
+            slideDirection > 0 ? 'calendar-row__swipe-action--right' : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          aria-hidden="true"
+          style={{
+            opacity: isSwiping || phase === 'slideOut'
+              ? Math.min(1, Math.abs(offsetX) / 72)
+              : 0,
+          }}
+        >
+          <span className="calendar-row__swipe-label">{t('calendars.dismissLabel')}</span>
+        </div>
+        <div
+          ref={surfaceRef}
+          className="calendar-row__surface"
+          style={{
+            backgroundColor: row.backgroundColor,
+            transform: phase === 'idle' && offsetX === 0
+              ? undefined
+              : `translateX(${offsetX}px)`,
+          }}
+          {...swipeHandlers}
+        >
         <div className="calendar-row__date-wrap">
           <p
             className={`calendar-row__date ${scriptClass}`.trim()}
@@ -151,7 +217,7 @@ export function CalendarRow({
           aria-label={t('calendars.reorderAria', { label: entry.label })}
           {...attributes}
           {...listeners}
-          disabled={!visible}
+          disabled={!showAsVisible}
         >
           <DragHandle />
         </button>
@@ -241,6 +307,7 @@ export function CalendarRow({
             </button>
           </div>
         </div>
+      </div>
       </div>
     </article>
     </>

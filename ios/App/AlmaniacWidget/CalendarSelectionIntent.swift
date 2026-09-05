@@ -60,6 +60,7 @@ struct CalendarChoiceQuery: EntityQuery {
             CalendarChoice(id: "islamic", label: "Islamic Calendar"),
             CalendarChoice(id: "hebrew", label: "Hebrew Calendar"),
             CalendarChoice(id: "persian", label: "Persian Calendar"),
+            CalendarChoice(id: "shahanshahi", label: "Shahanshahi Calendar"),
             CalendarChoice(id: "bahai", label: "Baháʼí Calendar"),
             CalendarChoice(id: "thaiBuddhist", label: "Thai Buddhist Calendar"),
             CalendarChoice(id: "bengali", label: "Bengali Calendar"),

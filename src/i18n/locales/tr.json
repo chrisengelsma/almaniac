@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
           "aboutNote": "Fars takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "Şahanshahi takvimi afişi, aşağıdaki kaynak görsellerden uyarlanmış türev bir eserdir. CC BY-SA 2.5 kaynağının ShareAlike koşulları uyarınca uyarlanmış afiş CC BY-SA 2.5 altında sunulmaktadır."
+        },
         "bahai": {
           "subjects": "Shrine of the Báb | Haifa",
           "aboutNote": "Baháʼí takvimi afişi, aşağıdaki kaynak fotoğraftan uyarlanmış türev bir eserdir."
@@ -294,6 +298,7 @@
     "listAria": "Takvim dönüşümleri",
     "addHint": "Menüden başka bir takvim ekle",
     "copied": "Panoya kopyalandı",
+    "dismissLabel": "Gizle",
     "reorderAria": "{{label}} sırasını değiştir",
     "holidayAria": "Bayram: {{names}}",
     "copyAria": "{{label}} tarihini kopyala",
@@ -325,6 +330,7 @@
       "islamic": "İslami Takvim",
       "hebrew": "İbrani Takvimi",
       "persian": "Fars Takvimi",
+      "shahanshahi": "Şahanshahi Takvimi",
       "bahai": "Baháʼí Takvimi",
       "japanese": "Japon Wareki Takvimi",
       "minguo": "Minguo Takvimi",
@@ -347,6 +353,7 @@
       "islamic": "İslami",
       "hebrew": "İbrani",
       "persian": "Fars",
+      "shahanshahi": "Şahanshahi",
       "bahai": "Baháʼí",
       "japanese": "Japon",
       "minguo": "Minguo",
@@ -482,6 +489,13 @@
         "usedIn": [
           "İran",
           "Afganistan"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976 M.S. (2535 Şahanshahi)",
+        "history": "Şahanshahi (İmparatorluk İran) takvimi, Büyük Kiros ile bağlantılı bir çağdan numaralandırılan ve Fars yılına +1180 ofset eklenen Solar Hicrî takvimidir. 1976–1978 arasında İran’ın resmi sivil takvimi oldu; Nowruz 2535, 21 Mart 1976’ya denk geldi.",
+        "usedIn": [
+          "İran (tarihî, 1976–1978)"
         ]
       },
       "bahai": {

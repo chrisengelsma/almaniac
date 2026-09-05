@@ -175,6 +175,10 @@
           "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
           "aboutNote": "The Persian calendar banner is derivative artwork adapted from the source images below. "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "The Shahanshahi calendar banner is derivative artwork adapted from the source images below. Under the ShareAlike terms of the CC BY-SA 2.5 source, the adapted banner is offered under CC BY-SA 2.5."
+        },
         "bahai": {
           "subjects": "Shrine of the Báb | Haifa",
           "aboutNote": "The Baháʼí calendar banner is derivative artwork adapted from the source photograph below."
@@ -321,6 +325,7 @@
     "listAria": "Calendar conversions",
     "addHint": "Add another calendar from the menu",
     "copied": "Copied to clipboard",
+    "dismissLabel": "Hide",
     "reorderAria": "Reorder {{label}}",
     "holidayAria": "Holiday: {{names}}",
     "copyAria": "Copy {{label}} date",
@@ -354,6 +359,7 @@
       "islamic": "Islamic Calendar",
       "hebrew": "Hebrew Calendar",
       "persian": "Persian Calendar",
+      "shahanshahi": "Shahanshahi Calendar",
       "bahai": "Baháʼí Calendar",
       "japanese": "Japanese Wareki Calendar",
       "minguo": "Minguo Calendar",
@@ -380,6 +386,7 @@
       "islamic": "Islamic",
       "hebrew": "Hebrew",
       "persian": "Persian",
+      "shahanshahi": "Shahanshahi",
       "bahai": "Baháʼí",
       "japanese": "Japanese",
       "minguo": "Minguo",
@@ -527,6 +534,13 @@
         "usedIn": [
           "Iran",
           "Afghanistan"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976 CE (2535 Shahanshahi)",
+        "history": "The Shahanshahi (Imperial Iranian) calendar is the Solar Hijri calendar with years numbered from an era tied to Cyrus the Great, using a +1180 year offset on the Persian year. It was the official civil calendar in Iran from 1976 to 1978; Nowruz 2535 fell on 21 March 1976.",
+        "usedIn": [
+          "Iran (historical, 1976–1978)"
         ]
       },
       "bahai": {

@@ -367,6 +367,31 @@ export const CALENDAR_BANNER_ATTRIBUTIONS: Partial<Record<CalendarId, CalendarBa
     derivedLicense: 'CC BY-SA 4.0',
     derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
   },
+  shahanshahi: {
+    calendarId: 'shahanshahi',
+    subjects: 'Mohammad Reza Shah Pahlavi | Persepolis',
+    aboutNote:
+      'The Shahanshahi calendar banner is derivative artwork adapted from the source images below. ' +
+      'Under the ShareAlike terms of the CC BY-SA 2.5 source, the adapted banner is offered under CC BY-SA 2.5.',
+    sources: [
+      {
+        title: 'Portrait of H.I.M. Mohammad Reza Shah Pahlavi',
+        author: 'Government of Iran',
+        license: 'Public domain',
+        licenseUrl: 'https://commons.wikimedia.org/wiki/File:Portrait_of_H.I.M._Mohammad_Reza_Shah_Pahlavi.jpg',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Portrait_of_H.I.M._Mohammad_Reza_Shah_Pahlavi.jpg',
+      },
+      {
+        title: 'Persepolis-Panorama',
+        author: 'Shervin Afshar',
+        license: 'CC BY-SA 2.5',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.5/',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Persepolis-Panorama.jpg',
+      },
+    ],
+    derivedLicense: 'CC BY-SA 2.5',
+    derivedLicenseUrl: 'https://creativecommons.org/licenses/by-sa/2.5/',
+  },
   bahai: {
     calendarId: 'bahai',
     subjects: 'Shrine of the Báb | Haifa',

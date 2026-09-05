@@ -15,6 +15,7 @@ export const CALENDAR_BANNERS: Partial<Record<CalendarId, string>> = {
   islamic: '/banners/islamic.png',
   hebrew: '/banners/hebrew.png',
   persian: '/banners/persian.png',
+  shahanshahi: '/banners/shahanshahi.png',
   bahai: '/banners/bahai.png',
   thaiBuddhist: '/banners/thaiBuddhist.png',
   discordian: '/banners/discordian.png',

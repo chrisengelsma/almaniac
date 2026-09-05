@@ -32,6 +32,7 @@ interface PickerCalendarOption {
 function pickerContextFromSettings(settings: AppSettings): PickerContext {
   return {
     islamicCalendarMode: settings.islamicCalendarMode,
+    islamicDayAdjustment: settings.islamicDayAdjustment,
     julianCalendarMode: settings.julianCalendarMode,
     useModifiedJulianDay: settings.useModifiedJulianDay,
   };

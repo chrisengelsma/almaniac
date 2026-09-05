@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Place Naqsh-e Jahan",
           "aboutNote": "La bannière du calendrier persan est une œuvre dérivée adaptée à partir des images sources ci-dessous. "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "La bannière du calendrier Shahanshahi est une œuvre dérivée adaptée à partir des images sources ci-dessous. Selon les conditions ShareAlike de la source CC BY-SA 2.5, la bannière adaptée est proposée sous CC BY-SA 2.5."
+        },
         "bahai": {
           "subjects": "Sanctuaire du Báb | Haïfa",
           "aboutNote": "La bannière du calendrier baháʼí est une œuvre dérivée adaptée à partir de la photographie source ci-dessous."
@@ -294,6 +298,7 @@
     "listAria": "Conversions de calendriers",
     "addHint": "Ajouter un autre calendrier depuis le menu",
     "copied": "Copié dans le presse-papiers",
+    "dismissLabel": "Masquer",
     "reorderAria": "Réorganiser {{label}}",
     "holidayAria": "Fête : {{names}}",
     "copyAria": "Copier la date {{label}}",
@@ -325,6 +330,7 @@
       "islamic": "Calendrier islamique",
       "hebrew": "Calendrier hébraïque",
       "persian": "Calendrier persan",
+      "shahanshahi": "Calendrier Shahanshahi",
       "bahai": "Calendrier baháʼí",
       "japanese": "Calendrier wareki japonais",
       "minguo": "Calendrier Minguo",
@@ -347,6 +353,7 @@
       "islamic": "Islamique",
       "hebrew": "Hébraïque",
       "persian": "Persan",
+      "shahanshahi": "Shahanshahi",
       "bahai": "Baháʼí",
       "japanese": "Japonais",
       "minguo": "Minguo",
@@ -482,6 +489,13 @@
         "usedIn": [
           "Iran",
           "Afghanistan"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976 apr. J.-C. (2535 Shahanshahi)",
+        "history": "Le calendrier Shahanshahi (iranien impérial) est le calendrier hégirien solaire avec des années numérotées à partir d’une ère liée à Cyrus le Grand, avec un décalage de +1180 par rapport à l’année persane. Il fut le calendrier civil officiel en Iran de 1976 à 1978 ; Nowruz 2535 tombait le 21 mars 1976.",
+        "usedIn": [
+          "Iran (historique, 1976–1978)"
         ]
       },
       "bahai": {

@@ -4,6 +4,7 @@ import type { AppLanguage } from './language';
 import en from './locales/en.json';
 import fr from './locales/fr.json';
 import ar from './locales/ar.json';
+import fa from './locales/fa.json';
 import es from './locales/es.json';
 import de from './locales/de.json';
 import it from './locales/it.json';
@@ -20,6 +21,7 @@ const resources = {
   en: { translation: en },
   fr: { translation: fr },
   ar: { translation: ar },
+  fa: { translation: fa },
   es: { translation: es },
   de: { translation: de },
   it: { translation: it },

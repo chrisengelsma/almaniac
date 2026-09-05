@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
           "aboutNote": "ペルシア暦のバナーは、下記のソース画像を基に改作した派生作品です。 "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "シャーアンシャーヒー暦のバナーは、下記のソース画像から適応した二次的著作物です。CC BY-SA 2.5 ソースの ShareAlike 条件に従い、適応したバナーは CC BY-SA 2.5 で提供されます。"
+        },
         "bahai": {
           "subjects": "Shrine of the Báb | Haifa",
           "aboutNote": "バハーイー暦のバナーは、下記のソース写真を基に改作した派生作品です。"
@@ -294,6 +298,7 @@
     "listAria": "暦法変換",
     "addHint": "メニューから別の暦法を追加",
     "copied": "クリップボードにコピーしました",
+    "dismissLabel": "非表示",
     "reorderAria": "{{label}} の順序を変更",
     "holidayAria": "祝日: {{names}}",
     "copyAria": "{{label}} の日付をコピー",
@@ -325,6 +330,7 @@
       "islamic": "イスラム暦",
       "hebrew": "ユダヤ暦",
       "persian": "ペルシャ暦",
+      "shahanshahi": "シャーアンシャーヒー暦",
       "bahai": "バハーイー暦",
       "japanese": "日本の和暦",
       "minguo": "民国暦",
@@ -347,6 +353,7 @@
       "islamic": "イスラム",
       "hebrew": "ユダヤ",
       "persian": "ペルシャ",
+      "shahanshahi": "シャーアンシャーヒー",
       "bahai": "バハーイー",
       "japanese": "日本",
       "minguo": "民国",
@@ -482,6 +489,13 @@
         "usedIn": [
           "イラン",
           "アフガニスタン"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976年（シャーアンシャーヒー2535年）",
+        "history": "シャーアンシャーヒー（帝国イラン）暦は、キュロス大王に結び付けられた紀元を用い、ペルシア年に+1180年のオフセットを加えた太陽ヒジュラ暦です。1976年から1978年までイランの公式民用暦でした。2535年のノールーズは1976年3月21日でした。",
+        "usedIn": [
+          "イラン（歴史的、1976–1978年）"
         ]
       },
       "bahai": {

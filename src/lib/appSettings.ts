@@ -14,13 +14,19 @@ import {
   type AppLanguagePreference,
 } from '../i18n/language';
 import { sanitizeSupporterSelections } from './supporterPerks';
-import { isBuildTimeDeveloperSupporterUnlockEnabled } from './developerSupporterUnlock';
+import { isBuildTimeDeveloperSupporterUnlockEnabled, isDeveloperSupporterUnlockCached } from './developerSupporterUnlock';
+import {
+  DEFAULT_COLOR_THEME,
+  normalizeColorTheme,
+  type ColorTheme,
+} from '../theme/themePalette';
+
+export type { ColorTheme } from '../theme/themePalette';
 
 export type IslamicDayAdjustment = -1 | 0 | 1;
 export type IslamicCalendarMode = 'tabular' | 'ummAlQura';
 export type JulianCalendarMode = 'julian' | 'revisedJulian';
 export type ColorScheme = 'light' | 'dark';
-export type ColorTheme = 'distinct' | 'mono' | 'sepia' | 'supporter';
 export type AppIconChoice = 'light' | 'dark' | 'supporter';
 
 export type { AppLanguage, AppLanguagePreference };
@@ -92,7 +98,7 @@ function defaultVisibility(): Record<CalendarId, boolean> {
 }
 
 function devSupporterUnlockEnabled(): boolean {
-  return isBuildTimeDeveloperSupporterUnlockEnabled();
+  return isBuildTimeDeveloperSupporterUnlockEnabled() || isDeveloperSupporterUnlockCached();
 }
 
 export function defaultAppSettings(): AppSettings {
@@ -100,7 +106,7 @@ export function defaultAppSettings(): AppSettings {
     appLanguagePreference: 'system',
     visibleCalendars: defaultVisibility(),
     calendarColors: {},
-    colorTheme: 'distinct',
+    colorTheme: DEFAULT_COLOR_THEME,
     colorScheme: systemColorScheme(),
     transliterateToEnglish: false,
     mayaUseHieroglyphs: true,
@@ -137,15 +143,7 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage
     appLanguagePreference,
     visibleCalendars: { ...defaults.visibleCalendars, ...parsed.visibleCalendars },
     calendarColors: { ...defaults.calendarColors, ...parsed.calendarColors },
-    colorTheme:
-      (parsed.colorTheme as string | undefined) === 'teal'
-        ? 'supporter'
-        : parsed.colorTheme === 'distinct' ||
-            parsed.colorTheme === 'mono' ||
-            parsed.colorTheme === 'sepia' ||
-            parsed.colorTheme === 'supporter'
-          ? parsed.colorTheme
-          : defaults.colorTheme,
+    colorTheme: normalizeColorTheme(parsed.colorTheme),
     colorScheme: parsed.colorScheme ?? defaults.colorScheme,
     transliterateToEnglish: parsed.transliterateToEnglish ?? defaults.transliterateToEnglish,
     mayaUseHieroglyphs: parsed.mayaUseHieroglyphs ?? defaults.mayaUseHieroglyphs,

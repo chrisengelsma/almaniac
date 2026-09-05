@@ -271,6 +271,7 @@ function App() {
         julianDayAt={julianDayTickActive ? now : undefined}
         themeTransitionDelays={themeTransitionDelays}
         onReorder={setOrder}
+        onHideCalendar={(id) => updateSettings((current) => toggleCalendarVisibility(current, id))}
         onInfoClick={setInfoCalendarId}
         onFullscreen={(row, originRect, textOriginRect) =>
           setFullscreen({

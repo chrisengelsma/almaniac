@@ -2,6 +2,7 @@ export type AppLanguage =
   | 'en'
   | 'fr'
   | 'ar'
+  | 'fa'
   | 'es'
   | 'de'
   | 'it'
@@ -20,6 +21,7 @@ export const APP_LANGUAGES: AppLanguage[] = [
   'en',
   'fr',
   'ar',
+  'fa',
   'es',
   'de',
   'it',
@@ -37,6 +39,7 @@ export const LANGUAGE_LABELS: Record<AppLanguage, string> = {
   en: 'English',
   fr: 'Français',
   ar: 'العربية',
+  fa: 'فارسی',
   es: 'Español',
   de: 'Deutsch',
   it: 'Italiano',
@@ -54,6 +57,7 @@ const LOCALE_MAP: Record<AppLanguage, string> = {
   en: 'en',
   fr: 'fr',
   ar: 'ar',
+  fa: 'fa',
   es: 'es',
   de: 'de',
   it: 'it',
@@ -80,7 +84,7 @@ export function toIntlLocale(language: AppLanguage): string {
 }
 
 export function isRtlLanguage(language: AppLanguage): boolean {
-  return language === 'ar';
+  return language === 'ar' || language === 'fa';
 }
 
 export function detectSystemLanguage(): AppLanguage {
@@ -96,6 +100,7 @@ export function detectSystemLanguage(): AppLanguage {
     const normalized = candidate.toLowerCase();
     if (normalized.startsWith('fr')) return 'fr';
     if (normalized.startsWith('ar')) return 'ar';
+    if (normalized.startsWith('fa') || normalized.startsWith('pes')) return 'fa';
     if (normalized.startsWith('es')) return 'es';
     if (normalized.startsWith('de')) return 'de';
     if (normalized.startsWith('it')) return 'it';

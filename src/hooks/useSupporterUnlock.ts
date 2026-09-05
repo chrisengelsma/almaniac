@@ -10,16 +10,28 @@ export function useSupporterUnlock(supporterUnlocked: boolean, onUnlock: () => v
 
     let cancelled = false;
 
-    void Promise.all([detectSupporterUnlockFromPurchases(), shouldForceDeveloperSupporterUnlock()]).then(
-      ([fromPurchases, fromDeveloper]) => {
-        if (!cancelled && (fromPurchases || fromDeveloper)) {
-          onUnlock();
-        }
-      },
-    );
+    const checkUnlock = () => {
+      void Promise.all([detectSupporterUnlockFromPurchases(), shouldForceDeveloperSupporterUnlock()]).then(
+        ([fromPurchases, fromDeveloper]) => {
+          if (!cancelled && (fromPurchases || fromDeveloper)) {
+            onUnlock();
+          }
+        },
+      );
+    };
 
+    checkUnlock();
+
+    const syncOnForeground = () => {
+      if (document.visibilityState === 'visible') {
+        checkUnlock();
+      }
+    };
+
+    document.addEventListener('visibilitychange', syncOnForeground);
     return () => {
       cancelled = true;
+      document.removeEventListener('visibilitychange', syncOnForeground);
     };
   }, [supporterUnlocked, onUnlock]);
 }

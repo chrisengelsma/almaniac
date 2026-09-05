@@ -159,6 +159,10 @@
           "subjects": "Omar Khayyam | Naqsh-e Jahan Square",
           "aboutNote": "Spanduk kalender Persia adalah karya turunan yang diadaptasi dari gambar sumber di bawah ini. "
         },
+        "shahanshahi": {
+          "subjects": "Mohammad Reza Shah Pahlavi | Persepolis",
+          "aboutNote": "Banner kalender Shahanshahi adalah karya turunan yang diadaptasi dari gambar sumber di bawah. Sesuai ketentuan ShareAlike dari sumber CC BY-SA 2.5, banner yang diadaptasi ditawarkan di bawah CC BY-SA 2.5."
+        },
         "bahai": {
           "subjects": "Shrine of the Báb | Haifa",
           "aboutNote": "Spanduk kalender Baháʼí adalah karya turunan yang diadaptasi dari foto sumber di bawah ini."
@@ -294,6 +298,7 @@
     "listAria": "Konversi kalender",
     "addHint": "Tambahkan kalender lain dari menu",
     "copied": "Disalin ke papan klip",
+    "dismissLabel": "Sembunyikan",
     "reorderAria": "Urutkan ulang {{label}}",
     "holidayAria": "Hari libur: {{names}}",
     "copyAria": "Salin tanggal {{label}}",
@@ -325,6 +330,7 @@
       "islamic": "Kalender Islam",
       "hebrew": "Kalender Ibrani",
       "persian": "Kalender Persia",
+      "shahanshahi": "Kalender Shahanshahi",
       "bahai": "Kalender Baháʼí",
       "japanese": "Kalender Wareki Jepang",
       "minguo": "Kalender Minguo",
@@ -347,6 +353,7 @@
       "islamic": "Islam",
       "hebrew": "Ibrani",
       "persian": "Persia",
+      "shahanshahi": "Shahanshahi",
       "bahai": "Baháʼí",
       "japanese": "Jepang",
       "minguo": "Minguo",
@@ -482,6 +489,13 @@
         "usedIn": [
           "Iran",
           "Afganistan"
+        ]
+      },
+      "shahanshahi": {
+        "firstImplemented": "1976 M (2535 Shahanshahi)",
+        "history": "Kalender Shahanshahi (Imperial Iran) adalah kalender Solar Hijri dengan penomoran tahun dari era yang terkait dengan Cyrus the Great, dengan offset +1180 dari tahun Persia. Ini menjadi kalender sipil resmi di Iran dari 1976 hingga 1978; Nowruz 2535 jatuh pada 21 Maret 1976.",
+        "usedIn": [
+          "Iran (historis, 1976–1978)"
         ]
       },
       "bahai": {
