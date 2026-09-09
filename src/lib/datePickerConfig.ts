@@ -38,6 +38,16 @@ import {
   daysInGregorianMonth,
   type GregorianEra,
 } from './gregorianDate';
+import {
+  displayJulianDay,
+  isSameGregorianDay,
+} from './julianDayValue';
+import { todayGregorianDate } from './calendarRegistry';
+import {
+  isBeforeFrenchRepublicanEpoch,
+  isBeforeJapaneseWarekiEpoch,
+  JAPANESE_WAREKI_EPOCH,
+} from './calendarSafety';
 import { bahaiMonthName, nepaliMonthName, persianMonthName, toDevanagariDigits, toPersianDigits } from './nativeCalendarText';
 
 export type PickerValues = Record<string, string>;
@@ -954,11 +964,11 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
           key: 'jd',
           label: context?.useModifiedJulianDay ? 'Modified Julian Day' : 'Julian Day',
           type: 'number',
-          step: 0.5,
+          step: 1 / 86_400,
           placeholder: context?.useModifiedJulianDay ? 'e.g. 60000' : 'e.g. 2460000',
           hint: context?.useModifiedJulianDay
-            ? 'Enter a Modified Julian Day number (may include .5 for noon).'
-            : 'Enter a Julian Day number (may include .5 for noon).',
+            ? 'Enter a Modified Julian Day number (may include fractional seconds).'
+            : 'Enter a Julian Day number (may include fractional seconds).',
         },
       ];
     default:
@@ -1022,6 +1032,15 @@ export function extractPickerValues(
       };
     }
     case 'japanese': {
+      if (isBeforeJapaneseWarekiEpoch(anchor)) {
+        return {
+          eraId: 'meiji',
+          eraYear: '1',
+          month: String(JAPANESE_WAREKI_EPOCH.month),
+          day: String(JAPANESE_WAREKI_EPOCH.day),
+        };
+      }
+
       const japanese = new JapaneseWarekiCalendar(anchor);
       return {
         eraId: japanese.eraId,
@@ -1039,6 +1058,15 @@ export function extractPickerValues(
       };
     }
     case 'frc': {
+      if (isBeforeFrenchRepublicanEpoch(anchor)) {
+        return {
+          year: '1',
+          month: '1',
+          week: '1',
+          day: '1',
+        };
+      }
+
       const frc = new FrenchRepublicanCalendar(anchor);
       return {
         year: String(frc.year),
@@ -1173,8 +1201,15 @@ export function extractPickerValues(
       };
     }
     case 'julianDay': {
+      const useModifiedJulianDay = context?.useModifiedJulianDay ?? false;
+      if (isSameGregorianDay(anchor, todayGregorianDate())) {
+        return {
+          jd: displayJulianDay(anchor, useModifiedJulianDay, new Date()),
+        };
+      }
+
       const jd = new JulianDay(anchor);
-      const value = context?.useModifiedJulianDay
+      const value = useModifiedJulianDay
         ? jd.value - JulianDay.Epoch.value
         : jd.value;
       return { jd: String(value) };

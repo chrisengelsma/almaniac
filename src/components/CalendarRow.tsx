@@ -251,7 +251,7 @@ export function CalendarRow({
             ) : null}
             <span className="calendar-row__calendar-name">{entry.calendarName}</span>
           </div>
-          {entry.detailLabel ? (
+          {entry.detailLabel || entry.detailLabelKey || entry.unavailableReason ? (
             <div className="calendar-row__meta calendar-row__meta--bottom">
               {entry.mayaTzolkin ? (
                 <MayaTzolkinDate
@@ -261,7 +261,11 @@ export function CalendarRow({
                 />
               ) : (
                 <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle} lang={detailTextLang}>
-                  {entry.detailLabel}
+                  {entry.unavailableReason
+                    ? t(`calendars.unavailable.${entry.unavailableReason}`)
+                    : entry.detailLabelKey
+                      ? t(`calendars.detail.${entry.detailLabelKey}`)
+                      : entry.detailLabel}
                 </span>
               )}
             </div>

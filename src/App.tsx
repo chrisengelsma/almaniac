@@ -83,10 +83,8 @@ function App() {
   } | null>(null);
 
   const calendarCopy = useMemo(() => createCalendarCopy(t), [t]);
-  const julianDayTickActive =
-    settings.visibleCalendars.julianDay &&
-    isSameGregorianDay(anchor, todayGregorianDate());
-  const now = useSecondClock(julianDayTickActive);
+  const viewingToday = isSameGregorianDay(anchor, todayGregorianDate());
+  const now = useSecondClock(viewingToday);
 
   const rows = useMemo(
     () =>
@@ -95,9 +93,9 @@ function App() {
         anchor,
         settings,
         calendarCopy,
-        julianDayTickActive ? now : undefined,
+        viewingToday ? now : undefined,
       ),
-    [order, anchor, settings, calendarCopy, julianDayTickActive, now],
+    [order, anchor, settings, calendarCopy, viewingToday, now],
   );
 
   const activeFullscreen = useMemo(() => {
@@ -264,11 +262,8 @@ function App() {
         onAboutOpen={() => setAboutOpen(true)}
       />
       <CalendarList
+        rows={rows}
         order={order}
-        anchor={anchor}
-        settings={settings}
-        calendarCopy={calendarCopy}
-        julianDayAt={julianDayTickActive ? now : undefined}
         themeTransitionDelays={themeTransitionDelays}
         onReorder={setOrder}
         onHideCalendar={(id) => updateSettings((current) => toggleCalendarVisibility(current, id))}

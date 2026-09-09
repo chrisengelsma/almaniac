@@ -90,16 +90,17 @@ function buildThemeVariants(
 export function buildWidgetSnapshot(
   anchor: GregorianCalendar,
   settings: AppSettings,
+  at?: Date,
 ): WidgetSnapshot {
   const copy = createCalendarCopy(i18n.getFixedT(getResolvedAppLanguage(settings)));
   const nativeEntries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, {
     ...settings,
     transliterateToEnglish: false,
-  }, copy);
+  }, copy, at);
   const transliteratedEntries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, {
     ...settings,
     transliterateToEnglish: true,
-  }, copy);
+  }, copy, at);
   const transliteratedById = new Map(
     transliteratedEntries.map((entry) => [entry.id, entry.date] as const),
   );
@@ -130,7 +131,7 @@ export function buildWidgetSnapshot(
 export async function syncWidgetData(settings: AppSettings): Promise<void> {
   try {
     const anchor = todayGregorianDate();
-    const snapshot = buildWidgetSnapshot(anchor, settings);
+    const snapshot = buildWidgetSnapshot(anchor, settings, new Date());
     await WidgetBridge.syncSnapshot({ snapshot: JSON.stringify(snapshot) });
   } catch {
     // Widget sync is best-effort and may run before the native bridge is ready.

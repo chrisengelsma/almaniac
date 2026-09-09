@@ -15,26 +15,19 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import type { AppSettings } from '../lib/appSettings';
 import type { ThemeTransitionDelays } from '../lib/themeTransition';
 import {
   DEFAULT_CALENDAR_ORDER,
-  getOrderedCalendarRows,
   reorderCalendars,
   type CalendarId,
   type CalendarRowData,
-  type GregorianCalendar,
 } from '../lib/calendarRegistry';
-import type { CalendarCopy } from '../i18n/calendarCopy';
 import { hapticDragHover, hapticTap } from '../lib/haptics';
 import { CalendarRow } from './CalendarRow';
 
 interface CalendarListProps {
+  rows: CalendarRowData[];
   order: CalendarId[];
-  anchor: GregorianCalendar;
-  settings: AppSettings;
-  calendarCopy: CalendarCopy;
-  julianDayAt?: Date;
   themeTransitionDelays?: ThemeTransitionDelays | null;
   onReorder: (order: CalendarId[]) => void;
   onHideCalendar: (id: CalendarId) => void;
@@ -44,11 +37,8 @@ interface CalendarListProps {
 }
 
 export function CalendarList({
+  rows: allRows,
   order,
-  anchor,
-  settings,
-  calendarCopy,
-  julianDayAt,
   themeTransitionDelays = null,
   onReorder,
   onHideCalendar,
@@ -64,7 +54,6 @@ export function CalendarList({
   const [fillsViewport, setFillsViewport] = useState(true);
   const [isEntering, setIsEntering] = useState(true);
   const [exitingIds, setExitingIds] = useState<CalendarId[]>([]);
-  const allRows = getOrderedCalendarRows(order, anchor, settings, calendarCopy, julianDayAt);
   const visibleRows = allRows.filter((row) => row.visible);
   const displayRows = allRows.filter(
     (row) => row.visible || exitingIds.includes(row.entry.id),

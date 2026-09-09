@@ -91,6 +91,11 @@ import {
 import { getThemeBehavior } from '../theme/themePalette';
 import { displayJulianDay } from './julianDayValue';
 import { getReligiousHolidays, type HolidayTradition, type ReligiousHoliday } from './religiousHolidays';
+import {
+  getCalendarUnavailableReason,
+  isBeforeGregorianHistoricalEpoch,
+  type CalendarUnavailableReason,
+} from './calendarSafety';
 
 export type CalendarId =
   | 'gregorian'
@@ -133,7 +138,9 @@ export interface CalendarEntry {
   mayaTzolkin?: MayaTzolkinParts;
   mayaLordOfNight?: MayaLordOfNight;
   detailLabel?: string;
+  detailLabelKey?: string;
   detailScriptFont?: ScriptFont;
+  unavailableReason?: CalendarUnavailableReason;
 }
 
 export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
@@ -367,6 +374,30 @@ function formatDate(
   }
 }
 
+function buildUnavailableCalendarEntry(
+  id: CalendarId,
+  anchor: GregorianCalendar,
+  settings: AppSettings,
+  copy: CalendarCopy,
+  reason: CalendarUnavailableReason,
+): CalendarEntry {
+  const weekdayIndex = new GregorianCalendar(anchor).getWeekDayNumber();
+  const weekday = id === 'julianDay'
+    ? ''
+    : (nativeWeekday(id, weekdayIndex, settings.transliterateToEnglish)
+      ?? new GregorianCalendar(anchor).getWeekDay());
+
+  return {
+    id,
+    label: copy.getLabel(id, settings.useModifiedJulianDay),
+    calendarName: copy.getName(id, settings.useModifiedJulianDay),
+    weekday,
+    date: '—',
+    scriptFont: scriptFontForCalendar(id, settings.transliterateToEnglish),
+    unavailableReason: reason,
+  };
+}
+
 function buildCalendarEntry(
   id: CalendarId,
   anchor: GregorianCalendar,
@@ -374,7 +405,17 @@ function buildCalendarEntry(
   copy: CalendarCopy,
   at?: Date,
 ): CalendarEntry {
-  let calendar = buildCalendar(id, anchor, settings);
+  const unavailableReason = getCalendarUnavailableReason(id, anchor);
+  if (unavailableReason) {
+    return buildUnavailableCalendarEntry(id, anchor, settings, copy, unavailableReason);
+  }
+
+  let calendar: Calendar;
+  try {
+    calendar = buildCalendar(id, anchor, settings);
+  } catch {
+    return buildUnavailableCalendarEntry(id, anchor, settings, copy, 'conversionFailed');
+  }
 
   if (id === 'islamic') {
     calendar = applyIslamicAdjustment(
@@ -398,6 +439,16 @@ function buildCalendarEntry(
 
   if (id === 'julianDay') {
     entry.date = displayJulianDay(anchor, settings.useModifiedJulianDay, at);
+  }
+
+  if (!entry.date.trim()) {
+    return buildUnavailableCalendarEntry(
+      id,
+      anchor,
+      settings,
+      copy,
+      getCalendarUnavailableReason(id, anchor) ?? 'conversionFailed',
+    );
   }
 
   if (id === 'maya') {
@@ -446,6 +497,10 @@ function buildCalendarEntry(
       settings.transliterateToEnglish,
     );
     entry.detailScriptFont = settings.transliterateToEnglish ? 'latin' : 'vietnamese';
+  }
+
+  if (id === 'gregorian' && isBeforeGregorianHistoricalEpoch(anchor)) {
+    entry.detailLabelKey = 'prolepticGregorian';
   }
 
   return entry;
@@ -532,8 +587,9 @@ export function getAllCalendarEntries(
   anchor: GregorianCalendar,
   settings: AppSettings,
   copy: CalendarCopy,
+  at?: Date,
 ): CalendarEntry[] {
-  return order.map((id) => buildCalendarEntry(id, anchor, settings, copy));
+  return order.map((id) => buildCalendarEntry(id, anchor, settings, copy, at));
 }
 
 export function shiftGregorianDate(

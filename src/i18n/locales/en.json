@@ -308,8 +308,8 @@
     },
     "hint": {
       "gregorianYear": "Type any year, including ancient dates like 100 BCE.",
-      "julianDay": "Enter a Julian Day number.",
-      "modifiedJulianDay": "Enter a Modified Julian Day number."
+      "julianDay": "Enter a Julian Day number (may include fractional seconds).",
+      "modifiedJulianDay": "Enter a Modified Julian Day number (may include fractional seconds)."
     },
     "placeholder": {
       "year100": "e.g. 100",
@@ -345,6 +345,14 @@
     "vietnameseZodiacYear": "Year of the {{zodiac}}, {{canChi}}",
     "japaneseGannen": "Gannen",
     "isoWeekDateFormat": "{{year}} Week {{week}} ({{padded}}), {{weekday}}",
+    "unavailable": {
+      "japaneseBeforeMeiji": "Before Meiji era (September 8, 1868)",
+      "frcBeforeEpoch": "Before French Republican calendar (September 22, 1792)",
+      "conversionFailed": "Not available for this date"
+    },
+    "detail": {
+      "prolepticGregorian": "Proleptic Gregorian (before October 15, 1582)"
+    },
     "name": {
       "gregorian": "Gregorian Calendar",
       "julian": "Julian Calendar",
