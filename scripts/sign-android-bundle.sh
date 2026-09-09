@@ -7,8 +7,8 @@ BUILD_DIR="$ROOT/build/android"
 PROPS_FILE="$ANDROID_DIR/keystore.properties"
 BUNDLE_SRC="$ANDROID_DIR/app/build/outputs/bundle/release/app-release.aab"
 MAPPING_SRC="$ANDROID_DIR/app/build/outputs/mapping/release/mapping.txt"
-BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.14-signed.aab"
-MAPPING_OUT="$BUILD_DIR/Almaniac-1.0.14-mapping.txt"
+BUNDLE_OUT="$BUILD_DIR/Almaniac-1.0.15-signed.aab"
+MAPPING_OUT="$BUILD_DIR/Almaniac-1.0.15-mapping.txt"
 
 export JAVA_HOME="${JAVA_HOME:-/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home}"
 
@@ -54,18 +54,18 @@ if ! unzip -l "$BUNDLE_OUT" | grep -q 'META-INF/.*\.\(RSA\|DSA\|EC\)'; then
   exit 1
 fi
 
-cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.14-release.aab"
+cp "$BUNDLE_OUT" "$BUILD_DIR/Almaniac-1.0.15-release.aab"
 
 if [[ -f "$MAPPING_SRC" ]]; then
   cp "$MAPPING_SRC" "$MAPPING_OUT"
   mkdir -p "$ROOT/store/google-play"
-  cp "$MAPPING_OUT" "$ROOT/store/google-play/Almaniac-1.0.14-mapping.txt"
+  cp "$MAPPING_OUT" "$ROOT/store/google-play/Almaniac-1.0.15-mapping.txt"
 else
   echo "Warning: mapping.txt not found at $MAPPING_SRC" >&2
 fi
 
 mkdir -p "$ROOT/store/google-play"
-cp "$BUILD_DIR/Almaniac-1.0.14-release.aab" "$ROOT/store/google-play/Almaniac-1.0.14.aab"
+cp "$BUILD_DIR/Almaniac-1.0.15-release.aab" "$ROOT/store/google-play/Almaniac-1.0.15.aab"
 
 echo ""
 echo "Signed bundle ready for Play Console:"
