@@ -1,0 +1,3 @@
+• Hebrew dates use conventional Hebrew numerals; weekday names no longer include niqqud
+• Coptic calendar typography is lighter and aligned with other rows
+• Maya calendar glyphs switched to SVG for sharper rendering at any size

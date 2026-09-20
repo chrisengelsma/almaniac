@@ -1,0 +1,5 @@
+Hebrew dates now use conventional Hebrew numerals (for example, ט׳ תשרי ה׳תשפ״ז), with weekday names shown without niqqud.
+
+Coptic calendar text is easier to read and matches the weight of other calendar rows.
+
+Maya calendar glyphs are now crisp vector artwork for sharper display on every screen size.
