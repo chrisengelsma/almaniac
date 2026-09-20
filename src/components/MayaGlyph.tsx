@@ -9,7 +9,7 @@ export function MayaGlyph({ src, className }: MayaGlyphProps) {
   return (
     <span
       className={['maya-glyph', className].filter(Boolean).join(' ')}
-      style={{ '--maya-glyph-src': `url(${src})` } as CSSProperties}
+      style={{ '--maya-glyph-src': `url("${src}")` } as CSSProperties}
       aria-hidden="true"
     />
   );
