@@ -100,14 +100,82 @@ const HEBREW_MONTHS = [
 ];
 
 const HEBREW_WEEKDAYS = [
-  'יוֹם רִאשׁוֹן',
-  'יוֹם שֵׁנִי',
-  'יוֹם שְׁלִישִׁי',
-  'יוֹם רְבִיעִי',
-  'יוֹם חֲמִישִׁי',
-  'יוֹם שִׁשִׁי',
-  'שַׁבָּת',
+  'יום ראשון',
+  'יום שני',
+  'יום שלישי',
+  'יום רביעי',
+  'יום חמישי',
+  'יום שישי',
+  'שבת',
 ];
+
+const HEBREW_GEMATRIA_VALUES: ReadonlyArray<readonly [number, string]> = [
+  [400, 'ת'],
+  [300, 'ש'],
+  [200, 'ר'],
+  [100, 'ק'],
+  [90, 'צ'],
+  [80, 'פ'],
+  [70, 'ע'],
+  [60, 'ס'],
+  [50, 'נ'],
+  [40, 'מ'],
+  [30, 'ל'],
+  [20, 'כ'],
+  [10, 'י'],
+  [9, 'ט'],
+  [8, 'ח'],
+  [7, 'ז'],
+  [6, 'ו'],
+  [5, 'ה'],
+  [4, 'ד'],
+  [3, 'ג'],
+  [2, 'ב'],
+  [1, 'א'],
+];
+
+function hebrewGematriaLetters(value: number): string {
+  if (value <= 0) {
+    return '';
+  }
+
+  let remaining = value;
+  let letters = '';
+  for (const [amount, letter] of HEBREW_GEMATRIA_VALUES) {
+    while (remaining >= amount) {
+      letters += letter;
+      remaining -= amount;
+    }
+  }
+  return letters;
+}
+
+function applyHebrewNumeralPunctuation(letters: string): string {
+  if (!letters) {
+    return '';
+  }
+  if (letters.length === 1) {
+    return `${letters}׳`;
+  }
+  return `${letters.slice(0, -1)}״${letters.slice(-1)}`;
+}
+
+function formatHebrewDayNumeral(day: number): string {
+  if (day === 15) {
+    return 'ט״ו';
+  }
+  if (day === 16) {
+    return 'ט״ז';
+  }
+  return applyHebrewNumeralPunctuation(hebrewGematriaLetters(day));
+}
+
+function formatHebrewYearNumeral(year: number): string {
+  if (year >= 5000) {
+    return `ה׳${applyHebrewNumeralPunctuation(hebrewGematriaLetters(year - 5000))}`;
+  }
+  return applyHebrewNumeralPunctuation(hebrewGematriaLetters(year));
+}
 
 const INDIAN_MONTHS_HI = [
   'चैत्र',
@@ -539,7 +607,7 @@ export function formatShahanshahiEnglish(calendar: ShahanshahiCalendar): string 
 
 export function formatHebrewNative(calendar: HebrewCalendar): string {
   const month = HEBREW_MONTHS[calendar.month - 1] ?? '';
-  return `${calendar.day} ${month} ${calendar.year}`;
+  return `${formatHebrewDayNumeral(calendar.day)} ${month} ${formatHebrewYearNumeral(calendar.year)}`;
 }
 
 export function formatHebrewEnglish(calendar: HebrewCalendar): string {
@@ -613,9 +681,22 @@ export function formatEthiopianEnglish(calendar: EthiopianCalendar): string {
   return calendar.getDate();
 }
 
-export function formatCopticNative(calendar: CopticCalendar): string {
+export function formatCopticNativeParts(calendar: CopticCalendar): {
+  day: string;
+  month: string;
+  year: string;
+} {
   const month = COPTIC_MONTHS[calendar.month - 1] ?? '';
-  return `${calendar.day} ${month} ${calendar.year}`;
+  return {
+    day: String(calendar.day),
+    month,
+    year: String(calendar.year),
+  };
+}
+
+export function formatCopticNative(calendar: CopticCalendar): string {
+  const { day, month, year } = formatCopticNativeParts(calendar);
+  return `${day} ${month} ${year}`;
 }
 
 export function formatCopticEnglish(calendar: CopticCalendar): string {

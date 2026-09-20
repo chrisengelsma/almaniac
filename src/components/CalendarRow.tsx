@@ -9,6 +9,7 @@ import { useSwipeToDismiss } from '../hooks/useSwipeToDismiss';
 import { DragHandle } from './DragHandle';
 import { MayaLongCount } from './MayaLongCount';
 import { MayaHaabDate, MayaLordOfNight, MayaTzolkinDate } from './MayaRoundDate';
+import { CopticDateText } from './CopticDateText';
 
 interface CalendarRowProps {
   row: CalendarRowData;
@@ -49,6 +50,7 @@ export function CalendarRow({
   const dateText = entry.date || '-';
   const canCopy = Boolean(entry.date && entry.date !== '-');
   const isEntering = staggerIndex !== undefined;
+  const useCopticNativeLayout = entry.id === 'coptic' && entry.copticDateParts;
 
   const {
     surfaceRef,
@@ -205,6 +207,8 @@ export function CalendarRow({
                 parts={entry.mayaLongCount}
                 useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
               />
+            ) : entry.copticDateParts ? (
+              <CopticDateText parts={entry.copticDateParts} />
             ) : (
               dateText
             )}
@@ -244,7 +248,7 @@ export function CalendarRow({
                   useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
                 />
               ) : (
-                <span className="calendar-row__weekday" style={scriptStyle} lang={textLang}>
+                <span className={`calendar-row__weekday ${scriptClass} ${useCopticNativeLayout ? 'calendar-row__coptic-script' : ''}`.trim()} style={scriptStyle} lang={textLang}>
                   {entry.weekday}
                 </span>
               )

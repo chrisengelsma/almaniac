@@ -1751,7 +1751,9 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   line-height: 1.35;
   color: var(--calendar-row-fg, var(--almaniac-text));
   text-shadow: var(--calendar-row-text-shadow, none);
-  -webkit-font-smoothing: auto;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   word-break: break-word;
   pointer-events: none;
 }
@@ -1761,8 +1763,42 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   min-width: 0;
   text-align: left;
   direction: ltr;
+  font-weight: var(--font-weight-display);
   text-shadow: none;
-  -webkit-font-smoothing: auto;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Noto Sans Coptic only ships Regular (400). Split digits (IBM Plex 300) from script
+ * and lighten script optically so it matches other calendar rows.
+ */
+.calendar-row__coptic-digit {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: var(--font-weight-display);
+  font-synthesis: none;
+}
+
+.calendar-row__coptic-script {
+  font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+  font-weight: var(--font-weight-display);
+  font-synthesis: weight;
+  opacity: 0.76;
+}
+
+html.platform-android .calendar-row__coptic-script {
+  font-family: 'IBM Plex Sans', 'Almaniac Coptic Script', sans-serif;
+  opacity: 0.72;
+}
+
+.fullscreen-date__text .calendar-row__coptic-digit,
+.fullscreen-date__text .calendar-row__coptic-script {
+  font-synthesis: weight;
+}
+
+.fullscreen-date__text .calendar-row__coptic-digit {
+  font-synthesis: none;
 }
 
 /* Maya row: unified foreground; glyph sizes scoped per region below */
@@ -1799,8 +1835,8 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 }
 
 .calendar-row--visible[data-calendar-row='maya'] .calendar-row__center-top .maya-round-date--lord .maya-round-date__sign {
-  width: clamp(1.15rem, 3.5vw, 1.55rem);
-  height: clamp(1.35rem, 4.2vw, 1.85rem);
+  width: calc(clamp(1.15rem, 3.5vw, 1.55rem) * 0.75);
+  height: calc(clamp(1.35rem, 4.2vw, 1.85rem) * 0.75);
   flex-shrink: 0;
 }
 
@@ -1825,6 +1861,7 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 .maya-glyph {
   display: inline-block;
   flex-shrink: 0;
+  color: var(--maya-row-fg, currentColor);
   background-color: currentColor;
   -webkit-mask-image: var(--maya-glyph-src);
   mask-image: var(--maya-glyph-src);
@@ -1919,6 +1956,10 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   font-size: 0.82rem;
   line-height: 1.1;
   gap: 0.25rem;
+  font-weight: var(--font-weight-display);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .maya-round-date__label {
@@ -1927,9 +1968,14 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
 
 .maya-round-date__value {
   white-space: nowrap;
+  font-weight: var(--font-weight-display);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Maya row: unified foreground on glyphs; labels use muted tone */
+.calendar-row--visible[data-calendar-row='maya'] .maya-glyph,
 .calendar-row--visible[data-calendar-row='maya'] .calendar-row__date,
 .calendar-row--visible[data-calendar-row='maya'] .maya-round-date,
 .calendar-row--visible[data-calendar-row='maya'] .maya-round-date__value {
@@ -2059,6 +2105,9 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   text-align: center;
   font-weight: var(--font-weight-display);
   line-height: 1.2;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-wrap: break-word;
   word-break: normal;
 }
@@ -3102,6 +3151,10 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   transform: rotate(-90deg);
 }
 
+.maya-glyphs-ref .maya-glyph {
+  color: var(--overlay-surface-fg);
+}
+
 .maya-glyphs-ref__glyph {
   width: 2rem;
   height: 2.75rem;
@@ -3193,6 +3246,7 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   width: min(42vmin, 14rem);
   height: min(58vmin, 19rem);
   color: var(--overlay-surface-fg);
+  background-color: currentColor;
 }
 
 .maya-glyph-fullscreen--open .maya-glyph-fullscreen__glyph-wrap--rotated .maya-glyph-fullscreen__glyph {

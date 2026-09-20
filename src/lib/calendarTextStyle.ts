@@ -13,7 +13,7 @@ const SCRIPT_CLASS: Record<ScriptFont, string> = {
   vietnamese: '',
   cyrillic: '',
   ethiopic: '',
-  coptic: '',
+  coptic: 'calendar-row__text--coptic',
   japanese: '',
   korean: '',
   thai: '',
@@ -46,7 +46,8 @@ export function calendarTextLang(scriptFont: ScriptFont): string | undefined {
 }
 
 export function calendarTextStyle(scriptFont: ScriptFont): { fontFamily?: string } | undefined {
-  if (scriptFont === 'latin') {
+  if (scriptFont === 'latin' || scriptFont === 'coptic') {
+    // Coptic typography is controlled in CSS (`.calendar-row__text--coptic`, @font-face).
     return undefined;
   }
 

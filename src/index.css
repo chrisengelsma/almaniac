@@ -1,3 +1,13 @@
+/* Coptic script fallback when system UI lacks coverage (Android). */
+@font-face {
+  font-family: 'Almaniac Coptic Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/noto-sans-coptic.woff2') format('woff2');
+  unicode-range: U+2C80-2CFF;
+}
+
 :root {
   --top-bar-height: 7rem;
   --top-bar-bg: #faf9f4;

@@ -6,7 +6,7 @@
  */
 export const SCRIPT_FONTS = {
   arabic: '"IBM Plex Sans Arabic", "IBM Plex Sans", sans-serif',
-  persian: '"Vazirmatn", "IBM Plex Sans Arabic", "IBM Plex Sans", sans-serif',
+  persian: '"IBM Plex Sans Arabic", "IBM Plex Sans", sans-serif',
   hebrew: '"IBM Plex Sans Hebrew", "IBM Plex Sans", sans-serif',
   devanagari: '"IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif',
   nepali: '"Noto Sans Devanagari", "IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif',
@@ -15,7 +15,7 @@ export const SCRIPT_FONTS = {
   vietnamese: '"IBM Plex Sans", sans-serif',
   cyrillic: '"IBM Plex Sans", sans-serif',
   ethiopic: '"Noto Sans Ethiopic", sans-serif',
-  coptic: '"Noto Sans Coptic", sans-serif',
+  coptic: '"IBM Plex Sans", sans-serif',
   japanese: '"IBM Plex Sans JP", "IBM Plex Sans", sans-serif',
   korean: '"IBM Plex Sans KR", "IBM Plex Sans", sans-serif',
   thai: '"IBM Plex Sans Thai", "IBM Plex Sans", sans-serif',

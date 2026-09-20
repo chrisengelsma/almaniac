@@ -17,6 +17,7 @@ import {
   type ViewportRect,
 } from '../lib/fullscreenRect';
 import { MayaLongCount } from './MayaLongCount';
+import { CopticDateText } from './CopticDateText';
 
 const CLOSE_PROMPT_MS = 5000;
 const FIT_TRANSITION_MS = 180;
@@ -293,6 +294,8 @@ export function FullscreenDateView({
                 haab={entry.mayaHaab}
                 lordOfNight={entry.mayaUseGlyphs ? entry.mayaLordOfNight : undefined}
               />
+            ) : entry.copticDateParts ? (
+              <CopticDateText parts={entry.copticDateParts} />
             ) : (
               dateText
             )}

@@ -41,6 +41,7 @@ import {
   vietnameseYearDetailLabel,
   formatCopticEnglish,
   formatCopticNative,
+  formatCopticNativeParts,
   formatEthiopianEnglish,
   formatEthiopianNative,
   formatBahaiEnglish,
@@ -141,6 +142,7 @@ export interface CalendarEntry {
   detailLabelKey?: string;
   detailScriptFont?: ScriptFont;
   unavailableReason?: CalendarUnavailableReason;
+  copticDateParts?: { day: string; month: string; year: string };
 }
 
 export const DEFAULT_CALENDAR_ORDER: CalendarId[] = [
@@ -501,6 +503,10 @@ function buildCalendarEntry(
 
   if (id === 'gregorian' && isBeforeGregorianHistoricalEpoch(anchor)) {
     entry.detailLabelKey = 'prolepticGregorian';
+  }
+
+  if (id === 'coptic' && !settings.transliterateToEnglish) {
+    entry.copticDateParts = formatCopticNativeParts(calendar as CopticCalendar);
   }
 
   return entry;
