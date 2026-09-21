@@ -54,12 +54,68 @@ public final class WidgetSnapshotReader {
         prefs.edit().putString(WidgetConstants.COLOR_THEME_PREFIX + appWidgetId, colorTheme).apply();
     }
 
+    public static WidgetVariantKeys.WidgetCalendarOptions getCalendarOptions(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
+        WidgetVariantKeys.WidgetCalendarOptions options = new WidgetVariantKeys.WidgetCalendarOptions();
+        options.islamicCalendarMode = prefs.getString(
+            WidgetConstants.ISLAMIC_MODE_PREFIX + appWidgetId,
+            "tabular"
+        );
+        options.islamicDayAdjustment = prefs.getInt(
+            WidgetConstants.ISLAMIC_ADJUSTMENT_PREFIX + appWidgetId,
+            0
+        );
+        options.julianCalendarMode = prefs.getString(
+            WidgetConstants.JULIAN_MODE_PREFIX + appWidgetId,
+            "julian"
+        );
+        options.mayaUseHieroglyphs = prefs.getBoolean(
+            WidgetConstants.MAYA_HIEROGLYPHS_PREFIX + appWidgetId,
+            true
+        );
+        options.frcUseRomanNumerals = prefs.getBoolean(
+            WidgetConstants.FRC_ROMAN_PREFIX + appWidgetId,
+            true
+        );
+        options.useModifiedJulianDay = prefs.getBoolean(
+            WidgetConstants.MODIFIED_JULIAN_DAY_PREFIX + appWidgetId,
+            false
+        );
+        return options;
+    }
+
+    public static void setCalendarOptions(
+        Context context,
+        int appWidgetId,
+        WidgetVariantKeys.WidgetCalendarOptions options
+    ) {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
+        prefs
+            .edit()
+            .putString(WidgetConstants.ISLAMIC_MODE_PREFIX + appWidgetId, options.islamicCalendarMode)
+            .putInt(WidgetConstants.ISLAMIC_ADJUSTMENT_PREFIX + appWidgetId, options.islamicDayAdjustment)
+            .putString(WidgetConstants.JULIAN_MODE_PREFIX + appWidgetId, options.julianCalendarMode)
+            .putBoolean(WidgetConstants.MAYA_HIEROGLYPHS_PREFIX + appWidgetId, options.mayaUseHieroglyphs)
+            .putBoolean(WidgetConstants.FRC_ROMAN_PREFIX + appWidgetId, options.frcUseRomanNumerals)
+            .putBoolean(
+                WidgetConstants.MODIFIED_JULIAN_DAY_PREFIX + appWidgetId,
+                options.useModifiedJulianDay
+            )
+            .apply();
+    }
+
     public static void removeCalendarId(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
         prefs.edit()
             .remove(WidgetConstants.CALENDAR_ID_PREFIX + appWidgetId)
             .remove(WidgetConstants.TRANSLITERATE_PREFIX + appWidgetId)
             .remove(WidgetConstants.COLOR_THEME_PREFIX + appWidgetId)
+            .remove(WidgetConstants.ISLAMIC_MODE_PREFIX + appWidgetId)
+            .remove(WidgetConstants.ISLAMIC_ADJUSTMENT_PREFIX + appWidgetId)
+            .remove(WidgetConstants.JULIAN_MODE_PREFIX + appWidgetId)
+            .remove(WidgetConstants.MAYA_HIEROGLYPHS_PREFIX + appWidgetId)
+            .remove(WidgetConstants.FRC_ROMAN_PREFIX + appWidgetId)
+            .remove(WidgetConstants.MODIFIED_JULIAN_DAY_PREFIX + appWidgetId)
             .apply();
     }
 
@@ -73,6 +129,8 @@ public final class WidgetSnapshotReader {
         boolean transliterate = getTransliterateToEnglish(context, appWidgetId);
         String colorTheme = getColorTheme(context, appWidgetId);
         boolean isDark = isDarkMode(context);
+        WidgetVariantKeys.WidgetCalendarOptions options = getCalendarOptions(context, appWidgetId);
+        String variantKey = WidgetVariantKeys.forCalendar(calendarId, options);
         JSONObject snapshot = readSnapshot(context);
         if (snapshot == null) {
             return CalendarWidgetData.placeholder(calendarId);
@@ -85,14 +143,25 @@ public final class WidgetSnapshotReader {
             }
 
             JSONObject calendar = calendars.getJSONObject(calendarId);
+            JSONObject variant = calendar.optJSONObject("variants");
+            JSONObject selected = variant != null ? variant.optJSONObject(variantKey) : null;
+
+            String calendarName = calendar.optString("calendarName", "Calendar");
             String nativeDate = calendar.optString("date", "Open Almaniac");
             String transliteratedDate = calendar.optString("dateTransliterated", nativeDate);
+
+            if (selected != null) {
+                calendarName = selected.optString("calendarName", calendarName);
+                nativeDate = selected.optString("date", nativeDate);
+                transliteratedDate = selected.optString("dateTransliterated", nativeDate);
+            }
+
             String displayDate = transliterate ? transliteratedDate : nativeDate;
             ThemeColors themeColors = readThemeColors(calendar, colorTheme, isDark);
 
             return new CalendarWidgetData(
                 calendarId,
-                calendar.optString("calendarName", "Calendar"),
+                calendarName,
                 displayDate,
                 parseColor(themeColors.backgroundColor),
                 parseColor(themeColors.textColor)

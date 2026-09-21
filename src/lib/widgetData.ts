@@ -16,6 +16,12 @@ import { COLOR_THEME_IDS, getThemeBehavior, type ColorThemeId } from '../theme/t
 import { WidgetBridge } from '../plugins/widgetBridge';
 import i18n from '../i18n';
 import { createCalendarCopy } from '../i18n/calendarCopy';
+import {
+  calendarHasWidgetOptions,
+  widgetOptionCombinations,
+  widgetVariantKey,
+  type WidgetDateVariant,
+} from './widgetCalendarOptions';
 
 export interface WidgetThemeColors {
   backgroundColor: string;
@@ -33,6 +39,7 @@ export interface WidgetCalendarSnapshot {
   weekday: string;
   date: string;
   dateTransliterated: string;
+  variants?: Record<string, WidgetDateVariant>;
   themes: Record<ColorThemeId, WidgetThemeVariants>;
 }
 
@@ -87,6 +94,43 @@ function buildThemeVariants(
   );
 }
 
+function buildCalendarDateVariants(
+  id: CalendarId,
+  anchor: GregorianCalendar,
+  settings: AppSettings,
+  copy: ReturnType<typeof createCalendarCopy>,
+  at: Date | undefined,
+): Record<string, WidgetDateVariant> | undefined {
+  if (!calendarHasWidgetOptions(id)) {
+    return undefined;
+  }
+
+  const variants = widgetOptionCombinations(id).reduce(
+    (acc, overrides) => {
+      const nativeSettings = { ...settings, ...overrides, transliterateToEnglish: false };
+      const transliteratedSettings = { ...settings, ...overrides, transliterateToEnglish: true };
+      const [nativeEntry] = getAllCalendarEntries([id], anchor, nativeSettings, copy, at);
+      const [transliteratedEntry] = getAllCalendarEntries([id], anchor, transliteratedSettings, copy, at);
+      if (!nativeEntry) {
+        return acc;
+      }
+
+      const key = widgetVariantKey(id, { ...settings, ...overrides });
+      acc[key] = {
+        label: nativeEntry.label,
+        calendarName: nativeEntry.calendarName,
+        weekday: nativeEntry.weekday,
+        date: nativeEntry.date,
+        dateTransliterated: transliteratedEntry?.date ?? nativeEntry.date,
+      };
+      return acc;
+    },
+    {} as Record<string, WidgetDateVariant>,
+  );
+
+  return Object.keys(variants).length > 0 ? variants : undefined;
+}
+
 export function buildWidgetSnapshot(
   anchor: GregorianCalendar,
   settings: AppSettings,
@@ -113,6 +157,7 @@ export function buildWidgetSnapshot(
         weekday: entry.weekday,
         date: entry.date,
         dateTransliterated: transliteratedById.get(entry.id) ?? entry.date,
+        variants: buildCalendarDateVariants(entry.id, anchor, settings, copy, at),
         themes: buildThemeVariants(entry.id, settings),
       };
       return acc;

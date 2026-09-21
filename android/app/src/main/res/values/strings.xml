@@ -5,10 +5,25 @@
     <string name="package_name">app.engelsma.almaniac</string>
     <string name="custom_url_scheme">app.engelsma.almaniac</string>
     <string name="widget_description">Today\'s date in a calendar of your choice.</string>
-    <string name="widget_configure_title">Choose a calendar</string>
+    <string name="widget_configure_title">Configure calendar widget</string>
+    <string name="widget_calendar_list_label">Calendar</string>
+    <string name="widget_save_button">Add widget</string>
     <string name="widget_transliterate_label">Transliterate to English</string>
     <string name="widget_color_theme_label">Color theme</string>
     <string name="widget_theme_distinct">Distinct</string>
     <string name="widget_theme_mono">Mono</string>
     <string name="widget_theme_sepia">Sepia</string>
+    <string name="widget_islamic_system_label">Islamic system</string>
+    <string name="widget_islamic_system_tabular">Tabular</string>
+    <string name="widget_islamic_system_umm_al_qura">Umm al-Qura</string>
+    <string name="widget_islamic_adjustment_label">Day adjustment</string>
+    <string name="widget_islamic_adjustment_minus_one">−1 day</string>
+    <string name="widget_islamic_adjustment_zero">No adjustment</string>
+    <string name="widget_islamic_adjustment_plus_one">+1 day</string>
+    <string name="widget_julian_system_label">Julian system</string>
+    <string name="widget_julian_system_julian">Julian</string>
+    <string name="widget_julian_system_revised">Revised Julian</string>
+    <string name="widget_maya_hieroglyphs_label">Use Maya hieroglyphs</string>
+    <string name="widget_frc_roman_label">French Republican roman numerals</string>
+    <string name="widget_julian_day_label">Modified Julian Day</string>
 </resources>

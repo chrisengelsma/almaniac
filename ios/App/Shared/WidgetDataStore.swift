@@ -15,13 +15,30 @@ struct WidgetThemeVariants: Codable {
     let dark: WidgetThemeColors
 }
 
+struct WidgetDateVariant: Codable {
+    let label: String
+    let calendarName: String
+    let weekday: String
+    let date: String
+    let dateTransliterated: String?
+}
+
 struct WidgetCalendarData: Codable {
     let label: String
     let calendarName: String
     let weekday: String
     let date: String
     let dateTransliterated: String?
+    let variants: [String: WidgetDateVariant]?
     let themes: [String: WidgetThemeVariants]?
+}
+
+struct WidgetCalendarPresentation {
+    let label: String
+    let calendarName: String
+    let weekday: String
+    let nativeDate: String
+    let transliteratedDate: String
 }
 
 struct WidgetSnapshot: Codable {
@@ -51,6 +68,30 @@ enum WidgetDataStore {
 
     static func calendarData(for calendarId: String) -> WidgetCalendarData? {
         loadSnapshot()?.calendars[calendarId]
+    }
+
+    static func presentation(for calendarId: String, variantKey: String) -> WidgetCalendarPresentation? {
+        guard let data = calendarData(for: calendarId) else {
+            return nil
+        }
+
+        if let variant = data.variants?[variantKey] {
+            return WidgetCalendarPresentation(
+                label: variant.label,
+                calendarName: variant.calendarName,
+                weekday: variant.weekday,
+                nativeDate: variant.date,
+                transliteratedDate: variant.dateTransliterated ?? variant.date
+            )
+        }
+
+        return WidgetCalendarPresentation(
+            label: data.label,
+            calendarName: data.calendarName,
+            weekday: data.weekday,
+            nativeDate: data.date,
+            transliteratedDate: data.dateTransliterated ?? data.date
+        )
     }
 
     static func themeColors(

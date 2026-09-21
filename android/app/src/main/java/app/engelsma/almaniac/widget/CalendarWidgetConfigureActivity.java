@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Switch;
 import app.engelsma.almaniac.R;
 import java.util.ArrayList;
@@ -21,6 +23,21 @@ public class CalendarWidgetConfigureActivity extends Activity {
     public static final String EXTRA_CALENDAR_LABEL = "calendar_label";
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private String selectedCalendarId = "gregorian";
+    private int selectedCalendarPosition = 0;
+
+    private View islamicOptions;
+    private View julianOptions;
+    private View mayaOptions;
+    private View frcOptions;
+    private View julianDayOptions;
+
+    private Spinner islamicModeSpinner;
+    private Spinner islamicAdjustmentSpinner;
+    private Spinner julianModeSpinner;
+    private Switch mayaHieroglyphsSwitch;
+    private Switch frcRomanSwitch;
+    private Switch modifiedJulianDaySwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +69,53 @@ public class CalendarWidgetConfigureActivity extends Activity {
             themeGroup.check(R.id.widget_theme_distinct);
         }
 
+        islamicOptions = findViewById(R.id.widget_islamic_options);
+        julianOptions = findViewById(R.id.widget_julian_options);
+        mayaOptions = findViewById(R.id.widget_maya_options);
+        frcOptions = findViewById(R.id.widget_frc_options);
+        julianDayOptions = findViewById(R.id.widget_julian_day_options);
+
+        islamicModeSpinner = findViewById(R.id.widget_islamic_mode_spinner);
+        islamicAdjustmentSpinner = findViewById(R.id.widget_islamic_adjustment_spinner);
+        julianModeSpinner = findViewById(R.id.widget_julian_mode_spinner);
+        mayaHieroglyphsSwitch = findViewById(R.id.widget_maya_hieroglyphs_switch);
+        frcRomanSwitch = findViewById(R.id.widget_frc_roman_switch);
+        modifiedJulianDaySwitch = findViewById(R.id.widget_modified_julian_day_switch);
+
+        bindOptionSpinners();
+        loadSavedCalendarOptions();
+
+        selectedCalendarId = WidgetSnapshotReader.getCalendarId(this, appWidgetId);
+
         List<CalendarOption> options = loadCalendarOptions();
         ListView listView = findViewById(R.id.widget_calendar_list);
         ArrayAdapter<CalendarOption> adapter = new ArrayAdapter<>(
             this,
-            android.R.layout.simple_list_item_1,
+            android.R.layout.simple_list_item_single_choice,
             options
         );
         listView.setAdapter(adapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        for (int index = 0; index < options.size(); index += 1) {
+            if (options.get(index).id.equals(selectedCalendarId)) {
+                selectedCalendarPosition = index;
+                listView.setItemChecked(index, true);
+                break;
+            }
+        }
+
+        updateCalendarOptionPanels(selectedCalendarId);
+
         listView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
-            CalendarOption option = options.get(position);
+            selectedCalendarPosition = position;
+            selectedCalendarId = options.get(position).id;
+            updateCalendarOptionPanels(selectedCalendarId);
+        });
+
+        Button saveButton = findViewById(R.id.widget_save_button);
+        saveButton.setOnClickListener((View view) -> {
+            CalendarOption option = options.get(selectedCalendarPosition);
             WidgetSnapshotReader.setCalendarId(this, appWidgetId, option.id);
             WidgetSnapshotReader.setTransliterateToEnglish(
                 this,
@@ -69,6 +123,7 @@ public class CalendarWidgetConfigureActivity extends Activity {
                 transliterateSwitch.isChecked()
             );
             WidgetSnapshotReader.setColorTheme(this, appWidgetId, selectedColorTheme(themeGroup));
+            WidgetSnapshotReader.setCalendarOptions(this, appWidgetId, readCalendarOptionsFromUi());
 
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             CalendarWidgetProvider.updateWidgets(this, manager, new int[] { appWidgetId });
@@ -78,6 +133,89 @@ public class CalendarWidgetConfigureActivity extends Activity {
             setResult(RESULT_OK, result);
             finish();
         });
+    }
+
+    private void bindOptionSpinners() {
+        ArrayAdapter<String> islamicModeAdapter = new ArrayAdapter<>(
+            this,
+            android.R.layout.simple_spinner_item,
+            new String[] {
+                getString(R.string.widget_islamic_system_tabular),
+                getString(R.string.widget_islamic_system_umm_al_qura),
+            }
+        );
+        islamicModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        islamicModeSpinner.setAdapter(islamicModeAdapter);
+
+        ArrayAdapter<String> islamicAdjustmentAdapter = new ArrayAdapter<>(
+            this,
+            android.R.layout.simple_spinner_item,
+            new String[] {
+                getString(R.string.widget_islamic_adjustment_minus_one),
+                getString(R.string.widget_islamic_adjustment_zero),
+                getString(R.string.widget_islamic_adjustment_plus_one),
+            }
+        );
+        islamicAdjustmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        islamicAdjustmentSpinner.setAdapter(islamicAdjustmentAdapter);
+
+        ArrayAdapter<String> julianModeAdapter = new ArrayAdapter<>(
+            this,
+            android.R.layout.simple_spinner_item,
+            new String[] {
+                getString(R.string.widget_julian_system_julian),
+                getString(R.string.widget_julian_system_revised),
+            }
+        );
+        julianModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        julianModeSpinner.setAdapter(julianModeAdapter);
+    }
+
+    private void loadSavedCalendarOptions() {
+        WidgetVariantKeys.WidgetCalendarOptions options = WidgetSnapshotReader.getCalendarOptions(this, appWidgetId);
+        islamicModeSpinner.setSelection("ummAlQura".equals(options.islamicCalendarMode) ? 1 : 0);
+        if (options.islamicDayAdjustment == -1) {
+            islamicAdjustmentSpinner.setSelection(0);
+        } else if (options.islamicDayAdjustment == 1) {
+            islamicAdjustmentSpinner.setSelection(2);
+        } else {
+            islamicAdjustmentSpinner.setSelection(1);
+        }
+        julianModeSpinner.setSelection("revisedJulian".equals(options.julianCalendarMode) ? 1 : 0);
+        mayaHieroglyphsSwitch.setChecked(options.mayaUseHieroglyphs);
+        frcRomanSwitch.setChecked(options.frcUseRomanNumerals);
+        modifiedJulianDaySwitch.setChecked(options.useModifiedJulianDay);
+    }
+
+    private WidgetVariantKeys.WidgetCalendarOptions readCalendarOptionsFromUi() {
+        WidgetVariantKeys.WidgetCalendarOptions options = new WidgetVariantKeys.WidgetCalendarOptions();
+        options.islamicCalendarMode = islamicModeSpinner.getSelectedItemPosition() == 1 ? "ummAlQura" : "tabular";
+        switch (islamicAdjustmentSpinner.getSelectedItemPosition()) {
+            case 0:
+                options.islamicDayAdjustment = -1;
+                break;
+            case 2:
+                options.islamicDayAdjustment = 1;
+                break;
+            default:
+                options.islamicDayAdjustment = 0;
+                break;
+        }
+        options.julianCalendarMode = julianModeSpinner.getSelectedItemPosition() == 1
+            ? "revisedJulian"
+            : "julian";
+        options.mayaUseHieroglyphs = mayaHieroglyphsSwitch.isChecked();
+        options.frcUseRomanNumerals = frcRomanSwitch.isChecked();
+        options.useModifiedJulianDay = modifiedJulianDaySwitch.isChecked();
+        return options;
+    }
+
+    private void updateCalendarOptionPanels(String calendarId) {
+        islamicOptions.setVisibility("islamic".equals(calendarId) ? View.VISIBLE : View.GONE);
+        julianOptions.setVisibility("julian".equals(calendarId) ? View.VISIBLE : View.GONE);
+        mayaOptions.setVisibility("maya".equals(calendarId) ? View.VISIBLE : View.GONE);
+        frcOptions.setVisibility("frc".equals(calendarId) ? View.VISIBLE : View.GONE);
+        julianDayOptions.setVisibility("julianDay".equals(calendarId) ? View.VISIBLE : View.GONE);
     }
 
     private static String selectedColorTheme(RadioGroup themeGroup) {

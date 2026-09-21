@@ -4,9 +4,22 @@ import WidgetKit
 struct AlmaniacWidgetEntry: TimelineEntry {
     let date: Date
     let calendarId: String
+    let calendarLabel: String
     let calendarName: String
+    let weekday: String
     let displayDate: String
     let colorTheme: String
+}
+
+private extension WidgetFamily {
+    var isLockScreen: Bool {
+        switch self {
+        case .accessoryInline, .accessoryCircular, .accessoryRectangular:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
@@ -14,7 +27,9 @@ struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
         AlmaniacWidgetEntry(
             date: Date(),
             calendarId: "gregorian",
+            calendarLabel: "Gregorian",
             calendarName: "Gregorian Calendar",
+            weekday: "Wednesday",
             displayDate: "August 5, 2026",
             colorTheme: "distinct"
         )
@@ -33,16 +48,17 @@ struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
     private func entry(for configuration: SelectCalendarIntent) -> AlmaniacWidgetEntry {
         let calendarId = configuration.calendar?.id ?? "gregorian"
         let useTransliteration = configuration.transliterateToEnglish
+        let variantKey = configuration.widgetVariantKey(for: calendarId)
 
-        if let data = WidgetDataStore.calendarData(for: calendarId) {
-            let displayDate = useTransliteration
-                ? (data.dateTransliterated ?? data.date)
-                : data.date
+        if let presentation = WidgetDataStore.presentation(for: calendarId, variantKey: variantKey) {
+            let displayDate = useTransliteration ? presentation.transliteratedDate : presentation.nativeDate
 
             return AlmaniacWidgetEntry(
                 date: Date(),
                 calendarId: calendarId,
-                calendarName: data.calendarName,
+                calendarLabel: presentation.label,
+                calendarName: presentation.calendarName,
+                weekday: presentation.weekday,
                 displayDate: displayDate,
                 colorTheme: configuration.colorTheme.rawValue
             )
@@ -51,7 +67,9 @@ struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
         return AlmaniacWidgetEntry(
             date: Date(),
             calendarId: calendarId,
+            calendarLabel: "Almaniac",
             calendarName: "Almaniac",
+            weekday: "",
             displayDate: "Open Almaniac to refresh",
             colorTheme: configuration.colorTheme.rawValue
         )
@@ -150,12 +168,40 @@ struct AlmaniacWidgetEntryView: View {
         return trimmed.isEmpty ? "Almaniac" : trimmed
     }
 
+    private var calendarLabelText: String {
+        let trimmed = entry.calendarLabel.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? calendarNameText : trimmed
+    }
+
+    private var weekdayText: String {
+        entry.weekday.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var lockScreenInlineText: String {
+        if calendarLabelText.caseInsensitiveCompare(displayDateText) == .orderedSame {
+            return displayDateText
+        }
+        return "\(calendarLabelText) · \(displayDateText)"
+    }
+
+    private var lockScreenCircularText: String {
+        if displayDateText.count <= 14 {
+            return displayDateText
+        }
+        if !weekdayText.isEmpty {
+            return weekdayText
+        }
+        return calendarLabelText
+    }
+
     private var dateFont: Font {
         switch family {
         case .systemExtraLarge, .systemLarge:
             return .largeTitle
         case .systemMedium:
             return .title2
+        case .accessoryCircular:
+            return .caption2
         default:
             return .headline
         }
@@ -184,6 +230,54 @@ struct AlmaniacWidgetEntryView: View {
     }
 
     var body: some View {
+        Group {
+            switch family {
+            case .accessoryInline:
+                Text(lockScreenInlineText)
+                    .lineLimit(1)
+            case .accessoryCircular:
+                VStack(spacing: 2) {
+                    Text(calendarLabelText)
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    Text(lockScreenCircularText)
+                        .font(dateFont)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.55)
+                        .lineLimit(3)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .accessoryRectangular:
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(calendarNameText)
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                    if !weekdayText.isEmpty {
+                        Text(weekdayText)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
+                    Text(displayDateText)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .minimumScaleFactor(0.75)
+                        .lineLimit(2)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            default:
+                homeScreenBody
+            }
+        }
+        .padding(family.isLockScreen ? 0 : contentPadding)
+    }
+
+    private var homeScreenBody: some View {
         ZStack {
             Text(displayDateText)
                 .font(dateFont)
@@ -209,13 +303,13 @@ struct AlmaniacWidgetEntryView: View {
                 Spacer(minLength: 0)
             }
         }
-        .padding(contentPadding)
     }
 }
 
 struct WidgetThemeBackground: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.widgetRenderingMode) private var renderingMode
+    @Environment(\.widgetFamily) private var family
     let entry: AlmaniacWidgetEntry
 
     private var resolvedThemeColors: (background: String, text: String) {
@@ -223,8 +317,12 @@ struct WidgetThemeBackground: View {
     }
 
     var body: some View {
-        WidgetColorParser.color(from: resolvedThemeColors.background)
-            .opacity(renderingMode == .accented ? 0.28 : 1)
+        if family.isLockScreen {
+            AccessoryWidgetBackground()
+        } else {
+            WidgetColorParser.color(from: resolvedThemeColors.background)
+                .opacity(renderingMode == .accented ? 0.28 : 1)
+        }
     }
 }
 
@@ -239,12 +337,15 @@ struct AlmaniacWidget: Widget {
                 }
         }
         .configurationDisplayName("Almaniac Calendar")
-        .description("Today's date in a calendar of your choice.")
+        .description("Today's date in a calendar of your choice on your Home Screen or Lock Screen.")
         .supportedFamilies([
             .systemSmall,
             .systemMedium,
             .systemLarge,
             .systemExtraLarge,
+            .accessoryInline,
+            .accessoryCircular,
+            .accessoryRectangular,
         ])
         .contentMarginsDisabled()
     }
