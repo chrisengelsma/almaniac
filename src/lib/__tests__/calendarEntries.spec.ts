@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { IslamicCalendarMode, JulianCalendarMode } from 'calendar-converter/calendars';
+import { GregorianCalendar, IslamicCalendarMode, JulianCalendarMode } from 'calendar-converter/calendars';
 import {
   toIslamicCalendar,
   toJulianCalendar,
@@ -50,6 +50,13 @@ describe('calendar entries', () => {
 
     expect(entry.calendarName).toBe('revisedJulian');
     expect(toJulianCalendar(anchor, JulianCalendarMode.RevisedJulian).month).toBe(anchor.month);
+  });
+
+  it('shows French Republican décade weekday from calendar day', () => {
+    const anchor = new GregorianCalendar(1792, 9, 22);
+    const entry = getAllCalendarEntries(['frc'], anchor, testSettings(), TEST_CALENDAR_COPY)[0];
+
+    expect(entry.weekday).toBe('Primidi');
   });
 
   it('formats French Republican year with roman numerals when enabled', () => {
