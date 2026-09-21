@@ -4,6 +4,7 @@ import {
   VietnameseCalendar,
   CopticCalendar,
   EthiopianCalendar,
+  FrenchRepublicanCalendar,
 } from 'calendar-converter/calendars';
 import type {
   DiscordianCalendar,
@@ -790,6 +791,46 @@ export function formatDiscordianNative(calendar: DiscordianCalendar): string {
 
 export function formatDiscordianEnglish(calendar: DiscordianCalendar): string {
   return calendar.getDate();
+}
+
+const ROMAN_NUMERAL_VALUES: Array<[number, string]> = [
+  [1000, 'M'],
+  [900, 'CM'],
+  [500, 'D'],
+  [400, 'CD'],
+  [100, 'C'],
+  [90, 'XC'],
+  [50, 'L'],
+  [40, 'XL'],
+  [10, 'X'],
+  [9, 'IX'],
+  [5, 'V'],
+  [4, 'IV'],
+  [1, 'I'],
+];
+
+function toRomanNumeral(value: number): string {
+  let remaining = value;
+  let roman = '';
+  for (const [amount, numeral] of ROMAN_NUMERAL_VALUES) {
+    while (remaining >= amount) {
+      roman += numeral;
+      remaining -= amount;
+    }
+  }
+  return roman;
+}
+
+export function formatFrenchRepublicanDate(
+  calendar: FrenchRepublicanCalendar,
+  useRomanYear: boolean,
+): string {
+  if (calendar.year < 1) {
+    return '';
+  }
+
+  const yearPart = useRomanYear ? toRomanNumeral(calendar.year) : String(calendar.year);
+  return `${calendar.dayLongform} ${calendar.getMonthName()}, ${yearPart}`;
 }
 
 const ISO_WEEKDAYS = [

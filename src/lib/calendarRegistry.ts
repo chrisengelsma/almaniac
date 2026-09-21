@@ -71,6 +71,7 @@ import {
   formatIsoWeekNative,
   formatDiscordianEnglish,
   formatDiscordianNative,
+  formatFrenchRepublicanDate,
   formatNepaliEnglish,
   formatNepaliNative,
   formatKoreanDangiEnglish,
@@ -281,8 +282,10 @@ function applyIslamicAdjustment(calendar: IslamicCalendar, adjustment: number): 
 function formatDate(
   id: CalendarId,
   calendar: Calendar,
-  transliterateToEnglish: boolean,
+  settings: Pick<AppSettings, 'transliterateToEnglish' | 'frcUseRomanNumerals'>,
 ): string {
+  const { transliterateToEnglish, frcUseRomanNumerals } = settings;
+
   if (transliterateToEnglish) {
     switch (id) {
       case 'islamic':
@@ -325,6 +328,11 @@ function formatDate(
         return formatIsoWeekEnglish(calendar as IsoWeekCalendar);
       case 'discordian':
         return formatDiscordianEnglish(calendar as DiscordianCalendar);
+      case 'frc':
+        return formatFrenchRepublicanDate(
+          calendar as FrenchRepublicanCalendar,
+          frcUseRomanNumerals,
+        );
       default:
         return calendar.getDate();
     }
@@ -371,6 +379,11 @@ function formatDate(
       return formatIsoWeekNative(calendar as IsoWeekCalendar);
     case 'discordian':
       return formatDiscordianNative(calendar as DiscordianCalendar);
+    case 'frc':
+      return formatFrenchRepublicanDate(
+        calendar as FrenchRepublicanCalendar,
+        frcUseRomanNumerals,
+      );
     default:
       return calendar.getDate();
   }
@@ -435,7 +448,7 @@ function buildCalendarEntry(
     label: copy.getLabel(id, settings.useModifiedJulianDay),
     calendarName: copy.getName(id, settings.useModifiedJulianDay),
     weekday,
-    date: formatDate(id, calendar, settings.transliterateToEnglish),
+    date: formatDate(id, calendar, settings),
     scriptFont: scriptFontForCalendar(id, settings.transliterateToEnglish),
   };
 

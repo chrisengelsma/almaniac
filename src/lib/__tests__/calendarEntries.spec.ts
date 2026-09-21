@@ -52,6 +52,19 @@ describe('calendar entries', () => {
     expect(toJulianCalendar(anchor, JulianCalendarMode.RevisedJulian).month).toBe(anchor.month);
   });
 
+  it('formats French Republican year with roman numerals when enabled', () => {
+    const anchor = TEST_ANCHOR_DATES[0];
+    const romanSettings = testSettings({ frcUseRomanNumerals: true });
+    const arabicSettings = testSettings({ frcUseRomanNumerals: false });
+
+    const romanEntry = getAllCalendarEntries(['frc'], anchor, romanSettings, TEST_CALENDAR_COPY)[0];
+    const arabicEntry = getAllCalendarEntries(['frc'], anchor, arabicSettings, TEST_CALENDAR_COPY)[0];
+
+    expect(romanEntry.date).toMatch(/, [IVXLCDM]+$/);
+    expect(arabicEntry.date).toMatch(/, \d+$/);
+    expect(arabicEntry.date).not.toEqual(romanEntry.date);
+  });
+
   it('includes Maya long count parts when glyphs are enabled', () => {
     const anchor = TEST_ANCHOR_DATES[0];
     const settings = testSettings({ transliterateToEnglish: false, mayaUseHieroglyphs: true });

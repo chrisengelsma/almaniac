@@ -26,6 +26,7 @@ import {
   setHapticsEnabled,
   setTransliterateToEnglish,
   setMayaUseHieroglyphs,
+  setFrcUseRomanNumerals,
   setUseModifiedJulianDay,
   setAllCalendarsVisibility,
   toggleCalendarVisibility,
@@ -241,6 +242,9 @@ function App() {
         }
         onMayaUseHieroglyphsChange={(value) =>
           updateSettings((current) => setMayaUseHieroglyphs(current, value))
+        }
+        onFrcUseRomanNumeralsChange={(value) =>
+          updateSettings((current) => setFrcUseRomanNumerals(current, value))
         }
         onUseModifiedJulianDayChange={(value) =>
           updateSettings((current) => setUseModifiedJulianDay(current, value))

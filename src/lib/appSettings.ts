@@ -39,6 +39,7 @@ export interface AppSettings {
   colorScheme: ColorScheme;
   transliterateToEnglish: boolean;
   mayaUseHieroglyphs: boolean;
+  frcUseRomanNumerals: boolean;
   islamicCalendarMode: IslamicCalendarMode;
   islamicDayAdjustment: IslamicDayAdjustment;
   julianCalendarMode: JulianCalendarMode;
@@ -110,6 +111,7 @@ export function defaultAppSettings(): AppSettings {
     colorScheme: systemColorScheme(),
     transliterateToEnglish: false,
     mayaUseHieroglyphs: true,
+    frcUseRomanNumerals: true,
     islamicCalendarMode: 'tabular',
     islamicDayAdjustment: 0,
     julianCalendarMode: 'julian',
@@ -147,6 +149,7 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage
     colorScheme: parsed.colorScheme ?? defaults.colorScheme,
     transliterateToEnglish: parsed.transliterateToEnglish ?? defaults.transliterateToEnglish,
     mayaUseHieroglyphs: parsed.mayaUseHieroglyphs ?? defaults.mayaUseHieroglyphs,
+    frcUseRomanNumerals: parsed.frcUseRomanNumerals ?? defaults.frcUseRomanNumerals,
     islamicCalendarMode: parsed.islamicCalendarMode ?? defaults.islamicCalendarMode,
     islamicDayAdjustment: parsed.islamicDayAdjustment ?? defaults.islamicDayAdjustment,
     julianCalendarMode:
@@ -352,6 +355,13 @@ export function setMayaUseHieroglyphs(
   value: boolean,
 ): AppSettings {
   return { ...settings, mayaUseHieroglyphs: value };
+}
+
+export function setFrcUseRomanNumerals(
+  settings: AppSettings,
+  value: boolean,
+): AppSettings {
+  return { ...settings, frcUseRomanNumerals: value };
 }
 
 export function setIslamicCalendarMode(

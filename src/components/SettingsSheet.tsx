@@ -40,6 +40,7 @@ interface SettingsSheetProps {
   onIslamicAdjustmentChange: (value: IslamicDayAdjustment) => void;
   onJulianCalendarModeChange: (value: JulianCalendarMode) => void;
   onMayaUseHieroglyphsChange: (value: boolean) => void;
+  onFrcUseRomanNumeralsChange: (value: boolean) => void;
   onUseModifiedJulianDayChange: (value: boolean) => void;
   onRememberLastOpenedDateChange: (value: boolean) => void;
   onHapticsEnabledChange: (value: boolean) => void;
@@ -396,6 +397,31 @@ function MayaCalendarOptions({
   );
 }
 
+interface FrenchRepublicanCalendarOptionsProps {
+  settings: AppSettings;
+  onFrcUseRomanNumeralsChange: (value: boolean) => void;
+}
+
+function FrenchRepublicanCalendarOptions({
+  settings,
+  onFrcUseRomanNumeralsChange,
+}: FrenchRepublicanCalendarOptionsProps) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="settings-sheet__calendar-options" role="group" aria-label={t('settings.frcGroupAria')}>
+      <div className="settings-sheet__item">
+        <span>{t('settings.frcRomanNumeralsLabel')}</span>
+        <SheetToggle
+          checked={settings.frcUseRomanNumerals}
+          label={t('settings.frcRomanNumeralsToggle')}
+          onChange={() => onFrcUseRomanNumeralsChange(!settings.frcUseRomanNumerals)}
+        />
+      </div>
+    </div>
+  );
+}
+
 interface JulianDayOptionsProps {
   settings: AppSettings;
   onUseModifiedJulianDayChange: (value: boolean) => void;
@@ -433,6 +459,7 @@ export function SettingsSheet({
   onIslamicAdjustmentChange,
   onJulianCalendarModeChange,
   onMayaUseHieroglyphsChange,
+  onFrcUseRomanNumeralsChange,
   onUseModifiedJulianDayChange,
   onRememberLastOpenedDateChange,
   onHapticsEnabledChange,
@@ -734,6 +761,12 @@ export function SettingsSheet({
                       <MayaCalendarOptions
                         settings={settings}
                         onMayaUseHieroglyphsChange={onMayaUseHieroglyphsChange}
+                      />
+                    ) : null}
+                    {id === 'frc' && settings.visibleCalendars.frc ? (
+                      <FrenchRepublicanCalendarOptions
+                        settings={settings}
+                        onFrcUseRomanNumeralsChange={onFrcUseRomanNumeralsChange}
                       />
                     ) : null}
                     {id === 'julianDay' && settings.visibleCalendars.julianDay ? (

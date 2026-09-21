@@ -18,6 +18,17 @@ android/.gradle/
 android/app/build/
 android/build/
 
+# Repo-root release outputs (Xcode archives, signed AABs, sim builds — see scripts/)
+/build/
+*.xcarchive
+
+# Play Console binaries (listing copy is under store/google-play/en-US/)
+store/google-play/*.aab
+store/google-play/*-mapping.txt
+
+# Ad-hoc UI/automation captures
+tap-probe-result.png
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
