@@ -1,0 +1,5 @@
+Widgets can show today’s date on your Lock Screen (inline, circular, and rectangular on iPhone).
+
+Widget settings now include the same calendar-specific options as the app—Islamic system and day adjustment, Julian system, Maya hieroglyphs, French Republican roman numerals, and Modified Julian Day.
+
+French Republican calendar settings add a roman numerals toggle for year display.
