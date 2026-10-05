@@ -49,7 +49,7 @@ zip -d "$BUNDLE_OUT" 'META-INF/*.SF' 'META-INF/*.RSA' 'META-INF/*.DSA' 'META-INF
 
 "$JAVA_HOME/bin/jarsigner" -verify "$BUNDLE_OUT"
 
-if ! unzip -l "$BUNDLE_OUT" | grep -q 'META-INF/.*\.\(RSA\|DSA\|EC\)'; then
+if ! unzip -l "$BUNDLE_OUT" | grep -Eq 'META-INF/.*\.(RSA|DSA|EC)'; then
   echo "Bundle is missing a JAR signature." >&2
   exit 1
 fi

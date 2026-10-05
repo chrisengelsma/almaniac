@@ -24,6 +24,8 @@ export type WidgetCalendarOptionOverrides = Pick<
   | 'useModifiedJulianDay'
 >;
 
+export type WidgetCalendarOptionCombination = Partial<WidgetCalendarOptionOverrides>;
+
 const ISLAMIC_MODES: IslamicCalendarMode[] = ['tabular', 'ummAlQura'];
 const ISLAMIC_ADJUSTMENTS: IslamicDayAdjustment[] = [-1, 0, 1];
 const JULIAN_MODES: JulianCalendarMode[] = ['julian', 'revisedJulian'];
@@ -38,7 +40,7 @@ export function calendarHasWidgetOptions(calendarId: CalendarId): boolean {
   );
 }
 
-export function widgetOptionCombinations(calendarId: CalendarId): WidgetCalendarOptionOverrides[] {
+export function widgetOptionCombinations(calendarId: CalendarId): WidgetCalendarOptionCombination[] {
   switch (calendarId) {
     case 'islamic':
       return ISLAMIC_MODES.flatMap((islamicCalendarMode) =>
@@ -83,7 +85,7 @@ export function widgetVariantKey(
 export function widgetOptionsFromSettings(
   calendarId: CalendarId,
   settings: AppSettings,
-): WidgetCalendarOptionOverrides {
+): WidgetCalendarOptionCombination {
   switch (calendarId) {
     case 'islamic':
       return {
