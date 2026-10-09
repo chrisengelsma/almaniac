@@ -297,6 +297,10 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
     ['baktun', 'katun', 'tun', 'uinal', 'kin'].includes(field.key),
   );
   const regularFields = fields.filter((field) => !mayaFields.includes(field));
+  const frcMonth = calendarId === 'frc' ? Number.parseInt(values.month ?? '', 10) : null;
+  const visibleRegularFields = frcMonth === 13
+    ? regularFields.filter((field) => field.key !== 'week')
+    : regularFields;
 
   return (
     <div className={`date-modal${open ? ' date-modal--visible' : ''}`} aria-hidden={!open}>
@@ -323,20 +327,20 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
             onChange={handleCalendarChange}
           />
 
-          {regularFields.length > 0 ? (
+          {visibleRegularFields.length > 0 ? (
             <div className="date-modal__fields">
               {calendarId === 'gregorian' ? (
                 <>
                   <div className="date-modal__year-row">
                     <PickerField
                       calendarId={calendarId}
-                      field={regularFields.find((field) => field.key === 'year')!}
+                      field={visibleRegularFields.find((field) => field.key === 'year')!}
                       values={values}
                       onChange={handleValueChange}
                     />
                     <PickerField
                       calendarId={calendarId}
-                      field={regularFields.find((field) => field.key === 'era')!}
+                      field={visibleRegularFields.find((field) => field.key === 'era')!}
                       values={values}
                       onChange={handleValueChange}
                     />
@@ -344,20 +348,20 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
                   <div className="date-modal__row">
                     <PickerField
                       calendarId={calendarId}
-                      field={regularFields.find((field) => field.key === 'month')!}
+                      field={visibleRegularFields.find((field) => field.key === 'month')!}
                       values={values}
                       onChange={handleValueChange}
                     />
                     <PickerField
                       calendarId={calendarId}
-                      field={regularFields.find((field) => field.key === 'day')!}
+                      field={visibleRegularFields.find((field) => field.key === 'day')!}
                       values={values}
                       onChange={handleValueChange}
                     />
                   </div>
                 </>
               ) : (
-                regularFields.map((field) => (
+                visibleRegularFields.map((field) => (
                   <PickerField
                     key={field.key}
                     calendarId={calendarId}

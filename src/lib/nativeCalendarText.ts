@@ -6,6 +6,7 @@ import {
   EthiopianCalendar,
   FrenchRepublicanCalendar,
 } from 'calendar-converter/calendars';
+import { FrenchRepublicanCalendarConstants } from 'calendar-converter/constants';
 import type {
   DiscordianCalendar,
   HebrewCalendar,
@@ -821,6 +822,27 @@ function toRomanNumeral(value: number): string {
   return roman;
 }
 
+const FRC_COMPLEMENTARY_DAY_NAMES = FrenchRepublicanCalendarConstants.dayNames[12];
+
+export function frenchRepublicanComplementaryDayName(day: number): string | undefined {
+  return FRC_COMPLEMENTARY_DAY_NAMES[day - 1];
+}
+
+export function frenchRepublicanDecadeDayName(dayInDecade: number): string | undefined {
+  return FrenchRepublicanCalendarConstants.weekDayNames[dayInDecade - 1];
+}
+
+export function frenchRepublicanAgriculturalDayName(
+  calendar: FrenchRepublicanCalendar,
+): string | undefined {
+  if (calendar.month < 1 || calendar.month > 12) {
+    return undefined;
+  }
+
+  const names = FrenchRepublicanCalendarConstants.dayNames[calendar.month - 1];
+  return names[calendar.dayLongform - 1];
+}
+
 export function formatFrenchRepublicanDate(
   calendar: FrenchRepublicanCalendar,
   useRomanYear: boolean,
@@ -830,7 +852,20 @@ export function formatFrenchRepublicanDate(
   }
 
   const yearPart = useRomanYear ? toRomanNumeral(calendar.year) : String(calendar.year);
-  return `${calendar.dayLongform} ${calendar.getMonthName()}, ${yearPart}`;
+  if (calendar.month === 13) {
+    const feast = frenchRepublicanComplementaryDayName(calendar.day);
+    if (feast) {
+      return `${feast}, ${yearPart}`;
+    }
+  }
+
+  const civil = `${calendar.dayLongform} ${calendar.getMonthName()}`;
+  const agricultural = frenchRepublicanAgriculturalDayName(calendar);
+  if (agricultural) {
+    return `${agricultural}, ${civil}, ${yearPart}`;
+  }
+
+  return `${civil}, ${yearPart}`;
 }
 
 const ISO_WEEKDAYS = [

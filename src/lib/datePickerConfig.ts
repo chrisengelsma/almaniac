@@ -48,7 +48,15 @@ import {
   isBeforeJapaneseWarekiEpoch,
   JAPANESE_WAREKI_EPOCH,
 } from './calendarSafety';
-import { bahaiMonthName, nepaliMonthName, persianMonthName, toDevanagariDigits, toPersianDigits } from './nativeCalendarText';
+import {
+  bahaiMonthName,
+  frenchRepublicanComplementaryDayName,
+  frenchRepublicanDecadeDayName,
+  nepaliMonthName,
+  persianMonthName,
+  toDevanagariDigits,
+  toPersianDigits,
+} from './nativeCalendarText';
 
 export type PickerValues = Record<string, string>;
 
@@ -303,7 +311,7 @@ function frcMonthOptions(): PickerFieldOption[] {
     value: String(index + 1),
     label: FrenchRepublicanCalendar.MonthName(index + 1),
   }));
-  return [...regular, { value: '13', label: 'Sansculottides' }];
+  return [...regular, { value: '13', label: FrenchRepublicanCalendar.MonthName(13) }];
 }
 
 function chineseMonthOptions(year: number): PickerFieldOption[] {
@@ -614,10 +622,13 @@ export function getPickerFields(calendarId: CalendarId, context?: PickerContext)
             const year = parseNumber(values, 'year') ?? 1;
             const month = parseNumber(values, 'month') ?? 1;
             const maxDay = month === 13 ? (FrenchRepublicanCalendar.IsLeapYear(year) ? 6 : 5) : 10;
-            return Array.from({ length: maxDay }, (_, index) => ({
-              value: String(index + 1),
-              label: String(index + 1),
-            }));
+            return Array.from({ length: maxDay }, (_, index) => {
+              const day = index + 1;
+              const label = month === 13
+                ? (frenchRepublicanComplementaryDayName(day) ?? String(day))
+                : (frenchRepublicanDecadeDayName(day) ?? String(day));
+              return { value: String(day), label };
+            });
           },
         },
       ];

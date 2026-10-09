@@ -57,6 +57,16 @@ describe('calendar entries', () => {
     const entry = getAllCalendarEntries(['frc'], anchor, testSettings(), TEST_CALENDAR_COPY)[0];
 
     expect(entry.weekday).toBe('Primidi');
+    expect(entry.date).toContain('Raisin');
+    expect(entry.date).toContain('1 Vendémiaire');
+  });
+
+  it('shows complementary-day feast names during Sans-culottides', () => {
+    const anchor = new GregorianCalendar(2026, 9, 21);
+    const entry = getAllCalendarEntries(['frc'], anchor, testSettings(), TEST_CALENDAR_COPY)[0];
+
+    expect(entry.date).toContain('La Fête des Récompenses');
+    expect(entry.date).not.toContain('Sans-culottides');
   });
 
   it('formats French Republican year with roman numerals when enabled', () => {

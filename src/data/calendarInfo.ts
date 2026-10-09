@@ -118,7 +118,7 @@ export const CALENDAR_INFO: Record<CalendarId, CalendarInfo> = {
     calendarType: 'solar',
     firstImplemented: '1793 CE',
     history:
-      'Created during the French Revolution to decimalize timekeeping. Years began at the autumn equinox; months and weeks were renamed and restructured. Napoleon abolished it in 1806; Paris Commune briefly revived it in 1871.',
+      'Created during the French Revolution to decimalize timekeeping. Years began at the autumn equinox with twelve 30-day months grouped in three-week décades. Five or six complementary days (sans-culottides) at year-end were public festivals outside the décade cycle. Napoleon abolished it in 1806; Paris Commune briefly revived it in 1871.',
     usedIn: ['France (1793–1805)', 'Paris Commune (1871)'],
     mapCountries: ['FR'],
   },

@@ -144,7 +144,12 @@ struct AlmaniacWidgetEntryView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.widgetFamily) private var family
     @Environment(\.widgetRenderingMode) private var renderingMode
+    @Environment(\.showsWidgetContainerBackground) private var showsWidgetContainerBackground
     var entry: AlmaniacWidgetProvider.Entry
+
+    private var usesLockPresentation: Bool {
+        family.isLockScreen || !showsWidgetContainerBackground
+    }
 
     private var resolvedThemeColors: (background: String, text: String) {
         WidgetColorParser.themeColors(for: entry, colorScheme: colorScheme)
@@ -194,6 +199,35 @@ struct AlmaniacWidgetEntryView: View {
         return calendarLabelText
     }
 
+    private var lockScreenRectangularBody: some View {
+        HStack(alignment: .center, spacing: 8) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(calendarNameText)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                if !weekdayText.isEmpty {
+                    Text(weekdayText)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Text(displayDateText)
+                .font(.headline)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.trailing)
+                .minimumScaleFactor(0.7)
+                .lineLimit(2)
+                .layoutPriority(1)
+        }
+    }
+
     private var dateFont: Font {
         switch family {
         case .systemExtraLarge, .systemLarge:
@@ -233,8 +267,13 @@ struct AlmaniacWidgetEntryView: View {
         Group {
             switch family {
             case .accessoryInline:
-                Text(lockScreenInlineText)
-                    .lineLimit(1)
+                ViewThatFits(in: .horizontal) {
+                    Text(lockScreenInlineText)
+                    Text(displayDateText)
+                    Text(calendarLabelText)
+                }
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
             case .accessoryCircular:
                 VStack(spacing: 2) {
                     Text(calendarLabelText)
@@ -251,30 +290,21 @@ struct AlmaniacWidgetEntryView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .accessoryRectangular:
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(calendarNameText)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                    if !weekdayText.isEmpty {
-                        Text(weekdayText)
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                    }
-                    Text(displayDateText)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .minimumScaleFactor(0.75)
-                        .lineLimit(2)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                lockScreenRectangularBody
             default:
-                homeScreenBody
+                if usesLockPresentation {
+                    lockScreenRectangularBody
+                } else {
+                    homeScreenBody
+                }
             }
         }
-        .padding(family.isLockScreen ? 0 : contentPadding)
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: family == .accessoryCircular ? .center : .leading
+        )
+        .padding(usesLockPresentation ? 0 : contentPadding)
     }
 
     private var homeScreenBody: some View {
@@ -347,6 +377,7 @@ struct AlmaniacWidget: Widget {
             .accessoryCircular,
             .accessoryRectangular,
         ])
+        .containerBackgroundRemovable(true)
         .contentMarginsDisabled()
     }
 }
