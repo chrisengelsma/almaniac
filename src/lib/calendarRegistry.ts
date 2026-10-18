@@ -72,6 +72,7 @@ import {
   formatDiscordianEnglish,
   formatDiscordianNative,
   formatFrenchRepublicanDate,
+  frenchRepublicanComplementaryDayName,
   formatNepaliEnglish,
   formatNepaliNative,
   formatKoreanDangiEnglish,
@@ -98,6 +99,8 @@ import {
   isBeforeGregorianHistoricalEpoch,
   type CalendarUnavailableReason,
 } from './calendarSafety';
+import { iranianSolarTraditionDetailLabel } from './iranianSolarTraditions';
+import { javidnamForSolarDate } from './javidnam';
 
 export type CalendarId =
   | 'gregorian'
@@ -141,6 +144,8 @@ export interface CalendarEntry {
   mayaLordOfNight?: MayaLordOfNight;
   detailLabel?: string;
   detailLabelKey?: string;
+  secondaryDetailLabel?: string;
+  secondaryDetailScriptFont?: ScriptFont;
   detailScriptFont?: ScriptFont;
   unavailableReason?: CalendarUnavailableReason;
   copticDateParts?: { day: string; month: string; year: string };
@@ -520,6 +525,39 @@ function buildCalendarEntry(
 
   if (id === 'coptic' && !settings.transliterateToEnglish) {
     entry.copticDateParts = formatCopticNativeParts(calendar as CopticCalendar);
+  }
+
+  if (id === 'frc') {
+    const frc = calendar as FrenchRepublicanCalendar;
+    if (frc.month === 13) {
+      const feast = frenchRepublicanComplementaryDayName(frc.day);
+      if (feast) {
+        entry.detailLabel = feast;
+        entry.detailScriptFont = 'latin';
+      }
+    }
+  }
+
+  if (id === 'persian' || id === 'shahanshahi') {
+    const solar = calendar as PersianCalendar | ShahanshahiCalendar;
+    if (settings.showIranianSolarTraditions) {
+      const tradition = iranianSolarTraditionDetailLabel(
+        solar.day,
+        weekdayIndex,
+        settings.transliterateToEnglish,
+      );
+      if (tradition) {
+        entry.detailLabel = tradition;
+        entry.detailScriptFont = settings.transliterateToEnglish ? 'latin' : 'persian';
+      }
+    }
+    if (settings.showJavidnamDaily) {
+      const javidnam = javidnamForSolarDate(solar.month, solar.day);
+      if (javidnam) {
+        entry.secondaryDetailLabel = javidnam;
+        entry.secondaryDetailScriptFont = 'persian';
+      }
+    }
   }
 
   return entry;

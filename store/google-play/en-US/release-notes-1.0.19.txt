@@ -1,0 +1,5 @@
+• Fixed modal close buttons and backdrops so taps no longer pass through to calendars behind dialogs
+• Improved stability when switching color themes or light/dark mode
+• French Republican: rural day names, décade weekdays, and sans-culottides feasts in the list and date picker
+• Persian / Shahanshahi: optional Zoroastrian traditions and daily Javidnam (settings toggles)
+• Lock Screen widget layout improvements

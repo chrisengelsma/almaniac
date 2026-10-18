@@ -65,8 +65,8 @@ describe('calendar entries', () => {
     const anchor = new GregorianCalendar(2026, 9, 21);
     const entry = getAllCalendarEntries(['frc'], anchor, testSettings(), TEST_CALENDAR_COPY)[0];
 
-    expect(entry.date).toContain('La Fête des Récompenses');
-    expect(entry.date).not.toContain('Sans-culottides');
+    expect(entry.date).toContain('5 Sans-culottides');
+    expect(entry.detailLabel).toBe('La Fête des Récompenses');
   });
 
   it('formats French Republican year with roman numerals when enabled', () => {

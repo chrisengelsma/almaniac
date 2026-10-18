@@ -47,6 +47,11 @@ export function CalendarRow({
   const detailScriptClass = calendarTextClassName(entry.detailScriptFont ?? entry.scriptFont);
   const detailScriptStyle = calendarTextStyle(entry.detailScriptFont ?? entry.scriptFont);
   const detailTextLang = calendarTextLang(entry.detailScriptFont ?? entry.scriptFont);
+  const secondaryScriptClass = calendarTextClassName(
+    entry.secondaryDetailScriptFont ?? entry.scriptFont,
+  );
+  const secondaryScriptStyle = calendarTextStyle(entry.secondaryDetailScriptFont ?? entry.scriptFont);
+  const secondaryTextLang = calendarTextLang(entry.secondaryDetailScriptFont ?? entry.scriptFont);
   const dateText = entry.date || '-';
   const canCopy = Boolean(entry.date && entry.date !== '-');
   const isEntering = staggerIndex !== undefined;
@@ -255,7 +260,7 @@ export function CalendarRow({
             ) : null}
             <span className="calendar-row__calendar-name">{entry.calendarName}</span>
           </div>
-          {entry.detailLabel || entry.detailLabelKey || entry.unavailableReason ? (
+          {entry.detailLabel || entry.detailLabelKey || entry.secondaryDetailLabel || entry.unavailableReason ? (
             <div className="calendar-row__meta calendar-row__meta--bottom">
               {entry.mayaTzolkin ? (
                 <MayaTzolkinDate
@@ -264,13 +269,26 @@ export function CalendarRow({
                   useHieroglyphs={entry.mayaUseHieroglyphs ?? true}
                 />
               ) : (
-                <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle} lang={detailTextLang}>
-                  {entry.unavailableReason
-                    ? t(`calendars.unavailable.${entry.unavailableReason}`)
-                    : entry.detailLabelKey
-                      ? t(`calendars.detail.${entry.detailLabelKey}`)
-                      : entry.detailLabel}
-                </span>
+                <>
+                  {entry.unavailableReason || entry.detailLabel || entry.detailLabelKey ? (
+                    <span className={`calendar-row__weekday ${detailScriptClass}`.trim()} style={detailScriptStyle} lang={detailTextLang}>
+                      {entry.unavailableReason
+                        ? t(`calendars.unavailable.${entry.unavailableReason}`)
+                        : entry.detailLabelKey
+                          ? t(`calendars.detail.${entry.detailLabelKey}`)
+                          : entry.detailLabel}
+                    </span>
+                  ) : null}
+                  {entry.secondaryDetailLabel ? (
+                    <span
+                      className={`calendar-row__weekday calendar-row__javidnam ${secondaryScriptClass}`.trim()}
+                      style={secondaryScriptStyle}
+                      lang={secondaryTextLang}
+                    >
+                      {entry.secondaryDetailLabel}
+                    </span>
+                  ) : null}
+                </>
               )}
             </div>
           ) : null}

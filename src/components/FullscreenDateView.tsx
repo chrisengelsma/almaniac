@@ -18,6 +18,7 @@ import {
 } from '../lib/fullscreenRect';
 import { MayaLongCount } from './MayaLongCount';
 import { CopticDateText } from './CopticDateText';
+import { useOverlayPointerBlock } from '../hooks/useModalOverlay';
 
 const CLOSE_PROMPT_MS = 5000;
 const FIT_TRANSITION_MS = 180;
@@ -167,12 +168,10 @@ export function FullscreenDateView({
     }
   };
 
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+  useOverlayPointerBlock(true);
 
+  useEffect(() => {
     return () => {
-      document.body.style.overflow = previousOverflow;
       clearCloseTimer();
     };
   }, []);

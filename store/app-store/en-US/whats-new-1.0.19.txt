@@ -1,0 +1,9 @@
+Fixed modal dialogs so About, Support, calendar info, the date picker, and settings reliably receive taps on close buttons and backdrops instead of passing through to the calendar list.
+
+Improved stability when switching color themes or light/dark mode while settings or other overlays are open.
+
+French Republican calendar rows and the date picker now show rural day names, décade weekdays, and sans-culottides feast names where applicable.
+
+Persian and Shahanshahi calendars can optionally show Zoroastrian traditions and a daily Javidnam name (new toggles in calendar settings).
+
+Lock Screen widget layouts are clearer on inline and rectangular sizes.

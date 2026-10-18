@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { APP_VERSION } from '../theme/appBranding';
 import { PRIVACY_POLICY_URL, SITE_URL, TERMS_OF_SERVICE_URL } from '../theme/supportLinks';
 import { getAllBannerAttributions } from '../data/imageAttributions';
-import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
+import { useModalOverlay } from '../hooks/useModalOverlay';
+import { ModalPortal } from './ModalPortal';
 
 interface AboutModalProps {
   open: boolean;
@@ -16,37 +17,22 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
   const attributions = getAllBannerAttributions();
   const appTitle = t('branding.appTitle');
 
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
+  useModalOverlay(open, onClose, { focusTarget: closeButtonRef });
 
-    focusWithoutScroll(closeButtonRef.current);
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    setBodyScrollLocked(true);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      setBodyScrollLocked(false);
-    };
-  }, [open, onClose]);
+  if (!open) {
+    return null;
+  }
 
   return (
-    <div className={`about-modal${open ? ' about-modal--visible' : ''}`} aria-hidden={!open}>
-      <button type="button" className="about-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
-      <div
-        className="about-modal__panel"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="about-modal-title"
-      >
+    <ModalPortal>
+      <div className="about-modal about-modal--visible" aria-hidden={false}>
+        <button type="button" className="about-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
+        <div
+          className="about-modal__panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="about-modal-title"
+        >
         <header className="about-modal__header">
           <h2 id="about-modal-title">{t('modals.about.title', { appTitle })}</h2>
           <button
@@ -142,7 +128,8 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
             <span>{t('modals.about.copyright')}</span>
           </div>
         </footer>
+        </div>
       </div>
-    </div>
+    </ModalPortal>
   );
 }

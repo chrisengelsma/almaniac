@@ -1,0 +1,3 @@
+• French Republican calendar: rural day names, décade weekdays, and sans-culottides feasts in the list and date picker
+• Persian / Shahanshahi: optional Zoroastrian traditions and daily Javidnam (settings toggles)
+• Lock Screen widget layout improvements

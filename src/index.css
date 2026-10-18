@@ -539,3 +539,11 @@ html[dir='rtl'] .settings-sheet__expander-summary,
 html[dir='rtl'] .settings-sheet__nav-copy {
   text-align: right;
 }
+
+/*
+ * Block taps on the app shell while any overlay is open (see useOverlayPointerBlock).
+ * Overlays render via ModalPortal (or createPortal) on document.body, outside .app.
+ */
+html.overlay-present .app {
+  pointer-events: none;
+}

@@ -169,9 +169,20 @@ describe('French Republican reference dates', () => {
     expect(entry.date).toBe('Raisin, 1 Vendémiaire, I');
   });
 
-  it('shows complementary feast on last day of republican year 233', () => {
+  it('shows civil sans-culottides date in the main FRC string', () => {
     const frc = new FrenchRepublicanCalendar(new GregorianCalendar(2025, 9, 21));
-    expect(formatFrenchRepublicanDate(frc, true)).toBe('La Fête des Récompenses, CCXXXIII');
+    expect(formatFrenchRepublicanDate(frc, true)).toBe('5 Sans-culottides, CCXXXIII');
+  });
+
+  it('puts complementary feast in the calendar row detail line', () => {
+    const entry = getAllCalendarEntries(
+      ['frc'],
+      new GregorianCalendar(2025, 9, 21),
+      testSettings(),
+      TEST_CALENDAR_COPY,
+    )[0];
+
+    expect(entry.detailLabel).toBe('La Fête des Récompenses');
   });
 
   it('starts year 234 on autumn equinox 2025', () => {

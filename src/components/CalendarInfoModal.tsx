@@ -6,7 +6,8 @@ import {
 } from '../data/calendarInfo';
 import type { CalendarId } from '../lib/calendarRegistry';
 import { getBannerAttribution } from '../data/imageAttributions';
-import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
+import { useModalOverlay } from '../hooks/useModalOverlay';
+import { ModalPortal } from './ModalPortal';
 import { CALENDAR_BANNERS } from '../theme/calendarBanners';
 import { getResolvedAppLanguage, type AppSettings } from '../lib/appSettings';
 import { useCalendarLabels } from '../hooks/useCalendarLabels';
@@ -163,33 +164,7 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
     return () => window.clearTimeout(timer);
   }, [visible, renderedId, calendarId]);
 
-  useEffect(() => {
-    if (!renderedId || !visible) {
-      return;
-    }
-
-    focusWithoutScroll(closeButtonRef.current);
-  }, [renderedId, visible]);
-
-  useEffect(() => {
-    if (!renderedId) {
-      return;
-    }
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    setBodyScrollLocked(true);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      setBodyScrollLocked(false);
-    };
-  }, [renderedId, onClose]);
+  useModalOverlay(Boolean(renderedId), onClose, { focusTarget: closeButtonRef });
 
   if (!renderedId) {
     return null;
@@ -205,7 +180,8 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
   const mapColors = getCalendarMapColors(renderedId, calendarColorContext(settings));
 
   return (
-    <div className={`info-modal${visible ? ' info-modal--visible' : ''}`} role="presentation" aria-hidden={!visible}>
+    <ModalPortal>
+      <div className={`info-modal${visible ? ' info-modal--visible' : ''}`} role="presentation" aria-hidden={!visible}>
       <button
         type="button"
         className="info-modal__backdrop"
@@ -303,5 +279,6 @@ export function CalendarInfoModal({ calendarId, settings, onClose, onAboutOpen }
         </div>
       </div>
     </div>
+    </ModalPortal>
   );
 }

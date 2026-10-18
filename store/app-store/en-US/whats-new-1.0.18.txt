@@ -1,0 +1,7 @@
+French Republican dates now show the full calendar: rural day names (for example Raisin), décade weekdays (Primidi through Décadi), and sans-culottides with the feast name on the row.
+
+The date picker uses those same names for décade days and complementary festivals, and hides the décade field during sans-culottides.
+
+Persian and Shahanshahi rows can optionally show Zoroastrian weekday and day traditions and a daily Javidnam name (new toggles under calendar settings).
+
+Lock Screen widgets use clearer layouts on inline and rectangular sizes.

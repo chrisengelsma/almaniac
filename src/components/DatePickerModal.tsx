@@ -14,6 +14,8 @@ import {
   type PickerValues,
 } from '../lib/datePickerConfig';
 import type { GregorianEra } from '../lib/gregorianDate';
+import { useModalOverlay } from '../hooks/useModalOverlay';
+import { ModalPortal } from './ModalPortal';
 
 interface DatePickerModalProps {
   open: boolean;
@@ -271,6 +273,8 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
     setError(null);
   }, [open, anchor, pickerContext]);
 
+  useModalOverlay(open, onClose);
+
   const handleCalendarChange = (nextCalendarId: CalendarId) => {
     setCalendarId(nextCalendarId);
     setValues(clampPickerValues(nextCalendarId, extractPickerValues(nextCalendarId, anchor, pickerContext), pickerContext));
@@ -302,8 +306,13 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
     ? regularFields.filter((field) => field.key !== 'week')
     : regularFields;
 
+  if (!open) {
+    return null;
+  }
+
   return (
-    <div className={`date-modal${open ? ' date-modal--visible' : ''}`} aria-hidden={!open}>
+    <ModalPortal>
+      <div className="date-modal date-modal--visible" aria-hidden={false}>
       <button type="button" className="date-modal__backdrop" onClick={onClose} aria-label={t('common.close')} />
       <div
         className="date-modal__panel"
@@ -401,5 +410,6 @@ export function DatePickerModal({ open, anchor, settings, onClose, onApply }: Da
         </footer>
       </div>
     </div>
+    </ModalPortal>
   );
 }

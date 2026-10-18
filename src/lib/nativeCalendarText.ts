@@ -853,10 +853,7 @@ export function formatFrenchRepublicanDate(
 
   const yearPart = useRomanYear ? toRomanNumeral(calendar.year) : String(calendar.year);
   if (calendar.month === 13) {
-    const feast = frenchRepublicanComplementaryDayName(calendar.day);
-    if (feast) {
-      return `${feast}, ${yearPart}`;
-    }
+    return `${calendar.day} ${calendar.getMonthName()}, ${yearPart}`;
   }
 
   const civil = `${calendar.dayLongform} ${calendar.getMonthName()}`;

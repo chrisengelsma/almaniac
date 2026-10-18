@@ -239,8 +239,10 @@ html.platform-native .settings-sheet {
 .date-modal__backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: none;
   background: rgba(0, 0, 0, 0.52);
+  cursor: pointer;
   opacity: 0;
   transition: opacity 300ms ease;
 }
@@ -252,6 +254,7 @@ html.platform-native .settings-sheet {
 .date-modal__panel {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   width: min(24rem, 100%);
   border: 1px solid var(--overlay-surface-border);
   border-radius: 0.85rem;
@@ -304,15 +307,20 @@ html[data-color-scheme='dark'] .info-modal__panel {
 }
 
 .date-modal__close {
+  position: relative;
+  z-index: 2;
   display: grid;
+  flex-shrink: 0;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: none;
   border-radius: 50%;
   background: var(--overlay-close-bg);
   color: var(--overlay-surface-fg);
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .date-modal__close svg {
@@ -567,8 +575,10 @@ html[data-color-scheme='dark'] .info-modal__panel {
 .donate-modal__backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: none;
   background: rgba(0, 0, 0, 0.52);
+  cursor: pointer;
   opacity: 0;
   transition: opacity 300ms ease;
 }
@@ -580,6 +590,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
 .donate-modal__panel {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   width: min(100%, 22rem);
   border: 1px solid var(--overlay-surface-border);
   border-radius: 1rem;
@@ -640,15 +651,20 @@ html[data-color-scheme='dark'] .info-modal__panel {
 }
 
 .donate-modal__close {
+  position: relative;
+  z-index: 2;
   display: grid;
+  flex-shrink: 0;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: none;
   border-radius: 50%;
   background: var(--overlay-close-bg);
   color: var(--overlay-surface-fg);
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .donate-modal__close svg {
@@ -864,8 +880,10 @@ html[data-color-scheme='dark'] .info-modal__panel {
 .donation-thank-you__backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: none;
   background: rgba(0, 0, 0, 0.52);
+  cursor: pointer;
   opacity: 0;
   transition: opacity 300ms ease;
 }
@@ -877,6 +895,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
 .donation-thank-you__panel {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   width: min(100%, 18rem);
   padding: 1.5rem 1.25rem 1.25rem;
   border-radius: 1rem;
@@ -925,6 +944,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
   align-items: center;
   justify-content: center;
   min-width: 8rem;
+  min-height: 2.75rem;
   padding: 0.65rem 1.1rem;
   border: none;
   border-radius: 999px;
@@ -933,6 +953,8 @@ html[data-color-scheme='dark'] .info-modal__panel {
   font: inherit;
   font-size: 0.95rem;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .donation-thank-you__btn:active {
@@ -972,8 +994,10 @@ html[data-color-scheme='dark'] .info-modal__panel {
 .about-modal__backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: none;
   background: rgba(0, 0, 0, 0.52);
+  cursor: pointer;
   opacity: 0;
   transition: opacity 300ms ease;
 }
@@ -985,6 +1009,7 @@ html[data-color-scheme='dark'] .info-modal__panel {
 .about-modal__panel {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   width: min(100%, 24rem);
@@ -1022,15 +1047,20 @@ html[data-color-scheme='dark'] .info-modal__panel {
 }
 
 .about-modal__close {
+  position: relative;
+  z-index: 2;
   display: grid;
+  flex-shrink: 0;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: none;
   border-radius: 50%;
   background: var(--overlay-close-bg);
   color: var(--overlay-surface-fg);
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .about-modal__close svg {
@@ -1691,6 +1721,14 @@ html[data-color-theme='supporter'] .calendar-list__spacer {
   top: auto;
   bottom: 1rem;
   padding-right: 9.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.calendar-row__javidnam {
+  font-size: 0.78rem;
+  opacity: 0.92;
 }
 
 .calendar-row__calendar-name {
@@ -2832,6 +2870,7 @@ html.platform-android .calendar-row__coptic-script {
 .info-modal__backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: none;
   background: rgba(0, 0, 0, 0.52);
   cursor: pointer;
@@ -2847,6 +2886,7 @@ html.platform-android .calendar-row__coptic-script {
 .info-modal__panel {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   width: min(28rem, 100%);
@@ -2964,16 +3004,19 @@ html.platform-android .calendar-row__coptic-script {
   position: absolute;
   top: 0.65rem;
   right: 0.65rem;
+  z-index: 3;
   display: grid;
   place-items: center;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.88);
   color: #263238;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .info-modal__close svg {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { APP_LANGUAGES, LANGUAGE_LABELS, type AppLanguagePreference } from '../i18n/language';
 import {
@@ -18,7 +18,8 @@ import appIconLight from '../assets/app-icon-light.png';
 import appIconDark from '../assets/app-icon-dark.png';
 import appIconSupporter from '../assets/app-icon-teal.png';
 import { isSupporterAppIcon } from '../lib/supporterPerks';
-import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
+import { useModalOverlay } from '../hooks/useModalOverlay';
+import { ModalPortal } from './ModalPortal';
 import { SheetSlider, SheetToggle } from './DrawerControls';
 import { ColorThemePicker } from './ColorThemePicker';
 import { getThemePaletteEntry } from '../theme/themePalette';
@@ -41,6 +42,8 @@ interface SettingsSheetProps {
   onJulianCalendarModeChange: (value: JulianCalendarMode) => void;
   onMayaUseHieroglyphsChange: (value: boolean) => void;
   onFrcUseRomanNumeralsChange: (value: boolean) => void;
+  onShowIranianSolarTraditionsChange: (value: boolean) => void;
+  onShowJavidnamDailyChange: (value: boolean) => void;
   onUseModifiedJulianDayChange: (value: boolean) => void;
   onRememberLastOpenedDateChange: (value: boolean) => void;
   onHapticsEnabledChange: (value: boolean) => void;
@@ -422,6 +425,41 @@ function FrenchRepublicanCalendarOptions({
   );
 }
 
+interface PersianSolarCalendarOptionsProps {
+  settings: AppSettings;
+  onShowIranianSolarTraditionsChange: (value: boolean) => void;
+  onShowJavidnamDailyChange: (value: boolean) => void;
+}
+
+function PersianSolarCalendarOptions({
+  settings,
+  onShowIranianSolarTraditionsChange,
+  onShowJavidnamDailyChange,
+}: PersianSolarCalendarOptionsProps) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="settings-sheet__calendar-options" role="group" aria-label={t('settings.persianSolarGroupAria')}>
+      <div className="settings-sheet__item">
+        <span>{t('settings.iranianTraditionsLabel')}</span>
+        <SheetToggle
+          checked={settings.showIranianSolarTraditions}
+          label={t('settings.iranianTraditionsToggle')}
+          onChange={() => onShowIranianSolarTraditionsChange(!settings.showIranianSolarTraditions)}
+        />
+      </div>
+      <div className="settings-sheet__item">
+        <span>{t('settings.javidnamDailyLabel')}</span>
+        <SheetToggle
+          checked={settings.showJavidnamDaily}
+          label={t('settings.javidnamDailyToggle')}
+          onChange={() => onShowJavidnamDailyChange(!settings.showJavidnamDaily)}
+        />
+      </div>
+    </div>
+  );
+}
+
 interface JulianDayOptionsProps {
   settings: AppSettings;
   onUseModifiedJulianDayChange: (value: boolean) => void;
@@ -460,6 +498,8 @@ export function SettingsSheet({
   onJulianCalendarModeChange,
   onMayaUseHieroglyphsChange,
   onFrcUseRomanNumeralsChange,
+  onShowIranianSolarTraditionsChange,
+  onShowJavidnamDailyChange,
   onUseModifiedJulianDayChange,
   onRememberLastOpenedDateChange,
   onHapticsEnabledChange,
@@ -474,6 +514,7 @@ export function SettingsSheet({
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [panel, setPanel] = useState<SettingsPanel>('main');
+  const [mounted, setMounted] = useState(open);
 
   const visibleCalendarCount = DEFAULT_CALENDAR_ORDER.filter(
     (id) => settings.visibleCalendars[id],
@@ -482,36 +523,42 @@ export function SettingsSheet({
   const selectedTheme = getThemePaletteEntry(settings.colorTheme);
   const selectedThemeLabel = t(selectedTheme.labelKey);
 
+  const handleSettingsEscape = useCallback(() => {
+    if (panel === 'calendars' || panel === 'themes') {
+      setPanel('main');
+      return;
+    }
+
+    onClose();
+  }, [panel, onClose]);
+
+  useModalOverlay(mounted, onClose, {
+    focusTarget: sheetRef,
+    onEscape: handleSettingsEscape,
+  });
+
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      return;
+    }
+
+    const timer = window.setTimeout(() => setMounted(false), SHEET_TRANSITION_MS);
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
   useEffect(() => {
     if (!open) {
       setDragOffset(0);
       setIsDragging(false);
       dragStartY.current = null;
       setPanel('main');
-      return;
     }
+  }, [open]);
 
-    focusWithoutScroll(sheetRef.current);
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        if (panel === 'calendars' || panel === 'themes') {
-          setPanel('main');
-          return;
-        }
-
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    setBodyScrollLocked(true);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      setBodyScrollLocked(false);
-    };
-  }, [open, onClose, panel]);
+  if (!mounted) {
+    return null;
+  }
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     dragStartY.current = event.clientY;
@@ -558,7 +605,7 @@ export function SettingsSheet({
   };
 
   return (
-    <>
+    <ModalPortal>
       <button
         type="button"
         className={`sheet-backdrop${open ? ' sheet-backdrop--open' : ''}`}
@@ -769,6 +816,14 @@ export function SettingsSheet({
                         onFrcUseRomanNumeralsChange={onFrcUseRomanNumeralsChange}
                       />
                     ) : null}
+                    {id === 'persian' &&
+                    (settings.visibleCalendars.persian || settings.visibleCalendars.shahanshahi) ? (
+                      <PersianSolarCalendarOptions
+                        settings={settings}
+                        onShowIranianSolarTraditionsChange={onShowIranianSolarTraditionsChange}
+                        onShowJavidnamDailyChange={onShowJavidnamDailyChange}
+                      />
+                    ) : null}
                     {id === 'julianDay' && settings.visibleCalendars.julianDay ? (
                       <JulianDayOptions
                         settings={settings}
@@ -791,6 +846,6 @@ export function SettingsSheet({
           )}
         </div>
       </aside>
-    </>
+    </ModalPortal>
   );
 }

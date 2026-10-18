@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
 import {
@@ -7,6 +7,7 @@ import {
   type ViewportRect,
 } from '../lib/fullscreenRect';
 import { MayaGlyph } from './MayaGlyph';
+import { useModalOverlay } from '../hooks/useModalOverlay';
 
 type FullscreenPhase = 'enter' | 'open' | 'exit';
 
@@ -68,19 +69,10 @@ export function MayaGlyphFullscreen({ target, onClose }: MayaGlyphFullscreenProp
     setPhase('exit');
   }, [onClose]);
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') {
-        return;
-      }
-
-      event.stopImmediatePropagation();
-      finishClose();
-    };
-
-    document.addEventListener('keydown', onKeyDown, { capture: true });
-    return () => document.removeEventListener('keydown', onKeyDown, { capture: true });
-  }, [finishClose]);
+  useModalOverlay(true, onClose, {
+    onEscape: finishClose,
+    escapeCapture: true,
+  });
 
   const handleExpandTransitionEnd = (event: React.TransitionEvent<HTMLDivElement>) => {
     if (event.propertyName !== 'transform' || phase !== 'exit') {

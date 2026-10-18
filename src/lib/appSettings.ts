@@ -47,6 +47,8 @@ export interface AppSettings {
   showChristianHolidays: boolean;
   showJewishHolidays: boolean;
   showIslamicHolidays: boolean;
+  showIranianSolarTraditions: boolean;
+  showJavidnamDaily: boolean;
   appIcon: AppIconChoice;
   supporterUnlocked: boolean;
   rememberLastOpenedDate: boolean;
@@ -119,6 +121,8 @@ export function defaultAppSettings(): AppSettings {
     showChristianHolidays: true,
     showJewishHolidays: true,
     showIslamicHolidays: true,
+    showIranianSolarTraditions: true,
+    showJavidnamDaily: true,
     appIcon: 'light',
     supporterUnlocked: devSupporterUnlockEnabled(),
     rememberLastOpenedDate: true,
@@ -160,6 +164,9 @@ function loadAppSettingsFromPartial(parsed: Partial<AppSettings> & { appLanguage
     showChristianHolidays: parsed.showChristianHolidays ?? defaults.showChristianHolidays,
     showJewishHolidays: parsed.showJewishHolidays ?? defaults.showJewishHolidays,
     showIslamicHolidays: parsed.showIslamicHolidays ?? defaults.showIslamicHolidays,
+    showIranianSolarTraditions:
+      parsed.showIranianSolarTraditions ?? defaults.showIranianSolarTraditions,
+    showJavidnamDaily: parsed.showJavidnamDaily ?? defaults.showJavidnamDaily,
     appIcon:
       (parsed.appIcon as string | undefined) === 'teal'
         ? 'supporter'
@@ -413,6 +420,14 @@ export function setShowJewishHolidays(settings: AppSettings, value: boolean): Ap
 
 export function setShowIslamicHolidays(settings: AppSettings, value: boolean): AppSettings {
   return { ...settings, showIslamicHolidays: value };
+}
+
+export function setShowIranianSolarTraditions(settings: AppSettings, value: boolean): AppSettings {
+  return { ...settings, showIranianSolarTraditions: value };
+}
+
+export function setShowJavidnamDaily(settings: AppSettings, value: boolean): AppSettings {
+  return { ...settings, showJavidnamDaily: value };
 }
 
 export function setCalendarColor(

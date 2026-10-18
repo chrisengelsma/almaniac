@@ -28,6 +28,8 @@ import {
   setMayaUseHieroglyphs,
   setFrcUseRomanNumerals,
   setUseModifiedJulianDay,
+  setShowIranianSolarTraditions,
+  setShowJavidnamDaily,
   setAllCalendarsVisibility,
   toggleCalendarVisibility,
   toggleColorScheme,
@@ -245,6 +247,12 @@ function App() {
         }
         onFrcUseRomanNumeralsChange={(value) =>
           updateSettings((current) => setFrcUseRomanNumerals(current, value))
+        }
+        onShowIranianSolarTraditionsChange={(value) =>
+          updateSettings((current) => setShowIranianSolarTraditions(current, value))
+        }
+        onShowJavidnamDailyChange={(value) =>
+          updateSettings((current) => setShowJavidnamDaily(current, value))
         }
         onUseModifiedJulianDayChange={(value) =>
           updateSettings((current) => setUseModifiedJulianDay(current, value))

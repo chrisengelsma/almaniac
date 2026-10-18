@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { IconTipJar } from './IconTipJar';
 import { useTipJar } from '../hooks/useTipJar';
 import { getReviewStoreLabelKey, openAppReview } from '../lib/appReview';
-import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
+import { useModalOverlay } from '../hooks/useModalOverlay';
+import { ModalPortal } from './ModalPortal';
 import {
   TIP_PRODUCT_IDS,
   TIP_PRODUCT_LABEL_KEYS,
@@ -73,36 +74,20 @@ export function DonateModal({
     }
   }, [open]);
 
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    focusWithoutScroll(closeButtonRef.current);
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    setBodyScrollLocked(true);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      setBodyScrollLocked(false);
-    };
-  }, [open, onClose]);
+  useModalOverlay(open, onClose, { focusTarget: closeButtonRef });
 
   const reviewStoreLabel = t(getReviewStoreLabelKey());
+
+  if (!open) {
+    return null;
+  }
 
   const handleOpenAppReview = () => {
     void openAppReview();
   };
 
   return (
-    <>
+    <ModalPortal>
       <div
         className={`donate-modal${open && !thankYouOpen ? ' donate-modal--visible' : ''}`}
         aria-hidden={!(open && !thankYouOpen)}
@@ -227,6 +212,6 @@ export function DonateModal({
           onClose();
         }}
       />
-    </>
+    </ModalPortal>
   );
 }

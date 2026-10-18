@@ -1,7 +1,7 @@
 {
   "name": "almaniac",
   "private": true,
-  "version": "1.0.17",
+  "version": "1.0.19",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
-    "cap:sync": "npm run build && npx cap sync && node scripts/patch-ios-plugins.mjs"
+    "cap:sync": "npm run build && npx cap sync && node scripts/patch-ios-plugins.mjs",
+    "ios:sim": "node scripts/run-ios-sim.mjs",
+    "build:javidnam-daily": "node scripts/build-javidnam-daily.mjs"
   },
   "dependencies": {
     "@capacitor-community/in-app-review": "^8.0.0",
@@ -38,6 +40,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
+    "happy-dom": "^20.14.6",
     "oxlint": "^1.75.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.0",

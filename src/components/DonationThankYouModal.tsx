@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { focusWithoutScroll, setBodyScrollLocked } from '../lib/nativeOverlay';
+import { focusWithoutScroll } from '../lib/nativeOverlay';
 
 interface DonationThankYouModalProps {
   open: boolean;
@@ -11,6 +11,9 @@ export function DonationThankYouModal({ open, onClose }: DonationThankYouModalPr
   const { t } = useTranslation();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
   useEffect(() => {
     if (!open) {
       return;
@@ -20,18 +23,13 @@ export function DonationThankYouModal({ open, onClose }: DonationThankYouModalPr
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose();
+        onCloseRef.current();
       }
     };
 
     document.addEventListener('keydown', onKeyDown);
-    setBodyScrollLocked(true);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      setBodyScrollLocked(false);
-    };
-  }, [open, onClose]);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open]);
 
   return (
     <div className={`donation-thank-you${open ? ' donation-thank-you--visible' : ''}`} aria-hidden={!open}>
