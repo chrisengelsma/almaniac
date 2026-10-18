@@ -115,6 +115,8 @@
       "bannerTitle": "{{calendar}} afişi",
       "version": "Sürüm {{version}}",
       "copyright": "© 2026 Chris Engelsma",
+      "privacyPolicy": "Gizlilik Politikası",
+      "termsOfService": "Hizmet Şartları",
       "derivedLicensePrefix": "Türev afiş şu lisans altında paylaşılmıştır",
       "sourceLink": "Kaynak",
       "banners": {

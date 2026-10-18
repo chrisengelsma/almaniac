@@ -115,6 +115,8 @@
       "bannerTitle": "Banner {{calendar}}",
       "version": "Versione {{version}}",
       "copyright": "© 2026 Chris Engelsma",
+      "privacyPolicy": "Informativa sulla privacy",
+      "termsOfService": "Termini di servizio",
       "derivedLicensePrefix": "Banner derivato condiviso sotto",
       "sourceLink": "Fonte",
       "banners": {

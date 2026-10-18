@@ -115,6 +115,8 @@
       "bannerTitle": "شعار {{calendar}}",
       "version": "الإصدار {{version}}",
       "copyright": "© 2026 Chris Engelsma",
+      "privacyPolicy": "سياسة الخصوصية",
+      "termsOfService": "شروط الخدمة",
       "derivedLicensePrefix": "شعار مُشتق مُشارَك تحت",
       "sourceLink": "المصدر",
       "banners": {

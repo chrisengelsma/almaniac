@@ -115,6 +115,8 @@
       "bannerTitle": "{{calendar}} बैनर",
       "version": "संस्करण {{version}}",
       "copyright": "© 2026 Chris Engelsma",
+      "privacyPolicy": "गोपनीयता नीति",
+      "termsOfService": "सेवा की शर्तें",
       "derivedLicensePrefix": "व्युत्पन्न बैनर साझा किया गया",
       "sourceLink": "स्रोत",
       "banners": {

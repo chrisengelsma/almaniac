@@ -109,6 +109,8 @@ const UI = {
       bannerTitle: '{{calendar}} banner',
       version: 'Version {{version}}',
       copyright: '© 2026 Chris Engelsma',
+      privacyPolicy: 'Privacy Policy',
+      termsOfService: 'Terms of Service',
       derivedLicensePrefix: 'Derivative banner shared under',
     },
     calendarInfo: {

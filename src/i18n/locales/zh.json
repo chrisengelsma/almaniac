@@ -115,6 +115,8 @@
       "bannerTitle": "{{calendar}} 横幅",
       "version": "版本 {{version}}",
       "copyright": "© 2026 Chris Engelsma",
+      "privacyPolicy": "隐私政策",
+      "termsOfService": "服务条款",
       "derivedLicensePrefix": "衍生横幅依据以下许可共享",
       "sourceLink": "来源",
       "banners": {

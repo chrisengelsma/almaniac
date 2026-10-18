@@ -115,6 +115,8 @@
       "bannerTitle": "Spanduk {{calendar}}",
       "version": "Versi {{version}}",
       "copyright": "© 2026 Chris Engelsma",
+      "privacyPolicy": "Kebijakan Privasi",
+      "termsOfService": "Ketentuan Layanan",
       "derivedLicensePrefix": "Spanduk turunan dibagikan di bawah",
       "sourceLink": "Sumber",
       "banners": {
