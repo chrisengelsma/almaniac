@@ -1,0 +1,5 @@
+Home Screen and Lock Screen widgets now roll forward to the correct calendar date at midnight without opening the app (open Almaniac once after updating to refresh widget data).
+
+New “Almaniac Lock Screen” widget for the full-width rectangular lock screen layout, plus clearer inline and circular lock screen sizes.
+
+Android widgets refresh on a schedule so today’s date stays current between app launches.

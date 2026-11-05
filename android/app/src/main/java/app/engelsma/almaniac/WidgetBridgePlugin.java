@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import app.engelsma.almaniac.widget.CalendarWidgetProvider;
 import app.engelsma.almaniac.widget.WidgetConstants;
+import app.engelsma.almaniac.widget.WidgetUpdateScheduler;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;

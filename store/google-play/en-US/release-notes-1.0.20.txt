@@ -1,0 +1,3 @@
+• Widgets update to the correct calendar date at midnight without opening the app (open Almaniac once after updating)
+• New lock screen widget option with full-width rectangular layout
+• Android home screen widget refreshes on a schedule
