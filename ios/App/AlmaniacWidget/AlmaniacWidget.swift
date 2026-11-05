@@ -36,25 +36,49 @@ struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: SelectCalendarIntent, in context: Context) async -> AlmaniacWidgetEntry {
-        entry(for: configuration)
+        entry(for: configuration, at: Date())
     }
 
     func timeline(for configuration: SelectCalendarIntent, in context: Context) async -> Timeline<AlmaniacWidgetEntry> {
-        let currentEntry = entry(for: configuration)
-        let nextRefresh = Calendar.current.startOfDay(for: Date().addingTimeInterval(86_400))
-        return Timeline(entries: [currentEntry], policy: .after(nextRefresh))
+        let calendar = Calendar.current
+        let timelineStart = WidgetDataStore.startOfDay(for: Date())
+        var entries: [AlmaniacWidgetEntry] = []
+
+        for dayOffset in 0..<WidgetDataStore.timelineDayCount {
+            guard let entryDate = calendar.date(byAdding: .day, value: dayOffset, to: timelineStart) else {
+                continue
+            }
+            entries.append(entry(for: configuration, at: entryDate))
+        }
+
+        if entries.isEmpty {
+            entries = [entry(for: configuration, at: timelineStart)]
+        }
+
+        let reloadDate = calendar.date(
+            byAdding: .day,
+            value: WidgetDataStore.timelineDayCount,
+            to: timelineStart
+        ) ?? timelineStart.addingTimeInterval(Double(WidgetDataStore.timelineDayCount) * 86_400)
+
+        return Timeline(entries: entries, policy: .after(reloadDate))
     }
 
-    private func entry(for configuration: SelectCalendarIntent) -> AlmaniacWidgetEntry {
+    private func entry(for configuration: SelectCalendarIntent, at date: Date = Date()) -> AlmaniacWidgetEntry {
         let calendarId = configuration.calendar?.id ?? "gregorian"
         let useTransliteration = configuration.transliterateToEnglish
         let variantKey = configuration.widgetVariantKey(for: calendarId)
+        let timelineDate = WidgetDataStore.startOfDay(for: date)
 
-        if let presentation = WidgetDataStore.presentation(for: calendarId, variantKey: variantKey) {
+        if let presentation = WidgetDataStore.presentation(
+            for: calendarId,
+            variantKey: variantKey,
+            on: timelineDate
+        ) {
             let displayDate = useTransliteration ? presentation.transliteratedDate : presentation.nativeDate
 
             return AlmaniacWidgetEntry(
-                date: Date(),
+                date: timelineDate,
                 calendarId: calendarId,
                 calendarLabel: presentation.label,
                 calendarName: presentation.calendarName,
@@ -65,7 +89,7 @@ struct AlmaniacWidgetProvider: AppIntentTimelineProvider {
         }
 
         return AlmaniacWidgetEntry(
-            date: Date(),
+            date: timelineDate,
             calendarId: calendarId,
             calendarLabel: "Almaniac",
             calendarName: "Almaniac",
@@ -360,24 +384,53 @@ struct AlmaniacWidget: Widget {
     let kind = "AlmaniacWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: SelectCalendarIntent.self, provider: AlmaniacWidgetProvider()) { entry in
-            AlmaniacWidgetEntryView(entry: entry)
-                .containerBackground(for: .widget) {
-                    WidgetThemeBackground(entry: entry)
-                }
-        }
-        .configurationDisplayName("Almaniac Calendar")
-        .description("Today's date in a calendar of your choice on your Home Screen or Lock Screen.")
-        .supportedFamilies([
-            .systemSmall,
-            .systemMedium,
-            .systemLarge,
-            .systemExtraLarge,
-            .accessoryInline,
-            .accessoryCircular,
-            .accessoryRectangular,
-        ])
-        .containerBackgroundRemovable(true)
-        .contentMarginsDisabled()
+        almaniacWidgetConfiguration(kind: kind)
+            .configurationDisplayName("Almaniac Calendar")
+            .description("Today's date in a calendar of your choice on your Home Screen.")
+            .supportedFamilies([
+                .systemSmall,
+                .systemMedium,
+                .systemLarge,
+                .systemExtraLarge,
+            ])
+            .disfavoredLocations([.lockScreen], for: [
+                .systemSmall,
+                .systemMedium,
+                .systemLarge,
+                .systemExtraLarge,
+            ])
+            .containerBackgroundRemovable(true)
+            .contentMarginsDisabled()
+    }
+}
+
+struct AlmaniacLockScreenWidget: Widget {
+    let kind = "AlmaniacLockScreenWidget"
+
+    var body: some WidgetConfiguration {
+        almaniacWidgetConfiguration(kind: kind)
+            .configurationDisplayName("Almaniac Lock Screen")
+            .description("Full-width lock screen date in a calendar of your choice.")
+            .supportedFamilies([
+                .accessoryInline,
+                .accessoryCircular,
+                .accessoryRectangular,
+            ])
+            .disfavoredLocations([.homeScreen], for: [
+                .accessoryInline,
+                .accessoryCircular,
+                .accessoryRectangular,
+            ])
+            .contentMarginsDisabled()
+    }
+}
+
+@available(iOS 17.0, *)
+private func almaniacWidgetConfiguration(kind: String) -> some WidgetConfiguration {
+    AppIntentConfiguration(kind: kind, intent: SelectCalendarIntent.self, provider: AlmaniacWidgetProvider()) { entry in
+        AlmaniacWidgetEntryView(entry: entry)
+            .containerBackground(for: .widget) {
+                WidgetThemeBackground(entry: entry)
+            }
     }
 }

@@ -23,6 +23,13 @@ struct WidgetDateVariant: Codable {
     let dateTransliterated: String?
 }
 
+struct WidgetDailySnapshot: Codable {
+    let weekday: String
+    let date: String
+    let dateTransliterated: String?
+    let variants: [String: WidgetDateVariant]?
+}
+
 struct WidgetCalendarData: Codable {
     let label: String
     let calendarName: String
@@ -30,6 +37,7 @@ struct WidgetCalendarData: Codable {
     let date: String
     let dateTransliterated: String?
     let variants: [String: WidgetDateVariant]?
+    let daily: [String: WidgetDailySnapshot]?
     let themes: [String: WidgetThemeVariants]?
 }
 
@@ -49,8 +57,23 @@ struct WidgetSnapshot: Codable {
 }
 
 enum WidgetDataStore {
+    static let timelineDayCount = 45
+
     static var defaults: UserDefaults? {
         UserDefaults(suiteName: WidgetConstants.appGroupId)
+    }
+
+    static func gregorianDateKey(for date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = .current
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: date)
+    }
+
+    static func startOfDay(for date: Date) -> Date {
+        Calendar.current.startOfDay(for: date)
     }
 
     static func saveSnapshotJSON(_ json: String) {
@@ -70,8 +93,38 @@ enum WidgetDataStore {
         loadSnapshot()?.calendars[calendarId]
     }
 
-    static func presentation(for calendarId: String, variantKey: String) -> WidgetCalendarPresentation? {
+    static func presentation(
+        for calendarId: String,
+        variantKey: String,
+        on date: Date = Date()
+    ) -> WidgetCalendarPresentation? {
         guard let data = calendarData(for: calendarId) else {
+            return nil
+        }
+
+        let dateKey = gregorianDateKey(for: date)
+
+        if let daily = data.daily?[dateKey] {
+            if let variant = daily.variants?[variantKey] {
+                return WidgetCalendarPresentation(
+                    label: variant.label,
+                    calendarName: variant.calendarName,
+                    weekday: variant.weekday,
+                    nativeDate: variant.date,
+                    transliteratedDate: variant.dateTransliterated ?? variant.date
+                )
+            }
+
+            return WidgetCalendarPresentation(
+                label: data.label,
+                calendarName: data.calendarName,
+                weekday: daily.weekday,
+                nativeDate: daily.date,
+                transliteratedDate: daily.dateTransliterated ?? daily.date
+            )
+        }
+
+        if let snapshot = loadSnapshot(), dateKey != snapshot.gregorianDate {
             return nil
         }
 

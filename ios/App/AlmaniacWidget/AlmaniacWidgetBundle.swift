@@ -5,5 +5,6 @@ import WidgetKit
 struct AlmaniacWidgetBundle: WidgetBundle {
     var body: some Widget {
         AlmaniacWidget()
+        AlmaniacLockScreenWidget()
     }
 }

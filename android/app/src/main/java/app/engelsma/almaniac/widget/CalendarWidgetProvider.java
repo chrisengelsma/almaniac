@@ -14,6 +14,12 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         updateWidgets(context, appWidgetManager, appWidgetIds);
+        WidgetUpdateScheduler.scheduleNextMidnightRefresh(context);
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        WidgetUpdateScheduler.scheduleNextMidnightRefresh(context);
     }
 
     @Override

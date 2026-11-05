@@ -82,6 +82,14 @@
                 android:resource="@xml/calendar_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".widget.WidgetMidnightReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="app.engelsma.almaniac.widget.ACTION_MIDNIGHT_REFRESH" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".widget.CalendarWidgetConfigureActivity"
             android:exported="true"

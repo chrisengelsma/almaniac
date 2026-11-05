@@ -125,6 +125,10 @@ public final class WidgetSnapshotReader {
     }
 
     public static CalendarWidgetData readCalendar(Context context, int appWidgetId) {
+        return readCalendar(context, appWidgetId, new java.util.Date());
+    }
+
+    public static CalendarWidgetData readCalendar(Context context, int appWidgetId, java.util.Date onDate) {
         String calendarId = getCalendarId(context, appWidgetId);
         boolean transliterate = getTransliterateToEnglish(context, appWidgetId);
         String colorTheme = getColorTheme(context, appWidgetId);
@@ -143,6 +147,10 @@ public final class WidgetSnapshotReader {
             }
 
             JSONObject calendar = calendars.getJSONObject(calendarId);
+            String dateKey = gregorianDateKey(onDate);
+            JSONObject dailyRoot = calendar.optJSONObject("daily");
+            JSONObject daily = dailyRoot != null ? dailyRoot.optJSONObject(dateKey) : null;
+
             JSONObject variant = calendar.optJSONObject("variants");
             JSONObject selected = variant != null ? variant.optJSONObject(variantKey) : null;
 
@@ -150,7 +158,21 @@ public final class WidgetSnapshotReader {
             String nativeDate = calendar.optString("date", "Open Almaniac");
             String transliteratedDate = calendar.optString("dateTransliterated", nativeDate);
 
-            if (selected != null) {
+            if (daily != null) {
+                nativeDate = daily.optString("date", nativeDate);
+                transliteratedDate = daily.optString("dateTransliterated", nativeDate);
+                JSONObject dailyVariants = daily.optJSONObject("variants");
+                JSONObject dailySelected = dailyVariants != null
+                    ? dailyVariants.optJSONObject(variantKey)
+                    : null;
+                if (dailySelected != null) {
+                    calendarName = dailySelected.optString("calendarName", calendarName);
+                    nativeDate = dailySelected.optString("date", nativeDate);
+                    transliteratedDate = dailySelected.optString("dateTransliterated", nativeDate);
+                }
+            } else if (!dateKey.equals(snapshot.optString("gregorianDate"))) {
+                return CalendarWidgetData.placeholder(calendarId);
+            } else if (selected != null) {
                 calendarName = selected.optString("calendarName", calendarName);
                 nativeDate = selected.optString("date", nativeDate);
                 transliteratedDate = selected.optString("dateTransliterated", nativeDate);
@@ -169,6 +191,12 @@ public final class WidgetSnapshotReader {
         } catch (JSONException exception) {
             return CalendarWidgetData.placeholder(calendarId);
         }
+    }
+
+    public static String gregorianDateKey(java.util.Date date) {
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US);
+        formatter.setTimeZone(java.util.TimeZone.getDefault());
+        return formatter.format(date);
     }
 
     private static ThemeColors readThemeColors(JSONObject calendar, String colorTheme, boolean isDark) {

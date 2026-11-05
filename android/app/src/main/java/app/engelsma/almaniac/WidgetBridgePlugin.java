@@ -34,6 +34,8 @@ public class WidgetBridgePlugin extends Plugin {
             CalendarWidgetProvider.updateWidgets(context, manager, widgetIds);
         }
 
+        WidgetUpdateScheduler.scheduleNextMidnightRefresh(context);
+
         JSObject result = new JSObject();
         result.put("ok", true);
         call.resolve(result);

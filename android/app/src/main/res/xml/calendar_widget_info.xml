@@ -9,6 +9,6 @@
     android:resizeMode="none"
     android:targetCellWidth="2"
     android:targetCellHeight="2"
-    android:updatePeriodMillis="0"
+    android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen"
     android:widgetFeatures="reconfigurable" />

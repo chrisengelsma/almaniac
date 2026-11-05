@@ -2,6 +2,7 @@ import { getResolvedAppLanguage, type AppSettings, type ColorScheme } from './ap
 import {
   DEFAULT_CALENDAR_ORDER,
   getAllCalendarEntries,
+  shiftGregorianDate,
   todayGregorianDate,
   type CalendarId,
   type GregorianCalendar,
@@ -33,6 +34,13 @@ export interface WidgetThemeVariants {
   dark: WidgetThemeColors;
 }
 
+export interface WidgetDailySnapshot {
+  weekday: string;
+  date: string;
+  dateTransliterated: string;
+  variants?: Record<string, WidgetDateVariant>;
+}
+
 export interface WidgetCalendarSnapshot {
   label: string;
   calendarName: string;
@@ -40,8 +48,12 @@ export interface WidgetCalendarSnapshot {
   date: string;
   dateTransliterated: string;
   variants?: Record<string, WidgetDateVariant>;
+  daily?: Record<string, WidgetDailySnapshot>;
   themes: Record<ColorThemeId, WidgetThemeVariants>;
 }
+
+/** Days of precomputed dates stored for widget timelines (iOS + Android). */
+export const WIDGET_TIMELINE_DAY_COUNT = 45;
 
 export interface WidgetSnapshot {
   version: 1;
@@ -58,6 +70,57 @@ function formatGregorianDate(anchor: GregorianCalendar): string {
   const month = String(anchor.month).padStart(2, '0');
   const day = String(anchor.day).padStart(2, '0');
   return `${year}-${month}-${day}`;
+}
+
+function instantForAnchor(
+  anchor: GregorianCalendar,
+  isToday: boolean,
+  referenceAt: Date,
+): Date {
+  if (isToday) {
+    return referenceAt;
+  }
+  return new Date(anchor.year, anchor.month - 1, anchor.day, 12, 0, 0);
+}
+
+function buildCalendarDailyMap(
+  id: CalendarId,
+  startAnchor: GregorianCalendar,
+  settings: AppSettings,
+  copy: ReturnType<typeof createCalendarCopy>,
+  referenceAt: Date,
+): Record<string, WidgetDailySnapshot> {
+  const daily: Record<string, WidgetDailySnapshot> = {};
+  const todayKey = formatGregorianDate(startAnchor);
+
+  for (let offset = 0; offset < WIDGET_TIMELINE_DAY_COUNT; offset += 1) {
+    const anchor = shiftGregorianDate(startAnchor, offset);
+    const key = formatGregorianDate(anchor);
+    const isToday = key === todayKey;
+    const at = instantForAnchor(anchor, isToday, referenceAt);
+    const nativeSettings = { ...settings, transliterateToEnglish: false };
+    const transliteratedSettings = { ...settings, transliterateToEnglish: true };
+    const [nativeEntry] = getAllCalendarEntries([id], anchor, nativeSettings, copy, at);
+    const [transliteratedEntry] = getAllCalendarEntries(
+      [id],
+      anchor,
+      transliteratedSettings,
+      copy,
+      at,
+    );
+    if (!nativeEntry) {
+      continue;
+    }
+
+    daily[key] = {
+      weekday: nativeEntry.weekday,
+      date: nativeEntry.date,
+      dateTransliterated: transliteratedEntry?.date ?? nativeEntry.date,
+      variants: buildCalendarDateVariants(id, anchor, settings, copy, at),
+    };
+  }
+
+  return daily;
 }
 
 function buildThemeVariants(
@@ -134,7 +197,7 @@ function buildCalendarDateVariants(
 export function buildWidgetSnapshot(
   anchor: GregorianCalendar,
   settings: AppSettings,
-  at?: Date,
+  at: Date = new Date(),
 ): WidgetSnapshot {
   const copy = createCalendarCopy(i18n.getFixedT(getResolvedAppLanguage(settings)));
   const nativeEntries = getAllCalendarEntries(DEFAULT_CALENDAR_ORDER, anchor, {
@@ -158,6 +221,7 @@ export function buildWidgetSnapshot(
         date: entry.date,
         dateTransliterated: transliteratedById.get(entry.id) ?? entry.date,
         variants: buildCalendarDateVariants(entry.id, anchor, settings, copy, at),
+        daily: buildCalendarDailyMap(entry.id, anchor, settings, copy, at),
         themes: buildThemeVariants(entry.id, settings),
       };
       return acc;
